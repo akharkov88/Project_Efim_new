@@ -21,7 +21,7 @@ import models
 import tables
 
 from database import get_session
-import settings
+from settings import Settings as settings
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in/')
@@ -91,7 +91,7 @@ class AuthService:
         user_data: models.UserCreate,
     ) -> models.Token:
         user = tables.User(
-            email=user_data.email,
+            # email=user_data.email,
             username=user_data.username,
             password_hash=self.hash_password(user_data.password),
         )

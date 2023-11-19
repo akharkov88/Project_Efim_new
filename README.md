@@ -30,6 +30,8 @@ uvicorn main:app
 
 uvicorn main:app --reload - обновление при изменениях
 
+website  --  https://github.com/learning-zone/website-templates
+
 --------------------------------------------------
 module 'pkgutil' has no attribute 'ImpImporter'. Did you mean: 'zipimporter'
 -------------------------------------------------

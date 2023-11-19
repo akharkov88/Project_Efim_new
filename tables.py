@@ -17,7 +17,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    email = Column(String, unique=True)
+    # email = Column(String, unique=True)
     username = Column(String, unique=True)
     password_hash = Column(String)
 
@@ -33,3 +33,8 @@ class Operation(Base):
     description = Column(String, nullable=True)
 
     user = relationship('User', backref='operations')
+
+
+    # from  database import engine
+    # from  tables import Base
+    # Base.metadata.create_all(engine)

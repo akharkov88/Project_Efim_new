@@ -7,7 +7,7 @@ class Settings(BaseConfig):
 
     database_url: str= "sqlite:///./database.sqlite3"
 
-    jwt_secret: str
+    jwt_secret: str="qwerty"
     jwt_algorithm: str = 'HS256'
     jwt_expires_s: int = 3600
 
