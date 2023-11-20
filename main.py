@@ -10,7 +10,7 @@ app = FastAPI()
 app.include_router(router)
 app.mount(
     "/static",
-    StaticFiles(directory=os.path.join(Path(__file__).parent.parent.absolute() , "Project_Efim_new","src","static")),
+    StaticFiles(directory=os.path.join(Path(__file__).parent.parent.absolute() , "Project_Efim_new2","src","static")),
     name="static",
 )
 
@@ -31,7 +31,7 @@ app.mount(
 # @app.get("/js", response_class=HTMLResponse)
 # async def read_items():
 #
-#     return HTMLResponse(content=open("src/autorization.html").read(), status_code=200)
+#     return HTMLResponse(content=open("src/auth.html").read(), status_code=200)
 
 if __name__ == '__main__':
     uvicorn.run(

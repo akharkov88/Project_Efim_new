@@ -2,13 +2,13 @@
 <!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
 <html lang="en" dir="ltr">
   <head>
-    <script src="{{ url_for('static', path='autorization/auth.js') }}"></script>
+    <script src="{{ url_for('static', path='auth/auth.js') }}"></script>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link href="{{ url_for('static', path='autorization/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='auth/style.css') }}" rel="stylesheet">
     <!-- Fontawesome CDN Link -->
 <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">-->
-    <link rel="stylesheet" href="{{ url_for('static', path='autorization/cdnjs.cloudflare.com_ajax_libs_font-awesome_5.15.3_css_all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='auth/cdnjs.cloudflare.com_ajax_libs_font-awesome_5.15.3_css_all.min.css') }}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
@@ -17,14 +17,15 @@
     <input type="checkbox" id="flip">
     <div class="cover">
       <div class="front">
-        <img src="{{ url_for('static', path='autorization/images/frontImg.jpg') }}" alt="">
+<!--        <img src="{{ url_for('static', path='auth/frontImg.jpg') }}" alt="">-->
+        <img src="{{ url_for('static', path='auth/images/frontImg.jpg') }}" alt="">
         <div class="text">
           <span class="text-1">Every new friend is a <br> new adventure</span>
           <span class="text-2">Let's get connected</span>
         </div>
       </div>
       <div class="back">
-        <img class="backImg" src="{{ url_for('static', path='autorization/images/backImg.jpg') }}" alt="">
+        <img class="backImg" src="{{ url_for('static', path='auth/images/backImg.jpg') }}" alt="">
         <div class="text">
           <span class="text-1">Complete miles of journey <br> with one step</span>
           <span class="text-2">Let's get started</span>

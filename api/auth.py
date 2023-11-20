@@ -21,7 +21,7 @@ router = APIRouter(
 )
 
 
-templates = Jinja2Templates(directory="src/autorization")
+templates = Jinja2Templates(directory="src/auth")
 
 @router.get("/")
 async def root(request: Request):

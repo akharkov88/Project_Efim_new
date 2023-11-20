@@ -61,29 +61,44 @@
     "Authorization": result.token_type+" "+result.access_token
         },
     })
-    .then(function(response) {
-        // When the page is loaded convert it to text
-        return response.text()
-    })
-    .then(function(html) {
-        // Initialize the DOM parser
-        var parser = new DOMParser();
-
-        // Parse the text
-        var doc = parser.parseFromString(html, "text/html");
-
-        // You can now even select part of that html as you would in the regular DOM
-        // Example:
-        // var docArticle = doc.querySelector('article').innerHTML;
-
-        console.log(doc);
-        document.querySelector('html').innerHTML =html
+    .then(response => {
+        window.location.href=response.url
         // document.body.innerHTML = html
     })
     .catch(function(err) {
         console.log('Failed to fetch page: ', err);
     });
 
+    //
+    //  fetch('/main/',{
+    // headers: {
+    // Accept: 'application/json',
+    // "Authorization": result.token_type+" "+result.access_token
+    //     },
+    // })
+    // .then(function(response) {
+    //     // When the page is loaded convert it to text
+    //     return response.text()
+    // })
+    // .then(function(html) {
+    //     // Initialize the DOM parser
+    //     var parser = new DOMParser();
+    //
+    //     // Parse the text
+    //     var doc = parser.parseFromString(html, "text/html");
+    //
+    //     // You can now even select part of that html as you would in the regular DOM
+    //     // Example:
+    //     // var docArticle = doc.querySelector('article').innerHTML;
+    //
+    //     console.log(doc);
+    //     document.querySelector('html').innerHTML =html
+    //     // document.body.innerHTML = html
+    // })
+    // .catch(function(err) {
+    //     console.log('Failed to fetch page: ', err);
+    // });
+    //
 
     //  fetch('/main/')
     // .then(function(response) {
