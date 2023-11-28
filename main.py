@@ -10,7 +10,7 @@ app = FastAPI()
 app.include_router(router)
 app.mount(
     "/static",
-    StaticFiles(directory=os.path.join(Path(__file__).parent.parent.absolute() , "Project_Efim_new2","src","static")),
+    StaticFiles(directory=os.path.join(Path(__file__).parent.parent.absolute() , "Project_Efim_new","src","static")),
     name="static",
 )
 

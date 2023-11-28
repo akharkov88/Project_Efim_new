@@ -6,13 +6,16 @@ from settings import Settings
 
 engine = create_engine(
     Settings.database_url,
-    connect_args={'check_same_thread': False},
+    # connect_args={'check_same_thread': False},
+    # echo=True,
+    # pool_size=5,  # основные соеденения
+    # max_overflow=10,  # дополнтиленые соеденения
 )
 
 Session = sessionmaker(
     engine,
-    autocommit=False,
-    autoflush=False,
+    # autocommit=False,
+    # autoflush=False,
 )
 
 

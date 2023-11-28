@@ -71,6 +71,21 @@ def get_operation(request: Request,):
     return templates.TemplateResponse(
         "index.html", {"request": request}
     )
+@router.get('/index_copy_example.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "index_copy_example.html", {"request": request}
+    )
+@router.get('/tech_task.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "techTask.html", {"request": request}
+    )
+@router.get('/main/techTask.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "techTask.html", {"request": request}
+    )
 
 # @router.get("/")
 # async def root(request: Request):

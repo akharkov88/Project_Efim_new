@@ -27,12 +27,11 @@ referrer=document.referrer
     body: `grant_type=&username=${document.getElementById("login").value}&password=${document.getElementById("password").value}&scope=&client_id=&client_secret=`
     });
     let result = await response.json();
-   console.log(result)
-   console.log(document.referrer)
 
   if (response.status==200){
       localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
-     if (referrer!="") {
+     if (referrer!="" && referrer!= "http://127.0.0.1:8000/auth/") {
+
          document.location.href = referrer
      }else{
          document.location.href ='/main/'
