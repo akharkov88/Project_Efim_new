@@ -103,6 +103,12 @@ def get_operation(request: Request,):
         "techTaskForm.html", {"request": request}
     )
 
+@router.get('/indexShablon.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "indexShablon.html", {"request": request}
+    )
+
 # @router.get("/")
 # async def root(request: Request):
 #     return templates.TemplateResponse(
