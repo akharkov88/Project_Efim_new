@@ -5,17 +5,22 @@ from fastapi import (
     Depends,
     status,
     Request,
+    Response,
 )
+from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 
 import models
 
+from services.main import (
+    TaskServices,
+)
 from services.auth import (
     AuthService,
     get_current_user,
 )
-
+from services.main import TaskServices
 
 router = APIRouter(
     prefix='/main',
@@ -123,6 +128,27 @@ def get_operation(request: Request,):
     return templates.TemplateResponse(
         "indexShablon.html", {"request": request}
     )
+
+
+
+@router.post(
+    '/creatTask',
+    response_model=models.BaseTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+    username: str,
+    # user: models.User = Depends(get_current_user),
+    Task_Services: TaskServices = Depends(),
+):
+    # Task_Services.createTask(username)
+
+    # return Response(status_code=Task_Services.createTask(username))
+    # val,status=Task_Services.createTask(username)
+    # if status==200:
+    #     return JSONResponse(content={"message": val.id}, status_code=status)
+    # if status!=200:
+    return Task_Services.createTask(username)
 
 # @router.get("/")
 # async def root(request: Request):
