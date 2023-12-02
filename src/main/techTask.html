@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-
+<script src="../static/main/assets/js/jquery-1.10.2.js"></script>
+<script src="{{ url_for('static', path='main/techTask.js') }}"></script>
     <script src="{{ url_for('static', path='global.js') }}"></script>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -21,36 +22,7 @@
 
 <body>
 <div id="wrapper">
-    <nav class="navbar navbar-default top-navbar" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">Dynamic_Kharkov</a>
-        </div>
-
-    </nav>
-    <!--/. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-
-                <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-desktop"></i>Главная страница</a>
-                </li>
-
-                <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-desktop"></i>Технические задания</a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </nav>
+{% include "indexShablon.html" %}
     <div id="page-wrapper">
         <div id="page-inner">
 
@@ -63,13 +35,11 @@
 
                 </div>
                 <div class="col-md-3">
-                    <button style="    " class="text-center" type="button">Добавить новое задание</button>
+                    <button onclick="location.href = '/main/techTaskForm.html';" style="    " class="text-center" type="button">Добавить новое задание</button>
                 </div>
 
             </div>
             <!-- /. ROW  -->
-
-
 
 
             <div class="row">
@@ -113,7 +83,11 @@
                     <div class="text-center  row-md-2">
                         <div class="panel-heading">
                         </div>
-                        <button style="    " class="text-center" type="button">Изменить</button>
+                        <button  class="text-center" type="button">
+                            Изменить
+                        </button>
+
+
                     </div>
 
                 </div>
@@ -129,7 +103,16 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
+<<<<<<< HEAD
 <script src="../static/main/assets/js/jquery-1.10.2.js"></script>
+=======
+
+<!--<script >-->
+<!--    $('button:contains("Изменить")').on("click",function () {-->
+<!--    console.log(111)-->
+<!--})-->
+<!--</script>-->
+>>>>>>> f5a75c7bb4aa7266861dfd8e3246fc6f83d5555f
 
 <!-- Bootstrap Js -->
 <script src="../static/main/assets/js/bootstrap.min.js"></script>
