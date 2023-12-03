@@ -84,28 +84,20 @@ def get_operation(request: Request,):
 
 
 
-@router.get('/techTask.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
-    return templates.TemplateResponse(
-        "techTask.html", {"request": request}
-    )
 
 
 @router.get('/main/techTask.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
+def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
     return templates.TemplateResponse(
-        "techTask.html", {"request": request}
+        "techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
     )
-@router.get('/main/techTask_form.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
+
+@router.get('/techTask.html',response_model=List[models.Operation],)
+def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
     return templates.TemplateResponse(
-        "techTask_form.html", {"request": request}
+        "techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
     )
-@router.get('/techTask_form.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
-    return templates.TemplateResponse(
-        "techTask_form.html", {"request": request}
-    )
+
 @router.get('/indexShablon.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
@@ -149,6 +141,25 @@ def create_operation(
     #     return JSONResponse(content={"message": val.id}, status_code=status)
     # if status!=200:
     return Task_Services.createTask(username)
+
+@router.get(
+    '/getAllTask',
+    response_model=list[models.UserTask],
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+    # username: str,
+    # user: models.User = Depends(get_current_user),
+    Task_Services: TaskServices = Depends(),
+):
+    # Task_Services.createTask(username)
+
+    # return Response(status_code=Task_Services.createTask(username))
+    # val,status=Task_Services.createTask(username)
+    # if status==200:
+    #     return JSONResponse(content={"message": val.id}, status_code=status)
+    # if status!=200:
+    return Task_Services.getAllTask_S()
 
 # @router.get("/")
 # async def root(request: Request):

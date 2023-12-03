@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 import models
 import tables
 from services.auth import  get_session
-
+from fastapi.encoders import jsonable_encoder
 # from database import get_current_user
 #
 # print(get_current_user)
@@ -22,7 +22,7 @@ class TaskServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-    def createTask(self,username: models.UserTask) -> tables.TaskForm:
+    def createTask_S(self,username: models.UserTask) -> tables.TaskForm:
         try:
             operation = tables.TaskForm(
                 username=username,
@@ -39,10 +39,29 @@ class TaskServices:
             )
             if not operation:
                 raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
-            return operation
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Запись с таким именем уже существует запись")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+        # return "operation"
+    def getAllTask_S(self) -> tables.TaskForm:
+        try:
+            operation = (
+                self.session
+                .query(tables.TaskForm)
+                .all()
+            )
+            if not operation:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
 

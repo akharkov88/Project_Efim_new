@@ -1,6 +1,6 @@
 from pydantic import BaseConfig
 
-
+# ngrok http http://localhost:8000
 class Settings(BaseConfig):
     DB_port: int = 5432
     DB_user: str = "postgres"
