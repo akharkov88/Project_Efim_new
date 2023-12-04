@@ -55,8 +55,8 @@ class TaskServices:
                 .query(tables.TaskForm)
                 .all()
             )
-            if not operation:
-                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # if not operation:
+            #     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
             return jsonable_encoder(operation)
         except:

@@ -41,45 +41,52 @@ def get_operation(
     return templates.TemplateResponse(
         "index.html", {"request": request}
     )
-@router.get('/chart.html',response_model=List[models.Operation],)
+
+@router.get('/old/chart.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "chart.html", {"request": request}
     )
-@router.get('/empty.html',response_model=List[models.Operation],)
+@router.get('/old/empty.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "empty.html", {"request": request}
+        "/old/empty.html", {"request": request}
     )
-@router.get('/form.html',response_model=List[models.Operation],)
+@router.get('/old/form.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "form.html", {"request": request}
+        "/old/form.html", {"request": request}
     )
-@router.get('/tab-panel.html',response_model=List[models.Operation],)
+@router.get('/old/tab-panel.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "tab-panel.html", {"request": request}
+        "/old/tab-panel.html", {"request": request}
     )
-@router.get('/table.html',response_model=List[models.Operation],)
+@router.get('/old/table.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "table.html", {"request": request}
+        "/old/table.html", {"request": request}
     )
-@router.get('/ui-elements.html',response_model=List[models.Operation],)
+@router.get('/old/ui-elements.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "ui-elements.html", {"request": request}
+        "/old/ui-elements.html", {"request": request}
     )
 @router.get('/index.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "index.html", {"request": request}
     )
-@router.get('/index_copy_example.html',response_model=List[models.Operation],)
+@router.get('/old/index_copy_example.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "index_copy_example.html", {"request": request}
+        "/old/index_copy_example.html", {"request": request}
+    )
+
+@router.get('/index.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "index.html", {"request": request}
     )
 
 
@@ -95,7 +102,7 @@ def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
 @router.get('/techTask.html',response_model=List[models.Operation],)
 def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
     return templates.TemplateResponse(
-        "techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
+        "TechTask/techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
     )
 
 @router.get('/indexShablon.html',response_model=List[models.Operation],)
@@ -104,21 +111,10 @@ def get_operation(request: Request,):
         "indexShablon.html", {"request": request}
     )
 
-@router.get('/main/techTaskForm.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
-    return templates.TemplateResponse(
-        "techTaskForm.html", {"request": request}
-    )
 @router.get('/techTaskForm.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
-        "techTaskForm.html", {"request": request}
-    )
-
-@router.get('/indexShablon.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
-    return templates.TemplateResponse(
-        "indexShablon.html", {"request": request}
+        "TechTask/techTaskForm.html", {"request": request}
     )
 
 
