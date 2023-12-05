@@ -35,7 +35,7 @@ class ReportsService:
                 operation_data.description = None
             operations_data.append(operation_data)
         self.operations_service.create_many(
-            user_id,
+            # user_id,
             operations_data,
         )
 

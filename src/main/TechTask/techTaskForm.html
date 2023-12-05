@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+<script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
 
     <script src="{{ url_for('static', path='global.js') }}"></script>
     <script src="{{ url_for('static', path='main/techTask.js') }}"></script>
@@ -87,10 +88,44 @@
 
                                         <div class="form-group">
                                             <label>Проект/чертеж</label>
-                                            <input type="file">
+    <form id="myForm" action="/submit" method="post">
+
+                                            <input type="file" id="file" name="file" />
+    </form>
+
                                         </div>
+<!--    <form id="myForm" action="/submit" method="post">-->
+<!--      <input type="file" onclick="submitForm(event)">-->
+<!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
+<!--    </form>-->
 
+    <script>
+        document.getElementById('file').onchange = function() {
+          console.log(5645123)
+const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
+const file = fileInput.files[0]; // получаем выбранный файл
 
+const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
+const formData = new FormData(); // создаем объект FormData для передачи файла
+
+formData.append('file', file); // добавляем файл в объект FormData
+
+xhr.open('POST', '/techTaskForm/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+xhr.send(formData); // отправляем запрос на сервер с помощью метода send()
+    // fire the upload here
+};
+      function submitForm(event) {
+        event.preventDefault(); // Предотвращаем обновление страницы
+          console.log(123)
+        // let form = document.getElementById("myForm");
+        // let formData = new FormData(form);
+        //
+        // // Отправка данных формы с помощью AJAX-запроса
+        // let xhr = new XMLHttpRequest();
+        // xhr.open("POST", form.action, true);
+        // xhr.send(formData);
+      }
+    </script>
                                         <div class="form-group">
                                             <label>ППР (проект производства работ)</label>
                                             <textarea class="form-control" rows="3"
@@ -252,7 +287,6 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
-<script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
 <!-- Bootstrap Js -->
 <script src="../../static/main/assets/js/bootstrap.min.js"></script>
 <!-- Metis Menu Js -->
