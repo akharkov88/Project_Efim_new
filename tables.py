@@ -37,10 +37,18 @@ class Operation(Base):
 
 
 class TaskForm(Base):
-    __tablename__ = 'TaskForm'
+    __tablename__ = 'TechTaskForm'
 
     id = Column(Integer, primary_key=True)
-    username = Column(String, unique=True)
+    NameTechTask = Column(String, unique=True) # Наименование обекта
+    TechTaskClient = Column(String) # Наименование заказчика
+    TechTaskProject = Column(String) # Проект/чертеж
+    TechTaskPPR = Column(String) # Проект/чертеж
+    TechTaskOverhead = Column(String) # Накладные расходы
+    TechTaskDateKP = Column(String)#Column(Date) #  Срок подготовки КП
+    TechTaskDateEndWork = Column(String) #  Срок выполнение работ
+    TechTaskPrice = Column(String) #  Условия оплаты
+    TechTaskLeaderKP = Column(String) #  Отвественный
     # date = Column(Date)
     # kind = Column(String)
     # amount = Column(Numeric(10, 2))

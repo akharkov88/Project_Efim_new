@@ -121,14 +121,14 @@ def get_operation(request: Request,):
 
 @router.post(
     '/creatTask',
-    response_model=models.BaseTask,
+    response_model=models.UserTask,
     status_code=status.HTTP_200_OK,
 )
 def create_operation(
-    username: str,
-    Task_Services: TaskServices = Depends(),
+        user_data: models.UserTask,
+        Task_Services: TaskServices = Depends(),
 ):
-    return Task_Services.createTask_S(username)
+    return Task_Services.createTask_S(user_data)
 
 @router.get(
     '/getAllTask',
@@ -140,20 +140,10 @@ def create_operation(
 ):
     return Task_Services.getAllTask_S()
 
-@router.get(
-    '/getTechTaskUsername',
-    response_model=models.UserTask,
-    status_code=status.HTTP_200_OK,
+@router.get('/getTechTaskNameTechTask',response_model=models.UserTask,status_code=status.HTTP_200_OK,
 )
 def create_operation(
-        username: str,
+        NameTechTask: str,
         Task_Services: TaskServices = Depends(),
 ):
-    return Task_Services.getTechTaskUsername_S(username)
-
-
-# @router.get("/")
-# async def root(request: Request):
-#     return templates.TemplateResponse(
-#         "index.html", {"request": request}
-#     )
+    return Task_Services.getTechTaskNameTechTask_S(NameTechTask)
