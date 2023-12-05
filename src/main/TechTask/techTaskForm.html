@@ -76,57 +76,67 @@
                                     <form role="form">
                                         <div class="form-group">
                                             <label>Наименнование заказчика</label>
-                                            <input class="form-control">
-                                            <p class="help-block">Тут возможно дополнительное описание</p>
+                                            <input class="form-control" placeholder="Введите описание">
                                         </div>
 
 
                                         <div class="form-group">
                                             <label>Наименнование объекта</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <input class="form-control" placeholder="Введите описание">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Проект/чертеж</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <input type="file">
                                         </div>
 
 
                                         <div class="form-group">
-                                            <label>ППР (проект производства робот)</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <label>ППР (проект производства работ)</label>
+                                            <textarea class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Накладные расходы на объекте</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <textarea class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
                                         </div>
 
 
-                                        <div class="form-group">
-                                            <label>Срок подготовки коммерческого предложения</label>
-                                            <input class="form-control" placeholder="Enter text">
-                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-3">
+                                                <label>Срок подготовки коммерческого предложения</label>
+                                                <input type="datetime-local" class="form-control" placeholder="dd.mm.yyyy">
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>Срок выполнения работ</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <div class="form-group col-lg-3">
+                                                <label>Срок выполнения работ</label>
+                                                <input type="datetime-local" class="form-control" placeholder="dd.mm.yyyy">
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Условия оплаты</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <textarea class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Ответственный за КП</label>
-                                            <input class="form-control" placeholder="Enter text">
+                                            <select class="form-control">
+                                                <option>Главный инженер</option>
+                                                <option>Технический директор</option>
+                                                <option>Снабжение</option>
+                                                <option>ПТО</option>
+                                                <option>Директор</option>
+                                            </select>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label>Создаем задачу на главного инженера</label>
-                                            <input class="form-control" placeholder="Enter text">
-                                        </div>
+                                        <!--                                        <div class="form-group">-->
+                                        <!--                                            <label>Создаем задачу на главного инженера</label>-->
+                                        <!--                                            <input class="form-control" placeholder="Enter text">-->
+                                        <!--                                        </div>-->
 
 
                                         <!--                                        <div class="form-group">-->
@@ -217,9 +227,10 @@
                                         <!--                                                <option>5</option>-->
                                         <!--                                            </select>-->
                                         <!--                                        </div>-->
-                                        <button type="submit" class="btn btn-default">Создать задание</button>
-<!--                                        <button type="reset" class="btn btn-default">Reset Button</button>-->
+                                        <!--                                        <button type="reset" class="btn btn-default">Reset Button</button>-->
                                     </form>
+                                        <button  >Создать задание</button>
+
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                                 <!-- /.col-lg-6 (nested) -->
