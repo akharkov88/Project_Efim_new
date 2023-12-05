@@ -66,6 +66,30 @@ class TaskServices:
 
 
         # return "operation"
+
+        getAllTask_S
+    def getTechTaskUsername_S(self,username: models.UserTask) -> tables.TaskForm:
+        try:
+            operation = (
+                self.session
+                .query(tables.TaskForm)
+                .filter(
+                    tables.TaskForm.username == username
+                )
+                .first()
+            )
+            if not operation:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Нет такого username")
+            return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+        # return "operation"
+
+        getAllTask_S
     #
     # def update(
     #     self,

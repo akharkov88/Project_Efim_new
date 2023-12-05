@@ -126,17 +126,9 @@ def get_operation(request: Request,):
 )
 def create_operation(
     username: str,
-    # user: models.User = Depends(get_current_user),
     Task_Services: TaskServices = Depends(),
 ):
-    # Task_Services.createTask(username)
-
-    # return Response(status_code=Task_Services.createTask(username))
-    # val,status=Task_Services.createTask(username)
-    # if status==200:
-    #     return JSONResponse(content={"message": val.id}, status_code=status)
-    # if status!=200:
-    return Task_Services.createTask(username)
+    return Task_Services.createTask_S(username)
 
 @router.get(
     '/getAllTask',
@@ -144,18 +136,21 @@ def create_operation(
     status_code=status.HTTP_200_OK,
 )
 def create_operation(
-    # username: str,
-    # user: models.User = Depends(get_current_user),
-    Task_Services: TaskServices = Depends(),
+        Task_Services: TaskServices = Depends(),
 ):
-    # Task_Services.createTask(username)
-
-    # return Response(status_code=Task_Services.createTask(username))
-    # val,status=Task_Services.createTask(username)
-    # if status==200:
-    #     return JSONResponse(content={"message": val.id}, status_code=status)
-    # if status!=200:
     return Task_Services.getAllTask_S()
+
+@router.get(
+    '/getTechTaskUsername',
+    response_model=models.UserTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        username: str,
+        Task_Services: TaskServices = Depends(),
+):
+    return Task_Services.getTechTaskUsername_S(username)
+
 
 # @router.get("/")
 # async def root(request: Request):
