@@ -3,8 +3,13 @@ from .auth import (
     User,
     UserCreate,
 )
+from .main import (
+    BaseTask,
+    UserTask,
+)
 from .operations import (
     Operation,
     OperationCreate,
     OperationUpdate,
 )
+
