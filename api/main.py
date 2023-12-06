@@ -128,7 +128,6 @@ def create_operation(
         user_data: models.UserTask,
         Task_Services: TaskServices = Depends(),
 ):
-<<<<<<< HEAD
     # Task_Services.createTask(username)
 
     # return Response(status_code=Task_Services.createTask(username))
@@ -136,10 +135,7 @@ def create_operation(
     # if status==200:
     #     return JSONResponse(content={"message": val.id}, status_code=status)
     # if status!=200:
-    return Task_Services.createTask_S(username)
-=======
     return Task_Services.createTask_S(user_data)
->>>>>>> f873bfe8f133ad7dd507e632a9a7751b1fa85327
 
 @router.get(
     '/getAllTask',
