@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
 
     <script src="{{ url_for('static', path='global.js') }}"></script>
     <script src="{{ url_for('static', path='main/techTask.js') }}"></script>
@@ -73,33 +74,68 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form role="form">
+                                    <form role="form" id="formFrame">
                                         <div class="form-group">
                                             <label>Наименнование заказчика</label>
-                                            <input class="form-control" placeholder="Введите описание">
+                                            <input name="TechTaskClient" value="" class="form-control" placeholder="Введите описание" required>
                                         </div>
 
 
                                         <div class="form-group">
                                             <label>Наименнование объекта</label>
-                                            <input class="form-control" placeholder="Введите описание">
+                                            <input name="NameTechTask" class="form-control" placeholder="Введите описание">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Проект/чертеж</label>
-                                            <input type="file">
+                                            <form id="myForm" action="/submit" method="post">
+
+                                                <input name="TechTaskProject" type="file" id="file" name="file"/>
+                                            </form>
+
                                         </div>
+                                        <!--    <form id="myForm" action="/submit" method="post">-->
+                                        <!--      <input type="file" onclick="submitForm(event)">-->
+                                        <!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
+                                        <!--    </form>-->
 
+                                        <script>
+                                            document.getElementById('file').onchange = function () {
+                                                console.log(5645123)
+                                                const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
+                                                const file = fileInput.files[0]; // получаем выбранный файл
 
+                                                const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
+                                                const formData = new FormData(); // создаем объект FormData для передачи файла
+
+                                                formData.append('file', file); // добавляем файл в объект FormData
+
+                                                xhr.open('POST', '/techTaskForm/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.send(formData); // отправляем запрос на сервер с помощью метода send()
+                                                // fire the upload here
+                                            };
+
+                                            function submitForm(event) {
+                                                event.preventDefault(); // Предотвращаем обновление страницы
+                                                console.log(123)
+                                                // let form = document.getElementById("myForm");
+                                                // let formData = new FormData(form);
+                                                //
+                                                // // Отправка данных формы с помощью AJAX-запроса
+                                                // let xhr = new XMLHttpRequest();
+                                                // xhr.open("POST", form.action, true);
+                                                // xhr.send(formData);
+                                            }
+                                        </script>
                                         <div class="form-group">
                                             <label>ППР (проект производства работ)</label>
-                                            <textarea class="form-control" rows="3"
+                                            <textarea name="TechTaskPPR" class="form-control" rows="3"
                                                       placeholder="Введите описание"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Накладные расходы на объекте</label>
-                                            <textarea class="form-control" rows="3"
+                                            <textarea name="TechTaskOverhead" class="form-control" rows="3"
                                                       placeholder="Введите описание"></textarea>
                                         </div>
 
@@ -107,24 +143,26 @@
                                         <div class="row">
                                             <div class="form-group col-lg-3">
                                                 <label>Срок подготовки коммерческого предложения</label>
-                                                <input type="datetime-local" class="form-control" placeholder="dd.mm.yyyy">
+                                                <input name="TechTaskDateKP" type="datetime-local" class="form-control"
+                                                       placeholder="dd.mm.yyyy">
                                             </div>
 
                                             <div class="form-group col-lg-3">
                                                 <label>Срок выполнения работ</label>
-                                                <input type="datetime-local" class="form-control" placeholder="dd.mm.yyyy">
+                                                <input name="TechTaskDateEndWork" type="datetime-local" class="form-control"
+                                                       placeholder="dd.mm.yyyy">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Условия оплаты</label>
-                                            <textarea class="form-control" rows="3"
+                                            <textarea name="TechTaskPrice" class="form-control" rows="3"
                                                       placeholder="Введите описание"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Ответственный за КП</label>
-                                            <select class="form-control">
+                                            <select name="TechTaskLeaderKP" class="form-control">
                                                 <option>Главный инженер</option>
                                                 <option>Технический директор</option>
                                                 <option>Снабжение</option>
@@ -133,103 +171,23 @@
                                             </select>
                                         </div>
 
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Создаем задачу на главного инженера</label>-->
-                                        <!--                                            <input class="form-control" placeholder="Enter text">-->
-                                        <!--                                        </div>-->
+                                        <button id="createTicket">Создать задание</button>
+                                        <script>
+                                            function validForm(obj){
+                                                console.log('validForm',obj)
+                                                console.log('client',$('form').serialize())
 
+                                                return false
+                                            }
+                                            document.getElementById('createTicket').onclick=function (event) {
+                                                if(validForm(document.getElementById('formFrame'))){
 
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>File input</label>-->
-                                        <!--                                            <input type="file">-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Text area</label>-->
-                                        <!--                                            <textarea class="form-control" rows="3"></textarea>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Checkboxes</label>-->
-                                        <!--                                            <div class="checkbox">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="checkbox" value="">Checkbox 1-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="checkbox">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="checkbox" value="">Checkbox 2-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="checkbox">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="checkbox" value="">Checkbox 3-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Inline Checkboxes</label>-->
-                                        <!--                                            <label class="checkbox-inline">-->
-                                        <!--                                                <input type="checkbox">1-->
-                                        <!--                                            </label>-->
-                                        <!--                                            <label class="checkbox-inline">-->
-                                        <!--                                                <input type="checkbox">2-->
-                                        <!--                                            </label>-->
-                                        <!--                                            <label class="checkbox-inline">-->
-                                        <!--                                                <input type="checkbox">3-->
-                                        <!--                                            </label>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Radio Buttons</label>-->
-                                        <!--                                            <div class="radio">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">Radio 1-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="radio">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                            <div class="radio">-->
-                                        <!--                                                <label>-->
-                                        <!--                                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3-->
-                                        <!--                                                </label>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Inline Radio Buttons</label>-->
-                                        <!--                                            <label class="radio-inline">-->
-                                        <!--                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked="">1-->
-                                        <!--                                            </label>-->
-                                        <!--                                            <label class="radio-inline">-->
-                                        <!--                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2-->
-                                        <!--                                            </label>-->
-                                        <!--                                            <label class="radio-inline">-->
-                                        <!--                                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3-->
-                                        <!--                                            </label>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Selects</label>-->
-                                        <!--                                            <select class="form-control">-->
-                                        <!--                                                <option>1</option>-->
-                                        <!--                                                <option>2</option>-->
-                                        <!--                                                <option>3</option>-->
-                                        <!--                                                <option>4</option>-->
-                                        <!--                                                <option>5</option>-->
-                                        <!--                                            </select>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <div class="form-group">-->
-                                        <!--                                            <label>Multiple Selects</label>-->
-                                        <!--                                            <select multiple="" class="form-control">-->
-                                        <!--                                                <option>1</option>-->
-                                        <!--                                                <option>2</option>-->
-                                        <!--                                                <option>3</option>-->
-                                        <!--                                                <option>4</option>-->
-                                        <!--                                                <option>5</option>-->
-                                        <!--                                            </select>-->
-                                        <!--                                        </div>-->
-                                        <!--                                        <button type="reset" class="btn btn-default">Reset Button</button>-->
+                                                }else{
+                                                    event.preventDefault()
+                                                }
+                                            }
+                                        </script>
                                     </form>
-                                        <button  >Создать задание</button>
 
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -252,7 +210,6 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
-<script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
 <!-- Bootstrap Js -->
 <script src="../../static/main/assets/js/bootstrap.min.js"></script>
 <!-- Metis Menu Js -->

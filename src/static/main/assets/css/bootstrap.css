@@ -142,6 +142,16 @@ input::-moz-focus-inner {
 input {
   line-height: normal;
 }
+input:invalid:required{
+  background-image: linear-gradient(to right, pink, lightgreen);
+}
+input:valid{
+  border: 2px solid black;
+}
+input:invalid{
+  border: 2px dashed red;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
   box-sizing: border-box;
