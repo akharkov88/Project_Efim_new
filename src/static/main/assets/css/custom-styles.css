@@ -429,9 +429,9 @@ font-size: 19px;
 }
 }
 
-body {
-  background: #121212;
-}
+/*body {*/
+/*  background: #121212;*/
+/*}*/
 .container {
   max-width: 1140px;
   padding: 0 30px;

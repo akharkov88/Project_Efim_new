@@ -98,6 +98,28 @@ class TaskServices:
         # return "operation"
 
         getAllTask_S
+    def getTechTaskIDTechTask_S(self,IDTechTask: models.BaseTask) -> tables.TaskForm:
+        try:
+            operation = (
+                self.session
+                .query(tables.TaskForm)
+                .filter(
+                    tables.TaskForm.id == IDTechTask
+                )
+                .first()
+            )
+            if not operation:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Нет такого NameTechTask")
+            return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+        # return "operation"
+
+        getAllTask_S
     #
     # def update(
     #     self,
