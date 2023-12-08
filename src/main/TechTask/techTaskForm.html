@@ -77,21 +77,23 @@
                                     <form role="form" id="formFrame">
                                         <div class="form-group">
                                             <label>Наименнование заказчика</label>
-                                            <input name="TechTaskClient" value="" class="form-control" placeholder="Введите описание" required>
+                                            <input name="TechTaskClient" value="" class="form-control"
+                                                   placeholder="Введите описание" required>
                                         </div>
 
 
                                         <div class="form-group">
                                             <label>Наименнование объекта</label>
-                                            <input name="NameTechTask" class="form-control" placeholder="Введите описание">
+                                            <input name="NameTechTask" class="form-control"
+                                                   placeholder="Введите описание">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Проект/чертеж</label>
-                                            <form id="myForm" action="/submit" method="post">
+                                            <!--                                            <form id="myForm" action="/submit" method="post">-->
 
-                                                <input name="TechTaskProject" type="file" id="file" name="file"/>
-                                            </form>
+                                            <input name="TechTaskProject" type="file" id="file" name="file"/>
+                                            <!--                                            </form>-->
 
                                         </div>
                                         <!--    <form id="myForm" action="/submit" method="post">-->
@@ -149,7 +151,8 @@
 
                                             <div class="form-group col-lg-3">
                                                 <label>Срок выполнения работ</label>
-                                                <input name="TechTaskDateEndWork" type="datetime-local" class="form-control"
+                                                <input name="TechTaskDateEndWork" type="datetime-local"
+                                                       class="form-control"
                                                        placeholder="dd.mm.yyyy">
                                             </div>
                                         </div>
@@ -173,16 +176,47 @@
 
                                         <button id="createTicket">Создать задание</button>
                                         <script>
-                                            function validForm(obj){
-                                                console.log('validForm',obj)
-                                                console.log('client',$('form').serialize())
+                                                let elem_obj = {}
+                                            function validForm(obj) {
+                                                console.log('validForm', obj)
+                                                let elements = $('form').serializeArray();
+                                                console.log('client1', elements)
+                                                for (let key of elements) {
+                                                    elem_obj[key.name] = key.value
+                                                }
+                                                elem_obj.TechTaskProject=""
+                                                console.log('client2', elem_obj)
 
-                                                return false
+                                                return true
                                             }
-                                            document.getElementById('createTicket').onclick=function (event) {
-                                                if(validForm(document.getElementById('formFrame'))){
 
-                                                }else{
+                                            document.getElementById('createTicket').onclick = function (event) {
+                                                if (validForm(document.getElementById('formFrame'))) {
+
+                                                    event.preventDefault()
+                                                    // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
+                                                    const postData = async (url = '', data = {}) => {
+                                                        // Формируем запрос
+                                                        const response = await fetch(url, {
+                                                            // Метод, если не указывать, будет использоваться GET
+                                                            method: 'POST',
+                                                            // Заголовок запроса
+                                                            headers: {
+                                                                'Content-Type': 'application/json'
+                                                            },
+                                                            // Данные
+                                                            body: JSON.stringify(data)
+                                                        });
+                                                        return response.json();
+                                                    }
+                                                    postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
+                                                        .then((data) => {
+                                                            console.log('------успех-----',data);
+                                                        }).catch((err) => {
+                                                            console.log('------badly-----',err);
+                                                    })
+
+                                                } else {
                                                     event.preventDefault()
                                                 }
                                             }
