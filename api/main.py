@@ -6,6 +6,7 @@ from fastapi import (
     status,
     Request,
     Response,
+    Path,
 )
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -158,10 +159,16 @@ def create_operation(
 
 
 
+# @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
+# def get_operation(request: Request,NameTechTask: str
+#     Task_Services: TaskServices = Depends(),
+# ):
+#     return templates.TemplateResponse("TechTask/techTaskFormEdit.html", {"request": request,"getAllTask_S":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
+#     )
+
+
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
-def get_operation(request: Request,):
+def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = ""):
     return templates.TemplateResponse(
-        "TechTask/techTaskFormEdit.html", {"request": request}
+        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
     )
-
-
