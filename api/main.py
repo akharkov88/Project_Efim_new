@@ -128,13 +128,6 @@ def create_operation(
         user_data: models.UserTask,
         Task_Services: TaskServices = Depends(),
 ):
-    # Task_Services.createTask(username)
-
-    # return Response(status_code=Task_Services.createTask(username))
-    # val,status=Task_Services.createTask(username)
-    # if status==200:
-    #     return JSONResponse(content={"message": val.id}, status_code=status)
-    # if status!=200:
     return Task_Services.createTask_S(user_data)
 
 @router.get(
