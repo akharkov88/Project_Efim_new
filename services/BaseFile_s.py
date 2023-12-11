@@ -44,7 +44,7 @@ class BaseFileServices:
 
             # return "operation"
 
-    def get_name_file(self,id) -> str:
+    def get_name_file(self,id):
         try:
             operation = (
                 self.session
