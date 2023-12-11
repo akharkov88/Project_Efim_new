@@ -23,9 +23,7 @@ from fastapi.encoders import jsonable_encoder
 class techTaskFormServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
-    def unload_file(self,file):
-        with open(pathlib.PurePath(pathlib.Path(os.path.abspath(os.getcwd())),"src","file",file.filename), "wb") as f:
-            f.write(file.file.read())
+
     def update_value(self, TechTaskDATA: models.UserTask) -> tables.TaskForm:
         try:
             operation = tables.TaskForm(
