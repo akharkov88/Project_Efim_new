@@ -4,7 +4,7 @@ from . import (
     auth,
     operations,
     reports,
-    # js_router,
+    BaseFile,
     main,
     techTask,
     techTaskForm,
@@ -19,3 +19,4 @@ router.include_router(reports.router)
 router.include_router(main.router)
 router.include_router(techTask.router)
 router.include_router(techTaskForm.router)
+router.include_router(BaseFile.router)

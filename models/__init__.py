@@ -13,3 +13,7 @@ from .operations import (
     OperationUpdate,
 )
 
+from .BaseFile_m import (
+    UUIDModelBase,
+)
+

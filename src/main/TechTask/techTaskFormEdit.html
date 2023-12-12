@@ -199,7 +199,7 @@
                                                    placeholder="Введите описание">
                                         </div>
 
-                                        <div class="form-group">
+                                        <div name="TechTaskProject_form" class="form-group">
                                             <label>Проект/чертеж</label>
                                             <!--                                            <form id="myForm" action="/submit" method="post">-->
 
@@ -207,6 +207,28 @@
                                             <!--                                            </form>-->
 
                                         </div>
+
+                                        <script>
+                                            console.log("dsfsdfsdfssdfsdfsdfs",JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}}))
+                                            for (item of JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}})){
+                                                console.log(item)
+
+                                                 div = document.createElement('div')
+                                                        a = document.createElement('a')
+                                                        a.href = 'javascript:void(0);'
+                                                        a.target = "_blank"
+                                                        a.onclick = function () {
+                                                            event.preventDefault();
+                                                            downloadFileFromURL('/BaseFile/download-file/'+item.id, item.name)
+                                                        }
+                                                        a.innerText = item.name
+                                                        div.append(a)
+                                                        console.log("divdiv",div)
+                                                        document.getElementsByName('TechTaskProject_form')[0].append(div)
+                                            }
+                                        </script>
+<!--                                        <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>-->
+
                                         <!--    <form id="myForm" action="/submit" method="post">-->
                                         <!--      <input type="file" onclick="submitForm(event)">-->
                                         <!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
