@@ -54,6 +54,8 @@ class TaskForm(Base):
     TechTaskDateEndWork = Column(String) #  Срок выполнение работ
     TechTaskPrice = Column(String) #  Условия оплаты
     TechTaskLeaderKP = Column(String) #  Отвественный
+    user_name = Column(String, ForeignKey('users.username'), index=True)
+
     # date = Column(Date)
     # kind = Column(String)
     # amount = Column(Numeric(10, 2))
@@ -73,6 +75,8 @@ class BaseFile(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
     create_at =  Column(DateTime(timezone=True), server_default=func.now())
+    user_name = Column(String, ForeignKey('users.username'), index=True)
+
     # create_at =  Mapped[create_at]
     # update_at =  Mapped[update_at]
 

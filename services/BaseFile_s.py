@@ -23,16 +23,20 @@ from fastapi.encoders import jsonable_encoder
 class BaseFileServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
-    def unload_file(self,file) -> str:
-        filename=self.create_uuid_table(file.filename)
+    def unload_file(self,file,
+                    user: tables.User,
+                    ) -> str:
+        filename=self.create_uuid_table(file.filename,user)
         with open(pathlib.PurePath(pathlib.Path(os.path.abspath(os.getcwd())),"src","file",filename), "wb") as f:
             f.write(file.file.read())
         return filename
 
-    def create_uuid_table(self, name_fail) -> tables.BaseFile:
+    def create_uuid_table(self, name_fail,user: tables.User,) -> tables.BaseFile:
             try:
                 operation = tables.BaseFile(
                     name=name_fail,
+                    user_name=user.username,
+
                 )
                 self.session.add(operation)
                 self.session.commit()
