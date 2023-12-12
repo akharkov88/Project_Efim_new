@@ -188,14 +188,14 @@
                                     <form role="form" id="formFrame">
                                         <div class="form-group">
                                             <label>Наименнование заказчика</label>
-                                            <input name="TechTaskClient" value="" class="form-control"
-                                                   placeholder="{{getTechTaskName.TechTaskClient}}" required>
+                                            <input name="TechTaskClient" value="{{getTechTaskName.TechTaskClient}}" class="form-control"
+                                                   placeholder="Введите описание" required>
                                         </div>
 
 
                                         <div class="form-group">
                                             <label>Наименнование объекта</label>
-                                            <input name="NameTechTask" class="form-control"
+                                            <input name="NameTechTask" value="{{getTechTaskName.NameTechTask}}" class="form-control"
                                                    placeholder="Введите описание">
                                         </div>
 
@@ -243,26 +243,26 @@
                                         <div class="form-group">
                                             <label>ППР (проект производства работ)</label>
                                             <textarea name="TechTaskPPR" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
+                                                      placeholder="Введите описание">{{getTechTaskName.TechTaskPPR}}</textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Накладные расходы на объекте</label>
                                             <textarea name="TechTaskOverhead" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
+                                                      placeholder="Введите описание">{{getTechTaskName.TechTaskOverhead}}</textarea>
                                         </div>
 
 
                                         <div class="row">
                                             <div class="form-group col-lg-3">
                                                 <label>Срок подготовки коммерческого предложения</label>
-                                                <input name="TechTaskDateKP" type="datetime-local" class="form-control"
+                                                <input name="TechTaskDateKP" value="{{getTechTaskName.TechTaskDateKP}}" type="datetime-local" class="form-control"
                                                        placeholder="dd.mm.yyyy">
                                             </div>
 
                                             <div class="form-group col-lg-3">
                                                 <label>Срок выполнения работ</label>
-                                                <input name="TechTaskDateEndWork" type="datetime-local"
+                                                <input name="TechTaskDateEndWork" value="{{getTechTaskName.TechTaskDateEndWork}}" type="datetime-local"
                                                        class="form-control"
                                                        placeholder="dd.mm.yyyy">
                                             </div>
@@ -271,7 +271,7 @@
                                         <div class="form-group">
                                             <label>Условия оплаты</label>
                                             <textarea name="TechTaskPrice" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
+                                                      placeholder="Введите описание">{{getTechTaskName.TechTaskPrice}}</textarea>
                                         </div>
 
                                         <div class="form-group">
@@ -285,34 +285,10 @@
                                             </select>
                                         </div>
 
-                                        <button id="createTicket">Создать задание</button>
+                                        <button id="createTicket">Сохранить задание</button>
+                                        <button id="cancelTicket">Отмена</button>
                                         <script>
-                                            let elem_obj = {}
 
-                                            function validForm(obj) {
-                                                console.log('validForm', obj)
-                                                let elements = $('form').serializeArray();
-                                                console.log('client1', elements)
-                                                for (let key of elements) {
-                                                    elem_obj[key.name] = key.value
-                                                }
-                                                elem_obj.TechTaskProject = ""
-                                                console.log('client2', elem_obj)
-
-                                                return true
-                                            }
-
-                                            document.getElementById('createTicket').onclick = function (event) {
-                                                if (validForm(document.getElementById('formFrame'))) {
-
-                                                    event.preventDefault()
-                                                    // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
-
-
-                                                } else {
-                                                    event.preventDefault()
-                                                }
-                                            }
                                         </script>
                                     </form>
 

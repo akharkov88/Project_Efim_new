@@ -80,7 +80,7 @@
                                         <div class="form-group">
                                             <label>Наименнование заказчика</label>
                                             <input name="TechTaskClient" value="" class="form-control"
-                                                   placeholder="Введите описание" required>
+                                                   placeholder="Введите описание">
                                         </div>
 
 
@@ -182,15 +182,23 @@
 
                                             function validForm(obj) {
                                                 console.log('validForm', obj)
+                                                let valid = true
                                                 let elements = $('form').serializeArray();
                                                 console.log('client1', elements)
                                                 for (let key of elements) {
                                                     elem_obj[key.name] = key.value
+                                                    if(key.value==''){
+                                                        valid = false
+                                                        document.getElementsByName(key.name)[0].setAttribute("required",true)
+                                                    }else{
+                                                        document.getElementsByName(key.name)[0].removeAttribute("required")
+                                                    }
+
                                                 }
                                                 elem_obj.TechTaskProject = ""
                                                 console.log('client2', elem_obj)
 
-                                                return true
+                                                return valid
                                             }
 
                                             document.getElementById('createTicket').onclick = function (event) {
