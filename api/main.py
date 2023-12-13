@@ -130,8 +130,9 @@ def get_operation(request: Request,):
 def create_operation(
         user_data: models.UserTask,
         Task_Services: TaskServices = Depends(),
+        user: models.User = Depends(get_current_user),
 ):
-    return Task_Services.createTask_S(user_data)
+    return Task_Services.createTask_S(user_data,user)
 
 @router.get(
     '/getAllTask',

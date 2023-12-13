@@ -22,7 +22,7 @@ class TaskServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-    def createTask_S(self,TechTaskDATA: models.UserTask) -> tables.TaskForm:
+    def createTask_S(self,TechTaskDATA: models.UserTask,user: tables.User,) -> tables.TaskForm:
         try:
             operation = tables.TaskForm(
                 NameTechTask=TechTaskDATA.NameTechTask,
@@ -34,6 +34,7 @@ class TaskServices:
                 TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
                 TechTaskPrice=TechTaskDATA.TechTaskPrice,
                 TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
+                user_name=user.username,
             )
             self.session.add(operation)
             self.session.commit()

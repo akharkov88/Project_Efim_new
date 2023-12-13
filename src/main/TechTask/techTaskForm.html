@@ -105,6 +105,7 @@
 
                                         <script>
                                             let vlozheniya = []
+window.vlozheniya=vlozheniya
                                             document.getElementById('file').onchange = function () {
                                                 console.log(5645123)
                                                 const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
@@ -117,6 +118,7 @@
                                                 file_name = this.value.replace(/.*[\/\\]/, '');
                                                 console.log(file_name)
                                                 xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
                                                 xhr.send(formData);
                                                 xhr.onload = function () {
                                                     console.log(`Загружено: ${xhr.status} ${xhr.response}`);
@@ -125,19 +127,19 @@
                                                             name: file_name,
                                                             id: xhr.response.replaceAll('"', "")
                                                         })
-                                                            div = document.createElement('div')
+                                                        div = document.createElement('div')
                                                         a = document.createElement('a')
                                                         a.href = 'javascript:void(0);'
                                                         a.target = "_blank"
                                                         a.onclick = function () {
                                                             event.preventDefault();
-                                                            downloadFileFromURL('/BaseFile/download-file/'+xhr.response.replaceAll('"', ""), file_name)
+                                                            downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
                                                         }
                                                         a.innerText = file_name
                                                         div.append(a)
                                                         document.getElementsByName('TechTaskProject_form')[0].append(div)
 
-                                        // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
+                                                        // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
 
                                                     }
                                                     // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
@@ -208,6 +210,8 @@
                                         <button id="createTicket">Создать задание</button>
                                         <script>
                                             let elem_obj = {}
+                                            elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
+                                                console.log('client0', elem_obj)
 
                                             function validForm(obj) {
                                                 console.log('validForm', obj)
@@ -216,16 +220,20 @@
                                                 console.log('client1', elements)
                                                 for (let key of elements) {
                                                     elem_obj[key.name] = key.value
-                                                    if(key.value==''){
+                                                    if (key.value == '' || key.value == '[]') {
                                                         valid = false
-                                                        document.getElementsByName(key.name)[0].setAttribute("required",true)
-                                                    }else{
+                                                        console.warn(key, key.name, key.value)
+                                                        document.getElementsByName(key.name)[0].setAttribute("required", true)
+                                                    } else {
                                                         document.getElementsByName(key.name)[0].removeAttribute("required")
                                                     }
 
                                                 }
-                                                // elem_obj.TechTaskProject = ""
-                                                console.log('client2', elem_obj)
+                                                if (window.vlozheniya.length==0) {
+                                                    valid = false
+                                                        console.warn('TechTaskProject',window.vlozheniya)
+                                                    document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
+                                                }
 
                                                 return valid
                                             }
@@ -237,13 +245,14 @@
                                                     // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
                                                     const postData = async (url = '', data = {}) => {
                                                         // Формируем запрос
-                                                            data.TechTaskProject=JSON.stringify(vlozheniya)
+                                                        data.TechTaskProject = JSON.stringify(JSON.stringify(window.vlozheniya))
 
                                                         const response = await fetch(url, {
                                                             // Метод, если не указывать, будет использоваться GET
                                                             method: 'POST',
                                                             // Заголовок запроса
                                                             headers: {
+                                                                "Authorization": localStorage.getItem('Authorization'),
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             // Данные
@@ -254,6 +263,7 @@
                                                     postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
                                                         .then((data) => {
                                                             console.log('------успех-----', data);
+                                                            window.location.href = '/main/techTask.html';
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
                                                     })
