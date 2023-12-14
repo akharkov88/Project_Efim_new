@@ -59,18 +59,18 @@ templates = Jinja2Templates(directory="src/main")
 #     fullpath = os.path.join(DESTINATION, file.filename)
 #     await chunked_copy(file, fullpath)
 #     return {"File saved to disk at": fullpath}
-
-@router.post("/uploadfile")
-def upload_file(file: UploadFile,Task_Services: techTaskFormServices = Depends(),):
-    # try:
-    # for file in file:
-    #         # file_path = f"C:\\Users\\gfg/{file.filename}"
-    #         # with open(file_path, "wb") as f:
-    #         #     f.write(file.file.read())
-    #     return {"message": "File saved successfully"}
-    # except Exception as e:
-    #     return {"message": e.args}
-    return Task_Services.unload_file(file)
+#
+# @router.post("/uploadfile")
+# def upload_file(file: UploadFile,Task_Services: techTaskFormServices = Depends(),):
+#     # try:
+#     # for file in file:
+#     #         # file_path = f"C:\\Users\\gfg/{file.filename}"
+#     #         # with open(file_path, "wb") as f:
+#     #         #     f.write(file.file.read())
+#     #     return {"message": "File saved successfully"}
+#     # except Exception as e:
+#     #     return {"message": e.args}
+#     return Task_Services.unload_file(file)
 
 # @router.post("/uploadfile")
 # async def uploadfile(files: list[UploadFile],):
@@ -83,15 +83,15 @@ def upload_file(file: UploadFile,Task_Services: techTaskFormServices = Depends()
 #     # except Exception as e:
 #     #     return {"message": e.args}
 #     return files
-
-@router.post(
-    '/update_value',
-    response_model=models.UserTask,
-    status_code=status.HTTP_200_OK,
-)
-def create_operation(
-        user_data: models.UserTask,
-        Task_Services: techTaskFormServices = Depends(),
-):
-    return Task_Services.update_value(user_data)
+#
+# @router.post(
+#     '/update_value',
+#     response_model=models.UserTask,
+#     status_code=status.HTTP_200_OK,
+# )
+# def create_operation(
+#         user_data: models.UserTask,
+#         Task_Services: techTaskFormServices = Depends(),
+# ):
+#     return Task_Services.update_value(user_data)
 

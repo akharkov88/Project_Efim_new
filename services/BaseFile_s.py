@@ -58,6 +58,9 @@ class BaseFileServices:
                 )
                 .first()
             )
+            #посмотреть какой запрос получится
+            print(operation.compile(compile_kwargs={"literal_binds":True}))
+
             if not operation:
                 raise HTTPException(status.HTTP_404)
             # return jsonable_encoder(operation)

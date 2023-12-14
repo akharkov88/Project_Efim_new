@@ -86,233 +86,20 @@
                                             <div class="panel-heading">
                                                 Список полей
                                             </div>
-                                            <div class="panel-body">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <form role="form" id="formFrame">
-                                                            <div class="form-group">
-                                                                <label>Наименнование заказчика</label>
-                                                                <input name="TechTaskClient"
-                                                                       value="{{getTechTaskName.TechTaskClient}}"
-                                                                       class="form-control"
-                                                                       placeholder="Введите описание" required>
-                                                            </div>
+                                            {% include "TechTask/techTaskFormEdit_FormMainTask.html" %}
 
-
-                                                            <div class="form-group">
-                                                                <label>Наименнование объекта</label>
-                                                                <input name="NameTechTask"
-                                                                       value="{{getTechTaskName.NameTechTask}}"
-                                                                       class="form-control"
-                                                                       placeholder="Введите описание">
-                                                            </div>
-
-                                                            <div name="TechTaskProject_form" class="form-group">
-                                                                <label>Проект/чертеж</label>
-                                                                <!--                                            <form id="myForm" action="/submit" method="post">-->
-
-                                                                <input name="TechTaskProject" type="file" id="file"
-                                                                       name="file"/>
-                                                                <!--                                            </form>-->
-
-                                                            </div>
-
-                                                            <script>
-                                                                // for (item of JSON.parse({{getTechTaskName.TechTaskProject}}))
-                                                                // {
-                                                                //     div = document.createElement('div')
-                                                                //     a = document.createElement('a')
-                                                                //     a.href = 'javascript:void(0);'
-                                                                //     a.target = "_blank"
-                                                                //     a.onclick = function () {
-                                                                //         event.preventDefault();
-                                                                //         downloadFileFromURL('/BaseFile/download-file/' + item.id, item.name)
-                                                                //     }
-                                                                //     a.innerText = item.name
-                                                                //     div.append(a)
-                                                                //     document.getElementsByName('TechTaskProject_form')[0].append(div)
-                                                                // }
-                                                            </script>
-                                                            <!--                                        <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>-->
-
-                                                            <!--    <form id="myForm" action="/submit" method="post">-->
-                                                            <!--      <input type="file" onclick="submitForm(event)">-->
-                                                            <!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
-                                                            <!--    </form>-->
-
-                                                            <script>
-                                                                document.getElementById('file').onchange = function () {
-                                                                    console.log(5645123)
-                                                                    const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
-                                                                    const file = fileInput.files[0]; // получаем выбранный файл
-
-                                                                    const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
-                                                                    const formData = new FormData(); // создаем объект FormData для передачи файла
-
-                                                                    formData.append('file', file); // добавляем файл в объект FormData
-
-                                                                    xhr.open('POST', '/techTaskForm/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
-                                                                    xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
-                                                                    xhr.send(formData); // отправляем запрос на сервер с помощью метода send()
-                                                                    // fire the upload here
-                                                                };
-
-                                                                function submitForm(event) {
-                                                                    event.preventDefault(); // Предотвращаем обновление страницы
-                                                                    console.log(123)
-                                                                    // let form = document.getElementById("myForm");
-                                                                    // let formData = new FormData(form);
-                                                                    //
-                                                                    // // Отправка данных формы с помощью AJAX-запроса
-                                                                    // let xhr = new XMLHttpRequest();
-                                                                    // xhr.open("POST", form.action, true);
-                                                                    // xhr.send(formData);
-                                                                }
-                                                            </script>
-                                                            <div class="form-group">
-                                                                <label>ППР (проект производства работ)</label>
-                                                                <textarea name="TechTaskPPR" class="form-control"
-                                                                          rows="3"
-                                                                          placeholder="Введите описание">{{getTechTaskName.TechTaskPPR}}</textarea>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Накладные расходы на объекте</label>
-                                                                <textarea name="TechTaskOverhead" class="form-control"
-                                                                          rows="3"
-                                                                          placeholder="Введите описание">{{getTechTaskName.TechTaskOverhead}}</textarea>
-                                                            </div>
-
-
-                                                            <div class="row">
-                                                                <div class="form-group col-lg-3">
-                                                                    <label>Срок подготовки коммерческого
-                                                                        предложения</label>
-                                                                    <input name="TechTaskDateKP"
-                                                                           value="{{getTechTaskName.TechTaskDateKP}}"
-                                                                           type="datetime-local" class="form-control"
-                                                                           placeholder="dd.mm.yyyy">
-                                                                </div>
-
-                                                                <div class="form-group col-lg-3">
-                                                                    <label>Срок выполнения работ</label>
-                                                                    <input name="TechTaskDateEndWork"
-                                                                           value="{{getTechTaskName.TechTaskDateEndWork}}"
-                                                                           type="datetime-local"
-                                                                           class="form-control"
-                                                                           placeholder="dd.mm.yyyy">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Условия оплаты</label>
-                                                                <textarea name="TechTaskPrice" class="form-control"
-                                                                          rows="3"
-                                                                          placeholder="Введите описание">{{getTechTaskName.TechTaskPrice}}</textarea>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label>Ответственный за КП</label>
-                                                                <select name="TechTaskLeaderKP" class="form-control">
-                                                                    <option>Главный инженер</option>
-                                                                    <option>Технический директор</option>
-                                                                    <option>Снабжение</option>
-                                                                    <option>ПТО</option>
-                                                                    <option>Директор</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <button id="saveTicket">Сохранить задание</button>
-                                                            <button id="cancelTicket">Отмена</button>
-                                                            <script>
-
-                                                                document.getElementById('cancelTicket').onclick = function (event) {
-                                                                    event.preventDefault()
-                                                                    window.location.href = '/main/techTask.html';
-                                                                }
-                                                                let elem_obj = {}
-                                                                // elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
-                                                                console.log('client0', elem_obj)
-
-                                                                function validForm(obj) {
-                                                                    console.log('validForm', obj)
-                                                                    let valid = true
-                                                                    let elements = $('form').serializeArray();
-                                                                    console.log('client1', elements)
-                                                                    for (let key of elements) {
-                                                                        elem_obj[key.name] = key.value
-                                                                        if (key.value == '' || key.value == '[]') {
-                                                                            valid = false
-                                                                            console.warn(key, key.name, key.value)
-                                                                            document.getElementsByName(key.name)[0].setAttribute("required", true)
-                                                                        } else {
-                                                                            document.getElementsByName(key.name)[0].removeAttribute("required")
-                                                                        }
-
-                                                                    }
-                                                                    // if (window.vlozheniya.length == 0) {
-                                                                    //     valid = false
-                                                                    //     console.warn('TechTaskProject', window.vlozheniya)
-                                                                    //     document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
-                                                                    // }
-
-                                                                    return valid
-                                                                }
-
-                                                                document.getElementById('saveTicket').onclick = function (event) {
-                                                                        event.preventDefault()
-                                                                    if (validForm(document.getElementById('formFrame'))) {
-
-                                                                        event.preventDefault()
-                                                                        // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
-                                                                        const postData = async (url = '', data = {}) => {
-                                                                            // Формируем запрос
-                                                                            data.TechTaskProject = JSON.stringify(JSON.stringify([]))
-
-                                                                            const response = await fetch(url, {
-                                                                                // Метод, если не указывать, будет использоваться GET
-                                                                                method: 'POST',
-                                                                                // Заголовок запроса
-                                                                                headers: {
-                                                                                    "Authorization": localStorage.getItem('Authorization'),
-                                                                                    'Content-Type': 'application/json'
-                                                                                },
-                                                                                // Данные
-                                                                                body: JSON.stringify(data)
-                                                                            });
-                                                                            return response.json();
-                                                                        }
-                                                                        postData('http://127.0.0.1:8000/techTaskForm/update_value', elem_obj)
-                                                                            .then((data) => {
-                                                                                console.log('------успех-----', data);
-                                                                                // window.location.href = '/main/techTask.html';
-                                                                            }).catch((err) => {
-                                                                            console.log('------badly-----', err);
-                                                                        })
-
-                                                                    } else {
-                                                                        event.preventDefault()
-                                                                    }
-                                                                }
-                                                            </script>
-                                                        </form>
-
-                                                    </div>
-                                                    <!-- /.col-lg-6 (nested) -->
-                                                    <!-- /.col-lg-6 (nested) -->
-                                                </div>
-                                                <!-- /.row (nested) -->
-                                            </div>
                                             <!-- /.panel-body -->
                                         </div>
                                     </div>
-                                    <div class="tabs__content" data-tab="portfolio">Portfolio lorem ipsum dolor sit
-                                        amet,
-                                        consectetur adipisicing elit. Id magni sit, enim tenetur animi eius ea,
-                                        similique optio
-                                        nostrum quibusdam ex, dolores dolorem. Recusandae quo molestiae modi saepe
-                                        ratione
-                                        numquam!
+                                    <div class="tabs__content" data-tab="portfolio">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                Список полей
+                                            </div>
+<!--                                            {% include "TechTask/techTaskFormEdit_FormPTO.html" %}-->
+
+                                            <!-- /.panel-body -->
+                                        </div>
                                     </div>
                                     <div class="tabs__content" data-tab="about">About lorem ipsum dolor sit amet,
                                         consectetur
@@ -425,18 +212,6 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
-<!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<!-- Bootstrap Js -->
-<script src="../../static/main/assets/js/bootstrap.min.js"></script>
-<!-- Metis Menu Js -->
-<script src="../static/main/assets/js/jquery.metisMenu.js"></script>
-<!-- Morris Chart Js -->
-<script src="../../static/main/assets/js/morris/raphael-2.1.0.min.js"></script>
-<script src="../../static/main/assets/js/morris/morris.js"></script>
-<!-- Custom Js -->
-<script src="../../static/main/assets/js/custom-scripts.js"></script>
 
 
 </body>
