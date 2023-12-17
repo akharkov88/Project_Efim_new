@@ -2,22 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
-    <script src="{{ url_for('static', path='main/techTask.js') }}"></script>
-    <script src="{{ url_for('static', path='global.js') }}"></script>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Free Bootstrap Admin Template : Dream</title>
-    <!-- Bootstrap Styles-->
-    <link href="{{ url_for('static', path='main/assets/css/bootstrap.css') }}" rel="stylesheet"/>
-    <!-- FontAwesome Styles-->
-    <link href="{{ url_for('static', path='main/assets/css/font-awesome.css') }}" rel="stylesheet"/>
-    <!-- Morris Chart Styles-->
-    <link href="../../static/main/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet"/>
-    <!-- Custom Styles-->
-    <link href="../../static/main/assets/css/custom-styles.css" rel="stylesheet"/>
-    <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+
+    {% include "indexShablon_head.html" %}
+
 </head>
 
 <body>
@@ -138,19 +125,7 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
-<!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<script src="../../static/main/assets/js/jquery-1.10.2.js"></script>
-<!-- Bootstrap Js -->
-<script src="../../static/main/assets/js/bootstrap.min.js"></script>
-<!-- Metis Menu Js -->
-<script src="../static/main/assets/js/jquery.metisMenu.js"></script>
-<!-- Morris Chart Js -->
-<script src="../../static/main/assets/js/morris/raphael-2.1.0.min.js"></script>
-<script src="../../static/main/assets/js/morris/morris.js"></script>
-<!-- Custom Js -->
-<script src="../../static/main/assets/js/custom-scripts.js"></script>
+    {% include "indexShablon_end.html" %}
 
 
 </body>

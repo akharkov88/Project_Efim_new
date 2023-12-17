@@ -2,7 +2,7 @@
 <!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
 <html lang="en" dir="ltr">
 <head>
-    <script src="{{ url_for('static', path='auth/auth.js') }}"></script>
+    <script src="{{ url_for('static', path='auth/auth_creat.js') }}"></script>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
     <link href="{{ url_for('static', path='auth/style.css') }}" rel="stylesheet">
@@ -36,7 +36,7 @@
     <div class="forms">
         <div class="form-content">
             <div class="login-form">
-                <div class="title">Login</div>
+                <div class="title">Новый пользователь</div>
                 <form id="formElem" action="#">
                     <div class="input-boxes">
                         <div class="input-box">
@@ -47,13 +47,43 @@
                             <i class="fas fa-lock"></i>
                             <input type="password" id="password" placeholder="Пароль" required>
                         </div>
+{#                        <div class="form-group">#}
+{#                            <label>Роль</label>#}
+{#                            <select class="form-control">#}
+{#                                <option>Администратор</option>#}
+{#                                <option>Директор</option>#}
+{#                                <option>Главный инженер</option>#}
+{#                            </select>#}
+{#                        </div>#}
+
+                        <div class="form-group">
+                            <label>Checkboxes</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Администратор
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Директор
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="">Главный инженер
+                                </label>
+                            </div>
+                        </div>
                         <!--              <div class="text"><a href="#">Forgot password?</a></div>-->
                         <div class="button input-box">
-                            <input type="submit" value="Авторизация">
+                            <input type="submit" value="Создать пользователя/Изменить роль">
                         </div>
+
+                        {#              <div class="text sign-up-text">Если нет УЗ? <label for="flip">Нажми сюда</label></div>#}
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
