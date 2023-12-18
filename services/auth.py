@@ -94,6 +94,7 @@ class AuthService:
             # email=user_data.email,
             username=user_data.username,
             password_hash=self.hash_password(user_data.password),
+            roles=user_data.roles,
         )
         self.session.add(user)
         self.session.commit()
@@ -124,3 +125,4 @@ class AuthService:
             raise exception
 
         return self.create_token(user)
+

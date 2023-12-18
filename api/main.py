@@ -172,6 +172,7 @@ def create_operation(
 
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
 def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = ""):
+    print(Task_Services.getTechTaskNameTechTask_S(NameTechTask))
     return templates.TemplateResponse(
         "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
     )

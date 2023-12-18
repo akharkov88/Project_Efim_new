@@ -45,12 +45,6 @@ def download_file(file_name: str,):
 
 
 
-@router.get(
-    '/user/',
-    response_model=models.User,
-)
-def get_user(user: models.User = Depends(get_current_user)):
-    return user
 
 
 @router.post("/uploadfile",)

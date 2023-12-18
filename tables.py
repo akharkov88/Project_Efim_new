@@ -7,6 +7,7 @@ from sqlalchemy import (
     String,
     DateTime,
 )
+# from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import uuid
@@ -25,6 +26,7 @@ class User(Base):
     # email = Column(String, unique=True)
     username = Column(String, unique=True)
     password_hash = Column(String)
+    roles = Column(String)
 
 
 class Operation(Base):

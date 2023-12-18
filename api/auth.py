@@ -29,6 +29,12 @@ async def root(request: Request):
         "index.html", {"request": request}
     )
 
+@router.get("/create")
+async def root(request: Request):
+    return templates.TemplateResponse(
+        "create.html", {"request": request}
+    )
+
 @router.post(
     '/sign-up/',
     response_model=models.Token,
