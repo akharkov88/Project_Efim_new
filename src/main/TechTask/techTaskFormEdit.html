@@ -118,20 +118,20 @@
                                                             </div>
 
                                                             <script>
-                                                                // for (item of JSON.parse({{getTechTaskName.TechTaskProject}}))
-                                                                // {
-                                                                //     div = document.createElement('div')
-                                                                //     a = document.createElement('a')
-                                                                //     a.href = 'javascript:void(0);'
-                                                                //     a.target = "_blank"
-                                                                //     a.onclick = function () {
-                                                                //         event.preventDefault();
-                                                                //         downloadFileFromURL('/BaseFile/download-file/' + item.id, item.name)
-                                                                //     }
-                                                                //     a.innerText = item.name
-                                                                //     div.append(a)
-                                                                //     document.getElementsByName('TechTaskProject_form')[0].append(div)
-                                                                // }
+                                                                for (item of JSON.parse({{getTechTaskName.TechTaskProject}}))
+                                                                {
+                                                                    div = document.createElement('div')
+                                                                    a = document.createElement('a')
+                                                                    a.href = 'javascript:void(0);'
+                                                                    a.target = "_blank"
+                                                                    a.onclick = function () {
+                                                                        event.preventDefault();
+                                                                        downloadFileFromURL('/BaseFile/download-file/' + item.id, item.name)
+                                                                    }
+                                                                    a.innerText = item.name
+                                                                    div.append(a)
+                                                                    document.getElementsByName('TechTaskProject_form')[0].append(div)
+                                                                }
                                                             </script>
                                                             <!--                                        <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>-->
 
@@ -240,7 +240,7 @@
                                                                     let elements = $('form').serializeArray();
                                                                     console.log('client1', elements)
                                                                     for (let key of elements) {
-                                                                        elem_obj[key.name] = key.value
+                                                                         [key.name] = key.value
                                                                         if (key.value == '' || key.value == '[]') {
                                                                             valid = false
                                                                             console.warn(key, key.name, key.value)
@@ -267,7 +267,7 @@
                                                                         // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
                                                                         const postData = async (url = '', data = {}) => {
                                                                             // Формируем запрос
-                                                                            data.TechTaskProject = JSON.stringify(JSON.stringify([]))
+                                                                            // data.TechTaskProject = JSON.stringify(JSON.stringify([]))
 
                                                                             const response = await fetch(url, {
                                                                                 // Метод, если не указывать, будет использоваться GET
