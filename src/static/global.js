@@ -84,7 +84,7 @@ function downloadFileFromURL(url, fileName) {
 }
 
 
-document.getElementById('Settings Create_User').onclick = function (event) {
+document.getElementById('Admin User').onclick = function (event) {
     check_user = fetch('/auth/user/', {
         headers: {
             Accept: 'application/json',

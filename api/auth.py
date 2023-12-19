@@ -34,6 +34,11 @@ async def root(request: Request):
     return templates.TemplateResponse(
         "create.html", {"request": request}
     )
+@router.get("/Admin_user")
+async def root(request: Request):
+    return templates.TemplateResponse(
+        "Admin_user.html", {"request": request}
+    )
 
 @router.post(
     '/sign-up/',

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+      {% include "indexShablon_head.html" %}
+
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">Dynamic_Kharkov</a>
+        </div>
+
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li>
+                    <a class="active-menu" href="../index.html"><i class="fa fa-desktop"></i>Главная страница</a>
+                </li>
+
+                <li>
+                    <a class="active-menu" href="techTask.html"><i class="fa fa-desktop"></i>Технические задания</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Создание технического задания
+                    </h1>
+                </div>
+            </div>
+
+
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="section col-lg-12">
+
+                        <div class="">
+                            <div class="section__tabs tabs">
+                                <div class="tabs__head">
+                                    <div class="tabs__caption" data-tab="main">форма</div>
+                                    <div class="tabs__caption" data-tab="portfolio">бухгалтер</div>
+                                    <div class="tabs__caption" data-tab="about">инженер</div>
+                                    <div class="tabs__caption" data-tab="about1">суетолог</div>
+                                    <div class="tabs__caption" data-tab="about2">еще кто-то</div>
+                                    <div class="tabs__caption" data-tab="about3">About3</div>
+                                </div>
+                                <div class="tabs__body">
+                                    <div class="tabs__content" data-tab="main">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                Список полей
+                                            </div>
+                                            {% include "TechTask/techTaskFormEdit_FormMainTask.html" %}
+
+                                            <!-- /.panel-body -->
+                                        </div>
+                                    </div>
+                                    <div class="tabs__content" data-tab="portfolio">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                Список полей
+                                            </div>
+<!--                                            {% include "TechTask/techTaskFormEdit_FormPTO.html" %}-->
+
+                                            <!-- /.panel-body -->
+                                        </div>
+                                    </div>
+                                    <div class="tabs__content" data-tab="about">About lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
+                                        nulla,
+                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
+                                        animi.
+                                    </div>
+                                    <div class="tabs__content" data-tab="about1">About lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
+                                        nulla,
+                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
+                                        animi.
+                                    </div>
+                                    <div class="tabs__content" data-tab="about2">About lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
+                                        nulla,
+                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
+                                        animi.
+                                    </div>
+                                    <div class="tabs__content" data-tab="about3">About lorem ipsum dolor sit amet,
+                                        consectetur
+                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
+                                        nulla,
+                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
+                                        animi.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <script>
+                        var search = location.search.substring(1);
+                        let nameTT = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', function (key, value) {
+                            return key === "" ? value : decodeURIComponent(value)
+                        })
+                        const postData = async (url = '', data = {}) => {
+                            // Формируем запрос
+                            const response = await fetch(url, {
+                                // Метод, если не указывать, будет использоваться GET
+                                method: 'GET',
+                                // Заголовок запроса
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                // Данные
+                                // body: JSON.stringify(data)
+                            });
+                            return response.json();
+                        }
+                        postData('http://127.0.0.1:8000/main/getTechTaskNameTechTask?NameTechTask=' + nameTT.NameTechTask)
+                            .then((data) => {
+                                console.log('------успех-----', data);
+                            }).catch((err) => {
+                            console.log('------badly-----', err);
+                        })
+                        document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+                            const tabs = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
+                                const head = document.querySelector('.tabs__head') // ищем элемент с кнопками и записываем в константу
+                                const body = document.querySelector('.tabs__body') // ищем элемент с контентом и записываем в константу
+
+                                const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
+                                    return head.querySelector('.tabs__caption_active').dataset.tab // возвращаем значение data-tab активной кнопки
+                                }
+
+                                const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
+                                    if (body.querySelector('.tabs__content_active')) { // если уже есть активный элемент контента
+                                        body.querySelector('.tabs__content_active').classList.remove('tabs__content_active') // то скрываем его
+                                    }
+                                    body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add('tabs__content_active') // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
+                                }
+
+// проверяем при загрузке страницы, есть ли активная вкладка
+                                if (!head.querySelector('.tabs__caption_active')) {  // если активной вкладки нет
+                                    head.querySelector('.tabs__caption').classList.add('tabs__caption_active') // то делаем активной по-умолчанию первую вкладку
+                                }
+
+                                setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой при загрузке страницы
+
+                                head.addEventListener('click', e => { // при клике на .tabs__head
+                                    const caption = e.target.closest('.tabs__caption') // узнаем, был ли клик на кнопке
+                                    if (!caption) return // если клик был не на кнопке, то прерываем выполнение функции
+                                    if (caption.classList.contains('tabs__caption_active')) return // если клик был на активной кнопке, то тоже прерываем выполнение функции и ничего не делаем
+
+                                    if (head.querySelector('.tabs__caption_active')) { // если уже есть активная кнопка
+                                        head.querySelector('.tabs__caption_active').classList.remove('tabs__caption_active') // то удаляем ей активный класс
+                                    }
+
+                                    caption.classList.add('tabs__caption_active') // затем добавляем активный класс кнопке, на которой был клик
+
+                                    setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
+                                })
+                            }
+
+                            tabs() // вызываем основную функцию
+
+                        })
+                    </script>
+
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+    {% include "indexShablon_end.html" %}
+
+
+
+</body>
+
+</html>
