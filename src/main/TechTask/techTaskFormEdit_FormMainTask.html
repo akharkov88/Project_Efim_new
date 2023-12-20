@@ -30,8 +30,11 @@
                 </div>
 
                 <script>
-                    console.log("getTechTaskName", {{getTechTaskName.TechTaskProject|tojson}})
-                    for (item of JSON.parse({{getTechTaskName.TechTaskProject|tojson}})) {
+                    vv={{getTechTaskName.TechTaskProject|tojson|safe}}
+                    console.log("getTechTaskName", JSON.parse(JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}})))
+                    for (item of JSON.parse(JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}}))) {
+                    console.log("getTechTaskName", item)
+
                         div = document.createElement('div')
                         a = document.createElement('a')
                         a.href = 'javascript:void(0);'
