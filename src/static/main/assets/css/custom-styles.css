@@ -533,7 +533,7 @@ button_link {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
+
 #addFile{
     margin-top: 10px;
 }
@@ -541,10 +541,9 @@ button_link {
     display: inline-block;
     margin: 10px 10px 0px 0px;
 }
-.addFile{
+.addFile {
     margin-bottom: 0px;
-=======
+}
 button_down {
 margin-top: 40px;
->>>>>>> 2f46d84e8d40756157dcab29766f76ae6eff59be
 }
