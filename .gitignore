@@ -1,5 +1,5 @@
 .idea/*
-src/file/
+src/file/*
 __pycache__/
 api/__pycache__/
 models/__pycache__/
