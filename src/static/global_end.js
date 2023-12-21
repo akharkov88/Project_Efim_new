@@ -1,16 +1,18 @@
 
 
-
-document.getElementById('Settings Create_User').onclick = function (event) {
-    check_user = fetch('/auth/user/', {
+document.getElementById('adminMenu').onclick = async function (event) {
+    console.log('adminMenu')
+    check_user = await fetch('/auth/user/', {
         headers: {
             Accept: 'application/json',
             "Authorization": localStorage.getItem('Authorization')
         },
     });
-    if (check_user.status != 200) {
-        document.location.href = '/auth/create'
+    let responseText = await check_user.text();
+    console.log("responseText",JSON.parse(JSON.parse(responseText).roles).indexOf("admin"))
+    if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("admin")!=-1) {
+    console.log("check_user.status",check_user.status)
+        document.location.href = '/main/adminMenu'
+
     }
-
 }
-

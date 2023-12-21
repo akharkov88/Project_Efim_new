@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 
-import models
+import models,json
 import os,pathlib
 from services.main import (
     TaskServices,
@@ -172,7 +172,12 @@ def create_operation(
 
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
 def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = ""):
-    print(Task_Services.getTechTaskNameTechTask_S(NameTechTask))
     return templates.TemplateResponse(
         "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
+    )
+
+@router.get("/adminMenu")
+async def root(request: Request):
+    return templates.TemplateResponse(
+        "adminMenu.html", {"request": request}
     )

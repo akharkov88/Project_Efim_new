@@ -490,7 +490,7 @@ body {
 }
 .section {
   --primary: #428bca;
-  --color: #fff;
+  --color: #030303;
   padding: 15px 0;
 }
 .about {
@@ -533,6 +533,7 @@ button_link {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 #addFile{
     margin-top: 10px;
 }
@@ -542,4 +543,8 @@ button_link {
 }
 .addFile{
     margin-bottom: 0px;
+=======
+button_down {
+margin-top: 40px;
+>>>>>>> 2f46d84e8d40756157dcab29766f76ae6eff59be
 }
