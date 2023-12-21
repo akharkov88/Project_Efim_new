@@ -12,7 +12,7 @@ class Settings(BaseConfig):
     server_host: str = '127.0.0.1'
     server_port: int = 8000
 
-    database_url: str= 'postgresql+psycopg://postgres:postgres@127.0.0.1:5432/efimov_db'
+    database_url: str= 'postgresql+psycopg://postgres:1@127.0.0.1:5432/efimov_db'
     # database_url: str= f"postgresql+asyncpg://{DB_user}:{DB_pass}@{DB_host}:{DB_port}/{DB_name}"
 
     jwt_secret: str="qwerty"

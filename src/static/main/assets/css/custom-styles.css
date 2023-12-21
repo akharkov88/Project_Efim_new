@@ -532,3 +532,14 @@ button_link {
   text-decoration: underline;
   cursor: pointer;
 }
+
+#addFile{
+    margin-top: 10px;
+}
+.testText input{
+    display: inline-block;
+    margin: 10px 10px 0px 0px;
+}
+.addFile{
+    margin-bottom: 0px;
+}

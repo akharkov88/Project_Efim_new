@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-       {% include "indexShablon_head.html" %}
+    {% include "indexShablon_head.html" %}
 
 </head>
 
@@ -26,7 +26,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="../index.html"><i class="fa fa-desktop"></i>Главная страница</a>
+                    <a class="active-menu" href="index.html"><i class="fa fa-desktop"></i>Главная страница</a>
                 </li>
 
                 <li>
@@ -75,7 +75,7 @@
                                                    placeholder="Введите описание">
                                         </div>
 
-                                        <div name="TechTaskProject_form" class="form-group">
+                                        <div name="TechTaskProject_form" class="form-group addFile">
                                             <label>Проект/чертеж</label>
                                             <!--                                            <form id="myForm" action="/submit" method="post">-->
 
@@ -83,6 +83,17 @@
                                             <!--                                            </form>-->
 
                                         </div>
+                                        <!-- Добавление новой кнопки -->
+                                        <div name="TechTaskProject_form" class="form-group">
+                                            <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
+                                            <!-- hidden="true"-->
+                                            <div id="testText" class="testText"></div>
+                                            <input id="addFile" type="button" value="Добавить вложение" name="file">
+
+                                        </div>
+                                        <!--                                            </form>"-->
+
+
                                         <!--    <form id="myForm" action="/submit" method="post">-->
                                         <!--      <input type="file" onclick="submitForm(event)">-->
                                         <!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
@@ -90,18 +101,27 @@
 
                                         <script>
                                             let vlozheniya = []
-window.vlozheniya=vlozheniya
-                                            document.getElementById('file').onchange = function () {
+                                            window.vlozheniya = vlozheniya
+
+                                            document.getElementById('file').onchange = uploadfile_func
+
+                                            function uploadfile_func() {
+                                                console.log('vlozheniya = ', vlozheniya)
+                                                console.log(document.getElementById('file'));
                                                 console.log(5645123)
                                                 const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
                                                 const file = fileInput.files[0]; // получаем выбранный файл
+
+                                                console.log("fileInput = " + fileInput)
+                                                console.log("fileInput.files[0] = " + fileInput.files[0])
+                                                console.log("file = " + file)
 
                                                 const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
                                                 const formData = new FormData(); // создаем объект FormData для передачи файла
 
                                                 formData.append('file', file); // добавляем файл в объект FormData
                                                 file_name = this.value.replace(/.*[\/\\]/, '');
-                                                console.log(file_name)
+                                                console.log("file_name = ", file_name)
                                                 xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
                                                 xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
                                                 xhr.send(formData);
@@ -145,6 +165,120 @@ window.vlozheniya=vlozheniya
                                                 // let xhr = new XMLHttpRequest();
                                                 // xhr.open("POST", form.action, true);
                                                 // xhr.send(formData);
+                                            }
+
+                                            const el = document.createElement('div');
+                                            el.setAttribute("id", "addButton");
+                                            let idButton = 1;
+                                            addFile.onclick = function () {
+                                                {
+                                                    if (window.vlozheniya.length == 0) {
+                                                        console.warn('TechTaskProject', window.vlozheniya)
+                                                        document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
+                                                    } else {
+
+                                                        let poddiv = document.createElement("div");
+                                                        poddiv.setAttribute("id", "expent" + idButton);
+                                                        poddiv.setAttribute("class", "expent" + idButton);
+                                                        document.getElementById("testText").appendChild(poddiv);
+
+                                                        const box = document.getElementById('expent' + idButton);
+                                                        box.appendChild(el);
+                                                        let button = document.createElement("input");
+                                                        button.type = "button";
+                                                        button.value = "Удалить файл";
+                                                        button.setAttribute("id", "idButton" + idButton);
+
+                                                        let text = document.createElement("input");
+
+                                                        text.name = "TechTaskProject";
+                                                        text.type = "file";
+
+
+                                                        text.setAttribute("id", "file" + idButton);
+                                                        box.appendChild(text);
+                                                        box.appendChild(button);
+                                                        idButton++;
+
+                                                        box.addEventListener('click', function handleClick() {
+                                                            if (event.target.type == 'button') {
+                                                                let str = event.target.id.slice(8, event.target.id.length);
+                                                                console.log(document.getElementById('expent' + str).getElementsByTagName('a'));
+                                                                let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
+                                                                for (let i in vlozheniya){
+                                                                    console.log('i='+ i)
+                                                                    console.log('vlozheniya[i]='+vlozheniya[i].name)
+                                                                    if (vlozheniya[i].name == coll){
+                                                                        console.log("удаление элемена " + i + vlozheniya[i].name)
+                                                                        vlozheniya.splice(i,1);
+                                                                    }
+                                                                }
+
+                                                                console.log('index = ' + vlozheniya.indexOf(coll))
+                                                                console.log('coll = ' + coll)
+                                                                document.getElementById('expent' + str).remove();
+                                                                console.log(vlozheniya)
+
+                                                            }
+                                                        });
+                                                        box.addEventListener('change', e => {
+                                                            if (event.target.id.slice(0, 4) == 'file') {
+                                                                let str = event.target.id.slice(4, event.target.id.length);
+                                                                document.getElementById('file' + str).onchange = uploadfile_func1('file' + str);
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            };
+
+                                            function uploadfile_func1(str) {
+                                                console.log('vlozheniya = ', vlozheniya)
+                                                console.log('uploadfile_func1: ' + str)
+                                                console.log(document.getElementById(str));
+                                                const fileInput = document.getElementById(str); // получаем элемент input для загрузки файла
+                                                console.log("fileInput = " + fileInput)
+                                                const file = fileInput.files[0]; // получаем выбранный файл
+                                                console.log("file = " + file)
+                                                console.log("fileInput.files = " + fileInput.files)
+
+                                                const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
+                                                const formData = new FormData(); // создаем объект FormData для передачи файла
+
+                                                formData.append('file', file); // добавляем файл в объект FormData
+
+                                                file_name = document.getElementById(str).value.replace(/.*[\/\\]/, '');
+
+                                                console.log("file_name = ", file_name)
+                                                xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.send(formData);
+                                                xhr.onload = function () {
+                                                    console.log(`Загружено: ${xhr.status} ${xhr.response}`);
+                                                    if (xhr.status == 200) {
+                                                        vlozheniya.push({
+                                                            name: file_name,
+                                                            id: xhr.response.replaceAll('"', "")
+                                                        })
+                                                        div = document.createElement('div')
+                                                        a = document.createElement('a')
+                                                        a.href = 'javascript:void(0);'
+                                                        a.target = "_blank"
+                                                        a.onclick = function () {
+                                                            event.preventDefault();
+                                                            downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
+                                                        }
+                                                        a.innerText = file_name
+                                                        div.append(a)
+                                                        console.log(div)
+                                                        document.getElementById('expent' + str.slice(4, str.length)).appendChild(div);
+
+                                                        console.log('expent = ' + 'expent' + str.slice(4, str.length) +" "+ str)
+                                                        // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
+
+                                                    }
+                                                    // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
+
+                                                }
                                             }
                                         </script>
                                         <div class="form-group">
@@ -196,7 +330,7 @@ window.vlozheniya=vlozheniya
                                         <script>
                                             let elem_obj = {}
                                             elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
-                                                console.log('client0', elem_obj)
+                                            console.log('client0', elem_obj)
 
                                             function validForm(obj) {
                                                 console.log('validForm', obj)
@@ -214,9 +348,9 @@ window.vlozheniya=vlozheniya
                                                     }
 
                                                 }
-                                                if (window.vlozheniya.length==0) {
+                                                if (window.vlozheniya.length == 0) {
                                                     valid = false
-                                                        console.warn('TechTaskProject',window.vlozheniya)
+                                                    console.warn('TechTaskProject', window.vlozheniya)
                                                     document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
                                                 }
 
@@ -279,8 +413,7 @@ window.vlozheniya=vlozheniya
     <!-- /. PAGE WRAPPER  -->
 </div>
 
-    {% include "indexShablon_end.html" %}
-
+{% include "indexShablon_end.html" %}
 
 
 </body>
