@@ -76,7 +76,7 @@ class TaskServices:
 
         # return "operation"
 
-        getAllTask_S
+
     def getTechTaskNameTechTask_S(self,NameTechTask: models.UserTask) -> tables.TaskForm:
         try:
             operation = (
@@ -98,7 +98,7 @@ class TaskServices:
 
         # return "operation"
 
-        getAllTask_S
+
     def getTechTaskIDTechTask_S(self,IDTechTask: models.BaseTask) -> tables.TaskForm:
         try:
             operation = (
@@ -120,7 +120,7 @@ class TaskServices:
 
         # return "operation"
 
-        getAllTask_S
+
     #
     # def update(
     #     self,

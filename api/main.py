@@ -122,6 +122,14 @@ def get_operation(request: Request,):
 
 
 
+@router.get('/Uvedomleniya.html',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "Uvedomleniya.html", {"request": request}
+    )
+
+
+
 @router.post(
     '/creatTask',
     response_model=models.UserTask,
@@ -181,3 +189,22 @@ async def root(request: Request):
     return templates.TemplateResponse(
         "adminMenu.html", {"request": request}
     )
+
+
+from fastapi import Cookie,Header
+@router.get("/qwerty")
+async def root( sessionKey: str = Header(None), cookie_param: int | None = Cookie(None)):
+    print("sessionKey",sessionKey)
+    print("cookie_param",cookie_param)
+    return {"message": f"returned"}
+
+from fastapi import Cookie
+from typing import Optional
+@router.get('/set')
+async def setting(response: Response):
+    response.set_cookie(key='refresh_token', value='helloworld', httponly=True)
+    return True
+@router.get('/read')
+async def reading(refresh_token: Optional[str] = Cookie(None)):
+    print("refresh_token",refresh_token)
+    return refresh_token

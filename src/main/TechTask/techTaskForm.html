@@ -349,12 +349,12 @@
                                                             // Данные
                                                             body: JSON.stringify(data)
                                                         });
-                                                        return response.json();
+                                                        return [response.json(),response.status];
                                                     }
                                                     postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
                                                         .then((data) => {
-                                                            console.log('------успех-----', data);
-                                                            window.location.href = '/main/techTask.html';
+                                                            console.log('------успех-----', data[1]);
+                                                            {#window.location.href = '/main/techTask.html';#}
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
                                                     })

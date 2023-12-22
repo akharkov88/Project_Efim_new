@@ -19,12 +19,15 @@ from sqlalchemy.orm import Session
 
 import models
 import tables
+import json
 
 from database import get_session
 from settings import Settings as settings
+import traceback
 
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in/')
+from fastapi.encoders import jsonable_encoder
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> models.User:
@@ -126,3 +129,54 @@ class AuthService:
 
         return self.create_token(user)
 
+
+    def get_all_user(self,user_data: models.UserCreate    ) -> list[models.UserCreate2]:
+        try:
+            if json.loads(user_data.roles).count('admin')>0:
+                operation = (
+                    self.session
+                    .query(tables.User)
+                    .all()
+                )
+                # if not operation:
+                #     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                # return jsonable_encoder(operation)
+                return jsonable_encoder(operation)
+            else:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Не хватает прав")
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+
+    def update_user_roles(self,id,roles    ) -> bool:
+        try:
+            # operation = tables.TaskForm(
+            #     NameTechTask=TechTaskDATA.NameTechTask,
+            #     TechTaskClient=TechTaskDATA.TechTaskClient,
+            #     TechTaskProject=TechTaskDATA.TechTaskProject,
+            #     TechTaskPPR=TechTaskDATA.TechTaskPPR,
+            #     TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
+            #     TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
+            #     TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
+            #     TechTaskPrice=TechTaskDATA.TechTaskPrice,
+            #     TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
+            # )
+
+            # existing_row = self.session.query(tables.TaskForm).filter(tables.TaskForm.NameTechTask == TechTaskDATA.NameTechTask).first()
+            # existing_row.column1 = 'new_value1'
+            # existing_row.column2 = 'new_value2'
+            # existing_row.TechTaskClient = TechTaskDATA.TechTaskClient,
+            # self.session.commit()
+
+
+            self.session.query(tables.User).filter(tables.User.id == id).update(dict(roles=roles))
+            self.session.commit()
+            return HTTPException(status.HTTP_200_OK)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Запись с таким именем уже существует запись")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})

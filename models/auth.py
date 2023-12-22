@@ -13,6 +13,9 @@ class UserCreate(UserRoles):
 
 
 
+
+
+
 class User(BaseUser):
     id: int
     roles: str
@@ -20,6 +23,11 @@ class User(BaseUser):
     class Config:
         orm_mode = True
 
+class UserCreate2(BaseModel):
+    id: int
+    roles: str
+    password: str
+    username: str
 
 class Token(BaseModel):
     access_token: str

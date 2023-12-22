@@ -8,101 +8,195 @@
 
 <body>
 <div id="wrapper">
-    <nav class="navbar navbar-default top-navbar" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">Dynamic_Kharkov</a>
-        </div>
-
-    </nav>
-    <!--/. NAV TOP  -->
-    <nav class="navbar-default navbar-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav" id="main-menu">
-
-                <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-desktop"></i>Главная страница</a>
-                </li>
-
-                <li>
-                    <a class="active-menu" href="techTask.html"><i class="fa fa-desktop"></i>Технические
-                        задания</a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </nav>
-
+    {% include "indexShablon.html" %}
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="page-header">
-                        Создание технического задания
+                        Административное меню
                     </h1>
                 </div>
             </div>
-
-
-            <!-- /. ROW  -->
             <div class="row">
                 <div class="col-lg-12">
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Список полей
+                            Создание нового пользователя
                         </div>
-                        <div class="panel-body">
-                            <div class="col-lg-2 col-md-1" class="form-group">
-                                <label>id</label>
-                                <input value="" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-1" class="form-group">
-                                <label>login</label>
-                                <input value="" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-2" class="form-group">
-                                <label>Password</label>
-                                <input value="" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-2" class="form-group">
-                                <label>Roles</label>
-                                <input value="" class="form-control">
-                            </div>
-                            <div class="col-lg-2 col-md-2" class="form-group">
 
-                                <label>Изменить Roles</label>
-                                <select class="form-control">
-                                    <option>admin</option>
-                                    <option>mainEngineer</option>
-                                    <option>Engineer</option>
-                                    <option>mainAccountant</option>
-                                    <option>accountant</option>
-                                </select>
-                            </div>
+                        <div class="row">
 
-                            <div class="text-center col-lg-2 col-md-3 col-sm-12 col-xs-12">
-                                <div >
-                                    <button class="button_down">добавить/удалить роль</button>
+                            <div id="myDiv2">
+
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
+                                    <label>login</label>
+                                    <input value="" class="form-control">
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
+                                    <label>password</label>
+                                    <input value="" class="form-control">
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
+                                    <button type="submit" class="btn btn-default">Добавить пользователя</button>
+
                                 </div>
                             </div>
-                            <!-- /.col-lg-6 (nested) -->
-                            <!-- /.col-lg-6 (nested) -->
-                            <!-- /.row (nested) -->
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Настроить права пользователям
+                        </div>
+
+
+                        <div id="myDiv">
+
+                        </div>
+
+
+                        <script>
+
+
+                            async function get_all_user(event) {
+                                console.log('adminMenu')
+                                check_user = await fetch('/auth/get_all_user/', {
+                                    headers: {
+                                        Accept: 'application/json',
+                                        "Authorization": localStorage.getItem('Authorization')
+                                    },
+                                });
+                                let responseText = await check_user.text();
+                                console.log("responseText", responseText)
+
+                                if (check_user.status == 200) {
+                                    console.log("check_user.status", JSON.parse(responseText))
+                                    id = 1
+                                    for (item of JSON.parse(responseText)) {
+                                        console.log("item", item)
+
+
+                                        {#window.vv={% include "adminMenuShablon.html" %}#}
+                                        {#    console.log(vv)#}
+
+                                        document.getElementById("myDiv").innerHTML = creat_element("1", item);
+                                        {#console.log("item", {% include "adminMenuShablon.html" %})#}
+                                        {#$("body").append({% include "adminMenuShablon.html" %});#}
+                                        {#document.write({% include "adminMenuShablon.html" %})#}
+
+                                        document.getElementById(`button_${id}`).onclick = async function (event) {
+                                            event.preventDefault()
+                                            idEvent = event.target.id.slice(event.target.id.indexOf("_") + 1)
+                                            check_user = await fetch('/auth/user/', {
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    "Authorization": localStorage.getItem('Authorization')
+                                                },
+                                            });
+                                            let responseText = await check_user.text();
+                                            if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("admin") != -1) {
+                                                if (document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value != "") {
+                                                    new_roles = JSON.parse('["' + document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') + '"]')
+
+                                                    if (new_roles.indexOf(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value) == -1) {
+                                                        new_roles.push(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value)
+                                                    } else {
+                                                        new_roles.splice(new_roles.indexOf(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value), 1)
+
+                                                    }
+                                                    let update_roles = await fetch(`/auth/update_roles_user?id=${idEvent}&roles=${JSON.stringify(new_roles.sort())}`, {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            Accept: 'application/json',
+                                                            "Authorization": localStorage.getItem('Authorization')
+                                                        },
+
+                                                    });
+                                                    let update_roles_responseText = await update_roles.text();
+                                                    if (update_roles.status == 200) {
+                                                        console.log("успешно")
+                                                        location.reload();
+                                                    }
+
+                                                } else {
+                                                    showToast("Выбери роль", "warning", 5000);
+
+                                                }
+
+
+                                            }
+                                        }
+                                        id++
+                                    }
+
+                                }
+                            }
+
+                            get_all_user()
+
+
+                            function creat_element(id, item) {
+                                return `            <div class="panel-body">
+                <div class="col-lg-2 col-md-1" class="form-group">
+                    <label>id</label>
+                    <input value="${item.id}" id="id_${id}" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-1" class="form-group">
+                    <label>login</label>
+                    <input value="${item.username}" id="login_${id}" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-2" class="form-group">
+                    <label>Password</label>
+                    <input value="" id="Password_${id}" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-2" class="form-group">
+                    <label>Roles</label>
+                    <input value="${JSON.parse(item.roles)}" id="Roles_${id}" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-2" class="form-group">
+
+                    <label>Изменить Roles</label>
+                    <select id="select_${id}" class="form-control">
+                        <option></option>
+                        <option>Admin</option>
+                        <option>mainEngineer</option>
+                        <option>engineer</option>
+                        <option>mainAccountant</option>
+                        <option>accountant</option>
+                    </select>
+                </div>
+
+                <div class="text-center col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                    <div>
+                        <button  id="button_${id}" class="button_down">добавить/удалить роль</button>
+                    </div>
+                </div>
+            </div>
+`
+                            }
+
+
+                        </script>
+
+                        {#                         {% include "adminMenuShablon.html" %}#}
+
+
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+            <!-- /. ROW  -->
+
 
         </div>
         <!-- /. PAGE INNER  -->

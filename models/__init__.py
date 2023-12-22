@@ -2,6 +2,8 @@ from .auth import (
     Token,
     User,
     UserCreate,
+    UserCreate2,
+    BaseUser,
 )
 from .main import (
     BaseTask,
