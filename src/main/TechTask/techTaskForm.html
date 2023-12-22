@@ -9,7 +9,7 @@
 <body>
 <div id="wrapper">
 
- {% include "indexShablon.html" %}
+    {% include "indexShablon.html" %}
 
     <div id="page-wrapper">
         <div id="page-inner">
@@ -47,20 +47,20 @@
                                                    placeholder="Введите описание">
                                         </div>
 
-                                        <div name="TechTaskProject_form" class="form-group addFile">
+                                        {# <div name="TechTaskProject_form" class="form-group addFile">
                                             <label>Проект/чертеж</label>
                                             <!--                                            <form id="myForm" action="/submit" method="post">-->
 
                                             <input name="TechTaskProject" type="file" id="file" name="file"/>
                                             <!--                                            </form>-->
 
-                                        </div>
+                                        </div>#}
                                         <!-- Добавление новой кнопки -->
-                                        <div name="TechTaskProject_form" class="form-group">
+                                        <div name="TechTaskProject_form" class="form-group ">
                                             <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
                                             <!-- hidden="true"-->
                                             <div id="testText" class="testText"></div>
-                                            <input id="addFile" type="button" value="Добавить вложение" name="file">
+                                            <input id="addFile" type="button" value="Добавить вложение">
 
                                         </div>
                                         <!--                                            </form>"-->
@@ -75,7 +75,7 @@
                                             let vlozheniya = []
                                             window.vlozheniya = vlozheniya
 
-                                            document.getElementById('file').onchange = uploadfile_func
+                                            {#document.getElementById('file').onchange = uploadfile_func#}
 
                                             function uploadfile_func() {
                                                 console.log('vlozheniya = ', vlozheniya)
@@ -142,13 +142,20 @@
                                             const el = document.createElement('div');
                                             el.setAttribute("id", "addButton");
                                             let idButton = 1;
+                                            let idButtonArr = [1];
+
                                             addFile.onclick = function () {
                                                 {
-                                                    if (window.vlozheniya.length == 0) {
-                                                        console.warn('TechTaskProject', window.vlozheniya)
-                                                        document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
+                                                    idButton = idButtonArr[idButtonArr.length - 1];
+                                                    {# if (window.vlozheniya.length == 0) {
+                                                         console.warn('TechTaskProject', window.vlozheniya)
+                                                         document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
+                                                     } else#}
+                                                    if (idButtonArr.length >= 2 && document.getElementById('file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {
+                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
+                                                        document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
+                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
                                                     } else {
-
                                                         let poddiv = document.createElement("div");
                                                         poddiv.setAttribute("id", "expent" + idButton);
                                                         poddiv.setAttribute("class", "expent" + idButton);
@@ -159,37 +166,50 @@
                                                         let button = document.createElement("input");
                                                         button.type = "button";
                                                         button.value = "Удалить файл";
-                                                        button.setAttribute("id", "idButton" + idButton);
 
+                                                        button.setAttribute("id", "idButton" + idButton);
                                                         let text = document.createElement("input");
 
-                                                        text.name = "TechTaskProject";
                                                         text.type = "file";
-
-
+                                                        text.disabled = true;
                                                         text.setAttribute("id", "file" + idButton);
+                                                        let vvod = document.createElement("input");
+                                                        vvod.setAttribute("id", "input" + idButton)
+
+                                                        vvod.type = "input";
+                                                        {#let lab = document.createElement("label");
+                                                        lab.setAttribute("id", "label" + idButton)
+                                                        lab.name = "TechTaskProject";
+                                                        lab.type = "label";
+                                                        lab.innerHTML = ''#}
+
+                                                        box.appendChild(vvod);
                                                         box.appendChild(text);
                                                         box.appendChild(button);
+                                                        {#box.appendChild(lab);#}
                                                         idButton++;
+                                                        idButtonArr.push(idButton);
+
 
                                                         box.addEventListener('click', function handleClick() {
                                                             if (event.target.type == 'button') {
                                                                 let str = event.target.id.slice(8, event.target.id.length);
-                                                                console.log(document.getElementById('expent' + str).getElementsByTagName('a'));
-                                                                let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
-                                                                for (let i in vlozheniya){
-                                                                    console.log('i='+ i)
-                                                                    console.log('vlozheniya[i]='+vlozheniya[i].name)
-                                                                    if (vlozheniya[i].name == coll){
-                                                                        console.log("удаление элемена " + i + vlozheniya[i].name)
-                                                                        vlozheniya.splice(i,1);
-                                                                    }
-                                                                }
+                                                                console.log('document.getElementById("expent" + str).getElementsByTagName() = ', document.getElementById('expent' + str).getElementsByTagName('a'));
+                                                                if (document.getElementById('input' + str).value != '') {
+                                                                    let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
+                                                                    console.log('str = ', str, idButtonArr.indexOf(Number(str)))
+                                                                    console.warn('file name id = ', vlozheniya[idButtonArr.indexOf(Number(str))].name, " ", vlozheniya[idButtonArr.indexOf(Number(str))].id)
+                                                                    console.warn('Удаление файла с id: ', vlozheniya[idButtonArr.indexOf(Number(str))].id)
+                                                                    vlozheniya.splice(idButtonArr.indexOf(Number(str)), 1);
 
-                                                                console.log('index = ' + vlozheniya.indexOf(coll))
-                                                                console.log('coll = ' + coll)
+                                                                }
+                                                                {#console.log('index = ' + vlozheniya.indexOf(coll))
+                                                                console.log('coll = ' + coll)#}
+                                                                console.log('str = ' + str + " idButtonArr.indexOf(str) = " + idButtonArr.indexOf(Number(str)))
                                                                 document.getElementById('expent' + str).remove();
                                                                 console.log(vlozheniya)
+                                                                idButtonArr.splice(idButtonArr.indexOf(Number(str)), 1);
+                                                                idButton = idButtonArr[idButtonArr.length - 1];
 
                                                             }
                                                         });
@@ -197,6 +217,10 @@
                                                             if (event.target.id.slice(0, 4) == 'file') {
                                                                 let str = event.target.id.slice(4, event.target.id.length);
                                                                 document.getElementById('file' + str).onchange = uploadfile_func1('file' + str);
+                                                            } else if (event.target.id.slice(0, 5) == 'input') {
+                                                                let str = event.target.id.slice(5, event.target.id.length);
+                                                                document.getElementById('file' + str).disabled = false;
+                                                                console.log("str111", str);
                                                             }
                                                         })
                                                     }
@@ -240,13 +264,21 @@
                                                             downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
                                                         }
                                                         a.innerText = file_name
-                                                        div.append(a)
+
+                                                        let lab = document.createElement("label");
+                                                        lab.setAttribute("id", "label" + str.replace('file', ''))
+                                                        lab.type = "label";
+                                                        lab.style = "margin-right: 10px";
+                                                        lab.innerText = document.getElementById('input' + str.replace('file', '')).value;
+                                                        div.append(lab);
+                                                        div.append(a);
+
                                                         console.log(div)
                                                         document.getElementById('expent' + str.slice(4, str.length)).appendChild(div);
-
-                                                        console.log('expent = ' + 'expent' + str.slice(4, str.length) +" "+ str)
+                                                        {#document.getElementById('label' + str).innerHTML = document.getElementById('input' + str).value;#}
                                                         // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
-
+                                                        console.warn(str)
+                                                        document.getElementById(str).disabled = true;
                                                     }
                                                     // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
 
@@ -349,11 +381,22 @@
                                                             // Данные
                                                             body: JSON.stringify(data)
                                                         });
-                                                        return [response.json(),response.status];
+                                                        if (response.status == 409) {
+                                                            alert('Ошибка:' + (response.status))
+                                                            console.log('Ошибка', (response.status))
+
+                                                            let emailInput = document.getElementsByName('NameTechTask');
+                                                            emailInput.focus();
+
+                                                        }
+                                                        // читаем ответ в формате JSON
+                                                        console.log('response.json():', response.json())
+
+                                                        return response.json();
                                                     }
                                                     postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
                                                         .then((data) => {
-                                                            console.log('------успех-----', data[1]);
+                                                            console.log('------успех-----', data);
                                                             {#window.location.href = '/main/techTask.html';#}
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
