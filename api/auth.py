@@ -97,6 +97,16 @@ def get_user(user: models.User = Depends(get_current_user),
 )
 def get_user(id: int,roles: str,user: models.User = Depends(get_current_user),
              auth_service: AuthService = Depends(),):
-    return auth_service.update_user_roles(id,roles)
+    return auth_service.update_user_roles(id,roles,user)
+
+
+
+
+@router.post(
+    '/update_password_user',
+)
+def get_user(id: int,password: str,user: models.User = Depends(get_current_user),
+             auth_service: AuthService = Depends(),):
+    return auth_service.update_user_password(id,password,user)
 
 

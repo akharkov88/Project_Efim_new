@@ -12,8 +12,8 @@ document.getElementById('adminMenu').onclick = async function (event) {
     console.log("responseText",responseText)
 
     console.log("responseText",JSON.parse(responseText).roles)
-    console.log("responseText",JSON.parse(JSON.parse(responseText).roles).indexOf("admin"))
-    if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("admin")!=-1) {
+    console.log("responseText",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
+    if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")!=-1) {
     console.log("check_user.status",check_user.status)
         document.location.href = '/main/adminMenu'
 

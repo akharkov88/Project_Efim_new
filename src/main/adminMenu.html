@@ -32,15 +32,44 @@
 
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
                                     <label>login</label>
-                                    <input value="" class="form-control">
+                                    <input value="" id="new_login" class="form-control">
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
                                     <label>password</label>
-                                    <input value="" class="form-control">
+                                    <input value="" id="new_password" class="form-control">
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
-                                    <button type="submit" class="btn btn-default">Добавить пользователя</button>
+                                    <button type="submit" id="creat" class="btn btn-default">Добавить пользователя
+                                    </button>
+                                    <script>
+                                        document.getElementById(`creat`).onclick = async function (event) {
+                                            event.preventDefault()
+                                            if (document.getElementById(`new_login`).value != "" && document.getElementById(`new_password`).value != "") {
+                                                let update_roles = await fetch(`/auth/sign-up/`, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        Accept: 'application/json',
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    body: `{"username":"${document.getElementById(`new_login`).value}","roles":"[]","password":"${document.getElementById(`new_password`).value}"}`
+                                                    {#"grant_type=&username=dsf&password=dfsf&scope=&client_id=&client_secret="#}
+                                                });
+                                                let update_roles_responseText = await update_roles.text();
+                                                console.log("update_roles_responseText", update_roles_responseText)
+                                                console.log("update_roles_responseText", update_roles.status)
+
+                                                if (update_roles.status == 201) {
+                                                    console.log("успешно")
+                                                    location.reload();
+                                                }
+                                            } else {
+                                                showToast("Необходимо заполнить поля", "warning", 5000);
+
+                                            }
+                                        }
+                                    </script>
+
 
                                 </div>
                             </div>
@@ -75,65 +104,118 @@
                                     },
                                 });
                                 let responseText = await check_user.text();
-                                console.log("responseText", responseText)
 
                                 if (check_user.status == 200) {
-                                    console.log("check_user.status", JSON.parse(responseText))
+                                    id = 1
+                                    await async function () {
+                                        for (item of JSON.parse(responseText)) {
+                                            document.getElementById("myDiv").innerHTML = document.getElementById("myDiv").innerHTML + creat_element(id, item);
+                                            id++
+                                        }
+                                    }()
+
                                     id = 1
                                     for (item of JSON.parse(responseText)) {
-                                        console.log("item", item)
+                                        async function vizov(id) {
+                                            document.getElementById(`button_` + id).onclick = async function (event) {
+                                                event.preventDefault()
+                                                idEvent = event.target.id.slice(event.target.id.indexOf("_") + 1)
+                                                check_user = await fetch('/auth/user/', {
+                                                    headers: {
+                                                        Accept: 'application/json',
+                                                        "Authorization": localStorage.getItem('Authorization')
+                                                    },
+                                                });
+                                                let responseText = await check_user.text();
+                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") != -1) {
+                                                    if (document.getElementById(`select_${id}`).options[document.getElementById(`select_${id}`).selectedIndex].value != "") {
+                                                        if (document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') != "") {
+                                                            new_roles = JSON.parse('["' + document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') + '"]')
+
+                                                        } else {
+                                                            new_roles = []
+
+                                                        }
+                                                        console.log("new_roles", new_roles)
+                                                        if (new_roles.indexOf(document.getElementById(`select_${id}`).options[document.getElementById(`select_${id}`).selectedIndex].value) == -1) {
+                                                            new_roles.push(document.getElementById(`select_${id}`).options[document.getElementById(`select_${id}`).selectedIndex].value)
+                                                        } else {
+                                                            new_roles.splice(new_roles.indexOf(document.getElementById(`select_${id}`).options[document.getElementById(`select_${id}`).selectedIndex].value), 1)
+                                                            console.log("post new_roles", new_roles)
+
+                                                        }
+                                                        let update_roles = await fetch(`/auth/update_roles_user?id=${document.getElementById(`id_${idEvent}`).value}&roles=${JSON.stringify(new_roles.sort())}`, {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                Accept: 'application/json',
+                                                                "Authorization": localStorage.getItem('Authorization')
+                                                            },
+
+                                                        });
+                                                        let update_roles_responseText = await update_roles.text();
+                                                        if (update_roles.status == 200) {
+                                                            location.reload();
+                                                        } else {
+                                                            showToast("Ошибка", "error", 5000);
+
+                                                        }
 
 
-                                        {#window.vv={% include "adminMenuShablon.html" %}#}
-                                        {#    console.log(vv)#}
-
-                                        document.getElementById("myDiv").innerHTML = creat_element("1", item);
-                                        {#console.log("item", {% include "adminMenuShablon.html" %})#}
-                                        {#$("body").append({% include "adminMenuShablon.html" %});#}
-                                        {#document.write({% include "adminMenuShablon.html" %})#}
-
-                                        document.getElementById(`button_${id}`).onclick = async function (event) {
-                                            event.preventDefault()
-                                            idEvent = event.target.id.slice(event.target.id.indexOf("_") + 1)
-                                            check_user = await fetch('/auth/user/', {
-                                                headers: {
-                                                    Accept: 'application/json',
-                                                    "Authorization": localStorage.getItem('Authorization')
-                                                },
-                                            });
-                                            let responseText = await check_user.text();
-                                            if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("admin") != -1) {
-                                                if (document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value != "") {
-                                                    new_roles = JSON.parse('["' + document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') + '"]')
-
-                                                    if (new_roles.indexOf(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value) == -1) {
-                                                        new_roles.push(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value)
                                                     } else {
-                                                        new_roles.splice(new_roles.indexOf(document.getElementById("select_1").options[document.getElementById("select_1").selectedIndex].value), 1)
+                                                        showToast("Выбери роль", "warning", 5000);
 
                                                     }
-                                                    let update_roles = await fetch(`/auth/update_roles_user?id=${idEvent}&roles=${JSON.stringify(new_roles.sort())}`, {
-                                                        method: 'POST',
-                                                        headers: {
-                                                            Accept: 'application/json',
-                                                            "Authorization": localStorage.getItem('Authorization')
-                                                        },
 
-                                                    });
-                                                    let update_roles_responseText = await update_roles.text();
-                                                    if (update_roles.status == 200) {
-                                                        console.log("успешно")
-                                                        location.reload();
-                                                    }
-
-                                                } else {
-                                                    showToast("Выбери роль", "warning", 5000);
 
                                                 }
-
-
                                             }
+
+                                            document.getElementById(`button_new_password_${id}`).onclick = async function (event) {
+                                                event.preventDefault()
+                                                idEvent = event.target.id.slice(event.target.id.lastIndexOf("_") + 1)
+                                                check_user = await fetch('/auth/user/', {
+                                                    headers: {
+                                                        Accept: 'application/json',
+                                                        "Authorization": localStorage.getItem('Authorization')
+                                                    },
+                                                });
+                                                let responseText = await check_user.text();
+                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") != -1) {
+                                                    console.log("check_user.status",check_user.status)
+                                                    if (document.getElementById(`Password_${id}`).value != "") {
+
+    console.log(document.getElementById(`Password_${id}`).value)
+    console.log(idEvent)
+    console.log(document.getElementById(`id_${idEvent}`))
+    console.log(document.getElementById(`id_${idEvent}`).value)
+                                                        let update_password = await fetch(`/auth/update_password_user?id=${document.getElementById(`id_${idEvent}`).value}&password=${document.getElementById(`Password_${id}`).value}`, {
+                                                            method: 'POST',
+                                                            headers: {
+                                                                Accept: 'application/json',
+                                                                "Authorization": localStorage.getItem('Authorization')
+                                                            },
+
+                                                        });
+                                                        let update_password_responseText = await update_password.text();
+                                                        if (update_password.status == 200) {
+                                                            location.reload();
+                                                        } else {
+                                                            showToast("Ошибка", "error", 5000);
+
+                                                        }
+
+                                                    } else {
+                                                        showToast("Необходимо заполнить поле с паролем", "warning", 5000);
+
+                                                    }
+
+
+                                                }
+                                            }
+
                                         }
+
+                                        await vizov(id)
                                         id++
                                     }
 
@@ -145,21 +227,27 @@
 
                             function creat_element(id, item) {
                                 return `            <div class="panel-body">
-                <div class="col-lg-2 col-md-1" class="form-group">
+                <div class="col-lg-1 col-md-1" class="form-group">
                     <label>id</label>
-                    <input value="${item.id}" id="id_${id}" class="form-control">
-                </div>
-                <div class="col-lg-2 col-md-1" class="form-group">
-                    <label>login</label>
-                    <input value="${item.username}" id="login_${id}" class="form-control">
+                    <input value="${item.id}" id="id_${id}" class="form-control" readonly>
                 </div>
                 <div class="col-lg-2 col-md-2" class="form-group">
+                    <label>login</label>
+                    <input value="${item.username}" id="login_${id}" class="form-control" readonly>
+                </div>
+                <div class="col-lg-1 col-md-1" class="form-group">
                     <label>Password</label>
                     <input value="" id="Password_${id}" class="form-control">
                 </div>
+                <div class="col-lg-2 col-md-2 align-self-center" class="form-group">
+
+                    <div >
+                        <button  id="button_new_password_${id}" class="button_down">установить новый пароль</button>
+                    </div>
+                </div>
                 <div class="col-lg-2 col-md-2" class="form-group">
                     <label>Roles</label>
-                    <input value="${JSON.parse(item.roles)}" id="Roles_${id}" class="form-control">
+                    <input value="${JSON.parse(item.roles)}" id="Roles_${id}" class="form-control" readonly>
                 </div>
                 <div class="col-lg-2 col-md-2" class="form-group">
 
@@ -178,6 +266,7 @@
                     <div>
                         <button  id="button_${id}" class="button_down">добавить/удалить роль</button>
                     </div>
+
                 </div>
             </div>
 `

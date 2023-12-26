@@ -132,10 +132,11 @@ class AuthService:
 
     def get_all_user(self,user_data: models.UserCreate    ) -> list[models.UserCreate2]:
         try:
-            if json.loads(user_data.roles).count('admin')>0:
+            if json.loads(user_data.roles).count('Admin')>0:
                 operation = (
                     self.session
                     .query(tables.User)
+                    .order_by(tables.User.id)
                     .all()
                 )
                 # if not operation:
@@ -151,32 +152,49 @@ class AuthService:
 
 
 
-    def update_user_roles(self,id,roles    ) -> bool:
+    def update_user_roles(self,id,roles,user_data: models.UserCreate    ) -> bool:
         try:
-            # operation = tables.TaskForm(
-            #     NameTechTask=TechTaskDATA.NameTechTask,
-            #     TechTaskClient=TechTaskDATA.TechTaskClient,
-            #     TechTaskProject=TechTaskDATA.TechTaskProject,
-            #     TechTaskPPR=TechTaskDATA.TechTaskPPR,
-            #     TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
-            #     TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
-            #     TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
-            #     TechTaskPrice=TechTaskDATA.TechTaskPrice,
-            #     TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
-            # )
+            if json.loads(user_data.roles).count('Admin')>0:
 
-            # existing_row = self.session.query(tables.TaskForm).filter(tables.TaskForm.NameTechTask == TechTaskDATA.NameTechTask).first()
-            # existing_row.column1 = 'new_value1'
-            # existing_row.column2 = 'new_value2'
-            # existing_row.TechTaskClient = TechTaskDATA.TechTaskClient,
-            # self.session.commit()
+                # operation = tables.TaskForm(
+                #     NameTechTask=TechTaskDATA.NameTechTask,
+                #     TechTaskClient=TechTaskDATA.TechTaskClient,
+                #     TechTaskProject=TechTaskDATA.TechTaskProject,
+                #     TechTaskPPR=TechTaskDATA.TechTaskPPR,
+                #     TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
+                #     TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
+                #     TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
+                #     TechTaskPrice=TechTaskDATA.TechTaskPrice,
+                #     TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
+                # )
+
+                # existing_row = self.session.query(tables.TaskForm).filter(tables.TaskForm.NameTechTask == TechTaskDATA.NameTechTask).first()
+                # existing_row.column1 = 'new_value1'
+                # existing_row.column2 = 'new_value2'
+                # existing_row.TechTaskClient = TechTaskDATA.TechTaskClient,
+                # self.session.commit()
 
 
-            self.session.query(tables.User).filter(tables.User.id == id).update(dict(roles=roles))
-            self.session.commit()
-            return HTTPException(status.HTTP_200_OK)
-
+                self.session.query(tables.User).filter(tables.User.id == id).update(dict(roles=roles))
+                self.session.commit()
+                return HTTPException(status.HTTP_200_OK)
+            else:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Не хватает прав")
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Запись с таким именем уже существует запись")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+    def update_user_password(self,id,password,user_data: models.UserCreate) -> bool:
+        try:
+            if json.loads(user_data.roles).count('Admin')>0:
+
+                self.session.query(tables.User).filter(tables.User.id == id).update(dict(password_hash=self.hash_password(password)))
+                self.session.commit()
+                return HTTPException(status.HTTP_200_OK)
+            else:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Не хватает прав")
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_400_BAD_REQUEST)
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})

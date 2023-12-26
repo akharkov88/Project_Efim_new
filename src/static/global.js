@@ -83,4 +83,24 @@ function downloadFileFromURL(url, fileName) {
     xhr.send();
 }
 
+async function check_user_Admin(){
+    console.log(1111111111111111111111111111)
+console.log(window.location.pathname)
+console.log(window.location.pathname=='/main/adminMenu')
+if (window.location.pathname=='/main/adminMenu'){
+     check_user = await fetch('/auth/user/', {
+        headers: {
+            Accept: 'application/json',
+            "Authorization": localStorage.getItem('Authorization')
+        },
+    });
+    let responseText = await check_user.text();
+console.log("222222",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
+    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")==-1) {
+        document.location.href = '/main'
+    }
+}
 
+}
+
+check_user_Admin()
