@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <table id="table1" border="1" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>Серийный номер</td>
+                <td>Полное имя</td>
+                <td>возраст</td>
+                <td>интерес</td>
+                <td>Идентификационный номер</td>
+                <td>Номер телефона</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Чжан Сан</td>
+                <td>18</td>
+                <td>Играть в игры</td>
+                <td>320322184087562589</td>
+                <td>1374569821</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Ли Си</td>
+                <td>88</td>
+                <td>Смотреть фильм</td>
+                <td>420322184087562589</td>
+                <td>2374569821</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Ван Ву</td>
+                <td>81</td>
+                <td>Спать</td>
+                <td>520322184087562589</td>
+                <td>3374569821</td>
+            </tr>
+            <tr>
+                <td colspan="4">Это объединенная ячейка</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="btn" onclick="btn_export()">экспорт</button>
+</body>
+<script src="js/xlsx.extendscript.js"></script>
+<script src="js/xlsx-style/xlsx.full.min.js"></script>
+
+<script src="js/export.js"></script>
+<script>
+    function btn_export() {
+        var table1 = document.querySelector("#table1");
+        var opt = {
+            rowIndex: 4
+        }; // Начинаем с 4 пустых строк
+        var sheet = XLSX2.utils.table_to_sheet(table1, opt);
+        sheet["A1"] = {
+            t: "s",
+            v: 'Sanlu Group Co., Ltd.'
+        }; // Присваиваем значение ячейке A1
+        sheet["A1"].s = {
+            font: {
+                name: 'Times New Roman',
+                sz: 24,
+                bold: true,
+                underline: true,
+                color: {
+                    rgb: "FFFFAA00"
+                }
+            },
+            alignment: {
+                horizontal: "center",
+                vertical: "center",
+                wrap_text: true
+            },
+            fill: {
+                bgColor: {
+                    rgb: 'ffff00'
+                }
+            }
+        };
+        // ["! merges"] Этот атрибут специально используется для объединения ячеек
+        sheet["!merges"].push({ // Если не пусто, push пусто
+            // Объединенный индекс ячейки начинается с 0
+            s: { // начало
+                c: 0, // Начать столбец
+                r: 0 // Стартовая строка
+            },
+            e: { // е заканчивается
+                c: 3, // Конец столбца
+                r: 2 // Конечная строка
+            }
+        });
+        sheet["A9"].s = { // Стиль
+            font: {
+                sz: 13,
+                bold: true,
+                color: {
+                    rgb: "FFFFAA00"
+                }
+            },
+            alignment: {
+                horizontal: "center",
+                vertical: "center",
+                wrap_text: true
+            }
+        };
+
+        sheet["!cols"] = [{
+            wpx: 70
+        }, {
+            wpx: 70
+        }, {
+            wpx: 70
+        }, {
+            wpx: 70
+        }, {
+            wpx: 150
+        }, {
+            wpx: 120
+        }]; // Ширина столбца ячейки
+
+        {#openDownloadDialog(sheet2blob(sheet), «Скачать .xlsx»);#}
+    }
+
+    function sheet2blob(sheet, sheetName) {
+    sheetName = sheetName || 'sheet1';
+    var workbook = {
+        SheetNames: [sheetName],
+        Sheets: {}
+    };
+    workbook.Sheets[sheetName] = sheet; // Генерируем элементы конфигурации excel
+
+    var wopts = {
+        bookType: 'xlsx', // Тип файла, который будет сгенерирован
+        bookSST: false, // Нужно ли генерировать Shared String Table, официальное объяснение состоит в том, что если вы включите скорость генерации, она уменьшится, но будет иметь лучшую совместимость на устройствах с более низким IOS
+        type: 'binary'
+    };
+    var wbout = XLSX.write(workbook, wopts);
+    var blob = new Blob([s2ab(wbout)], {
+        type: "application/octet-stream"
+    }); // Строка в ArrayBuffer
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+    return blob;
+}
+
+function openDownloadDialog(url, saveName) {
+    if (typeof url == 'object' && url instanceof Blob) {
+        url = URL.createObjectURL(url); // Создать адрес блоба
+    }
+    var aLink = document.createElement('a');
+    aLink.href = url;
+    aLink.download = saveName || ''; // HTML5 новый атрибут, укажите имя сохраненного файла, вы не можете использовать суффикс, обратите внимание, что режим file: /// не вступит в силу
+    var event;
+    if (window.MouseEvent) event = new MouseEvent('click');
+    else {
+        event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    }
+    aLink.dispatchEvent(event);
+}
+</script>
+
+</html>

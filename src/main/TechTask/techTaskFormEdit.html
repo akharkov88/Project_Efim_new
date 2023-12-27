@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-      {% include "indexShablon_head.html" %}
+    {% include "indexShablon_head.html" %}
 
 </head>
 
 <body>
 <div id="wrapper">
- {% include "indexShablon.html" %}
+    {% include "indexShablon.html" %}
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
@@ -56,37 +56,44 @@
                                             <!-- /.panel-body -->
                                         </div>
                                     </div>
-                                    <div class="tabs__content" data-tab="about">About lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
-                                        nulla,
-                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
-                                        animi.
-                                    </div>
-                                    <div class="tabs__content" data-tab="about1">About lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
-                                        nulla,
-                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
-                                        animi.
-                                    </div>
-                                    <div class="tabs__content" data-tab="about2">About lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
-                                        nulla,
-                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
-                                        animi.
-                                    </div>
-                                    <div class="tabs__content" data-tab="about3">About lorem ipsum dolor sit amet,
-                                        consectetur
-                                        adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut cum
-                                        nulla,
-                                        accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure saepe
-                                        animi.
+                                    <div class="tabs__content" data-tab="about">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+
+                                            </div>
+                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
+
+                                        </div>
+                                        <div class="tabs__content" data-tab="about1">About lorem ipsum dolor sit amet,
+                                            consectetur
+                                            adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut
+                                            cum
+                                            nulla,
+                                            accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure
+                                            saepe
+                                            animi.
+                                        </div>
+                                        <div class="tabs__content" data-tab="about2">About lorem ipsum dolor sit amet,
+                                            consectetur
+                                            adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut
+                                            cum
+                                            nulla,
+                                            accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure
+                                            saepe
+                                            animi.
+                                        </div>
+                                        <div class="tabs__content" data-tab="about3">About lorem ipsum dolor sit amet,
+                                            consectetur
+                                            adipisicing elit. Mollitia quibusdam nemo qui numquam magnam! In sunt, ut
+                                            cum
+                                            nulla,
+                                            accusantium mollitia et illum voluptate repudiandae! Magnam alias, iure
+                                            saepe
+                                            animi.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </section>
 
                     <script>
@@ -167,8 +174,7 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
-    {% include "indexShablon_end.html" %}
-
+{% include "indexShablon_end.html" %}
 
 
 </body>

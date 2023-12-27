@@ -70,3 +70,15 @@ def getNameFile(id: str,BaseFileServices: BaseFileServices = Depends(),):
     # except Exception as e:
     #     return {"message": e.args}
     return BaseFileServices.get_name_file(id)
+
+@router.get("/reports")
+def getReports(BaseFileServices: BaseFileServices = Depends(),):#url: str,
+    # try:
+    # for file in file:
+    #         # file_path = f"C:\\Users\\gfg/{file.filename}"
+    #         # with open(file_path, "wb") as f:
+    #         #     f.write(file.file.read())
+    #     return {"message": "File saved successfully"}
+    # except Exception as e:
+    #     return {"message": e.args}
+    return BaseFileServices.reports_PTO()

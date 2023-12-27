@@ -130,6 +130,14 @@ def get_operation(request: Request,):
 
 
 
+@router.get('/ExcelInTable',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "ExcelInTable.html", {"request": request}
+    )
+
+
+
 @router.post(
     '/creatTask',
     response_model=models.UserTask,
@@ -184,10 +192,19 @@ def get_operationName(request: Request,Task_Services: TaskServices = Depends(),N
         "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
     )
 
+
+
 @router.get("/adminMenu")
 async def root(request: Request):
     return templates.TemplateResponse(
         "adminMenu.html", {"request": request}
+    )
+
+
+@router.get("/techTaskFormEdit_FormNEW")
+async def root(request: Request):
+    return templates.TemplateResponse(
+        "TechTask/techTaskFormEdit_FormNEW.html", {"request": request}
     )
 
 
@@ -208,3 +225,5 @@ async def setting(response: Response):
 async def reading(refresh_token: Optional[str] = Cookie(None)):
     print("refresh_token",refresh_token)
     return refresh_token
+
+
