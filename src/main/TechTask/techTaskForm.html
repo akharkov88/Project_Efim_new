@@ -118,7 +118,7 @@
                                         <div class="form-group" style="margin-top: 15px">
                                             <label>Наименнование заказчика</label>
                                             <input name="TechTaskClient" value="" class="form-control"
-                                                   placeholder="Введите описание">
+                                                   placeholder="Введите описание" required>
                                         </div>
 
 
@@ -550,11 +550,11 @@
 
                                             function validForm(obj) {
                                                 console.log('validForm', obj)
-                                                let valid = true
                                                 let elements = $('form').serializeArray();
                                                 console.log('client1', elements)
                                                 for (let key of elements) {
                                                     elem_obj[key.name] = key.value
+<<<<<<< HEAD
                                                     if (key.value == '' || key.value == '[]') {
                                                         valid = false
                                                         console.warn(key, key.name, key.value)
@@ -563,6 +563,8 @@
                                                         document.getElementsByName(key.name)[0].removeAttribute("required")
                                                     }
 
+=======
+>>>>>>> parent of aae47da (121223)
                                                 }
                                                 if (window.vlozheniya.length == 0) {
 
@@ -587,7 +589,7 @@
                                                     valid = false
                                                 }
 
-                                                return valid
+                                                return true
                                             }
 
                                             document.getElementById('createTicket').onclick = function (event) {
