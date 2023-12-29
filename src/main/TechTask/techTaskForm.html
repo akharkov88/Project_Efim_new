@@ -554,7 +554,6 @@
                                                 console.log('client1', elements)
                                                 for (let key of elements) {
                                                     elem_obj[key.name] = key.value
-<<<<<<< HEAD
                                                     if (key.value == '' || key.value == '[]') {
                                                         valid = false
                                                         console.warn(key, key.name, key.value)
@@ -562,9 +561,6 @@
                                                     } else {
                                                         document.getElementsByName(key.name)[0].removeAttribute("required")
                                                     }
-
-=======
->>>>>>> parent of aae47da (121223)
                                                 }
                                                 if (window.vlozheniya.length == 0) {
 
