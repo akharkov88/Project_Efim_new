@@ -21,7 +21,7 @@ body {
     padding: 15px 15px;
     min-height: 600px;
     background:#E5EBF2;
-   
+
 }
 #page-inner {
     width:100%;
@@ -49,7 +49,7 @@ h4 {
     padding-top:10px;
 }
 .square-btn-adjust {
-    border: 0px solid transparent; 
+    border: 0px solid transparent;
    -webkit-border-radius: 0px;
 -moz-border-radius: 0px;
 border-radius: 0px;
@@ -278,7 +278,7 @@ overflow: hidden;
 background-color: #f5f5f5;
 border-radius: 0px;
 }
-.dropdown-tasks > li > a { 
+.dropdown-tasks > li > a {
 padding: 0px 15px;
 }
 .dropdown-tasks p {
@@ -325,7 +325,7 @@ padding-top: 4px;
 	color:#fff;
 	background:transparent;
 	text-shadow:none;
-	
+
 }
 .sidebar-collapse > .nav > li > a {
 	padding:15px 10px;
@@ -338,24 +338,24 @@ background: #172D44;
 }
 .sidebar-collapse .nav > li > a:hover,
 .sidebar-collapse .nav > li > a:focus {
-	 
+
 	outline:0;
 }
- 
+
 .navbar-side {
 	border:none;
 	background-color: transparent;
-	
+
 }
 .top-navbar {
 	background:#09192A;
 	border-bottom:none;
-	
+
 }
 .top-navbar .nav > li > a > i {
 margin-right: 2px;
 }
-.top-navbar .navbar-brand:hover { 
+.top-navbar .navbar-brand:hover {
 color:#fff;
 
 }
@@ -364,13 +364,13 @@ margin: 8px 0;
 }
 .navbar-default {
 border:0px solid black;
-     
+
 }
 .navbar-header {
     background: #09192A;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-background-color: #B40101;
+background-color: #2dcbe5;
 }
 .navbar-default .navbar-toggle {
 border-color: #fff;
@@ -400,16 +400,15 @@ line-height: 1.428571429;
 /*----------------------------------------------
     MEDIA QUERIES     
 ------------------------------------------------*/
- 
+
  @media(min-width:768px) {
      #page-wrapper{
-               margin: 0 0 0 260px;
         padding: 15px 30px;
         min-height: 1200px;
-		
+
     }
-	
-	
+
+
     .navbar-side {
         z-index: 1;
         position: absolute;
@@ -417,9 +416,9 @@ line-height: 1.428571429;
     }
 
    .navbar {
- border-radius: 0px; 
+ border-radius: 0px;
 }
-   
+
 }
  @media(max-width:480px) {
 .page-header small {
@@ -547,4 +546,56 @@ button_link {
 button_down{
 margin-top: 40px;
 }
+#style_table{
+    padding: 10px 0 10px 0;
+}
+.style_table table{
+    height: 100%;
+}
+.table_parent{
 
+}
+table {
+  border-collapse: collapse;
+  line-height: 1.1;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  background:  radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);
+  color: #0C213B;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    width: 100%;
+}
+caption:before, caption:after {
+  content: "\274B";
+  color: #A9E2CC;
+  margin: 0 10px;
+}
+
+th {
+  padding: 10px;
+  border: 1px solid #A9E2CC;
+}
+td{
+  font-size: 0.8em;
+  padding: 5px 7px;
+  border: 1px solid #A9E2CC;
+}
+.first {
+  font-size: 1em;
+  text-align: center;
+}
+.table_parent{
+    border: 0px;
+}
+
+.valid_button{
+  background-image: linear-gradient(to right, pink, lightgreen);
+  border: 2px dashed red;
+}
+tbody{
+    height: 100%;
+}
+
+table.first {
+   width: 100%;
+}

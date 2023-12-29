@@ -34,7 +34,88 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <form role="form" id="formFrame">
+
+
                                         <div class="form-group">
+                                            <label>Selects</label>
+                                            <select class="form-control" id="select_one">
+                                                <option value="0">первое значение</option>
+                                                <option value="1">второе значение</option>
+                                                <option value="2">3</option>
+                                                <option value="3">4</option>
+                                                <option value="4">5</option>
+                                            </select>
+
+                                            <colgroup>
+                                                <col span="2" style="background:#e5ebf2">
+                                                <!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
+                                                <col style="background-color:LightCyan">
+                                                <!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
+                                            </colgroup>
+
+                                        </div>
+                                        <div class="style_table" id='style_table' style="display:none;">
+                                            <table class="first iksweb" id="first_table">
+                                                <tbody>
+                                                <tr>
+                                                    <td>№</td>
+                                                    <td rowspan="2">Наименование</td>
+                                                    <td colspan="4">Стоимость</td>
+                                                    <td>Добавить вид работ
+                                                        <button class="editbtn" id='button_table_2'>+</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>п/п</td>
+                                                    <td>Ед.изм.</td>
+                                                    <td>Кол-во</td>
+                                                    <td>Цена</td>
+                                                    <td>Всего</td>
+                                                    <td>Добавить значение
+                                                        <button class="editbtn" id="button_table_1">+</button>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            {#<table class="table_parent" id="table_container">
+                                                <tbody>
+                                                <tr>
+                                                    <td width="90%" rowspan="1000" style="padding: 0 0 0 0;">
+                                                        <table class="first iksweb" id="first_table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>№</td>
+                                                                <td rowspan="2">Наименование</td>
+                                                                <td colspan="4">Стоимость</td>
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>п/п</td>
+                                                                <td>Ед.изм.</td>
+                                                                <td>Кол-во</td>
+                                                                <td>Цена</td>
+                                                                <td>Всего</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+
+                                                    <td>Добавить вид работ
+                                                        <button class="editbtn" id='button_table_2'>+</button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Добавить значение
+                                                        <button class="editbtn" id="button_table_1">+</button>
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                            </table>#}
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 15px">
                                             <label>Наименнование заказчика</label>
                                             <input name="TechTaskClient" value="" class="form-control"
                                                    placeholder="Введите описание">
@@ -60,7 +141,8 @@
                                             <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
                                             <!-- hidden="true"-->
                                             <div id="testText" class="testText"></div>
-                                            <input id="addFile" type="button" value="Добавить вложение">
+                                            <input id="addFile" type="button" value="Добавить вложение"
+                                                   name="TechTaskProject">
 
                                         </div>
                                         <!--                                            </form>"-->
@@ -72,6 +154,132 @@
                                         <!--    </form>-->
 
                                         <script>
+                                            // Заголовки для таблиц
+                                            let array_table = [
+                                                {
+                                                    property_name: 'первое значение',
+                                                    arr: ['для первого значения 1ый input', 'для первого значения 2ый input', 'для первого значения 3ый input', 'для первого значения 4ый input', 'для первого значения 5ый input']
+                                                },
+                                                {
+                                                    property_name: 'второе значение',
+                                                    arr: ['для второго значения 1ый input', 'для второго значения 2ый input', 'для второго значения 3ый input', 'для второго значения 4ый input', 'для второго значения 5ый input']
+                                                },
+                                                {
+                                                    property_name: 'третье значение',
+                                                    arr: ['для третьего значения 1ый input', 'для третьего значения 2ый input', 'для третьего значения 3ый input', 'для третьего значения 4ый input', 'для третьего значения 5ый input']
+                                                },
+                                                {
+                                                    property_name: 'четвертое значение',
+                                                    arr: ['для четвертого значения 1ый input', 'для четвертого значения 2ый input', 'для четвертого значения 3ый input', 'для четвертого значения 4ый input', 'для четвертого значения 5ый input']
+                                                },
+                                                {
+                                                    property_name: 'пятое значение',
+                                                    arr: ['для пятого значения 1ый input longlonglonglonglonglonglonglonglong', 'для пятого значения 2ый input', 'для пятого значения 3ый input', 'для пятого значения 4ый input', 'для пятого значения 5ый input']
+                                                },
+                                            ]
+                                            select_one.onchange = function () {
+                                                // отображение таблицы
+                                                document.getElementById("style_table").style.display = "block";
+
+                                                let e = document.getElementById("select_one");
+                                                let value = e.value;
+                                                let text = e.options[e.selectedIndex].text;
+
+                                                document.getElementById('input_table_1').innerText = array_table[value].arr[0];
+                                                document.getElementById('input_table_2').innerText = array_table[value].arr[1];
+                                                document.getElementById('input_table_3').innerText = array_table[value].arr[2];
+                                                document.getElementById('input_table_4').innerText = array_table[value].arr[3];
+                                                document.getElementById('input_table_5').innerText = array_table[value].arr[4];
+                                            }
+                                            //<input type="text" name="example" list="exampleList"><datalist id="exampleList"><option value="A"><option value="B"></datalist>
+
+                                            // для удаленной таблицы
+
+                                            let count_table = 1;
+                                            let arr_count_table = [];
+                                            arr_count_table.push(count_table);
+                                            button_table_1.onclick = function () {
+                                                $("#first_table").append(`<tr id = "stroka${count_table}"><td contenteditable="false" id = "nn${count_table}">${arr_count_table.length}</td><td contenteditable="true" style="padding: 0;"><input type="text" name="example" list="exampleList"     style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList"><option value="A"><option value="B"></datalist></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`);
+                                                //$('#table_container').append(`<tr></tr><tr><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`)
+                                                count_table++
+                                                arr_count_table.push(count_table);
+                                            }
+                                            // картинка мусорки <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            button_table_2.onclick = function () {
+                                                $("#first_table").append(`<tr id = "stroka${count_table}"><td contenteditable="false" id = "nn${count_table}">${arr_count_table.length}</td> <td contenteditable="true" style="padding: 0;"><input type="text" name="example" list="exampleList_vid_rabot"     style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList_vid_rabot"><option value="Стоимость работ"><option value="Стоимость материала"></datalist></td><td colspan="3" contenteditable="true"></td><td contenteditable="true"></td><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`);
+                                                //$('#table_container').append(`<tr></tr><tr><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`)
+                                                count_table++
+                                                arr_count_table.push(count_table);
+                                            }
+                                            const table = document.getElementById('first_table');
+                                            {# почему submit???#}
+                                            table.addEventListener('click', function handleClick() {
+                                                if (event.target.type == 'submit' && event.target.id.slice(0, 6) == 'delbtn') {
+                                                    {# почему submit???#}
+                                                    num_id = Number(event.target.id.slice(6, event.target.id.length))
+                                                    console.warn(document.getElementById('stroka' + num_id))
+                                                    document.getElementById(`stroka${num_id}`).remove()
+                                                    //document.getElementById(`delbtn${num_id}`).parentElement.remove()
+                                                    arr_count_table.splice(arr_count_table.indexOf(num_id), 1)
+                                                    //arr_count_table.pop()
+                                                    count_table = arr_count_table[arr_count_table.length - 1]
+                                                    console.warn(arr_count_table, ' ', count_table);
+
+                                                    let podcount = 1;
+                                                    let delid = num_id;
+                                                    let totalRowCount = first_table.rows.length
+                                                    {#alert(totalRowCount - 2)#}
+                                                    // получаю массив всех ID строк из таблицы first_table. splice отрезает id маски - 2 строки.
+                                                    let arrIdTable = [];
+                                                    $("#first_table tr").each(function () {
+                                                        arrIdTable.push(this.id);
+                                                    });
+                                                    arrIdTable.splice(0, 2)
+                                                    console.warn(arrIdTable);
+                                                    // обновляю отображение номера строки в первом столбце по ID = 'nn'+${count_table}
+                                                    for (let i of arrIdTable) {
+                                                        document.getElementById('nn' + i.slice(6, i.length)).innerText = arrIdTable.indexOf(i) + 1;
+                                                    }
+
+                                                    // замена id после удаления строки. вариант изменения. каждый ID строки, нужно будет перезаписывать
+                                                    {# console.warn('podcount = ' + podcount)
+                                                     for (let i = 0; i <= count_table; i++) {
+                                                         #}{#console.warn('value = ' + document.getElementById('nn' + podcount).innerHTML)#}{#
+                                                         if (podcount < delid) {
+                                                             if (arr_count_table[i] == Number(document.getElementById('nn' + podcount).innerHTML)) {
+                                                                 console.log('попал в ИФ ' + document.getElementById('nn' + podcount).innerHTML);
+                                                                 podcount++;
+                                                             }
+                                                         } else if (podcount == delid) {
+                                                             #}{# 6 j = 5 #}{#
+                                                             for (let j = delid; j < count_table; j++) {
+                                                                 console.warn('замена id ' + (j + 1) + ' на ' + j)
+                                                                 document.getElementById('stroka' + (j + 1)).setAttribute("id", "stroka" + j);
+                                                                 document.getElementById('delbtn' + (j + 1)).setAttribute("id", "delbtn" + j);
+                                                                 document.getElementById('nn' + (j + 1)).setAttribute("id", "nn" + j);
+                                                                 document.getElementById('nn' + (j)).innerText = j;
+                                                             }
+                                                             podcount++
+                                                         }
+                                                     }#}
+                                                    {# function rename_table(n) {
+                                                         if (n <= 1) {
+                                                             return 0;
+                                                         }
+                                                         if (n == document.getElementById('nn'+ podcount).slice(3,document.getElementById('nn'+ podcount).length)){
+                                                             console.warn('document.getElementById("nn"+ podcount) = ' + n)
+                                                         }
+                                                         return n * rename_table(n - 1);
+                                                     }#}
+
+
+                                                    {#$(`tbody#stroka${num_id} tr`).remove();#}
+                                                    {#$(`#first_table tr`).remove();#}
+
+                                                }
+                                            });
+
+
                                             let vlozheniya = []
                                             window.vlozheniya = vlozheniya
 
@@ -146,6 +354,7 @@
 
                                             addFile.onclick = function () {
                                                 {
+                                                    document.getElementById('addFile').setAttribute("class", '')
                                                     idButton = idButtonArr[idButtonArr.length - 1];
                                                     {# if (window.vlozheniya.length == 0) {
                                                          console.warn('TechTaskProject', window.vlozheniya)
@@ -194,13 +403,16 @@
                                                         box.addEventListener('click', function handleClick() {
                                                             if (event.target.type == 'button') {
                                                                 let str = event.target.id.slice(8, event.target.id.length);
+
                                                                 console.log('document.getElementById("expent" + str).getElementsByTagName() = ', document.getElementById('expent' + str).getElementsByTagName('a'));
                                                                 if (document.getElementById('input' + str).value != '') {
-                                                                    let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
-                                                                    console.log('str = ', str, idButtonArr.indexOf(Number(str)))
-                                                                    console.warn('file name id = ', vlozheniya[idButtonArr.indexOf(Number(str))].name, " ", vlozheniya[idButtonArr.indexOf(Number(str))].id)
-                                                                    console.warn('Удаление файла с id: ', vlozheniya[idButtonArr.indexOf(Number(str))].id)
-                                                                    vlozheniya.splice(idButtonArr.indexOf(Number(str)), 1);
+                                                                    if (document.getElementById('file' + str).value != '') {
+                                                                        let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
+                                                                        console.log('str = ', str, idButtonArr.indexOf(Number(str)))
+                                                                        console.warn('file name id = ', vlozheniya[idButtonArr.indexOf(Number(str))].name, " ", vlozheniya[idButtonArr.indexOf(Number(str))].id)
+                                                                        console.warn('Удаление файла с id: ', vlozheniya[idButtonArr.indexOf(Number(str))].id)
+                                                                        vlozheniya.splice(idButtonArr.indexOf(Number(str)), 1);
+                                                                    }
 
                                                                 }
                                                                 {#console.log('index = ' + vlozheniya.indexOf(coll))
@@ -210,13 +422,13 @@
                                                                 console.log(vlozheniya)
                                                                 idButtonArr.splice(idButtonArr.indexOf(Number(str)), 1);
                                                                 idButton = idButtonArr[idButtonArr.length - 1];
-
                                                             }
                                                         });
                                                         box.addEventListener('change', e => {
                                                             if (event.target.id.slice(0, 4) == 'file') {
                                                                 let str = event.target.id.slice(4, event.target.id.length);
                                                                 document.getElementById('file' + str).onchange = uploadfile_func1('file' + str);
+                                                                document.getElementById('input' + str).setAttribute('readonly', true);
                                                             } else if (event.target.id.slice(0, 5) == 'input') {
                                                                 let str = event.target.id.slice(5, event.target.id.length);
                                                                 document.getElementById('file' + str).disabled = false;
@@ -353,9 +565,26 @@
 
                                                 }
                                                 if (window.vlozheniya.length == 0) {
-                                                    valid = false
+
                                                     console.warn('TechTaskProject', window.vlozheniya)
-                                                    document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
+                                                    if (idButtonArr.length > 1) {
+                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
+                                                        document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
+                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
+                                                    } else {
+                                                        document.getElementById('addFile').setAttribute("class", 'valid_button')
+                                                    }
+
+
+                                                    valid = false
+
+                                                } else if (idButtonArr.length >= 2 && document.getElementById('file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {
+                                                    console.warn('TechTaskProject', window.vlozheniya)
+                                                    document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
+                                                    document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
+                                                    document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
+                                                    alert('valid')
+                                                    valid = false
                                                 }
 
                                                 return valid
@@ -368,7 +597,7 @@
                                                     // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
                                                     const postData = async (url = '', data = {}) => {
                                                         // Формируем запрос
-                                                        data.TechTaskProject = JSON.stringify(JSON.stringify(window.vlozheniya))
+                                                        data.TechTaskProject = JSON.stringify(window.vlozheniya)
 
                                                         const response = await fetch(url, {
                                                             // Метод, если не указывать, будет использоваться GET
@@ -382,7 +611,7 @@
                                                             body: JSON.stringify(data)
                                                         });
                                                         if (response.status == 409) {
-                                                            alert('Ошибка:' + (response.status))
+                                                            alert('Ошибка:' + (response.status) + ' Наименнование объекта уже существует')
                                                             console.log('Ошибка', (response.status))
 
                                                             let emailInput = document.getElementsByName('NameTechTask');
@@ -390,14 +619,14 @@
 
                                                         }
                                                         // читаем ответ в формате JSON
-                                                        console.log('response.json():', response.json())
+                                                        {#console.log('response.json():', response.json())#}
 
-                                                        return response.json();
+                                                        {#return response.json();#}
                                                     }
                                                     postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
                                                         .then((data) => {
                                                             console.log('------успех-----', data);
-                                                            {#window.location.href = '/main/techTask.html';#}
+                                                            window.location.href = '/main/techTask.html';
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
                                                     })

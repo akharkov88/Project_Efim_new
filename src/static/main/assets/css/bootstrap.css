@@ -254,8 +254,11 @@ th {
     background: #fff !important;
   }
   .navbar {
-    display: none;
-  }
+    background: #fff !important;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
   .table td,
   .table th {
     background-color: #fff !important;
@@ -3669,6 +3672,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
+
 @media (min-width: 768px) {
   .navbar {
     border-radius: 4px;
@@ -3803,7 +3807,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-toggle {
-    display: none;
+
   }
 }
 .navbar-nav {

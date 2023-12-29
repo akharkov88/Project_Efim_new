@@ -31,8 +31,8 @@
 
                 <script>
                     vv={{getTechTaskName.TechTaskProject|tojson|safe}}
-                    console.log("getTechTaskName", JSON.parse(JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}})))
-                    for (item of JSON.parse(JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}}))) {
+                    console.log("getTechTaskName", JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}}))
+                    for (item of JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}})) {
                     console.log("getTechTaskName", item)
 
                         div = document.createElement('div')
