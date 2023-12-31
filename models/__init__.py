@@ -15,6 +15,11 @@ from .operations import (
     OperationUpdate,
 )
 
+from .techTask import (
+    TechTaskPTO,
+    BaseTechTaskPTO
+)
+
 from .BaseFile_m import (
     UUIDModelBase,
 )
