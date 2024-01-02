@@ -1,3 +1,4 @@
+**/__pycache__/
 .idea/*
 src/file/*
 __pycache__/
@@ -8,5 +9,5 @@ __pycache__/*
 api/__pycache__/*
 models/__pycache__/*
 services/__pycache__/*
-**/__pycache__/
+
 poetry.lock

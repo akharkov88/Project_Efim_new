@@ -6,6 +6,7 @@ from sqlalchemy import (
     Numeric,
     String,
     DateTime,
+    UniqueConstraint,
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -60,6 +61,31 @@ class PTO_Value(Base):
     user_name = Column(String, ForeignKey('users.username'), index=True)
     value_table = Column(String, nullable=False)
     create_at = Column(DateTime(timezone=True), server_default=func.now())
+# class Suggest(Base):
+#     __tablename__ = 'Suggest_Value'
+#     # update_at = Column(DateTime(timezone=True), server_default=func.now())
+#     __table_args__ = (
+#         # this can be db.PrimaryKeyConstraint if you want it to be a primary key
+#         UniqueConstraint('customer_id', 'value_table'),
+#     )
+#     customer_id = Column(String, ForeignKey('Suggest_Value.customer_id'))
+#     value_table = Column(String, nullable=False)
+#     create_at = Column(DateTime(timezone=True), server_default=func.now())
+#     user_name = Column(String, ForeignKey('users.username'), index=True)
+#     # id = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True, primary_key=True)
+
+
+class Suggest(Base):
+    __tablename__ = 'Suggest_Value'
+    id = Column(Integer, primary_key=True)
+    customer_id = Column(String)
+    value_table = Column(String)
+    create_at = Column(DateTime(timezone=True), server_default=func.now())
+    user_name = Column(String, ForeignKey('users.username'), index=True)
+
+    __table_args__ = (
+        UniqueConstraint('customer_id', 'value_table', name='uix_customer_id_value_table'),
+    )
 
 
 from  database import engine
