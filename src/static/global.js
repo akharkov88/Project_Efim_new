@@ -84,9 +84,6 @@ function downloadFileFromURL(url, fileName) {
 }
 
 async function check_user_Admin(){
-    console.log(1111111111111111111111111111)
-console.log(window.location.pathname)
-console.log(window.location.pathname=='/main/adminMenu')
 if (window.location.pathname=='/main/adminMenu'){
      check_user = await fetch('/auth/user/', {
         headers: {
@@ -104,3 +101,29 @@ console.log("222222",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")
 }
 
 check_user_Admin()
+
+
+async function check_menu_Admin(){
+     check_user = await fetch('/auth/user/', {
+        headers: {
+            Accept: 'application/json',
+            "Authorization": localStorage.getItem('Authorization')
+        },
+    });
+    let responseText = await check_user.text();
+    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")==-1) {
+        showStuff("adminMenu")
+    }
+
+}
+
+function showStuff(id) {
+    console.log("showStuffshowStuff")
+    document.getElementById(id).style.display = 'block';
+    // hide the lorem ipsum text
+    document.getElementById(id).style.display = 'none';
+    // hide the link
+    // btn.style.display = 'none';
+}
+
+check_menu_Admin()
