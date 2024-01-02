@@ -66,7 +66,7 @@
                                         <div class="form-group" style="margin-top: 15px">
                                             <label>Наименнование заказчика</label>
                                             <input name="TechTaskClient" value="" class="form-control"
-                                                   placeholder="Введите описание" required>
+                                                   placeholder="Введите описание" >
                                         </div>
 
 
@@ -378,6 +378,7 @@
                                             console.log('client0', elem_obj)
 
                                             function validForm(obj) {
+                                                valid=true
                                                 console.log('validForm', obj)
                                                 let elements = $('form').serializeArray();
                                                 console.log('client1', elements)
@@ -414,13 +415,14 @@
                                                     valid = false
                                                 }
 
-                                                return true
+                                                return valid
                                             }
 
                                             document.getElementById('createTicket').onclick = function (event) {
+                                                    event.preventDefault()
+
                                                 if (validForm(document.getElementById('formFrame'))) {
 
-                                                    event.preventDefault()
                                                     // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
                                                     const postData = async (url = '', data = {}) => {
                                                         // Формируем запрос
