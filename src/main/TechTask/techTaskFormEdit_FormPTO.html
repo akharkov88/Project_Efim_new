@@ -4,32 +4,69 @@
             <form role="form" id="formFrame">
 
                 <div class="form-group">
-                    <label>Selects</label>
-                    <select class="form-control" id="select_one">
-                        <option value="0">первое значение</option>
-                        <option value="1">второе значение</option>
+                    <label>Добавление раздела</label>
+                    <select class="form-control form-group" id="select_one">
+                        <option value="0">Выбирите значение</option>
+                        <option value="1">Устройство декоративного бассейна. Парк Швейцария</option>
                         <option value="2">3</option>
                         <option value="3">4</option>
                         <option value="4">5</option>
                     </select>
+                    <button id='add_razdel' type="button" class="btn btn-primary"> Добавить раздел</button>
+                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>
 
-                    <colgroup>
-                        <col span="2" style="background:#e5ebf2">
-                        <!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
-                        <col style="background-color:LightCyan">
-                        <!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
-                    </colgroup>
 
                 </div>
-                <div class="style_table" id='style_table' style="display:none;">
+                <div class="style_table table-responsive" id='style_table' style="display:none;">
                     <table class="first iksweb" id="first_table">
-                        <tbody>
+
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+{# хранить значения value инпутов в массиве??? при сохранении формы, например.
+var inputValues = [];
+inputValues.push(document.getElementById('input1').value);
+inputValues.push(document.getElementById('input2').value);#}
+
+
+    const table = document.getElementById('first_table');
+
+    let coll_table = 1;
+    let arr_coll_table = [1];
+    let id_count = 1;
+    let arr_id_count = [1];
+    document.getElementById('add_razdel').onclick = function () {
+        let e = document.getElementById("select_one");
+        let value = e.value;
+        let text = e.options[e.selectedIndex].text;
+        document.getElementById("style_table").style.display = "block";
+        //document.getElementById('first_table_span').innerText = text;
+        let control = true;
+
+        for (let j of arr_coll_table){
+        if (j < coll_table && document.getElementById('first_table_span_'+ j).innerText == text){
+            console.warn('!!! j= ' + j);
+            control = false;
+            alert('раздел есть ' + control)
+        }
+        }
+        if (control){
+        $("#first_table").append(`<tbody id = "tbody_${coll_table}">
+                        <tr style="background-color: #fce1b3">
+                            <td colspan="7"><span id="first_table_span_${coll_table}" ></span></td>
+                        </tr>
                         <tr>
                             <td>№</td>
                             <td rowspan="2">Наименование</td>
                             <td colspan="4">Стоимость</td>
-                            <td>Добавить вид работ
-                                <button class="editbtn" id='button_table_2'>+</button>
+                            <td width="10%">Добавить вид работ
+                                <button class="editbtn" id='button_table_1_${coll_table}' type="button">+</button>
                             </td>
                         </tr>
                         <tr>
@@ -39,361 +76,113 @@
                             <td>Цена</td>
                             <td>Всего</td>
                             <td>Добавить значение
-                                <button class="editbtn" id="button_table_1">+</button>
+                                <button class="editbtn" id="button_table_2_${coll_table}" type="button">+</button>
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
+                        </tbody>`)
 
-                </div>
-            </form>
+        document.getElementById('first_table_span_'+ coll_table).innerText = text;
 
-        </div>
+        coll_table++;
+        arr_coll_table.push(coll_table)
+        }
+    }
 
-    </div>
-</div>
+    table.addEventListener('click', function handleClick(event) {
 
- <script>
-                                            // Заголовки для таблиц
-                                            let array_table = [
-                                                {
-                                                    property_name: 'первое значение',
-                                                    arr: ['для первого значения 1ый input', 'для первого значения 2ый input', 'для первого значения 3ый input', 'для первого значения 4ый input', 'для первого значения 5ый input']
-                                                },
-                                                {
-                                                    property_name: 'второе значение',
-                                                    arr: ['для второго значения 1ый input', 'для второго значения 2ый input', 'для второго значения 3ый input', 'для второго значения 4ый input', 'для второго значения 5ый input']
-                                                },
-                                                {
-                                                    property_name: 'третье значение',
-                                                    arr: ['для третьего значения 1ый input', 'для третьего значения 2ый input', 'для третьего значения 3ый input', 'для третьего значения 4ый input', 'для третьего значения 5ый input']
-                                                },
-                                                {
-                                                    property_name: 'четвертое значение',
-                                                    arr: ['для четвертого значения 1ый input', 'для четвертого значения 2ый input', 'для четвертого значения 3ый input', 'для четвертого значения 4ый input', 'для четвертого значения 5ый input']
-                                                },
-                                                {
-                                                    property_name: 'пятое значение',
-                                                    arr: ['для пятого значения 1ый input longlonglonglonglonglonglonglonglong', 'для пятого значения 2ый input', 'для пятого значения 3ый input', 'для пятого значения 4ый input', 'для пятого значения 5ый input']
-                                                },
-                                            ]
-                                            select_one.onchange = function () {
-                                                // отображение таблицы
-                                                document.getElementById("style_table").style.display = "block";
+        if (event.target.type == 'button' && (event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'button_table_2' || event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'button_table_1')){
+            let str = event.target.id.slice(event.target.id.lastIndexOf('_')+1, event.target.id.length);
+            addLine(str, event.target.id, id_count);
+            id_count++;
+            arr_id_count.push(id_count);
+        } else if (event.target.type == 'button' && event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'delbtn'){
+            {#alert('delbtn');#}
+            delLine(event.target.id);
+        } else if (event.target.type == 'button' && event.target.id == 'del_razdel'){
 
-                                                let e = document.getElementById("select_one");
-                                                let value = e.value;
-                                                let text = e.options[e.selectedIndex].text;
+            alert('Удалить раздел: ')
+        }
+    });
 
-                                                document.getElementById('input_table_1').innerText = array_table[value].arr[0];
-                                                document.getElementById('input_table_2').innerText = array_table[value].arr[1];
-                                                document.getElementById('input_table_3').innerText = array_table[value].arr[2];
-                                                document.getElementById('input_table_4').innerText = array_table[value].arr[3];
-                                                document.getElementById('input_table_5').innerText = array_table[value].arr[4];
-                                            }
-                                            //<input type="text" name="example" list="exampleList"><datalist id="exampleList"><option value="A"><option value="B"></datalist>
+    function addLine(id_table, cel, id_create) {
+        console.warn(id_table)
+        let tbody = document.getElementById(`tbody_${id_table}`)
+        console.log('tbody = ' + tbody)
+         let arrIdTable = [];
+                $(`#tbody_${id_table} tr`).each(function () {
+                    arrIdTable.push(this.id);
+                });
+                arrIdTable.splice(0, 3)
+                console.warn(arrIdTable, arrIdTable.length);
 
-                                            // для удаленной таблицы
+        if (cel.slice(0,cel.lastIndexOf('_')) == 'button_table_2'){
 
-                                            let count_table = 1;
-                                            let arr_count_table = [];
-                                            arr_count_table.push(count_table);
-                                            button_table_1.onclick = function () {
-                                                $("#first_table").append(`<tr id = "stroka${count_table}"><td contenteditable="false" id = "nn${count_table}">${arr_count_table.length}</td><td contenteditable="true" style="padding: 0;"><input type="text" name="example" list="exampleList"     style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList"><option value="A"><option value="B"></datalist></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`);
-                                                //$('#table_container').append(`<tr></tr><tr><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`)
-                                                count_table++
-                                                arr_count_table.push(count_table);
-                                            }
-                                            // картинка мусорки <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                            button_table_2.onclick = function () {
-                                                $("#first_table").append(`<tr id = "stroka${count_table}"><td contenteditable="false" id = "nn${count_table}">${arr_count_table.length}</td> <td contenteditable="true" style="padding: 0;"><input type="text" name="example" list="exampleList_vid_rabot"     style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList_vid_rabot"><option value="Стоимость работ"><option value="Стоимость материала"></datalist></td><td colspan="3" contenteditable="true"></td><td contenteditable="true"></td><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`);
-                                                //$('#table_container').append(`<tr></tr><tr><td>удалить строку  <button class="delbtn" id="delbtn${count_table}">-</button></td></tr>`)
-                                                count_table++
-                                                arr_count_table.push(count_table);
-                                            }
-                                            const table = document.getElementById('first_table');
-                                            {# почему submit???#}
-                                            table.addEventListener('click', function handleClick() {
-                                                if (event.target.type == 'submit' && event.target.id.slice(0, 6) == 'delbtn') {
-                                                    {# почему submit???#}
-                                                    num_id = Number(event.target.id.slice(6, event.target.id.length))
-                                                    console.warn(document.getElementById('stroka' + num_id))
-                                                    document.getElementById(`stroka${num_id}`).remove()
-                                                    //document.getElementById(`delbtn${num_id}`).parentElement.remove()
-                                                    arr_count_table.splice(arr_count_table.indexOf(num_id), 1)
-                                                    //arr_count_table.pop()
-                                                    count_table = arr_count_table[arr_count_table.length - 1]
-                                                    console.warn(arr_count_table, ' ', count_table);
+            let parentTbody = document.getElementById(`tbody_${id_table}`);
+            console.warn(parentTbody)
 
-                                                    let podcount = 1;
-                                                    let delid = num_id;
-                                                    let totalRowCount = first_table.rows.length
-                                                    {#alert(totalRowCount - 2)#}
-                                                    // получаю массив всех ID строк из таблицы first_table. splice отрезает id маски - 2 строки.
-                                                    let arrIdTable = [];
-                                                    $("#first_table tr").each(function () {
-                                                        arrIdTable.push(this.id);
-                                                    });
-                                                    arrIdTable.splice(0, 2)
-                                                    console.warn(arrIdTable);
-                                                    // обновляю отображение номера строки в первом столбце по ID = 'nn'+${count_table}
-                                                    for (let i of arrIdTable) {
-                                                        document.getElementById('nn' + i.slice(6, i.length)).innerText = arrIdTable.indexOf(i) + 1;
-                                                    }
+            $(parentTbody).append(`<tr id = "stroka${id_create}"><td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td><td contenteditable="true" style="padding: 0;"><input id = 'input_${id_create}' type="text" name="example" list="exampleList"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList"><option value="A"><option value="B"></datalist></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button></td></tr>`);
 
-                                                    // замена id после удаления строки. вариант изменения. каждый ID строки, нужно будет перезаписывать
-                                                    {# console.warn('podcount = ' + podcount)
-                                                     for (let i = 0; i <= count_table; i++) {
-                                                         #}{#console.warn('value = ' + document.getElementById('nn' + podcount).innerHTML)#}{#
-                                                         if (podcount < delid) {
-                                                             if (arr_count_table[i] == Number(document.getElementById('nn' + podcount).innerHTML)) {
-                                                                 console.log('попал в ИФ ' + document.getElementById('nn' + podcount).innerHTML);
-                                                                 podcount++;
-                                                             }
-                                                         } else if (podcount == delid) {
-                                                             #}{# 6 j = 5 #}{#
-                                                             for (let j = delid; j < count_table; j++) {
-                                                                 console.warn('замена id ' + (j + 1) + ' на ' + j)
-                                                                 document.getElementById('stroka' + (j + 1)).setAttribute("id", "stroka" + j);
-                                                                 document.getElementById('delbtn' + (j + 1)).setAttribute("id", "delbtn" + j);
-                                                                 document.getElementById('nn' + (j + 1)).setAttribute("id", "nn" + j);
-                                                                 document.getElementById('nn' + (j)).innerText = j;
-                                                             }
-                                                             podcount++
-                                                         }
-                                                     }#}
-                                                    {# function rename_table(n) {
-                                                         if (n <= 1) {
-                                                             return 0;
-                                                         }
-                                                         if (n == document.getElementById('nn'+ podcount).slice(3,document.getElementById('nn'+ podcount).length)){
-                                                             console.warn('document.getElementById("nn"+ podcount) = ' + n)
-                                                         }
-                                                         return n * rename_table(n - 1);
-                                                     }#}
+        } else if (cel.slice(0,cel.lastIndexOf('_')) == 'button_table_1'){
+            let parentTbody = document.getElementById(`tbody_${id_table}`);
+            console.warn(parentTbody)
+            $(parentTbody).append(`<tr id = "stroka${id_create}"><td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td> <td contenteditable="true" style="padding: 0;"><input id = 'input_${id_create}' type="text" name="example" list="exampleList_vid_rabot"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList_vid_rabot"><option value="Стоимость работ"><option value="Стоимость материала"></datalist></td><td colspan="3" contenteditable="true"></td><td contenteditable="true"></td><td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button></td></tr>`);
+        }
+
+    }
+
+    function delLine(cel){
+        console.warn('cel= ' + cel)
+        let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
+        id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)
+        console.log('tbody = ' + id_table)
+        let id_del = cel.slice(cel.lastIndexOf('_')+1, cel.length)
+        console.warn(id_del)
+        console.warn(document.getElementById('stroka' + id_del))
+                document.getElementById(`stroka${id_del}`).remove()
+        let arrCountStrok = [];
+        $(`#tbody_${id_table} tr`).each(function () {
+                    arrCountStrok.push(this.id);
+                });
+        arrCountStrok.splice(0, 3);
+                console.warn(arrCountStrok, arrCountStrok.length);
+
+                // получаю массив всех ID строк из таблицы first_table. splice отрезает id маски - 3 строки.
+                let arrIdTable = [];
+
+                $(`#tbody_${id_table} tr`).each(function () {
+                    arrIdTable.push(this.id);
+                });
+                arrIdTable.splice(0, 3)
+                console.warn(arrIdTable);
+                // обновляю отображение номера строки в первом столбце по ID = 'nn'+${count_table}
+                for (let i of arrIdTable) {
+                    document.getElementById('nn' + i.slice(6, i.length)).innerText = arrIdTable.indexOf(i) + 1;
+                }
+    }
+
+    document.getElementById('del_razdel').onclick = function () {
+        let e = document.getElementById("select_one");
+        let value = e.value;
+        let text = e.options[e.selectedIndex].text;
+
+        console.warn(arr_coll_table)
+        for (let i of arr_coll_table){
+            if(i < coll_table && document.getElementById('first_table_span_'+ i).innerText == text){
+                console.log(i);
+                let del_tbody = document.getElementById('first_table_span_'+ i);
+                del_tbody = del_tbody.parentElement.parentElement.parentElement;
+                console.warn(del_tbody);
+                del_tbody.remove();
+                arr_coll_table.splice(arr_coll_table.indexOf(i) , 1);
+                console.warn(arr_coll_table);
+                break;
+            } else if (i == coll_table){
+             alert(' нет раздела для удаления ')
+             }
+        }
 
 
-                                                    {#$(`tbody#stroka${num_id} tr`).remove();#}
-                                                    {#$(`#first_table tr`).remove();#}
-
-                                                }
-                                            });
+    }
 
 
-                                            let vlozheniya = []
-                                            window.vlozheniya = vlozheniya
-
-                                            {#document.getElementById('file').onchange = uploadfile_func#}
-
-                                            function uploadfile_func() {
-                                                console.log('vlozheniya = ', vlozheniya)
-                                                console.log(document.getElementById('file'));
-                                                console.log(5645123)
-                                                const fileInput = document.getElementById('file'); // получаем элемент input для загрузки файла
-                                                const file = fileInput.files[0]; // получаем выбранный файл
-
-                                                console.log("fileInput = " + fileInput)
-                                                console.log("fileInput.files[0] = " + fileInput.files[0])
-                                                console.log("file = " + file)
-
-                                                const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
-                                                const formData = new FormData(); // создаем объект FormData для передачи файла
-
-                                                formData.append('file', file); // добавляем файл в объект FormData
-                                                file_name = this.value.replace(/.*[\/\\]/, '');
-                                                console.log("file_name = ", file_name)
-                                                xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.send(formData);
-                                                xhr.onload = function () {
-                                                    console.log(`Загружено: ${xhr.status} ${xhr.response}`);
-                                                    if (xhr.status == 200) {
-                                                        vlozheniya.push({
-                                                            name: file_name,
-                                                            id: xhr.response.replaceAll('"', "")
-                                                        })
-                                                        div = document.createElement('div')
-                                                        a = document.createElement('a')
-                                                        a.href = 'javascript:void(0);'
-                                                        a.target = "_blank"
-                                                        a.onclick = function () {
-                                                            event.preventDefault();
-                                                            downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
-                                                        }
-                                                        a.innerText = file_name
-                                                        div.append(a)
-                                                        document.getElementsByName('TechTaskProject_form')[0].append(div)
-
-                                                        // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
-
-                                                    }
-                                                    // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
-
-                                                }
-                                            }
-
-                                            // $("#TechTaskProject").prop('files')[0]["id"]="iddddd"// отправляем запрос на сервер с помощью метода send()
-                                            // fire the upload here
-
-                                            function submitForm(event) {
-                                                event.preventDefault(); // Предотвращаем обновление страницы
-                                                console.log(123)
-                                                // let form = document.getElementById("myForm");
-                                                // let formData = new FormData(form);
-                                                //
-                                                // // Отправка данных формы с помощью AJAX-запроса
-                                                // let xhr = new XMLHttpRequest();
-                                                // xhr.open("POST", form.action, true);
-                                                // xhr.send(formData);
-                                            }
-
-                                            const el = document.createElement('div');
-                                            el.setAttribute("id", "addButton");
-                                            let idButton = 1;
-                                            let idButtonArr = [1];
-
-                                            addFile.onclick = function () {
-                                                {
-                                                    document.getElementById('addFile').setAttribute("class", '')
-                                                    idButton = idButtonArr[idButtonArr.length - 1];
-                                                    {# if (window.vlozheniya.length == 0) {
-                                                         console.warn('TechTaskProject', window.vlozheniya)
-                                                         document.getElementsByName('TechTaskProject')[0].setAttribute("required", true)
-                                                     } else#}
-                                                    if (idButtonArr.length >= 2 && document.getElementById('file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {
-                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
-                                                        document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
-                                                        document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
-                                                    } else {
-                                                        let poddiv = document.createElement("div");
-                                                        poddiv.setAttribute("id", "expent" + idButton);
-                                                        poddiv.setAttribute("class", "expent" + idButton);
-                                                        document.getElementById("testText").appendChild(poddiv);
-
-                                                        const box = document.getElementById('expent' + idButton);
-                                                        box.appendChild(el);
-                                                        let button = document.createElement("input");
-                                                        button.type = "button";
-                                                        button.value = "Удалить файл";
-
-                                                        button.setAttribute("id", "idButton" + idButton);
-                                                        let text = document.createElement("input");
-
-                                                        text.type = "file";
-                                                        text.disabled = true;
-                                                        text.setAttribute("id", "file" + idButton);
-                                                        let vvod = document.createElement("input");
-                                                        vvod.setAttribute("id", "input" + idButton)
-
-                                                        vvod.type = "input";
-                                                        {#let lab = document.createElement("label");
-                                                        lab.setAttribute("id", "label" + idButton)
-                                                        lab.name = "TechTaskProject";
-                                                        lab.type = "label";
-                                                        lab.innerHTML = ''#}
-
-                                                        box.appendChild(vvod);
-                                                        box.appendChild(text);
-                                                        box.appendChild(button);
-                                                        {#box.appendChild(lab);#}
-                                                        idButton++;
-                                                        idButtonArr.push(idButton);
-
-
-                                                        box.addEventListener('click', function handleClick() {
-                                                            if (event.target.type == 'button') {
-                                                                let str = event.target.id.slice(8, event.target.id.length);
-
-                                                                console.log('document.getElementById("expent" + str).getElementsByTagName() = ', document.getElementById('expent' + str).getElementsByTagName('a'));
-                                                                if (document.getElementById('input' + str).value != '') {
-                                                                    if (document.getElementById('file' + str).value != '') {
-                                                                        let coll = document.getElementById('expent' + str).getElementsByTagName('a')[0].innerText;
-                                                                        console.log('str = ', str, idButtonArr.indexOf(Number(str)))
-                                                                        console.warn('file name id = ', vlozheniya[idButtonArr.indexOf(Number(str))].name, " ", vlozheniya[idButtonArr.indexOf(Number(str))].id)
-                                                                        console.warn('Удаление файла с id: ', vlozheniya[idButtonArr.indexOf(Number(str))].id)
-                                                                        vlozheniya.splice(idButtonArr.indexOf(Number(str)), 1);
-                                                                    }
-
-                                                                }
-                                                                {#console.log('index = ' + vlozheniya.indexOf(coll))
-                                                                console.log('coll = ' + coll)#}
-                                                                console.log('str = ' + str + " idButtonArr.indexOf(str) = " + idButtonArr.indexOf(Number(str)))
-                                                                document.getElementById('expent' + str).remove();
-                                                                console.log(vlozheniya)
-                                                                idButtonArr.splice(idButtonArr.indexOf(Number(str)), 1);
-                                                                idButton = idButtonArr[idButtonArr.length - 1];
-                                                            }
-                                                        });
-                                                        box.addEventListener('change', e => {
-                                                            if (event.target.id.slice(0, 4) == 'file') {
-                                                                let str = event.target.id.slice(4, event.target.id.length);
-                                                                document.getElementById('file' + str).onchange = uploadfile_func1('file' + str);
-                                                                document.getElementById('input' + str).setAttribute('readonly', true);
-                                                            } else if (event.target.id.slice(0, 5) == 'input') {
-                                                                let str = event.target.id.slice(5, event.target.id.length);
-                                                                document.getElementById('file' + str).disabled = false;
-                                                                console.log("str111", str);
-                                                            }
-                                                        })
-                                                    }
-                                                }
-                                            };
-
-                                            function uploadfile_func1(str) {
-                                                console.log('vlozheniya = ', vlozheniya)
-                                                console.log('uploadfile_func1: ' + str)
-                                                console.log(document.getElementById(str));
-                                                const fileInput = document.getElementById(str); // получаем элемент input для загрузки файла
-                                                console.log("fileInput = " + fileInput)
-                                                const file = fileInput.files[0]; // получаем выбранный файл
-                                                console.log("file = " + file)
-                                                console.log("fileInput.files = " + fileInput.files)
-
-                                                const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
-                                                const formData = new FormData(); // создаем объект FormData для передачи файла
-
-                                                formData.append('file', file); // добавляем файл в объект FormData
-
-                                                file_name = document.getElementById(str).value.replace(/.*[\/\\]/, '');
-
-                                                console.log("file_name = ", file_name)
-                                                xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.send(formData);
-                                                xhr.onload = function () {
-                                                    console.log(`Загружено: ${xhr.status} ${xhr.response}`);
-                                                    if (xhr.status == 200) {
-                                                        vlozheniya.push({
-                                                            name: file_name,
-                                                            id: xhr.response.replaceAll('"', "")
-                                                        })
-                                                        div = document.createElement('div')
-                                                        a = document.createElement('a')
-                                                        a.href = 'javascript:void(0);'
-                                                        a.target = "_blank"
-                                                        a.onclick = function () {
-                                                            event.preventDefault();
-                                                            downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
-                                                        }
-                                                        a.innerText = file_name
-
-                                                        let lab = document.createElement("label");
-                                                        lab.setAttribute("id", "label" + str.replace('file', ''))
-                                                        lab.type = "label";
-                                                        lab.style = "margin-right: 10px";
-                                                        lab.innerText = document.getElementById('input' + str.replace('file', '')).value;
-                                                        div.append(lab);
-                                                        div.append(a);
-
-                                                        console.log(div)
-                                                        document.getElementById('expent' + str.slice(4, str.length)).appendChild(div);
-                                                        {#document.getElementById('label' + str).innerHTML = document.getElementById('input' + str).value;#}
-                                                        // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
-                                                        console.warn(str)
-                                                        document.getElementById(str).disabled = true;
-                                                    }
-                                                    // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
-
-                                                }
-                                            }
-                                        </script>
+</script>
