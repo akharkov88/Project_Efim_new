@@ -50,22 +50,22 @@ let failed =
 let warn =
     document.querySelector(".custom-toast.warning-toast");
 
-submit.addEventListener("click",(e) => {
-        e.preventDefault();
-        showToast("Article Submitted Successfully","success",5000);
-    });
+// submit.addEventListener("click",(e) => {
+//         e.preventDefault();
+//         showToast("Article Submitted Successfully","success",5000);
+//     });
 
-information.addEventListener("click",(e) => {
-        e.preventDefault();
-        showToast("Do POTD and Earn Coins","info",5000);
-    });
-
-failed.addEventListener("click",(e) => {
-        e.preventDefault();
-        showToast("Failed unexpected error","danger",5000);
-    });
-
-warn.addEventListener("click", (e) => {
-    e.preventDefault();
-    showToast("!warning! server error","warning",5000);
-});
+// information.addEventListener("click",(e) => {
+//         e.preventDefault();
+//         showToast("Do POTD and Earn Coins","info",5000);
+//     });
+//
+// failed.addEventListener("click",(e) => {
+//         e.preventDefault();
+//         showToast("Failed unexpected error","danger",5000);
+//     });
+//
+// warn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     showToast("!warning! server error","warning",5000);
+// });
