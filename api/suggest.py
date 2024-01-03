@@ -39,7 +39,7 @@ templates = Jinja2Templates(directory="src/main/")
 @router.post(
     '/getSuggest',
     # response_model=models.UserTask,
-    # status_code=status.HTTP_200_OK,
+    status_code=status.HTTP_200_OK,
 )
 def create_operation(
         user_data: models.CountSuggest,

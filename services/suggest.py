@@ -22,24 +22,33 @@ class SuggestServices:
         self.session = session
 
     def get_suggest(self,TechTaskDATA: models.CountSuggest ,user: tables.User) -> tables.Suggest:
-        try:
+        # try:
+        if '*' in TechTaskDATA.search or '_' in TechTaskDATA.search:
+            looking_for = TechTaskDATA.search.replace('_', '__') \
+                .replace('*', '%') \
+                .replace('?', '_')
+        else:
+            looking_for = '%{0}%'.format(TechTaskDATA.search)
 
+        # result = db.table.filter(db.table.column.ilike(looking_for))
             operation = (
                 self.session
                 .query(tables.Suggest)
                 .filter(
                     tables.Suggest.customer_id == TechTaskDATA.customer_id,
+                    tables.Suggest.value_table.ilike(looking_for)
                 ).limit(TechTaskDATA.count)
                 .all()
             )
             if not operation:
-                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+
+                raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Отсутствуют значения заданным фильтрам")
             # return jsonable_encoder(operation)
             return jsonable_encoder(operation)
 
-        except:
-            print(traceback.format_exc())
-            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error")
+        # except:
+        #     print(traceback.format_exc())
+        #     raise HTTPException(status.HTTP_409_CONFLICT, detail="Error")
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
     def set_suggest(self,TechTaskDATA: models.SuggestM ,user: tables.User,) -> tables.Suggest:
@@ -62,7 +71,7 @@ class SuggestServices:
                 .all()
             )
             if not operation:
-                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
             return jsonable_encoder(operation)
 
