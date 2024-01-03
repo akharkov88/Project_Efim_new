@@ -6,7 +6,6 @@ from sqlalchemy import (
     Numeric,
     String,
     DateTime,
-    UniqueConstraint,
 )
 # from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.declarative import declarative_base
@@ -86,20 +85,8 @@ class PTO_Value(Base):
     user_name = Column(String, ForeignKey('users.username'), index=True)
     value_table = Column(String, nullable=False)
     create_at = Column(DateTime(timezone=True), server_default=func.now())
+    # update_at = Column(DateTime(timezone=True), server_default=func.now())
 
-
-
-class Suggest(Base):
-    __tablename__ = 'Suggest_Value'
-    id = Column(Integer, primary_key=True)
-    customer_id = Column(String)
-    value_table = Column(String)
-    create_at = Column(DateTime(timezone=True), server_default=func.now())
-    user_name = Column(String, ForeignKey('users.username'), index=True)
-
-    __table_args__ = (
-        UniqueConstraint('customer_id', 'value_table', name='uix_customer_id_value_table'),
-    )
     # create_at =  Mapped[create_at]
     # update_at =  Mapped[update_at]
 

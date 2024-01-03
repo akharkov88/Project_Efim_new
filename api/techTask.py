@@ -52,8 +52,6 @@ def create_operation(
 ):
     return Tech_TaskServices.createTechTaskPTO_S(user_data,user)
 
-
-
 @router.post(
     '/formPtoGet',
     # response_model=models.UserTask,
@@ -65,4 +63,3 @@ def create_operation(
         user: models.User = Depends(get_current_user),
 ):
     return Tech_TaskServices.getTechTaskPTO_S(user_data,user)
-
