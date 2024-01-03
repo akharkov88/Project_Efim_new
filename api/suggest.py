@@ -42,7 +42,7 @@ templates = Jinja2Templates(directory="src/main/")
     # status_code=status.HTTP_200_OK,
 )
 def create_operation(
-        user_data: models.BaseSuggest,
+        user_data: models.CountSuggest,
         Suggest_Services: SuggestServices = Depends(),
         user: models.User = Depends(get_current_user),
 ):

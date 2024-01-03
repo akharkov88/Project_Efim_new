@@ -21,7 +21,7 @@ class SuggestServices:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-    def get_suggest(self,TechTaskDATA: models.BaseSuggest ,user: tables.User,) -> tables.Suggest:
+    def get_suggest(self,TechTaskDATA: models.CountSuggest ,user: tables.User) -> tables.Suggest:
         try:
 
             operation = (
@@ -29,7 +29,7 @@ class SuggestServices:
                 .query(tables.Suggest)
                 .filter(
                     tables.Suggest.customer_id == TechTaskDATA.customer_id,
-                )
+                ).limit(TechTaskDATA.count)
                 .all()
             )
             if not operation:

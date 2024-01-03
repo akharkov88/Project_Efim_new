@@ -28,5 +28,6 @@ from .BaseFile_m import (
 from .suggest import (
     BaseSuggest,
     SuggestM,
+    CountSuggest,
 )
 
