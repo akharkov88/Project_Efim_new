@@ -1,9 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 27a2a0e (03.01 23:06)
 .idea/*
 src/file/
 __pycache__/
 api/__pycache__/
 models/__pycache__/
+<<<<<<< HEAD
 services/__pycache__/
 =======
 >>>>>>> ef99e48 (03.01 23:06)
+=======
+services/__pycache__/
+>>>>>>> 27a2a0e (03.01 23:06)
