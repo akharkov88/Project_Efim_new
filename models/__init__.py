@@ -24,3 +24,10 @@ from .BaseFile_m import (
     UUIDModelBase,
 )
 
+
+from .suggest import (
+    BaseSuggest,
+    SuggestM,
+    CountSuggest,
+)
+

@@ -1,0 +1,6 @@
+.idea/*
+src/file/
+__pycache__/
+api/__pycache__/
+models/__pycache__/
+services/__pycache__/
