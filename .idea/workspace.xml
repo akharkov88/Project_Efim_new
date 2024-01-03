@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="b1c1963b-2492-4470-9376-c640fe9f573c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-=======
-    <list default="true" id="968a4a52-777b-4505-ba10-306464cab19b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore222" beforeDir="false" />
->>>>>>> ef99e48 (03.01 23:06)
-    </list>
+    <list default="true" id="968a4a52-777b-4505-ba10-306464cab19b" name="Changes" comment="sad" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-<<<<<<< HEAD
-=======
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -29,13 +19,10 @@
       </list>
     </option>
   </component>
->>>>>>> ef99e48 (03.01 23:06)
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-<<<<<<< HEAD
-=======
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
@@ -50,61 +37,18 @@
       </UrlAndAccount>
     </option>
   </component>
->>>>>>> ef99e48 (03.01 23:06)
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
-<<<<<<< HEAD
-  <component name="ProjectId" id="2Zdh1zbHk9l3lxxkvFiHLyG3QKJ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-=======
   <component name="ProjectId" id="2Zlo4FLVFCUYLAzklkMxoVfisee" />
->>>>>>> ef99e48 (03.01 23:06)
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/aleksey/PycharmProjects/pythonProject/Project_Efim_new&quot;,
-=======
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tables.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tables_New_Create.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/aleksey/pythonProject/Project_Efim_new&quot;,
->>>>>>> 27a2a0e (03.01 23:06)
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-<<<<<<< HEAD
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
-  </component>
-  <component name="RunManager">
-=======
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
@@ -113,7 +57,7 @@
     "Python.tables_New_Create.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "Rebasing master",
     "last_opened_file_path": "/home/aleksey/pythonProject/Project_Efim_new",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -122,12 +66,8 @@
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
-=======
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
->>>>>>> 27a2a0e (03.01 23:06)
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -141,7 +81,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
->>>>>>> ef99e48 (03.01 23:06)
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project_Efim_new" />
       <option name="ENV_FILES" value="" />
@@ -165,11 +104,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-<<<<<<< HEAD
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.main" />
-=======
     <configuration name="tables" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project_Efim_new" />
       <option name="ENV_FILES" value="" />
@@ -221,7 +155,6 @@
         <item itemvalue="Python.main" />
         <item itemvalue="Python.tables_New_Create" />
         <item itemvalue="Python.tables" />
->>>>>>> ef99e48 (03.01 23:06)
       </list>
     </recent_temporary>
   </component>
@@ -235,19 +168,6 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-      <changelist id="b1c1963b-2492-4470-9376-c640fe9f573c" name="Changes" comment="" />
-      <created>1702757652791</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1702757652791</updated>
-      <workItem from="1702757654652" duration="819000" />
-      <workItem from="1704189969502" duration="1863000" />
-      <workItem from="1704192580930" duration="1528000" />
-      <workItem from="1704196713217" duration="3525000" />
-      <workItem from="1704313004437" duration="1394000" />
-      <workItem from="1704314399748" duration="603000" />
-=======
       <changelist id="968a4a52-777b-4505-ba10-306464cab19b" name="Changes" comment="" />
       <created>1703005833380</created>
       <option name="number" value="Default" />
@@ -271,7 +191,6 @@
       <workItem from="1704270957596" duration="665000" />
       <workItem from="1704287344703" duration="9626000" />
       <workItem from="1704310680717" duration="3824000" />
->>>>>>> ef99e48 (03.01 23:06)
     </task>
     <servers />
   </component>
@@ -288,11 +207,6 @@
         <option value="Space.CommitStatus" />
       </list>
     </option>
-<<<<<<< HEAD
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1704312544591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-=======
     <option name="COLUMN_ID_WIDTH">
       <map>
         <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="43" />
@@ -309,6 +223,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="sad" />
+    <option name="LAST_COMMIT_MESSAGE" value="sad" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -355,6 +273,5 @@
     <SUITE FILE_PATH="coverage/Project_Efim_new$tables.coverage" NAME="tables Coverage Results" MODIFIED="1704212946360" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1704310692245" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project_Efim_new$tables_New_Create.coverage" NAME="tables_New_Create Coverage Results" MODIFIED="1704214064666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
->>>>>>> ef99e48 (03.01 23:06)
   </component>
 </project>
