@@ -6,9 +6,9 @@
                 <div class="form-group">
                     <label>Добавление раздела</label>
                     <select class="form-control form-group" id="select_one">
-                        <option value="0">Выбирите значение</option>
-                        <option value="1">Устройство декоративного бассейна. Парк Швейцария</option>
-                        <option value="2">3</option>
+                        <option value="0">Земляные работы</option>
+                        <option value="1">Бетонные работы</option>
+                        <option value="2">Отделочные работы</option>
                         <option value="3">4</option>
                         <option value="4">5</option>
                     </select>
@@ -17,6 +17,7 @@
 
 
                 </div>
+
                 <div class="style_table table-responsive" id='style_table' style="display:none;">
                     <table class="first iksweb" id="first_table">
 
@@ -26,15 +27,15 @@
         </div>
     </div>
 </div>
-
+{# Добавил src #}
+<script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
 <script>
 
-{# хранить значения value инпутов в массиве??? при сохранении формы, например.
-var inputValues = [];
-inputValues.push(document.getElementById('input1').value);
-inputValues.push(document.getElementById('input2').value);#}
 
-
+{#const input = document.querySelector('input')
+input.onchange = (e) => {
+  console.warn('test change'+e.target.value)
+}#}
     const table = document.getElementById('first_table');
 
     let coll_table = 1;
@@ -88,8 +89,63 @@ inputValues.push(document.getElementById('input2').value);#}
         }
     }
 
-    table.addEventListener('click', function handleClick(event) {
+$(document).on('change', 'input', function () {
+        {#let options = $('datalist')[0].options;#}
+        {#options = $('datalist#exampleList_vid_rabot')[0].options;#}
 
+        let val = $(this).val();
+        console.warn(val);
+        console.warn($(this)[0].list.id);
+        $(this)[0].setAttribute('value', val); {# добавляется атрибут value в изменяемый input#}
+        let options_id = $(this)[0].list.id
+        let options = $(`datalist#${options_id}`)[0].options;
+        console.warn(options);
+
+        setTimeout(addOption, 1000);
+
+        function addOption() {
+        let control = false;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === val) {
+                console.log(val);
+                control = true;
+                break;
+            }
+        }
+        if (!control){
+        console.warn($(`datalist#${options_id}`))
+        $(`datalist#${options_id}`).prepend(`<option value='${val}'>`);}
+        }
+
+
+        {#let control = false;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === val) {
+                console.log(val);
+                control = true;
+                break;
+            }
+        }
+        if (!control){
+        console.warn($(`datalist#${options_id}`))
+        $(`datalist#${options_id}`).prepend(`<option value='${val}'>`);}#}
+        {# <datalist id="exampleList">
+        <option value="B"> #}
+
+    });
+
+    function updateList(){
+
+        alert('tyt 2')
+    const selectElement = document.getElementsByClassName(".exampleList_vid_rabot");
+    console.warn('selectElement = ' + selectElement)
+    {#selectElement.addEventListener("change", (event) => {
+    alert('change')
+    });#}
+    }
+
+
+    table.addEventListener('click', function handleClick(event) {
         if (event.target.type == 'button' && (event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'button_table_2' || event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'button_table_1')){
             let str = event.target.id.slice(event.target.id.lastIndexOf('_')+1, event.target.id.length);
             addLine(str, event.target.id, id_count);
@@ -99,16 +155,27 @@ inputValues.push(document.getElementById('input2').value);#}
             {#alert('delbtn');#}
             delLine(event.target.id);
         } else if (event.target.type == 'button' && event.target.id == 'del_razdel'){
-
             alert('Удалить раздел: ')
+        } else if (event.target.type == 'input' && event.target.id.slice(0, event.target.id.lastIndexOf('_')) == 'input'){
+        alert('tyt 1')
+        updateList()
+        }
+        else {console.warn('type event = ' + event.target.type + ' target = ' + event.target[0])
+        if (event.target[1] == 'HTMLInputElement'){console.warn('OK')}
         }
     });
+
+{#const input = document.querySelector('input')
+input.onchange = (e) => {
+  console.warn('!!! change datalist = ' + e.target.value)
+}#}
+
 
     function addLine(id_table, cel, id_create) {
         console.warn(id_table)
         let tbody = document.getElementById(`tbody_${id_table}`)
         console.log('tbody = ' + tbody)
-         let arrIdTable = [];
+        let arrIdTable = [];
                 $(`#tbody_${id_table} tr`).each(function () {
                     arrIdTable.push(this.id);
                 });
@@ -119,14 +186,51 @@ inputValues.push(document.getElementById('input2').value);#}
 
             let parentTbody = document.getElementById(`tbody_${id_table}`);
             console.warn(parentTbody)
+{#
+<input list="ff">
+<datalist id="ff">
+  <option>Option 1 Here</option>
+  <option>Option 2 Here</option>
+</datalist>
 
-            $(parentTbody).append(`<tr id = "stroka${id_create}"><td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td>
-<td contenteditable="true" style="padding: 0;"><input id = 'input_${id_create}' type="text" name="example" list="exampleList"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList"><option value="A"><option value="B"></datalist></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button></td></tr>`);
+<input id = 'input_${id_create}'  list="exampleList" style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+<datalist id="exampleList">
+<option value="A">
+<option value="B">
+</datalist>
+#}
+
+            $(parentTbody).append(`<tr id = "stroka${id_create}">
+<td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td>
+<td contenteditable="true" style="padding: 0;">
+<input id = 'input_${id_create}'  list="exampleList" style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+<datalist id="exampleList">
+<option value="A">
+<option value="B">
+</datalist>
+</td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button>
+</td></tr>`);
 
         } else if (cel.slice(0,cel.lastIndexOf('_')) == 'button_table_1'){
             let parentTbody = document.getElementById(`tbody_${id_table}`);
             console.warn(parentTbody)
-            $(parentTbody).append(`<tr id = "stroka${id_create}"><td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td> <td contenteditable="true" style="padding: 0;"><input id = 'input_${id_create}' type="text" name="example" list="exampleList_vid_rabot"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);"><datalist id="exampleList_vid_rabot"><option value="Стоимость работ"><option value="Стоимость материала"></datalist></td><td colspan="3" contenteditable="true"></td><td contenteditable="true"></td><td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button></td></tr>`);
+            $(parentTbody).append(`<tr id = "stroka${id_create}">
+<td contenteditable="false" id = "nn${id_create}">${arrIdTable.length + 1}</td>
+<td contenteditable="true" style="padding: 0;">
+<input id = 'input_${id_create}'  id = "exampleList_vid_rabot" list="exampleList_vid_rabot"   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+<datalist id="exampleList_vid_rabot">
+<option value="Стоимость работ">
+<option value="Стоимость материала">
+</datalist></td>
+<td colspan="3" contenteditable="true"></td>
+<td contenteditable="true"></td>
+<td><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_create}"></button>
+</td></tr>`);
         }
 
     }
@@ -182,8 +286,6 @@ inputValues.push(document.getElementById('input2').value);#}
              }
         }
 
-
     }
-
 
 </script>
