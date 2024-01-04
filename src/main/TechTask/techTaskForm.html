@@ -452,7 +452,7 @@
 
                                                         {#return response.json();#}
                                                     }
-                                                    postData('http://127.0.0.1:8000/main/creatTask', elem_obj)
+                                                    postData('/main/creatTask', elem_obj)
                                                         .then((data) => {
                                                             console.log('------успех-----', data);
                                                             window.location.href = '/main/techTask.html';

@@ -88,7 +88,7 @@
                     });
                     {#return response.json();#}
                 }
-                postData('http://127.0.0.1:8000/main/getTechTaskNameTechTask?NameTechTask=' + nameTT.NameTechTask)
+                postData('/main/getTechTaskNameTechTask?NameTechTask=' + nameTT.NameTechTask)
                     .then((data) => {
                         console.log('------успех-----', data);
                     }).catch((err) => {

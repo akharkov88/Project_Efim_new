@@ -17,7 +17,7 @@ class Settings(BaseConfig):
 
     jwt_secret: str="qwerty"
     jwt_algorithm: str = 'HS256'
-    jwt_expires_s: int = 3600
+    jwt_expires_s: int = 43200
 
 
 # settings = Settings(
