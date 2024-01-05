@@ -9,6 +9,7 @@ from . import (
     techTask,
     techTaskForm,
     suggest,
+    UserProfile,
 )
 
 
@@ -22,3 +23,4 @@ router.include_router(techTask.router)
 router.include_router(techTaskForm.router)
 router.include_router(BaseFile.router)
 router.include_router(suggest.router)
+router.include_router(UserProfile.router)
