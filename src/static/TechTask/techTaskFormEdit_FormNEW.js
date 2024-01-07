@@ -1,3 +1,11 @@
+$("#div1").delegate(":input", "input", function (e) {
+    var options = $('datalist')[0].options;
+    if (options.length!=0 && options[options.length-1].value==$(this).val()){
+        return
+    }
+    set_options_datalist("type", e.target.value, 5)
+
+});
 function set_options_datalist(customer_id, search, count = 10) {
     $.ajax({
         method: 'POST',
@@ -14,63 +22,55 @@ function set_options_datalist(customer_id, search, count = 10) {
                     return
                 }
             }
-            // ingredients.unshift({value_table:"Добавить значение в список"})
-
-            console.log("ingredients",ingredients)
             $("#tetst_v").empty();
-                // $("<option/>").html("Добавить значение в список"+i).appendTo("#tetst_v");
-
             for (var i in ingredients) {
-                $("<option/>").html(ingredients[i].value_table).appendTo("#tetst_v");
-            }
+                $(`<option id="${i}" />`).html(ingredients[i].value_table).appendTo("#tetst_v");
+                if (i == ingredients.length - 1) {
+                    $(`<option/>`).html(search).appendTo("#tetst_v");
+                }
 
-            console.log("111111111111111111111")
+            }
+        },
+        error: function (error) {
+            $("#tetst_v").empty();
+            $(`<option/>`).html(search).appendTo("#tetst_v");
 
         },
-
-              error: function (error) {
-
-                   console.log("error",error)
-                // $("<option/>").html("Добавить значение в список").appendTo("#tetst_v");
-
-
-      },
-      // complete: function () {
-      //   // Handle the complete event
-      //   alert("ajax completed " + cartObject.productID);
-      // }
-
     });
 }
+//
+// $("#input_v").delegate(":input", "input", function (event) {
+//     var _this = $(this);
+//     var value = _this.val();
+//     console.log("value", value)
+//
+//     set_options_datalist("type", value, 5)
+//     // _this.removeAttr("list").focus();
+//
+//
+// });
+// $(document).on('change', 'input', function (event) {
+//     console.log("change")
+// })
+//
+// $(document).on( 'change', function() {
+//     console.log("change")
+//
+// })
+// $(document).on( 'input', function() {
+//     console.log("change")
+//
+// })
+//     var options = $('datalist')[0].options;
+//     if (options[options.length-1].value==$(this).val()){
+//     }
 
-$("#input_v").on("keyup", function (event) {
-    var _this = $(this);
-    var value = _this.val();
-    console.log("value", value)
 
-    set_options_datalist("type", value, 5)
-    // _this.removeAttr("list").focus();
-
-
-});
-$(document).on('change', 'input', function (event) {
-    console.log("change")
-
-    var _this = $(this);
-    var options = $('datalist')[0].options;
-    var val = $(this).val();
-    for (var i = 0; i < options.length; i++) {
-        if (options[i].value === val) {
-            console.log("Выбрали значения", val);
-            $("#tetst_v").blur()
 //         _this.removeAttr("list").focus();
 // setTimeout(function() {
 //     document.getElementById('input_v').setAttribute('list', document.getElementById('tetst_v').id);
 // },100);
-            break;
-        }
-    }
-});
+// });
 // functi
 // async function fff() {
 //     let response = await fetch('/suggest/getSuggest', {
