@@ -23,26 +23,27 @@
                                     <div class="card-body p-4 text-white">
 
                                         <div class="text-center pt-3 pb-2">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                                            <img src="{{ url_for('static', path='auth/images/check1.webp') }}"
                                                  alt="Check" width="60">
-                                            <h2 class="my-4">Task List</h2>
+                                            <h2 class="my-4">СПИСОК ЗАДАЧ</h2>
                                         </div>
 
                                         <table class="table text-white mb-0">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Team Member</th>
-                                                <th scope="col">Task</th>
-                                                <th scope="col">Priority</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
+                                                <th scope="col">АВТОР</th>
+                                                <th scope="col">ИСПОЛНИТЕЛИ</th>
+                                                <th scope="col">ДАТА НАЗНАЧЕНИЯ</th>
+                                                <th scope="col">КОНТРОЛЬНЫЙ СРОК</th>
+                                                <th scope="col">ПРИОРИТЕТ</th>
+                                                <th scope="col">ЭТАП ВЫПОЛНЕНИЯ</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr class="fw-normal">
-                                                <th>
-                                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                                         alt="avatar 1" style="width: 45px; height: auto;">
-                                                    <span class="ms-2">Alice Mayer</span>
+                                      s          <th>
+                                                    <span class="ms-2">Заполнение формы ПТО</span>
                                                 </th>
                                                 <td class="align-middle">
                                                     <span>Call Sam For payments</span>
@@ -124,10 +125,20 @@
                                                     </h6>
                                                 </td>
                                                 <td class="border-0 align-middle">
-                                                    <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                                                            class="fas fa-check fa-lg text-success me-3"></i></a>
-                                                    <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                                                            class="fas fa-trash-alt fa-lg text-warning"></i></a>
+
+{#                                                    <a href="#!"><i class="fa fa-bell fa-10x" ></i></a>#}
+                                                    <a href="#!"><i class="fa fa-camera-retro fa-10x"></i></a>
+                                                    <a href="#!"><i class="fa fa-home fa-10"></i></a>
+{#    <div><i class="fa fa-envelope"></i> - envelope icon</div>#}
+{#    <div> <i class="fa fa-phone"></i> - phone icon</div>#}
+{#    <div> <i class="fa fa-search"></i> - search icon</div>#}
+{#    <div><i class="fa fa-shopping-cart"></i> - shopping cart icon</div>#}
+{#    <div> <i class="fa fa-user"></i> - user icon</div>#}
+{#    <div> <i class="fa fa-heart"></i> - heart icon</div>#}
+{#    <div><i class="fa fa-play"></i> - play icon</div>#}
+{#    <div> <i class="fa fa-cog"></i> - cog/gear icon</div>#}
+{#    <div><i class="fa fa-home"></i> - trash icon</div>#}
+{#    <div> <i class="fa fa-check"></i> - checkmark icon</div>#}
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -697,3 +697,67 @@ body {
     cursor: pointer;
     border: solid 1px #BA68C8
 }
+
+
+/*#############################################################*/
+    /* set the font-size of all icons to 24px */
+    .fa {
+        font-size: 24px;
+    }
+
+    /* add some margin to the left of the icon elements */
+    div>.fa {
+        margin-right: 5px;
+    }
+
+    /* style the text in the div elements */
+
+    /* change the color of the envelope icon to red */
+    .fa-envelope {
+        color: red;
+    }
+
+    /* change the color of the phone icon to green */
+    .fa-phone {
+        color: green;
+    }
+
+    /* change the color of the search icon to blue */
+    .fa-search {
+        color: blue;
+    }
+
+    /* change the color of the shopping cart icon to orange */
+    .fa-shopping-cart {
+        color: orange;
+    }
+
+    /* change the color of the user icon to purple */
+    .fa-user {
+        color: black;
+    }
+
+    /* change the color of the heart icon to pink */
+    .fa-heart {
+        color: pink;
+    }
+
+    /* change the color of the play icon to black */
+    .fa-play {
+        color: black;
+    }
+
+    /* change the color of the cog/gear icon to gray */
+    .fa-cog {
+        color: gray;
+    }
+
+    /* change the color of the trash icon to brown */
+    .fa-trash {
+        color: purple;
+    }
+
+    /* change the color of the checkmark icon to teal */
+    .fa-check {
+        color: teal;
+    }
