@@ -53,7 +53,7 @@ def create_operation(
     # response_model=models.UserTask,
     # status_code=status.HTTP_200_OK,
 )
-def create_operation(
+def setSuggest(
         user_data: models.SuggestM,
         Suggest_Services: SuggestServices = Depends(),
         user: models.User = Depends(get_current_user),

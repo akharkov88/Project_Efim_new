@@ -25,7 +25,10 @@
                                         <div class="text-center pt-3 pb-2">
                                             <img src="{{ url_for('static', path='auth/images/check1.webp') }}"
                                                  alt="Check" width="60">
-                                            <h2 class="my-4">СПИСОК ЗАДАЧ</h2>
+                                            <h3 class="my-4">СПИСОК ЗАДАЧ</h3>
+                                        </div>
+                                        <div class="text-center pt-3 pb-2">
+
                                         </div>
 
                                         <table class="table text-white mb-0">
@@ -42,22 +45,44 @@
                                             </thead>
                                             <tbody>
                                             <tr class="fw-normal">
+
+                                                {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
                                                     <span class="ms-2">Заполнение формы ПТО</span>
                                                 </th>
+
+                                                {#АВТОР#}
                                                 <td class="align-middle">
-                                                    <span>Call Sam For payments</span>
+                                                    <span>Харьков Алексей</span>
                                                 </td>
+
+                                                {#ИСПОЛНИТЕЛИ#}
+                                                <td class="align-middle">
+
+                                                </td>
+
+                                                {#ДАТА НАЗНАЧЕНИЯ#}
+                                                <td class="align-middle">
+
+                                                </td>
+
+                                                {#КОНТРОЛЬНЫЙ СРОК#}
+                                                <td class="align-middle">
+
+                                                </td>
+
+
+                                                {#ПРИОРИТЕТ#}
                                                 <td class="align-middle">
                                                     <h6 class="mb-0"><span class="badge bg-danger">High priority</span>
                                                     </h6>
                                                 </td>
+
+                                                {#ЭТАП ВЫПОЛНЕНИЯ#}
                                                 <td class="align-middle">
-                                                    <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                                                            class="fas fa-check fa-lg text-success me-3"></i></a>
-                                                    <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                                                            class="fas fa-trash-alt fa-lg text-warning"></i></a>
+
                                                 </td>
+
                                             </tr>
                                             <tr class="fw-normal">
                                                 <th>
