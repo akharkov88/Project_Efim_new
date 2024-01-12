@@ -4,254 +4,33 @@
             <form role="form" id="formFrame">
 
                 <div class="form-group">
+                <label ></label>
+                <div class="form-group">
+                    <label>Наименнование объекта</label>
+                    <input value="{{ getTechTaskName.NameTechTask }}"
+                           class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                <div id="div_name_razdel">
                     <label>Добавление раздела</label>
-                    <select class="form-control form-group" id="select_one">
-                        <option value="0">Земляные работы</option>
-                        <option value="1">Бетонные работы</option>
-                        <option value="2">Отделочные работы</option>
-                        <option value="3">4</option>
-                        <option value="4">5</option>
-                    </select>
+                    <div id="div1">
+                    <input id="select_one" type="text" name="example" list="ListRazdel" value="" class="form-control">
+                    <datalist id="ListRazdel">
+                    </datalist>
+                    </div>
+
+                    </div>
+                    </div>
+
                     <button id='add_razdel' type="button" class="btn btn-primary"> Добавить раздел</button>
-                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>
+{#                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>#}
 
 
                 </div>
 
-                <div class="style_table table-responsive-pto" id='style_table' style="display:block;">
-                    <table class="first iksweb" id="first_table">
-                    <tbody id = "earthWorks_1">
-                    <tr><td colspan="6" style="padding: 0;"><input id = 'input_zagolovok'  list="zagolovok" style = "width: 100%; height: 100%; border:  0;">
-                                <datalist id="zagolovok">
-                                </datalist></td>
-                    </tr>
-                        <tr style="background-color: #fce1b3">
-                            <td>№</td>
-                            <td rowspan="2">Наименование</td>
-                            <td colspan="4">Стоимость</td>
-                            <td colspan="4">Справочная информация</td>
-                            <td colspan="8">Аналитический блок</td>
-                        </tr>
+                <div class="style_table table-responsive-pto" id='style_table' style="display:none;">
+                    <table class="first iksweb" id="first_table" >
 
-                        <tr style="background-color: #fce1b3">
-                            <td>п/п</td>
-                            <td>Ед.изм.</td>
-                            <td>Кол-во</td>
-                            <td>Цена</td>
-                            <td>Всего</td>
-                            <td rowspan="1">Тр-затр (чел-дн)</td>
-                            <td rowspan="1">Столбец для анализа</td>
-                            <td rowspan="1"></td>
-                            <td rowspan="1">Примечание</td>
-                            <td>Кол-во</td>
-                            <td>Цена руб-ед</td>
-                            <td>Всего</td>
-                            <td>Тр-затр (чел-дн)</td>
-                            <td>Стоимость дня рабочего</td>
-                        </tr>
-                        </tbody>
-                        <tbody id = 'earthWorks_costWork_1'>
-                        <tr>
-                            <td contenteditable="false">1</td>
-                            <td contenteditable="false" id = 'earthWorks_costWork_addLine_1' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
-                            Стоимость работ
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
-                            </td>
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        </tr>
-                    <tbody id = 'earthWorks_costMaterial_1'>
-                        <tr>
-                            <td contenteditable="false">2</td>
-                            <td contenteditable="false" id = 'earthWorks_costMaterial_addLine_1' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
-                            Стоимость материала
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
-                            </td>
-
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="false" colspan="2"> Ед изм расчётные </td>
-
-                            <td contenteditable="false"> Ед изм (М2) для окраски </td>
-
-                            <td contenteditable="true"></td>
-
-                            <td contenteditable="false">Закупка по счету - ед изм расчётные</td>
-                            <td contenteditable="false">Остаток закупки</td>
-                            <td contenteditable="false">ед изм к закупке</td>
-                            <td contenteditable="false">руб-ед</td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="false">Счёта</td>
-                            <td contenteditable="false">Срок поставки</td>
-                            <td contenteditable="false">ПРИМЕЧАНИЕ</td>
-                        </tr>
-                    </tbody>
-
-                    <tbody id = 'earthWorks_Special_1'>
-                    <tr>
-                            <td contenteditable="false">3</td>
-
-                            <td contenteditable="false" id = 'earthWorks_Special_addLine_1' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
-                            Стоимость спецтехники
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
-                            </td>
-
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-                            <td contenteditable="true"></td>
-
-                            <td contenteditable="false">Стоимость аренды</td>
-                            <td contenteditable="false">Телефон</td>
-                            <td contenteditable="false">Счет</td> {# под ней вложение #}
-                            <td contenteditable="false">Срок</td>
-
-                        </tr>
-
-                    </tbody>
-
-                     <tbody id = 'earthWorks_Total_1'>
-                        <tr>
-                            <td contenteditable="false">4</td>
-                            <td contenteditable="false" style="font-weight: bold;" colspan="4"> Итого
-                            </td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                        </tr>
-                        <tr id = "stroka${id_create}">
-                            <td contenteditable="false">5</td>
-                            <td contenteditable="false">
-                                Накладные расходы
-                            </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                        </tr>
-
-                        <tr id = "stroka${id_create}">
-                            <td contenteditable="false">6</td>
-                            <td contenteditable="false">
-                                Вспомогательные материалы
-                            </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                        </tr>
-
-                        <tr id = "stroka${id_create}">
-                            <td contenteditable="false">7</td>
-                            <td contenteditable="false">
-                                Транспортные расходы
-                            </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                        </tr>
-
-                        <tr id = "stroka${id_create}">
-                            <td contenteditable="false">8</td>
-                            <td contenteditable="false" style="font-weight: bold; text-align: right">
-                                ВСЕГО:
-                            </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-                        </tr>
-                        <tr id = "stroka${id_create}">
-                            <td contenteditable="false">9</td>
-                            <td contenteditable="false" style="font-weight: bold;">
-                                В том числе НДС - 20% за нал от материалов
-                            </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-                        </tr>
-                    </tbody>
                     </table>
                 </div>
             </form>
@@ -260,10 +39,11 @@
 </div>
 
 <script>
+
 const table = document.getElementById('first_table');
 
-    let coll_table = 2;
-    let arr_coll_table = [1,2];
+    let coll_table = 1;
+    let arr_coll_table = [1];
     let id_count = 1;
     let arr_id_count = [1];
 
@@ -271,8 +51,19 @@ const table = document.getElementById('first_table');
         let addLineObj = new Object();
         addLineObj = {
             'earthWorks_costWork': `<tr id = "stroka_${id_count}">
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+
+
+                            <td contenteditable="false">
+
+                            </td>
+                            <td contenteditable="true" style="padding: 0;">
+
+                            <div id="div_costWork_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
+                            <input id = 'input_costWork_${id_count}' type="text"  name="example" list="datalist_costWork_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+                            <datalist id="datalist_costWork_${id_count}">
+                            </datalist>
+                            </div></td>
                             <td contenteditable="true"></td>
 
 
@@ -290,8 +81,15 @@ const table = document.getElementById('first_table');
                         <td contenteditable="true"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
-<td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"></td>
+                            <td contenteditable="true" style="padding: 0;">
+                            <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
+                            <input id = 'input_costMaterial_${id_count}' type="text"  name="example" list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+                            <datalist id="datalist_costMaterial_${id_count}">
+                            </datalist>
+                            </div>
+                            </td>
                             <td contenteditable="true"></td>
 
 
@@ -312,8 +110,15 @@ const table = document.getElementById('first_table');
                         <td contenteditable="true"></td>
                         </tr>`,
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
-<td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"></td>
+                            <td contenteditable="true" style="padding: 0;">
+                            <div id="div_Special_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
+                            <input id = 'input_Special_${id_count}' type="text"  name="example" list="datalist_Special_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);">
+                            <datalist id="datalist_Special_${id_count}">
+                            </datalist>
+                            </div>
+                            </td>
                             <td contenteditable="true"></td>
 
 
@@ -323,7 +128,7 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+                            <td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
                         <td contenteditable="true"></td>
                         <td contenteditable="true"></td>
                         <td contenteditable="true"></td>
@@ -331,14 +136,14 @@ const table = document.getElementById('first_table');
                         </tr>`,
         };
 
-        console.warn('!!!',addLineObj[forTable])
+        //console.warn('!!!',addLineObj[forTable])
         return addLineObj[forTable];
     }
 
 
 let time
 function showButton (event, elem){
-console.warn(document.getElementsByTagName('NameTechTask'))
+{#console.warn(document.getElementsByTagName('NameTechTask'))#}
 {#time = setTimeout(function (){#}
 elem = elem.id;
 {#console.warn('child = ',elem, ' ', document.getElementById(elem).childNodes[1])#}
@@ -353,107 +158,41 @@ elem = elem.id;
 document.getElementById(elem).childNodes[1].style.display = "none";
 }
 
-function addLineSpecial(element){
-console.warn('!! do element = ',element)
-element = element.parentElement.parentElement.parentElement.parentElement;
-console.warn('element = ',element)
-let element_id = element.id;
-console.warn('id = ',element_id)
-let arrIdTable = [];
 
-       $(`#${element_id} tr`).each(function () {
-           arrIdTable.push(this.id);
-       });
-       console.warn(arrIdTable, arrIdTable.length);
-
-
-
-$(element).append(`<tr id = "stroka_${id_count}">
-<td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        </tr>`)
-                        counterTr();
-            id_count++;
-            arr_id_count.push(id_count);
-}
-function addLineCostWork(element){
-console.warn('!! do element = ',element)
-element = element.parentElement.parentElement.parentElement.parentElement;
-console.warn('element = ',element)
-let element_id = element.id;
-console.warn('id = ',element_id)
-let arrIdTable = [];
-
-       $(`#${element_id} tr`).each(function () {
-           arrIdTable.push(this.id);
-       });
-       console.warn(arrIdTable, arrIdTable.length);
-
-
-$(element).append(`<tr id = "stroka_${id_count}">
-<td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-
-
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        </tr>`)
-                        counterTr();
-            id_count++;
-            arr_id_count.push(id_count);
-}
 function addLine(event, element){
-console.warn('target:',event.target)
-console.warn('!! do element = ',element)
+
 element = element.parentElement.parentElement.parentElement.parentElement;
-console.warn('element = ',element)
 let element_id = element.id;
-console.warn('id = ',element_id)
 let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
-console.warn('forObj: ',forObj)
-
-let arrIdTable = [];
-
-       $(`#${element_id} tr`).each(function () {
-           arrIdTable.push(this.id);
-       });
-       console.warn(arrIdTable, arrIdTable.length);
-
-
 $(element).append(objLine(id_count, forObj))
+forObj = forObj.slice(forObj.indexOf('_')+1)
+$(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
+let type = forObj;
+let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
+console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
+    var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
+    console.log("options = " + options)
+    if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
+        {# Определить type по target.id#}
+
+        if ($(this).val().indexOf("Добавить в список \"") != -1) {
+            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`datalist_${forObj}_${id_count}`)
+            $(`#input_${forObj}_${id_count}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
+        }
+        return
+    }
+    set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 5)
+
+});
+console.warn('counterTr(); из AddLine')
 counterTr();
             id_count++;
             arr_id_count.push(id_count);
 }
-    function set_options_datalist(customer_id, element_id ,search, count = 10) {
+
+
+
+function set_options_datalist(customer_id, search,id_datalist, count = 10) {
     $.ajax({
         method: 'POST',
         url: "/suggest/getSuggest",
@@ -464,31 +203,79 @@ counterTr();
         },
         data: `{"customer_id":"${customer_id}","search": "${search}","count":${count}}`,
         success: function (ingredients) {
-            $(`#${element_id}`).empty();
+        console.log("success")
+
             for (var i in ingredients) {
-                $("<option/>").html(ingredients[i].value_table).appendTo(`#${element_id}`);
+
+                {#console.log("search",search)#}
+                {#console.log("ingredients[i].value_table",ingredients[i].value_table)#}
+
+                if (ingredients[i].value_table == search) {
+                {#console.log("return")#}
+
+                    return
+                }
             }
-        }
+                {#console.log("return2")#}
+
+            $(`#${id_datalist}`).empty();
+            for (var i in ingredients) {
+                $(`<option id="${i}" />`).html(ingredients[i].value_table).appendTo(`#${id_datalist}`);
+                if (i == ingredients.length - 1) {
+                    $(`<option/>`).html(`Добавить в список "${search}"`).appendTo(`#${id_datalist}`);
+                }
+
+            }
+        },
+        error: function (error) {
+            $(`#${id_datalist}`).empty();
+            $(`<option/>`).html(`Добавить в список "${search}"`).appendTo(`#${id_datalist}`);
+
+        },
     });
 }
 
-$(document).on("keyup", 'input', function (event) {
-    var _this = $(this);
-    var value = _this.val();
-    set_options_datalist("type", $(this)[0].list.id, value, 5)
-});
+function set_setSuggest(customer_id, add_value,id_datalist) {
+    $.ajax({
+        method: 'POST',
+        url: "/suggest/setSuggest",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": localStorage.getItem('Authorization')
+        },
+        data: `{"customer_id":"${customer_id}","value_table": "${add_value}"}`,
+        success: function (ingredients) {
+            $(`#${id_datalist}`).empty();
+    console.log("2set_options_datalist ", id_datalist)
 
+            set_options_datalist(id_datalist.slice(id_datalist('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,5)
+
+        },
+        error: function (error) {
+        },
+    });
+}
+
+
+let arr_zaglav = [];
     document.getElementById('add_razdel').onclick = function () {
-        let e = document.getElementById("select_one");
-        let value = e.value;
-        let text = e.options[e.selectedIndex].text;
+{#$("#style_table").style.display = 'block';#}
+let e = document.getElementById("select_one");
+let value = e.value;
 
+ if(value == ''){
+            e.setAttribute("required", true)
+       } else if (arr_zaglav.indexOf(value) == -1){
+        arr_zaglav.push(value)
+        console.log(arr_zaglav)
+        document.getElementById("style_table").style.display = "block";
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
-                    <tr><td colspan="6" style="padding: 0;"><input id = 'input_zagolovok'  list="zagolovok" style = "width: 100%; height: 100%; border:  0;">
-                                <datalist id="zagolovok">
-                                </datalist></td>
+                    <tr><td colspan="6" style="padding: 0;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;">
+                               </td><td colspan="4" ><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
+                            <td rowspan="2">Тех столбец</td>
                             <td>№</td>
                             <td rowspan="2">Наименование</td>
                             <td colspan="4">Стоимость</td>
@@ -515,6 +302,7 @@ $(document).on("keyup", 'input', function (event) {
                         </tbody>
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
                         <tr>
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" id = 'earthWorks_costWork_addLine_${coll_table}' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость работ
@@ -535,6 +323,7 @@ $(document).on("keyup", 'input', function (event) {
                         </tr>
                     <tbody id = 'earthWorks_costMaterial_${coll_table}'>
                         <tr>
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" id = 'earthWorks_costMaterial_addLine_${coll_table}' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость материала
@@ -562,6 +351,7 @@ $(document).on("keyup", 'input', function (event) {
 
                     <tbody id = 'earthWorks_Special_${coll_table}'>
                     <tr>
+                    <td></td>
                             <td contenteditable="false"></td>
                              <td contenteditable="false" id = 'earthWorks_Special_addLine_${coll_table}' style="font-weight: bold;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость спецтехники
@@ -587,6 +377,7 @@ $(document).on("keyup", 'input', function (event) {
 
                      <tbody id = 'earthWorks_Total_${coll_table}'>
                         <tr>
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold;" colspan="4"> Итого
                             </td>
@@ -605,6 +396,7 @@ $(document).on("keyup", 'input', function (event) {
 
                         </tr>
                         <tr id = "stroka">
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Накладные расходы
@@ -629,6 +421,7 @@ $(document).on("keyup", 'input', function (event) {
                         </tr>
 
                         <tr id = "stroka">
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Вспомогательные материалы
@@ -653,6 +446,7 @@ $(document).on("keyup", 'input', function (event) {
                         </tr>
 
                         <tr id = "stroka">
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Транспортные расходы
@@ -677,6 +471,7 @@ $(document).on("keyup", 'input', function (event) {
                         </tr>
 
                         <tr id = "stroka">
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
                                 ВСЕГО:
@@ -695,6 +490,7 @@ $(document).on("keyup", 'input', function (event) {
 
                         </tr>
                         <tr id = "stroka">
+                        <td></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold;">
                                 В том числе НДС - 20% за нал от материалов
@@ -713,11 +509,41 @@ $(document).on("keyup", 'input', function (event) {
                         </tr>
                     </tbody>`)
 
+                    document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
+
+        document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
+        console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))
+
+            let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
+            zaglav = zaglav.value;
+            arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);
+
+            let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);
+            arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)
+            console.log(arr_zaglav);
+
+         document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+        let arr_test = []
+        $(`#first_table tbody`).each(function () {
+                    arr_test.push(this.id);
+                });
+                console.log('arr_test = ' + arr_test.length)
+        if (arr_test.length == 0){
+        document.getElementById('style_table').style.display = 'none'}
+        counterTr();
+        }
+
 
         coll_table++;
         arr_coll_table.push(coll_table);
+        console.warn('counterTr(); из add_razdel')
         counterTr();
-
+        }
+        else {alert('Заголовок есть')}
         }
 
  function counterTr(){
@@ -732,27 +558,26 @@ let razdelov = 0;
                 if (arr_tbody.length >= 5){
           razdelov = arr_tbody.length / 5;
           console.warn('razdelov v tablice = ', razdelov)
+          console.warn('arr_tbody = ', arr_tbody)
           }
-
+                {# собрать все цифры после '_' в массив и подствить в for 'J'#}
                 {#console.warn('arr_tbody = ' , arr_tbody,' arr_tbody.length = ' , arr_tbody.length);#}
 for(let j = 1; j <= razdelov; j++){
-arr_tr = []
+arr_tr = [];
 for (let i of arr_tbody){
+{#if (i.slice(0, i.lastIndexOf('_')) = 'earthWorks')#}
 if (i.slice(0, i.lastIndexOf('_')) != 'earthWorks'){
-console.warn(i)
-if(i.slice(i.lastIndexOf('_')+1, i.length) == j){
+if(i.slice(i.lastIndexOf('_')+1, i.length) == arr_coll_table[j-1]){
 $(`#${i} tr`).each(function () {
-                    this.firstElementChild.innerHTML = arr_tr.length + 1;
-                    arr_tr.push(this.id);
+                    {#this.firstElementChild.innerHTML = arr_tr.length + 1;#}
+                    this.childNodes[3].innerHTML = arr_tr.length + 1;
+                    arr_tr.push(this.parentElement.id.slice(this.parentElement.id.lastIndexOf('_')+1));
           });
+          console.log('arr_tr = ' + arr_tr)
           }
-
 }
 }
-
-
 }
-
 }
 
 $(document).on('change', 'input', function () {
@@ -776,7 +601,9 @@ $(document).on('change', 'input', function () {
             delLine(event.target.id);
         }
 
-    });
+});
+
+
 
     function delLine(cel){
         console.warn('cel= ' + cel)
@@ -788,9 +615,28 @@ $(document).on('change', 'input', function () {
         console.warn(document.getElementById('stroka_' + id_del))
         document.getElementById(`stroka_${id_del}`).remove()
 
+                console.warn('counterTr(); из Del_line')
                 counterTr();
     }
 
+$("#div1").delegate(":input", "input", function (e) {
+let forObj = 'ListRazdel'
+let type = forObj;
+let id_count=e.target.id;
+console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
+    var options = $(`#${forObj}`)[0].options;
+    console.log("options = " + options)
+    if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
+    console.log('tyt1')
+        if ($(this).val().indexOf("Добавить в список \"") != -1) {
+            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`${forObj}`)
+            $(`#${forObj}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
+        }
+        return
+    }
+    set_options_datalist(type, e.target.value, forObj, 5)
+
+});
 
 
 </script>
