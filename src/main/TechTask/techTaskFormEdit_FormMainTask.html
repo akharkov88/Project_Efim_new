@@ -23,19 +23,31 @@
                     <label>Проект/чертеж</label>
                     <!--                                            <form id="myForm" action="/submit" method="post">-->
 
-                    <input name="TechTaskProject" type="file" id="file"
-                           name="file"/>
+
                     <!--                                            </form>-->
 
                 </div>
-
+                <div id="testText" class="testText"></div>
+                <input id="addFile" type="button" value="Добавить вложение"
+                       name="TechTaskProject" style="margin: 0 0 10px 0">
                 <script>
                     vv={{getTechTaskName.TechTaskProject|tojson|safe}}
                     console.log("getTechTaskName", JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}}))
+                    let i = 1;
                     for (item of JSON.parse({{getTechTaskName.TechTaskProject|tojson|safe}})) {
                     console.log("getTechTaskName", item)
 
+                        let button = document.createElement("input");
+                        button.type = "button";
+                        button.value = "Удалить файл";
+
+                        button.setAttribute("id", "idButton" + i);
+
+
                         div = document.createElement('div')
+                        div.setAttribute('id', 'expent' + i)
+                        div.setAttribute('class', 'expent' + i)
+
                         a = document.createElement('a')
                         a.href = 'javascript:void(0);'
                         a.target = "_blank"
@@ -46,6 +58,10 @@
                         a.innerText = item.name
                         div.append(a)
                         document.getElementsByName('TechTaskProject_form')[0].append(div)
+
+                        div.appendChild(button);
+
+                        i++;
                     }
                 </script>
                 <!--                                        <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>-->
