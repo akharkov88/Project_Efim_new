@@ -229,7 +229,7 @@
                                                         box.addEventListener('change', e => {
                                                             if (event.target.id.slice(0, 4) == 'file') {
                                                                 let str = event.target.id.slice(4, event.target.id.length);
-                                                                document.getElementById('file' + str).onchange = uploadfile_func1('file' + str);
+                                                                document.getElementById('file' + str).onchange = uploadfile_func1(str);
                                                                 document.getElementById('input' + str).setAttribute('readonly', true);
                                                             } else if (event.target.id.slice(0, 5) == 'input') {
                                                                 let str = event.target.id.slice(5, event.target.id.length);
@@ -244,8 +244,8 @@
                                             function uploadfile_func1(str) {
                                                 console.log('vlozheniya = ', vlozheniya)
                                                 console.log('uploadfile_func1: ' + str)
-                                                console.log(document.getElementById(str));
-                                                const fileInput = document.getElementById(str); // получаем элемент input для загрузки файла
+                                                console.log(document.getElementById('file' + str));
+                                                const fileInput = document.getElementById('file' + str); // получаем элемент input для загрузки файла
                                                 console.log("fileInput = " + fileInput)
                                                 const file = fileInput.files[0]; // получаем выбранный файл
                                                 console.log("file = " + file)
@@ -256,7 +256,7 @@
 
                                                 formData.append('file', file); // добавляем файл в объект FormData
 
-                                                file_name = document.getElementById(str).value.replace(/.*[\/\\]/, '');
+                                                file_name = document.getElementById('file' + str).value.replace(/.*[\/\\]/, '');
 
                                                 console.log("file_name = ", file_name)
                                                 xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
@@ -267,7 +267,8 @@
                                                     if (xhr.status == 200) {
                                                         vlozheniya.push({
                                                             name: file_name,
-                                                            id: xhr.response.replaceAll('"', "")
+                                                            id: xhr.response.replaceAll('"', ""),
+                                                            value_user: document.getElementById('input' + str).value
                                                         })
                                                         div = document.createElement('div')
                                                         a = document.createElement('a')
@@ -280,19 +281,19 @@
                                                         a.innerText = file_name
 
                                                         let lab = document.createElement("label");
-                                                        lab.setAttribute("id", "label" + str.replace('file', ''))
+                                                        lab.setAttribute("id", "label" + str)
                                                         lab.type = "label";
                                                         lab.style = "margin-right: 10px";
-                                                        lab.innerText = document.getElementById('input' + str.replace('file', '')).value;
+                                                        lab.innerText = document.getElementById('input' + str).value;
                                                         div.append(lab);
                                                         div.append(a);
 
                                                         console.log(div)
-                                                        document.getElementById('expent' + str.slice(4, str.length)).appendChild(div);
+                                                        document.getElementById('expent' + str).appendChild(div);
                                                         {#document.getElementById('label' + str).innerHTML = document.getElementById('input' + str).value;#}
                                                         // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
                                                         console.warn(str)
-                                                        document.getElementById(str).disabled = true;
+                                                        document.getElementById('file' + str).disabled = true;
                                                     }
                                                     // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
 

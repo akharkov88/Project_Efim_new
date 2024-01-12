@@ -89,26 +89,26 @@ class Suggest(Base):
         UniqueConstraint('customer_id', 'value_table', name='uix_customer_id_value_table'),
     )
 
-# class progressEnum(Enum):
-#     WAITING_FOR_WORKER = 'Необходимо Взять в работу'
-#     IN_PROGRESS = 'В Работе'
-#     completed = 'Выполнено'
-#     fault = 'Отказ выполнять'
-# class ListUserTask(Base):
-#     __tablename__ = 'List_User_Task'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     user_create = Column(String)
-#     user_executor= Column(String)
-#     progress= Column(String)
-#     status = Column(PgEnum(progressEnum, name='order_status_enum', create_type=False), nullable=False,
-#                     default=progressEnum.WAITING_FOR_WORKER)
-#
-#     target_date= Column(DateTime(timezone=True))
-#
-#     create_at= Column(DateTime(timezone=True), server_default=func.now())
-#     update_at= Column(DateTime(timezone=True), onupdate=func.now())
-#     user_name = Column(String, ForeignKey('users.username'), index=True)
+class progressEnum(Enum):
+    WAITING_FOR_WORKER = 'Необходимо Взять в работу'
+    IN_PROGRESS = 'В Работе'
+    completed = 'Выполнено'
+    fault = 'Отказ выполнять'
+class ListUserTask(Base):
+    __tablename__ = 'List_User_Task'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_create = Column(String)
+    user_executor= Column(String)
+    progress= Column(String)
+    # status = Column(PgEnum(progressEnum, name='progressEnum'),
+    #                 default=progressEnum.WAITING_FOR_WORKER)
+    type = Column(Enum("WAITING_FOR_WORKER","IN_PROGRESS","completed","fault", name="ValueTypes"), default=progressEnum.WAITING_FOR_WORKER)
+    target_date= Column(DateTime(timezone=True))
+
+    create_at= Column(DateTime(timezone=True), server_default=func.now())
+    update_at= Column(DateTime(timezone=True), onupdate=func.now())
+    user_name = Column(String, ForeignKey('users.username'), index=True)
 
 
 from  database import engine
