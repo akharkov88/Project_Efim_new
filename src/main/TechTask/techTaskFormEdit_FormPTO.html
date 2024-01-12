@@ -248,8 +248,14 @@ function set_setSuggest(customer_id, add_value,id_datalist) {
         success: function (ingredients) {
             $(`#${id_datalist}`).empty();
     console.log("2set_options_datalist ", id_datalist)
-
+            if (id_datalist.indexOf("_")!=-1){
             set_options_datalist(id_datalist.slice(id_datalist('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,5)
+
+            } else
+                {
+            set_options_datalist(id_datalist,add_value,id_datalist,5)
+
+                }
 
         },
         error: function (error) {
@@ -629,7 +635,13 @@ console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
     if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
     console.log('tyt1')
         if ($(this).val().indexOf("Добавить в список \"") != -1) {
-            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`${forObj}`)
+    console.log('forObj',forObj)
+
+            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),forObj)
+    console.log('1111111111111111111111')
+    console.log('1111111111111111111111',$(this).val().replace("Добавить в список \"", "").slice(0, -1))
+
+
             $(`#${forObj}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
         }
         return
