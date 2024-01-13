@@ -249,7 +249,8 @@ function set_setSuggest(customer_id, add_value,id_datalist) {
             $(`#${id_datalist}`).empty();
     console.log("2set_options_datalist ", id_datalist)
             if (id_datalist.indexOf("_")!=-1){
-            set_options_datalist(id_datalist.slice(id_datalist('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,5)
+            console.log('IF ',id_datalist)
+            set_options_datalist(id_datalist.slice(id_datalist.indexOf('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,5)
 
             } else
                 {
@@ -587,13 +588,18 @@ $(`#${i} tr`).each(function () {
 }
 
 $(document).on('change', 'input', function () {
+console.log(this.id)
+
+if(this.id.indexOf('Form_') == -1){
+        console.log(this)
         let val = $(this).val();
         console.warn(val);
         console.warn($(this)[0].list.id);
         $(this)[0].setAttribute('value', val); {# добавляется атрибут value в изменяемый input#}
-        let options_id = $(this)[0].list.id
+        {#let options_id = $(this)[0].list.id
         let options = $(`datalist#${options_id}`)[0].options;
-        console.warn(options);
+        console.warn(options);#}
+}
   });
 
     table.addEventListener('click', function handleClick(event) {
