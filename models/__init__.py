@@ -31,3 +31,8 @@ from .suggest import (
     CountSuggest,
 )
 
+from .UserProfile import (
+    ModelUserTask,
+    ModelUserPfofile,
+)
+

@@ -25,7 +25,6 @@ from database import get_session
 from settings import Settings as settings
 import traceback
 
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/auth/sign-in/')
 from fastapi.encoders import jsonable_encoder
 
@@ -90,8 +89,8 @@ class AuthService:
         self.session = session
 
     def register_new_user(
-        self,
-        user_data: models.UserCreate,
+            self,
+            user_data: models.UserCreate,
     ) -> models.Token:
         user = tables.User(
             # email=user_data.email,
@@ -101,12 +100,21 @@ class AuthService:
         )
         self.session.add(user)
         self.session.commit()
+
+        UserPfofile = tables.UserPfofile(
+            # email=user_data.email,
+            username=user_data.username,
+            first_name=user_data.username + "_first_name",
+            last_name=user_data.username + "_last_name",
+        )
+        self.session.add(UserPfofile)
+        self.session.commit()
         return self.create_token(user)
 
     def authenticate_user(
-        self,
-        username: str,
-        password: str,
+            self,
+            username: str,
+            password: str,
     ) -> models.Token:
         exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -129,10 +137,9 @@ class AuthService:
 
         return self.create_token(user)
 
-
-    def get_all_user(self,user_data: models.UserCreate    ) -> list[models.UserCreate2]:
+    def get_all_user(self, user_data: models.UserCreate) -> list[models.UserCreate2]:
         try:
-            if json.loads(user_data.roles).count('Admin')>0:
+            if json.loads(user_data.roles).count('Admin') > 0:
                 operation = (
                     self.session
                     .query(tables.User)
@@ -150,11 +157,9 @@ class AuthService:
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
-
-
-    def update_user_roles(self,id,roles,user_data: models.UserCreate    ) -> bool:
+    def update_user_roles(self, id, roles, user_data: models.UserCreate) -> bool:
         try:
-            if json.loads(user_data.roles).count('Admin')>0:
+            if json.loads(user_data.roles).count('Admin') > 0:
 
                 # operation = tables.TaskForm(
                 #     NameTechTask=TechTaskDATA.NameTechTask,
@@ -174,7 +179,6 @@ class AuthService:
                 # existing_row.TechTaskClient = TechTaskDATA.TechTaskClient,
                 # self.session.commit()
 
-
                 self.session.query(tables.User).filter(tables.User.id == id).update(dict(roles=roles))
                 self.session.commit()
                 return HTTPException(status.HTTP_200_OK)
@@ -185,11 +189,12 @@ class AuthService:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Запись с таким именем уже существует запись")
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
-    def update_user_password(self,id,password,user_data: models.UserCreate) -> bool:
+    def update_user_password(self, id, password, user_data: models.UserCreate) -> bool:
         try:
-            if json.loads(user_data.roles).count('Admin')>0:
+            if json.loads(user_data.roles).count('Admin') > 0:
 
-                self.session.query(tables.User).filter(tables.User.id == id).update(dict(password_hash=self.hash_password(password)))
+                self.session.query(tables.User).filter(tables.User.id == id).update(
+                    dict(password_hash=self.hash_password(password)))
                 self.session.commit()
                 return HTTPException(status.HTTP_200_OK)
             else:
@@ -198,3 +203,16 @@ class AuthService:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_400_BAD_REQUEST)
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+    def get_my_UserPfofile(self, user_data: models.BaseUser) -> list[models.UserProfile]:
+                operation = (
+                    self.session
+                    .query(tables.UserPfofile)
+                    .filter(tables.User.username == user_data.username)
+                    .first()
+                )
+                if not operation:
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                return jsonable_encoder(operation)
+

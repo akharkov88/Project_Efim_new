@@ -92,6 +92,7 @@ def get_user(user: models.User = Depends(get_current_user),
 
 
 
+
 @router.post(
     '/update_roles_user',
 )
@@ -109,4 +110,12 @@ def get_user(id: int,password: str,user: models.User = Depends(get_current_user)
              auth_service: AuthService = Depends(),):
     return auth_service.update_user_password(id,password,user)
 
+
+@router.get(
+    '/get_my_UserPfofile/',
+    response_model=list[models.ModelUserPfofile],
+)
+def get_user(user: models.User = Depends(get_current_user),
+             auth_service: AuthService = Depends(), ):
+    return auth_service.get_my_UserPfofile(user)
 

@@ -105,28 +105,40 @@ class Suggest(Base):
 
 
 
-# class progressEnum(Enum):
-#     WAITING_FOR_WORKER = 'Необходимо Взять в работу'
-#     IN_PROGRESS = 'В Работе'
-#     completed = 'Выполнено'
-#     fault = 'Отказ выполнять'
-# class ListUserTask(Base):
-#     __tablename__ = 'List_User_Task'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String)
-#     user_create = Column(String)
-#     user_executor= Column(String)
-#     progress= Column(String)
-#     status = Column(PgEnum(progressEnum, name='order_status_enum', create_type=False), nullable=False,
-#                     default=progressEnum.WAITING_FOR_WORKER)
-#
-#     target_date= Column(DateTime(timezone=True))
-#
-#     create_at= Column(DateTime(timezone=True), server_default=func.now())
-#     update_at= Column(DateTime(timezone=True), onupdate=func.now())
-#     user_name = Column(String, ForeignKey('users.username'), index=True)
+class progressEnum(Enum):
+    WAITING_FOR_WORKER = 'Назначена'
+    IN_PROGRESS = 'В Работе'
+    completed = 'Выполнено'
+    fault = 'Отказ выполнять'
+class ListUserTask(Base):
+    __tablename__ = 'List_User_Task'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    user_create = Column(String)
+    user_executor= Column(String)
+    progress= Column(String)
+    # status = Column(PgEnum(progressEnum, name='order_status_enum', create_type=False), nullable=False,
+    #                 default=progressEnum.WAITING_FOR_WORKER)
+    # status  = Column(progressEnum)
+    status  = Column(String)
+    target_date= Column(Date)
+    create_at= Column(DateTime(timezone=True), server_default=func.now())
+    update_at= Column(DateTime(timezone=True), onupdate=func.now())
+    user_name = Column(String, ForeignKey('users.username'), index=True)
 
 
+
+
+class UserPfofile(Base):
+    __tablename__ = 'UserPfofile'
+    username = Column(String, ForeignKey('users.username'), index=True, primary_key=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    telegram = Column(String)
+    work_tel = Column(String)
+    email = Column(String)
+    adress = Column(String)
+    office = Column(String)
 
     # from  database import engine
     # from  tables import Base
