@@ -26,6 +26,8 @@ class User(Base):
     # email = Column(String, unique=True)
     username = Column(String, unique=True)
     password_hash = Column(String)
+    roles = Column(String)
+
 #
 #
 #
@@ -43,18 +45,15 @@ class TaskForm(Base):
     TechTaskPrice = Column(String) #  Условия оплаты
     TechTaskLeaderKP = Column(String) #  Отвественный
     user_name = Column(String, ForeignKey('users.username'), index=True)
-#
-# # create_at = Column(DateTime(timezone=True), server_default=func.now())
-# # update_at = Column(DateTime(timezone=True), onupdate=func.now())
-# class BaseFail(Base):
-#     __tablename__ = 'BaseFile_t'
-#     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-#     name = Column(String, nullable=False)
-#     create_at =  Column(DateTime(timezone=True), server_default=func.now())
-#     user_name = Column(String, ForeignKey('users.username'), index=True)
 
-    # create_at =  Mapped[create_at]
-    # update_at =  Mapped[update_at]
+create_at = Column(DateTime(timezone=True), server_default=func.now())
+update_at = Column(DateTime(timezone=True), onupdate=func.now())
+class BaseFile(Base):
+    __tablename__ = 'BaseFile_t'
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String, nullable=False)
+    create_at =  Column(DateTime(timezone=True), server_default=func.now())
+    user_name = Column(String, ForeignKey('users.username'), index=True)
 
 class PTO_Value(Base):
     __tablename__ = 'PTO_Value'
