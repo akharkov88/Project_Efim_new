@@ -29,8 +29,11 @@ referrer=document.referrer
     let result = await response.json();
 
   if (response.status==200){
-      localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
-     if (referrer!="" && referrer!= "http://127.0.0.1:8000/auth/") {
+      // localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
+      // document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
+      setCookie('Authorization', result.token_type+" "+result.access_token, {secure: true});
+
+     if (referrer!="" && referrer!= "/auth/") {
 
          document.location.href = referrer
      }else{

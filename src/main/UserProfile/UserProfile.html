@@ -25,42 +25,42 @@
                             </div>
                                 <div class="col-md-6"><label class="labels">Имя</label><input type="text"
                                                                                               class="form-control"
-                                                                                              placeholder="first name"
-                                                                                              value=""></div>
+                                                                                              placeholder="{{ get_UserProfile.first_name }}"
+                                                                                              value="{{ get_UserProfile.first_name }}"></div>
                                 <div class="col-md-6"><label class="labels">Фамилия</label><input type="text"
                                                                                                   class="form-control"
-                                                                                                  value=""
+                                                                                                  value="{{ get_UserProfile.last_name }}"
                                                                                                   placeholder="surname">
                                 </div>
 
                             <div class="col-md-12"><label class="labels">Мобильный телефон</label><input type="text"
                                                                                                          class="form-control"
-                                                                                                         value="">
+                                                                                                         value="{{ get_UserProfile.mobile }}">
                             </div>
 
                             <div class="col-md-12"><label class="labels">Рабочий телефон</label>
-                                <input type="text" class="form-control" value="">
+                                <input type="text" class="form-control" value="{{ get_UserProfile.work_tel }}">
                             </div>
 
                             <div class="col-md-12"><label class="labels">Аккаунт Теллеграм</label>
-                                <input type="text" class="form-control" value="">
+                                <input type="text" class="form-control" value="{{ get_UserProfile.telegram }}">
                             </div>
 
                             <div class="col-md-12"><label class="labels">Адрес</label><input type="text"
                                                                                              class="form-control"
                                                                                              placeholder="enter address line 1"
-                                                                                             value="">
+                                                                                             value="{{ get_UserProfile.adress }}">
                             </div>
                             <div class="col-md-12"><label class="labels">Кабинет</label><input type="text"
                                                                                                class="form-control"
                                                                                                placeholder="enter address line 2"
-                                                                                               value="">
+                                                                                               value="{{ get_UserProfile.office }}">
                             </div>
 
                             <div class="col-md-12"><label class="labels">Email ID</label><input type="text"
                                                                                                 class="form-control"
                                                                                                 placeholder="enter email id"
-                                                                                                value=""></div>
+                                                                                                value="{{ get_UserProfile.email }}"></div>
 
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="button">Save Profile</button>

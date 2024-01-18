@@ -5,7 +5,7 @@ document.getElementById('adminMenu').onclick = async function (event) {
     check_user = await fetch('/auth/user/', {
         headers: {
             Accept: 'application/json',
-            "Authorization": localStorage.getItem('Authorization')
+            "Authorization": getCookieValue("Authorization")
         },
     });
     let responseText = await check_user.text();
@@ -18,4 +18,12 @@ document.getElementById('adminMenu').onclick = async function (event) {
         document.location.href = '/main/adminMenu'
 
     }
+}
+
+
+
+document.getElementById('adminMenu').onclick = async function (event) {
+    deleteCookie("Authorization")
+        document.location.href = '/auth'
+
 }

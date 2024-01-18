@@ -56,6 +56,7 @@ class AuthService:
                 algorithms=[settings.jwt_algorithm],
             )
         except JWTError:
+            print(traceback.format_exc())
             raise exception from None
 
         user_data = payload.get('user')

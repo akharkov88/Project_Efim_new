@@ -26,7 +26,7 @@ class UserProfileServices:
         self.session = session
 
 
-    def create_UserTask(self,UserDATA: models.UserProfile ,user: tables.ListUserTask,) -> tables.ListUserTask:
+    def create_UserTask(self,UserDATA: models.UserProfile ,user: tables.User,) -> tables.ListUserTask:
         try:
 
             operation = tables.ListUserTask(
@@ -48,6 +48,32 @@ class UserProfileServices:
                 #     tables.ListUserTask.customer_id == TechTaskDATA.customer_id,
                 # )
                 .all()
+            )
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+    def get_UserProfile(self,user:str) -> tables.ListUserTask:
+        try:
+
+            # operation = tables.UserPfofile(
+            #     user_name=user.username,
+            # )
+            # self.session.add(operation)
+            # self.session.commit()
+            operation = (
+                self.session
+                .query(tables.UserPfofile)
+                .filter(
+                    tables.UserPfofile.username == user,
+                )
+                .first()
             )
             if not operation:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")

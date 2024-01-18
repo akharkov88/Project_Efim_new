@@ -105,7 +105,7 @@
                                                 file_name = this.value.replace(/.*[\/\\]/, '');
                                                 console.log("file_name = ", file_name)
                                                 xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
                                                 xhr.send(formData);
                                                 xhr.onload = function () {
                                                     console.log(`Загружено: ${xhr.status} ${xhr.response}`);
@@ -260,7 +260,7 @@
 
                                                 console.log("file_name = ", file_name)
                                                 xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
-                                                xhr.setRequestHeader("Authorization", localStorage.getItem('Authorization')); // указываем метод и URL сервера, куда будет отправлен файл
+                                                xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
                                                 xhr.send(formData);
                                                 xhr.onload = function () {
                                                     console.log(`Загружено: ${xhr.status} ${xhr.response}`);
@@ -407,7 +407,7 @@
                                                             method: 'POST',
                                                             // Заголовок запроса
                                                             headers: {
-                                                                "Authorization": localStorage.getItem('Authorization'),
+                                                                "Authorization": getCookieValue("Authorization"),
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             // Данные

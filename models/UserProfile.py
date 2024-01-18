@@ -20,7 +20,8 @@ class ModelUserPfofile(BaseModel):
     first_name: str
     last_name: str
     telegram: str
-    work_tel: str
+    mobile: str
+    worker_tel: str
     email: str
     adress: str
     office: str
