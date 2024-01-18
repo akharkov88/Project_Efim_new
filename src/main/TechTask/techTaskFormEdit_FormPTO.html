@@ -434,7 +434,7 @@ function set_options_datalist(customer_id, search,id_datalist, count = 10) {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": localStorage.getItem('Authorization')
+            "Authorization": getCookieValue("Authorization")
         },
         data: `{"customer_id":"${customer_id}","search": "${search}","count":${count}}`,
         success: function (ingredients) {
@@ -477,7 +477,7 @@ function set_setSuggest(customer_id, add_value,id_datalist) {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            "Authorization": localStorage.getItem('Authorization')
+            "Authorization": getCookieValue("Authorization")
         },
         data: `{"customer_id":"${customer_id}","value_table": "${add_value}"}`,
         success: function (ingredients) {
