@@ -31,7 +31,8 @@ referrer=document.referrer
   if (response.status==200){
       // localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
       // document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
-      setCookie('Authorization', result.token_type+" "+result.access_token, {secure: true});
+      // setCookie('Authorization', result.token_type+" "+result.access_token, {secure: true});
+      document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
 
      if (referrer!="" && referrer!= "/auth/") {
 

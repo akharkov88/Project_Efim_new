@@ -30,8 +30,8 @@ referrer=document.referrer
 
   if (response.status==200){
       // localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
-      setCookie('Authorization', result.token_type+" "+result.access_token, {secure: true});
-      // document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
+      // setCookie('Authorization', result.token_type+" "+result.access_token, {secure: true});
+      document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
      if (referrer!="" && referrer!= "http://127.0.0.1:8000/auth/") {
 
          document.location.href = referrer
