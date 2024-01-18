@@ -10,7 +10,6 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
-# from filestore import LocalStorage, Store
 
 import models
 
@@ -30,25 +29,6 @@ router = APIRouter(
 )
 
 templates = Jinja2Templates(directory="src/main/")
-
-# loc = LocalStorage(name='Authorization')
-
-
-# @router.get('/upload_book')
-# async def upload_book(book=Depends(loc)) -> Store:
-#     print(111111111111111111111)
-#     return book.store
-#
-#
-# @router.get('/upload_book2')
-# async def root(request: Request):
-#     return request.cookies.get('Authorization')
-
-
-# @router.get('/upload_book3')
-# async def root(request: Request, Auth_Service: AuthService = Depends(), ):
-#     print(Auth_Service.verify_token(request.cookies.get('Authorization').replace("bearer ", "")))
-#     return request.cookies.get('Authorization')
 
 
 @router.get('/userprofile', response_model=List[models.Operation], )
