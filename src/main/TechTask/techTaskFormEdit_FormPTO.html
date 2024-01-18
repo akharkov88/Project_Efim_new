@@ -417,6 +417,26 @@ console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
 
 });
 
+let forObj2 = 'costWorkEdIzm';
+
+$(`#div_${forObj2}_${id_count}`).delegate(":input", "input", function (e) {
+let type = forObj2;
+let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
+console.log("stroka = " + " #datalist_" + forObj2 + "_"+id_count)
+    var options = $("#datalist_" + forObj2 + "_"+id_count)[0].options;
+    console.log("options = " + options)
+    if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
+        {# Определить type по target.id#}
+
+        if ($(this).val().indexOf("Добавить в список \"") != -1) {
+            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`datalist_${forObj2}_${id_count}`)
+            $(`#input_${forObj2}_${id_count}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
+        }
+        return
+    }
+    set_options_datalist(type, e.target.value,"datalist_" + forObj2 +"_"+id_count, 5)
+
+});
 
 counterTr();
             id_count++;
