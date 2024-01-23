@@ -624,6 +624,11 @@ margin-top: 40px;
 .table_parent{
 
 }
+.blank_row
+{
+    height: 20px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
 table {
   border-collapse: collapse;
   line-height: 1.1;
