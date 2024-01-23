@@ -20,69 +20,99 @@
                             <div class="col-md-12 col-xl-10">
 
                                 <div class="card mask-custom">
-                                    <div class="card-body p-4 text-white">
+                                    {#                                    <ta class="card-body p-4 text-white">#}
 
-                                        <div class="text-center pt-3 pb-2">
-                                            <img src="{{ url_for('static', path='auth/images/check1.webp') }}"
-                                                 alt="Check" width="60">
-                                            <h3 class="my-4">СПИСОК ЗАДАЧ</h3>
-                                        </div>
-                                        <div class="text-center pt-3 pb-2">
+                                    <div class="text-center pt-3 pb-2">
+                                        <img src="{{ url_for('static', path='auth/images/check1.webp') }}"
+                                             alt="Check" width="60">
+                                        <h3 class="my-4">СПИСОК ЗАДАЧ</h3>
+                                    </div>
+                                    <div class="text-center pt-3 pb-2">
 
-                                        </div>
+                                    </div>
 
-                                        <table class="table text-white mb-0">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
-                                                <th scope="col">АВТОР</th>
-                                                <th scope="col">ИСПОЛНИТЕЛИ</th>
-                                                <th scope="col">ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК</th>
-                                                <th scope="col">ПРИОРИТЕТ</th>
-                                                <th scope="col">СТАТУС</th>
-                                                <th scope="col">РЕШЕНИЕ</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+                                    <table class="table text-white mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
+                                            <th scope="col">АВТОР</th>
+                                            <th scope="col">ИСПОЛНИТЕЛИ</th>
+                                            <th scope="col">ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК</th>
+                                            <th scope="col">ПРИОРИТЕТ</th>
+                                            <th scope="col">СТАТУС</th>
+                                            <th scope="col">РЕШЕНИЕ</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <script>
+
+
+                                            async function Get_user() {
+                                                check_user = await fetch('/auth/get_UserPfofile', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        "Accept": 'application/json',
+                                                        "Content-Type": 'application/json',
+                                                        "Authorization": getCookieValue("Authorization")
+                                                    },
+                                                    body: JSON.stringify({"username":"admin"})
+                                                });
+                                                let responseText = await check_user.text();
+                                                console.log(responseText)
+                                            }
+                                            Get_user()
+                                        </script>
+                                        {% for get_UserTask_for in get_UserTask %}
+
                                             <tr class="fw-normal">
 
                                                 {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
-                                                    <span class="ms-2">Заполнение формы ПТО</span>
+                                                    <span class="ms-2">{{ get_UserTask_for.name }}</span>
                                                 </th>
 
                                                 {#АВТОР#}
                                                 <td class="align-middle">
-                                                    <span>Харьков Алексей</span>
+                                                    <span id="">{{ get_UserTask_for.user_create }}</span>
                                                 </td>
 
                                                 {#ИСПОЛНИТЕЛИ#}
                                                 <td class="align-middle">
-                                                    <span>Ефимов Илья</span>
+                                                    <span>{{ get_UserTask_for.user_executor }}</span>
 
                                                 </td>
 
                                                 {#ДАТА НАЗНАЧЕНИЯ#}
                                                 <td class="align-middle">
-                                                    <span>10.06.2022/10.07.2022</span>
+                                                    <span>{{ get_UserTask_for.create_at }}/{{ get_UserTask_for.target_date }}</span>
 
                                                 </td>
 
 
                                                 {#ПРИОРИТЕТ#}
                                                 <td class="align-middle">
-                                                    <h6 class="mb-0"><span class="badge bg-danger">High priority</span>
+                                                    <h6 class="mb-0">
+
+                                                        {% if get_UserTask_for.priority|lower == "Важно"|lower %}
+                                                            <span class="badge bg-danger">{{ get_UserTask_for.priority }}</span>
+                                                        {% elif get_UserTask_for.priority|lower == "Нормально"|lower %}
+                                                            <span class="badge bg-warning">{{ get_UserTask_for.priority }}</span>
+                                                        {% else %}
+                                                            <span class="badge bg-success">{{ get_UserTask_for.priority }}</span>
+                                                        {% endif %}
                                                     </h6>
                                                 </td>
 
                                                 {#CТАТУС#}
                                                 <td class="align-middle">
-                                                    <span>Назначена</span>
+                                                    <span>{{ get_UserTask_for.status }}</span>
 
                                                 </td>
 
                                                 {#РЕШЕНИЕ#}
                                                 <td class="align-middle">
+                                                    <span>{{ get_UserTask_for.result }}</span>
+
                                                     <button id="process">Взять в рвботу</button>
 
                                                 </td>
@@ -134,147 +164,158 @@
                                                         </svg>
 
 
-<svg  viewBox="0 0 130.2 130.2">
-  <circle class="path circle" fill="none" stroke="#D06079" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
-  <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
-  <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4" y2="92.2"/>
-</svg>
+                                                        <svg viewBox="0 0 130.2 130.2">
+                                                            <circle class="path circle" fill="none" stroke="#D06079"
+                                                                    stroke-width="6" stroke-miterlimit="10" cx="65.1"
+                                                                    cy="65.1" r="62.1"/>
+                                                            <line class="path line" fill="none" stroke="#D06079"
+                                                                  stroke-width="6" stroke-linecap="round"
+                                                                  stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8"
+                                                                  y2="92.3"/>
+                                                            <line class="path line" fill="none" stroke="#D06079"
+                                                                  stroke-width="6" stroke-linecap="round"
+                                                                  stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4"
+                                                                  y2="92.2"/>
+                                                        </svg>
                                                         <button id="good" class="popup__button">
                                                             Отлично
                                                         </button>
 
                                                     </div>
                                                 </div>
-                                    </div>
+                                            </tr>
+                                        {% endfor %}
 
-
-                                    <script>
-
-                                        document.getElementById("process").addEventListener("click", () => {
-                                            document.getElementById("popup").style.display = "block";
-                                            document.getElementById("overlay").classList.add("show");
-
-                                        });
-
-
-                                        document.getElementById("good").addEventListener("click", () => {
-                                            document.getElementById("success").style.display = "none";
-                                            document.getElementById("overlay").classList.remove("show");
-                                        });
-
-                                        document.getElementById("no-btn").addEventListener("click", () => {
-                                            document.getElementById("popup").style.display = "none";
-                                            document.getElementById("overlay").classList.remove("show");
-                                        });
-
-                                        document.getElementById("yes-btn").addEventListener("click", () => {
-                                            document.getElementById("success").style.display = "block";
-                                            document.getElementById("popup").style.display = "none";
-                                            document.getElementById("overlay").classList.add("show");
-
-                                        });
-
-
-                                    </script>
-
-
-                                    </tr>
-                                    <tr class="fw-normal">
-                                        <th>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                                                 alt="avatar 1" style="width: 45px; height: auto;">
-                                            <span class="ms-2">Kate Moss</span>
-                                        </th>
-                                        <td class="align-middle">Make payment to Bluedart</td>
-                                        <td class="align-middle">
-                                            <h6 class="mb-0"><span class="badge bg-success">Low priority</span>
-                                            </h6>
-                                        </td>
-                                        <td class="align-middle">
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                                                    class="fas fa-check fa-lg text-success me-3"></i></a>
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                                                    class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="fw-normal">
-                                        <th>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
-                                                 alt="avatar 1" style="width: 45px; height: auto;">
-                                            <span class="ms-2">Danny McChain</span>
-                                        </th>
-                                        <td class="align-middle">Office rent</td>
-                                        <td class="align-middle">
-                                            <h6 class="mb-0"><span
-                                                    class="badge bg-warning">Middle priority</span></h6>
-                                        </td>
-                                        <td class="align-middle">
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                                                    class="fas fa-check fa-lg text-success me-3"></i></a>
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                                                    class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="fw-normal">
-                                        <th>
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
-                                                 alt="avatar 1" style="width: 45px; height: auto;">
-                                            <span class="ms-2">Alexa Chung</span>
-                                        </th>
-                                        <td class="align-middle">Office grocery shopping</td>
-                                        <td class="align-middle">
-                                            <h6 class="mb-0"><span class="badge bg-danger">High priority</span>
-                                            </h6>
-                                        </td>
-                                        <td class="align-middle">
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Done"><i
-                                                    class="fas fa-check fa-lg text-success me-3"></i></a>
-                                            <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i
-                                                    class="fas fa-trash-alt fa-lg text-warning"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="fw-normal">
-                                        <th class="border-0">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                                                 alt="avatar 1" style="width: 45px; height: auto;">
-                                            <span class="ms-2">Ben Smith</span>
-                                        </th>
-                                        <td class="border-0 align-middle">Ask for Lunch to Clients</td>
-                                        <td class="border-0 align-middle">
-                                            <h6 class="mb-0"><span class="badge bg-success">Low priority</span>
-                                            </h6>
-                                        </td>
-                                        <td class="border-0 align-middle">
-
-                                            {#                                                    <a href="#!"><i class="fa fa-bell fa-10x" ></i></a>#}
-                                            <a href="#!"><i class="fa fa-camera-retro fa-10x"></i></a>
-                                            <a href="#!"><i class="fa fa-home fa-10"></i></a>
-                                            {#    <div><i class="fa fa-envelope"></i> - envelope icon</div>#}
-                                            {#    <div> <i class="fa fa-phone"></i> - phone icon</div>#}
-                                            {#    <div> <i class="fa fa-search"></i> - search icon</div>#}
-                                            {#    <div><i class="fa fa-shopping-cart"></i> - shopping cart icon</div>#}
-                                            {#    <div> <i class="fa fa-user"></i> - user icon</div>#}
-                                            {#    <div> <i class="fa fa-heart"></i> - heart icon</div>#}
-                                            {#    <div><i class="fa fa-play"></i> - play icon</div>#}
-                                            {#    <div> <i class="fa fa-cog"></i> - cog/gear icon</div>#}
-                                            {#    <div><i class="fa fa-home"></i> - trash icon</div>#}
-                                            {#    <div> <i class="fa fa-check"></i> - checkmark icon</div>#}
-                                        </td>
-                                    </tr>
-                                    </tbody>
                                     </table>
-
-
                                 </div>
-                            </div>
 
+
+                                <script>
+
+                                    document.getElementById("process").addEventListener("click", () => {
+                                        document.getElementById("popup").style.display = "block";
+                                        document.getElementById("overlay").classList.add("show");
+
+                                    });
+
+
+                                    document.getElementById("good").addEventListener("click", () => {
+                                        document.getElementById("success").style.display = "none";
+                                        document.getElementById("overlay").classList.remove("show");
+                                    });
+
+                                    document.getElementById("no-btn").addEventListener("click", () => {
+                                        document.getElementById("popup").style.display = "none";
+                                        document.getElementById("overlay").classList.remove("show");
+                                    });
+
+                                    document.getElementById("yes-btn").addEventListener("click", () => {
+                                        document.getElementById("success").style.display = "block";
+                                        document.getElementById("popup").style.display = "none";
+                                        document.getElementById("overlay").classList.add("show");
+
+                                    });
+
+
+                                </script>
+
+
+                                {#                                <tr class="fw-normal">#}
+                                {#                                    <th>#}
+                                {#                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"#}
+                                {#                                             alt="avatar 1" style="width: 45px; height: auto;">#}
+                                {#                                        <span class="ms-2">Kate Moss</span>#}
+                                {#                                    </th>#}
+                                {#                                    <td class="align-middle">Make payment to Bluedart</td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <h6 class="mb-0"><span class="badge bg-success">Low priority</span>#}
+                                {#                                        </h6>#}
+                                {#                                    </td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Done"><i#}
+                                {#                                                class="fas fa-check fa-lg text-success me-3"></i></a>#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i#}
+                                {#                                                class="fas fa-trash-alt fa-lg text-warning"></i></a>#}
+                                {#                                    </td>#}
+                                {#                                </tr>#}
+                                {#                                <tr class="fw-normal">#}
+                                {#                                    <th>#}
+                                {#                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"#}
+                                {#                                             alt="avatar 1" style="width: 45px; height: auto;">#}
+                                {#                                        <span class="ms-2">Danny McChain</span>#}
+                                {#                                    </th>#}
+                                {#                                    <td class="align-middle">Office rent</td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <h6 class="mb-0"><span#}
+                                {#                                                class="badge bg-warning">Middle priority</span></h6>#}
+                                {#                                    </td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Done"><i#}
+                                {#                                                class="fas fa-check fa-lg text-success me-3"></i></a>#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i#}
+                                {#                                                class="fas fa-trash-alt fa-lg text-warning"></i></a>#}
+                                {#                                    </td>#}
+                                {#                                </tr>#}
+                                {#                                <tr class="fw-normal">#}
+                                {#                                    <th>#}
+                                {#                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"#}
+                                {#                                             alt="avatar 1" style="width: 45px; height: auto;">#}
+                                {#                                        <span class="ms-2">Alexa Chung</span>#}
+                                {#                                    </th>#}
+                                {#                                    <td class="align-middle">Office grocery shopping</td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <h6 class="mb-0"><span class="badge bg-danger">High priority</span>#}
+                                {#                                        </h6>#}
+                                {#                                    </td>#}
+                                {#                                    <td class="align-middle">#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Done"><i#}
+                                {#                                                class="fas fa-check fa-lg text-success me-3"></i></a>#}
+                                {#                                        <a href="#!" data-mdb-toggle="tooltip" title="Remove"><i#}
+                                {#                                                class="fas fa-trash-alt fa-lg text-warning"></i></a>#}
+                                {#                                    </td>#}
+                                {#                                </tr>#}
+                                {#                                <tr class="fw-normal">#}
+                                {#                                    <th class="border-0">#}
+                                {#                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"#}
+                                {#                                             alt="avatar 1" style="width: 45px; height: auto;">#}
+                                {#                                        <span class="ms-2">Ben Smith</span>#}
+                                {#                                    </th>#}
+                                {#                                    <td class="border-0 align-middle">Ask for Lunch to Clients</td>#}
+                                {#                                    <td class="border-0 align-middle">#}
+                                {#                                        <h6 class="mb-0"><span class="badge bg-success">Low priority</span>#}
+                                {#                                        </h6>#}
+                                {#                                    </td>#}
+                                {#                                    <td class="border-0 align-middle">#}
+                                {##}
+                                {#                                                    <a href="#!"><i class="fa fa-bell fa-10x" ></i></a>#}
+                                {#                                        <a href="#!"><i class="fa fa-camera-retro fa-10x"></i></a>#}
+                                {#                                        <a href="#!"><i class="fa fa-home fa-10"></i></a>#}
+                                {#    <div><i class="fa fa-envelope"></i> - envelope icon</div>#}
+                                {#    <div> <i class="fa fa-phone"></i> - phone icon</div>#}
+                                {#    <div> <i class="fa fa-search"></i> - search icon</div>#}
+                                {#    <div><i class="fa fa-shopping-cart"></i> - shopping cart icon</div>#}
+                                {#    <div> <i class="fa fa-user"></i> - user icon</div>#}
+                                {#    <div> <i class="fa fa-heart"></i> - heart icon</div>#}
+                                {#    <div><i class="fa fa-play"></i> - play icon</div>#}
+                                {#    <div> <i class="fa fa-cog"></i> - cog/gear icon</div>#}
+                                {#    <div><i class="fa fa-home"></i> - trash icon</div>#}
+                                {#    <div> <i class="fa fa-check"></i> - checkmark icon</div>#}
+                                {#                                    </td>#}
+                                {#                                </tr>#}
+                                </tbody>
+                                </table>
+
+
+                            </div>
                         </div>
+
                     </div>
             </div>
-            </section>
         </div>
+        </section>
     </div>
-    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. PAGE INNER  -->
 </div>
 <!-- /. PAGE WRAPPER  -->
 </div>

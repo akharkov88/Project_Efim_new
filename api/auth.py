@@ -13,6 +13,9 @@ from services.auth import (
     AuthService,
     get_current_user,
 )
+from typing import List
+
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 router = APIRouter(
     prefix='/auth',
@@ -118,4 +121,23 @@ def get_user(id: int,password: str,user: models.User = Depends(get_current_user)
 def get_user(user: models.User = Depends(get_current_user),
              auth_service: AuthService = Depends(), ):
     return auth_service.get_my_UserPfofile(user)
+
+
+
+
+@router.post(
+    '/get_UserPfofile',
+    # response_model=models.UserTask,
+    # status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        request: Request,
+        user_data: models.BaseUser,
+        auth_service: AuthService = Depends(),
+):
+    try:
+        auth_service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return auth_service.get_UserPfofile(user_data)
 

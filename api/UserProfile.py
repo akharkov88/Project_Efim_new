@@ -10,7 +10,7 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
-
+from fastapi.responses import HTMLResponse, RedirectResponse
 import models
 
 from services.UserProfile import (
@@ -37,6 +37,10 @@ def get_operation(request: Request,
                   # user: models.User = Depends(),
                   Auth_Service: AuthService = Depends(),
                   ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
         "/UserProfile/UserProfile.html", {"request": request, "get_UserProfile": User_ProfileServices.get_UserProfile(
             Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
@@ -44,9 +48,16 @@ def get_operation(request: Request,
 
 
 @router.get('/UserTask', response_model=List[models.Operation], )
-def get_operation(request: Request, ):
+def get_operation(request: Request,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  Auth_Service: AuthService = Depends(), ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "/UserProfile/UserTask.html", {"request": request}
+        "/UserProfile/UserTask.html", {"request": request, "get_UserTask":User_ProfileServices.get_UserTask(
+            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
     )
 
 
@@ -57,10 +68,10 @@ def get_operation(request: Request, ):
 )
 def create_operation(
         user_data: models.ModelUserTask,
-        Suggest_Services: UserProfileServices = Depends(),
+        UserProfile_Services: UserProfileServices = Depends(),
         user: models.User = Depends(get_current_user),
 ):
-    return Suggest_Services.create_UserTask(user_data, user)
+    return UserProfile_Services.create_UserTask(user_data, user)
 
 
 @router.get('/Naumov', response_model=List[models.Operation], )

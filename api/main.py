@@ -33,6 +33,8 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="src/main")
 
+
+
 @router.get(
     '/',
     response_model=List[models.Operation],

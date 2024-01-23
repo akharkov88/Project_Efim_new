@@ -217,3 +217,15 @@ class AuthService:
                     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
                 return jsonable_encoder(operation)
 
+
+    def get_UserPfofile(self, user_data: models.BaseUser) -> list[models.UserProfile]:
+                operation = (
+                    self.session
+                    .query(tables.UserPfofile)
+                    .filter(tables.User.username == user_data.username)
+                    .first()
+                )
+                if not operation:
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                return jsonable_encoder(operation)
+

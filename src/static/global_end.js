@@ -9,10 +9,10 @@ document.getElementById('adminMenu').onclick = async function (event) {
         },
     });
     let responseText = await check_user.text();
-    console.log("responseText",responseText)
+    console.log("1responseText",responseText)
 
-    console.log("responseText",JSON.parse(responseText).roles)
-    console.log("responseText",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
+    console.log("2responseText",JSON.parse(responseText).roles)
+    console.log("3responseText",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
     if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")!=-1) {
     console.log("check_user.status",check_user.status)
         document.location.href = '/main/adminMenu'
@@ -22,7 +22,7 @@ document.getElementById('adminMenu').onclick = async function (event) {
 
 
 
-document.getElementById('adminMenu').onclick = async function (event) {
+document.getElementById('Logout').onclick = async function (event) {
     deleteCookie("Authorization")
         document.location.href = '/auth'
 

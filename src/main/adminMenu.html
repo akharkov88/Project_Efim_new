@@ -100,7 +100,7 @@
                                 check_user = await fetch('/auth/get_all_user/', {
                                     headers: {
                                         Accept: 'application/json',
-                                        "Authorization": localStorage.getItem('Authorization')
+                                        "Authorization": getCookieValue("Authorization")
                                     },
                                 });
                                 let responseText = await check_user.text();
@@ -123,7 +123,7 @@
                                                 check_user = await fetch('/auth/user/', {
                                                     headers: {
                                                         Accept: 'application/json',
-                                                        "Authorization": localStorage.getItem('Authorization')
+                                                        "Authorization": getCookieValue("Authorization")
                                                     },
                                                 });
                                                 let responseText = await check_user.text();
@@ -148,7 +148,7 @@
                                                             method: 'POST',
                                                             headers: {
                                                                 Accept: 'application/json',
-                                                                "Authorization": localStorage.getItem('Authorization')
+                                                                "Authorization": getCookieValue("Authorization")
                                                             },
 
                                                         });
@@ -176,7 +176,7 @@
                                                 check_user = await fetch('/auth/user/', {
                                                     headers: {
                                                         Accept: 'application/json',
-                                                        "Authorization": localStorage.getItem('Authorization')
+                                                        "Authorization": getCookieValue("Authorization")
                                                     },
                                                 });
                                                 let responseText = await check_user.text();
@@ -192,7 +192,7 @@
                                                             method: 'POST',
                                                             headers: {
                                                                 Accept: 'application/json',
-                                                                "Authorization": localStorage.getItem('Authorization')
+                                                                "Authorization": getCookieValue("Authorization")
                                                             },
 
                                                         });
