@@ -107,7 +107,7 @@ class Suggest(Base):
 
 
 
-class ListUserTask(Base):
+class ListUserTask(Base ):
     __tablename__ = 'List_User_Task'
     id = Column(Integer, primary_key=True)
     name = Column(String)
