@@ -123,8 +123,6 @@ class ListUserTask(Base):
     priority = Column(String)
 
 
-
-
 class UserPfofile(Base):
     __tablename__ = 'UserPfofile'
     username = Column(String, ForeignKey('users.username'), index=True, primary_key=True)
@@ -136,7 +134,6 @@ class UserPfofile(Base):
     email = Column(String)
     adress = Column(String)
     office = Column(String)
-
 
 
     # from  database import engine
