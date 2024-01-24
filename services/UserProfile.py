@@ -2,6 +2,7 @@ from datetime import (
     datetime,
     timedelta,
 )
+import ast
 from pytz import timezone
 import traceback
 from typing import (
@@ -78,10 +79,40 @@ class UserProfileServices:
                 )
                 .all()
             )
+
+            val_mas=[]
+            for hh in jsonable_encoder(operation):
+                print(hh["user_create"])
+                print(self.get_UserProfile(hh["user_create"]))
+
+                save_val = {}
+
+                if save_val.get(hh["user_create"],False):
+                    hh["UserPfofile_create"] = hh["user_create"]
+                else:
+                    save_val[hh["user_create"]]=self.get_UserProfile(hh["user_create"])
+                    hh["UserPfofile_create"] = save_val[hh["user_create"]]
+
+                save_executor = []
+
+                for user_executor_val in ast.literal_eval(hh["user_executor"]):
+
+
+                    if save_val.get(user_executor_val, False):
+                        save_executor.append(save_val[user_executor_val])
+                    else:
+                        save_val[user_executor_val] = self.get_UserProfile(user_executor_val)
+                        save_executor.append(save_val[user_executor_val])
+
+                hh["UserPfofile_executor"] = save_executor
+
+                val_mas.append(hh)
+
+
             if not operation:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)
+            return val_mas
 
         except:
             print(traceback.format_exc())

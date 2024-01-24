@@ -73,12 +73,19 @@
 
                                                 {#АВТОР#}
                                                 <td class="align-middle">
-                                                    <span id="">{{ get_UserTask_for.user_create }}</span>
+                                                    <span >{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
                                                 </td>
+
 
                                                 {#ИСПОЛНИТЕЛИ#}
                                                 <td class="align-middle">
-                                                    <span>{{ get_UserTask_for.user_executor }}</span>
+{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+
+                                            {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                    <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }}</span>
+
+                                            {% endfor %}
 
                                                 </td>
 
