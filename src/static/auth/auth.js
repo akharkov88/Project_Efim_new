@@ -1,23 +1,11 @@
    console.log("referrer",document.referrer)
 referrer=document.referrer
  addEventListener("submit", async(event) => {
-
+// async function Autorization (event) {
+// document.getElementById("Autorization").onsubmit=async function Autorization (event) {
     console.log('1')
     console.log(event)
     event.preventDefault();
-    // let response = await fetch('/auth/sign-in/', {
-    // headers: {
-    // Accept: 'application/json',
-    // "Content-Type": 'application/x-www-form-urlencoded'
-    //     },
-    // method: 'POST',
-    // body: `grant_type=&username=${document.getElementById("login").value}&password=${document.getElementById("password").value}&scope=&client_id=&client_secret=`
-    // });
-    // let result = await response.json();
-    // if (response.status==200){
-    //     window.location.pathname = '/main'
-    // }
-
         let response = await fetch('/auth/sign-in/', {
     headers: {
     Accept: 'application/json',
@@ -40,6 +28,9 @@ referrer=document.referrer
      }
 
   }
+
+});
+
 
 
      // document.cookie = "Authorization" + '=' + result.token_type+" "+result.access_token;
@@ -136,4 +127,3 @@ referrer=document.referrer
     //     console.log('Failed to fetch page: ', err);
     // });
 
-});

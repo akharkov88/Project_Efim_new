@@ -32,13 +32,57 @@
                     <table class="first iksweb" id="first_table" >
 
                     </table>
+
+
+
                 </div>
+                <button id="saveTable"  style="display:none;">Сохранить изменения таблицы</button>
+
             </form>
         </div>
     </div>
 </div>
 
 <script>
+
+async function Test() {
+
+    let response = await fetch('/techTask/formPtoGet', {
+  method: 'POST',
+  headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        "Authorization": getCookieValue("Authorization")
+  },
+  body: JSON.stringify({"NameTechTask_key": "Благостроиство парка"})
+});
+        let responseText = await response.text();
+        console.log("formPtoGet",JSON.parse(responseText))
+        if (response.status==200){
+            document.getElementById("first_table").innerHTML=JSON.parse(responseText).value_table
+        document.getElementById("style_table").style.display = "block";
+        document.getElementById("saveTable").style.display = "block";
+        }
+
+}
+{#Test()#}
+
+document.getElementById('saveTable').onclick =async function () {
+
+    let response = await fetch('/techTask/formPtoCreateUpdate', {
+  method: 'POST',
+  headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        "Authorization": getCookieValue("Authorization")
+  },
+  body: JSON.stringify({"NameTechTask_key": "Благостроиство парка", "value_table": document.getElementById("first_table").innerHTML})
+});
+        let responseText = await response.text();
+console.log("responseText",responseText)
+
+  };
+
 let obj_global_sum = {};
 obj_global_sum['result_total'] = "";
 
@@ -263,33 +307,64 @@ function Provision_td_sum(elem_stroka){
 };
 let obj_table_values = {};
 obj_table_values['earthWorks_costWork'] = {};
-{#obj_table_values['earthWorks_costWork']['stroka_1'] = {};
-obj_table_values['earthWorks_costWork']['stroka_2'] = {};
-obj_table_values['earthWorks_costWork']['stroka_1']['9'] = "";
-obj_table_values['earthWorks_costWork']['stroka_1']['11'] = "";#}
-
 
 function addLine(event, element){
 
-element = element.parentElement.parentElement.parentElement.parentElement;
-let element_id = element.id;
-let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
+    element = element.parentElement.parentElement.parentElement.parentElement;
+    let element_id = element.id;
+    let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
 
-$(element).append(objLine(id_count, forObj))
+    $(element).append(objLine(id_count, forObj))
 
-let tr_math = document.getElementById('stroka_'+id_count)
+    let tr_math = document.getElementById('stroka_'+id_count)
+
+    {# Объект для хранения предыдущих значений таблицы, хранятся данные введеные в ПТО разделе.
+    При изменении данных в разделе Руководителя работ,
+     #}
+
+    console.log(tr_math.childNodes)
+
+    event_tr(tr_math)
+
+    console.log(tr_math.childNodes)
+    //  в td написать вызов функции onkeyup="javascript:dotest(this,event);"
+
+    //let tr_math = document.getElementById('earthWorks_costWork_1')
+    //tr_math.childNodes[1].childNodes[7]
+
+    forObj = forObj.slice(forObj.indexOf('_')+1)
+
+    $(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
+    let type = forObj;
+    let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
+    console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
+        var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
+        console.log("options = " + options)
+        if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
+            {# Определить type по target.id#}
+
+            if ($(this).val().indexOf("Добавить в список \"") != -1) {
+                set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`datalist_${forObj}_${id_count}`)
+                $(`#input_${forObj}_${id_count}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
+            }
+            return
+        }
+        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 5)
+
+    });
+
+    counterTr();
+                id_count++;
+                arr_id_count.push(id_count);
+}
+
+
+function event_tr (tr_math){
+
 obj_table_values['earthWorks_costWork'][tr_math.id] = {}
 obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = "";
 obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = "";
 obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = "";
-{# Объект для хранения предыдущих значений таблицы, хранятся данные введеные в ПТО разделе.
-При изменении данных в разделе Руководителя работ,
- #}
-
-console.log(tr_math.childNodes)
-
-
-
 
 // события обработки ячеек таблицы
 tr_math.childNodes[9].addEventListener('keyup', function(event) {
@@ -466,40 +541,7 @@ if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
 }
 });
 
-
-console.log(tr_math.childNodes)
-//  в td написать вызов функции onkeyup="javascript:dotest(this,event);"
-
-//let tr_math = document.getElementById('earthWorks_costWork_1')
-//tr_math.childNodes[1].childNodes[7]
-
-forObj = forObj.slice(forObj.indexOf('_')+1)
-
-$(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
-let type = forObj;
-let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
-console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
-    var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
-    console.log("options = " + options)
-    if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
-        {# Определить type по target.id#}
-
-        if ($(this).val().indexOf("Добавить в список \"") != -1) {
-            set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`datalist_${forObj}_${id_count}`)
-            $(`#input_${forObj}_${id_count}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
-        }
-        return
-    }
-    set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 5)
-
-});
-
-counterTr();
-            id_count++;
-            arr_id_count.push(id_count);
 }
-
-
 
 
 
@@ -876,7 +918,7 @@ let value = e.value;
                     `)
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
-
+                    document.getElementById("saveTable").style.display = "block"
 
 document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes[7].addEventListener('keyup', function(event){
     this.removeAttribute('data-title')
@@ -948,7 +990,9 @@ obj_global_sum['Транспортные_расходы_' +  id_table] = this.in
                 });
                 console.log('arr_test = ' + arr_test.length)
         if (arr_test.length == 0){
-        document.getElementById('style_table').style.display = 'none'}
+        document.getElementById('style_table').style.display = 'none';
+        document.getElementById("saveTable").style.display = "none";
+        }
         counterTr();
         }
 
