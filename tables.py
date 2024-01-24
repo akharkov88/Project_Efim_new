@@ -85,7 +85,8 @@ class BaseFile(Base):
 
 class PTO_Value(Base):
     __tablename__ = 'PTO_Value'
-    NameTechTask_key = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True, primary_key=True)
+    id = Column(Integer, primary_key=True)
+    NameTechTask_key = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True) #, primary_key=True
     user_name = Column(String, ForeignKey('users.username'), index=True)
     value_table = Column(String, nullable=False)
     create_at = Column(DateTime(timezone=True), server_default=func.now())
