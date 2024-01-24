@@ -39,6 +39,8 @@
 </div>
 
 <script>
+let obj_global_sum = {};
+obj_global_sum['result_total'] = "";
 
 const table = document.getElementById('first_table');
 
@@ -163,9 +165,15 @@ function closeButton (event,elem){
     document.getElementById(elem).childNodes[1].style.display = "none";
 }
 
-function td_math(id, sum){
-    let td_math = document.getElementById(id)
-    td_math.parentElement.childNodes[1].childNodes[7].innerText = sum.toFixed(2);
+function func_sum_total(id){
+let sum = 0;
+console.log(id);
+let coll_table = id.slice(id.lastIndexOf('_')+1)
+sum = Number(obj_global_sum['earthWorks_costWork_'+ coll_table]) +
+        Number(obj_global_sum['earthWorks_costMaterial_'+ coll_table]) +
+        Number(obj_global_sum['earthWorks_Special_'+ coll_table]);
+
+return sum;
 }
 
 function PTO_td_sum(elem_stroka){
@@ -191,6 +199,13 @@ function PTO_td_sum(elem_stroka){
 
     console.log('присваиваю суммы: ' + sum_total.toFixed(2) + ' and ' + sum_analysis.toFixed(2))
     elem_stroka.parentElement.childNodes[1].childNodes[7].innerText = sum_total.toFixed(2);
+    obj_global_sum[elem_stroka.parentElement.id] = Number(sum_total);
+    obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );;
+    document.getElementById('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)).childNodes[1].childNodes[7].innerText = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)].toFixed(2);
+
+    //func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
+
+
 
     if (elem_stroka.parentElement.id.indexOf('earthWorks_costWork')!=-1) {
         elem_stroka.parentElement.childNodes[1].childNodes[21].innerText = dir_sum_total.toFixed(2);
@@ -452,14 +467,6 @@ if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
 });
 
 
-
-
-
-
-//'earthWorks_costWork_1'     td_math(id, sum)    id earthWorks_costWork_1
-
-
-
 console.log(tr_math.childNodes)
 //  в td написать вызов функции onkeyup="javascript:dotest(this,event);"
 
@@ -583,6 +590,12 @@ let value = e.value;
         console.log(arr_zaglav)
         document.getElementById("style_table").style.display = "block";
         if (document.getElementById('result_total')) document.getElementById('result_total').remove()
+        obj_global_sum['earthWorks_costWork_'+ coll_table] = "";
+        obj_global_sum['earthWorks_costMaterial_'+ coll_table] = "";
+        obj_global_sum['earthWorks_Special_'+ coll_table] = "";
+        obj_global_sum['earthWorks_Total_'+ coll_table] = "";
+        obj_global_sum['Total_tbody_'+ coll_table] = "";
+
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
                     <tr><td colspan="6" style="padding: 0;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;" autocomplete="off">
@@ -864,7 +877,56 @@ let value = e.value;
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
 
-        document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
+
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes[7].addEventListener('keyup', function(event){
+    this.removeAttribute('data-title')
+    let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
+
+        if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
+obj_global_sum['Накладные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
+    if (obj_global_sum['earthWorks_costWork_'+id_table] != ''){
+    console.log('popal')
+        this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costWork_'+id_table]).toFixed(2)
+    }
+} else {
+        this.setAttribute('data-title' , "Введите корректное значение");
+        this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = '';
+        };
+
+
+});
+
+
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes[7].addEventListener('keyup', function(event){
+    this.removeAttribute('data-title')
+    let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
+        if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
+obj_global_sum['Вспомогательные_материалы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
+    if (obj_global_sum['earthWorks_costMaterial_'+id_table] != ''){
+    console.log('popal')
+        this.parentElement.parentElement.childNodes[5].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costMaterial_'+id_table]).toFixed(2)
+    }
+} else {
+        this.setAttribute('data-title' , "Введите корректное значение");
+        this.parentElement.parentElement.childNodes[5].childNodes[13].innerText = '';
+        };
+});
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[7].childNodes[7].addEventListener('keyup', function(event){
+    this.removeAttribute('data-title')
+    let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
+        if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
+obj_global_sum['Транспортные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
+    if (obj_global_sum['earthWorks_Special_'+id_table] != ''){
+    console.log('popal')
+        this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_Special_'+id_table]).toFixed(2)
+    }
+} else {
+        this.setAttribute('data-title' , "Введите корректное значение");
+        this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = '';
+        };
+});
+
+   document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
         console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))
 
             let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
