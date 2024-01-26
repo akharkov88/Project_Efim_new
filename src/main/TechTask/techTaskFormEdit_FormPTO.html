@@ -55,7 +55,7 @@ async function Test() {
         Accept: 'application/json',
         "Authorization": getCookieValue("Authorization")
   },
-  body: JSON.stringify({"NameTechTask_key": "Благостроиство парка"})
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}}})
 });
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
