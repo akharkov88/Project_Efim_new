@@ -47,6 +47,7 @@
 
 async function Test() {
 {#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
+
     let response = await fetch('/techTask/formPtoGet', {
   method: 'POST',
   headers: {
