@@ -46,7 +46,7 @@
 <script>
 
 async function Test() {
-
+{#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
     let response = await fetch('/techTask/formPtoGet', {
   method: 'POST',
   headers: {
@@ -54,7 +54,7 @@ async function Test() {
         Accept: 'application/json',
         "Authorization": getCookieValue("Authorization")
   },
-  body: JSON.stringify({"NameTechTask_key": "Благостроиство парка"})
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}}})
 });
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
@@ -64,8 +64,9 @@ async function Test() {
         document.getElementById("saveTable").style.display = "block";
         }
 
+
 }
-{#Test()#}
+Test()
 
 document.getElementById('saveTable').onclick =async function () {
 
@@ -76,7 +77,7 @@ document.getElementById('saveTable').onclick =async function () {
         Accept: 'application/json',
         "Authorization": getCookieValue("Authorization")
   },
-  body: JSON.stringify({"NameTechTask_key": "Благостроиство парка", "value_table": document.getElementById("first_table").innerHTML})
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}}, "value_table": document.getElementById("first_table").innerHTML})
 });
         let responseText = await response.text();
 console.log("responseText",responseText)
