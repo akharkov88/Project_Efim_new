@@ -80,6 +80,7 @@ document.getElementById('saveTable').onclick =async function () {
   body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}}, "value_table": document.getElementById("first_table").innerHTML})
 });
         let responseText = await response.text();
+
 console.log("responseText",responseText)
 
   };
