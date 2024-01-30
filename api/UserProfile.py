@@ -47,6 +47,18 @@ def get_operation(request: Request,
     )
 
 
+@router.post('/set_userprofile', response_model=models.ModelUserPfofile)
+def set_userprofile(request: Request,
+                    User_data: models.ModelUserPfofile,
+                    # User_data: models.ModelUserPfofile = Depends(),
+                    User_ProfileServices: UserProfileServices = Depends(),
+                    # Auth_Service: AuthService = Depends(),
+                    user: models.User = Depends(get_current_user),
+
+                    ):
+    return User_ProfileServices.set_UserProfile(user.username,User_data)
+
+
 @router.get('/UserTask', response_model=List[models.Operation], )
 def get_operation(request: Request,
                   User_ProfileServices: UserProfileServices = Depends(),
@@ -56,9 +68,20 @@ def get_operation(request: Request,
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "/UserProfile/UserTask.html", {"request": request, "get_UserTask":User_ProfileServices.get_UserTask(
+        "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(
             Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
     )
+
+
+@router.get('/get_UserTask', response_model=List[models.ModelUserTask], )
+def get_operation(request: Request,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  Auth_Service: AuthService = Depends(), ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return User_ProfileServices.get_UserTask(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
 
 
 @router.post(
@@ -66,16 +89,20 @@ def get_operation(request: Request,
     # response_model=models.UserTask,
     # status_code=status.HTTP_200_OK,
 )
-def create_operation(
-        user_data: models.ModelUserTask,
+def create_operation(request: Request,
+        user_data: models.ModelUserTask= Depends(),
         UserProfile_Services: UserProfileServices = Depends(),
         user: models.User = Depends(get_current_user),
 ):
     return UserProfile_Services.create_UserTask(user_data, user)
 
 
-@router.get('/Naumov', response_model=List[models.Operation], )
-def get_operation(request: Request, ):
-    return templates.TemplateResponse(
-        "/UserProfile/UserTask.html", {"request": request}
-    )
+
+@router.post('/updateUserTasck', response_model=models.ModelUserTask, )
+def update_UserTasck(
+        user_data: models.ModelUserTaskUpdate,
+        id: models.ModelUserTaskID,
+        UserProfile_Services: UserProfileServices = Depends(),
+        user: models.User = Depends(get_current_user),
+):
+    return UserProfile_Services.update_UserTask(user,user_data,id)

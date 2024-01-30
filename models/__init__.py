@@ -24,7 +24,6 @@ from .BaseFile_m import (
     UUIDModelBase,
 )
 
-
 from .suggest import (
     BaseSuggest,
     SuggestM,
@@ -34,5 +33,6 @@ from .suggest import (
 from .UserProfile import (
     ModelUserTask,
     ModelUserPfofile,
+    ModelUserTaskID,
+    ModelUserTaskUpdate,
 )
-

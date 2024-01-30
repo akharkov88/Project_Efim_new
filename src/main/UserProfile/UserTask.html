@@ -55,12 +55,16 @@
                                                         "Content-Type": 'application/json',
                                                         "Authorization": getCookieValue("Authorization")
                                                     },
-                                                    body: JSON.stringify({"username":"admin"})
+                                                    body: JSON.stringify({"username": "admin"})
                                                 });
                                                 let responseText = await check_user.text();
                                                 console.log(responseText)
                                             }
+
                                             Get_user()
+                                            {#console.log({{ get_UserTask|tojson|safe}}.length)#}
+
+                                            {#document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value#}
                                         </script>
                                         {% for get_UserTask_for in get_UserTask %}
 
@@ -73,19 +77,19 @@
 
                                                 {#АВТОР#}
                                                 <td class="align-middle">
-                                                    <span >{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
+                                                    <span>{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
                                                 </td>
 
 
                                                 {#ИСПОЛНИТЕЛИ#}
                                                 <td class="align-middle">
-{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
-{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
 
-                                            {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
-                                                    <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
+                                                    {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                        <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
 
-                                            {% endfor %}
+                                                    {% endfor %}
 
                                                 </td>
 
@@ -112,7 +116,7 @@
 
                                                 {#CТАТУС#}
                                                 <td class="align-middle">
-                                                    <span>{{ get_UserTask_for.status }}</span>
+                                                    <span id="status">{{ get_UserTask_for.status }}</span>
 
                                                 </td>
 
@@ -120,7 +124,14 @@
                                                 <td class="align-middle">
                                                     <span>{{ get_UserTask_for.result }}</span>
 
-                                                    <button id="process">Взять в рвботу</button>
+                                                    {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
+                                                        <button id="process_{{ get_UserTask_for.id }}">Выполнить задачу
+                                                        </button>
+                                                    {% else %}
+                                                        <button id="process_{{ get_UserTask_for.id }}">Взять в работу
+                                                        </button>
+                                                    {% endif %}
+
 
                                                 </td>
 
@@ -198,12 +209,56 @@
 
 
                                 <script>
+                                    for (v of {{ get_UserTask|tojson|safe}}) {
+                                        console.log("get_UserTask_for.id", v.id)
+                                        document.getElementById("process_" + v.id).addEventListener("click", (e) => {
+                                            console.log("get_UserTask_for.id", e.target.id)
+                                            console.log("get_UserTask_for.id", document.getElementById(e.target.id))
 
-                                    document.getElementById("process").addEventListener("click", () => {
-                                        document.getElementById("popup").style.display = "block";
-                                        document.getElementById("overlay").classList.add("show");
+                                            if (document.getElementById(e.target.id).innerText == "Взять в работу") {
 
-                                    });
+
+                                                (async function get_UserTask() {
+                                                    res = await fetch('/userprofile/updateUserTasck', {
+                                                        method: "POST",
+                                                        headers: {
+                                                            Accept: 'application/json',
+                                                            'Content-Type': 'application/json',
+                                                            "Authorization": getCookieValue("Authorization")
+                                                        },
+                                                        body: JSON.stringify({
+                                                            "user_data": {
+                                                                "status": "В Работе",
+                                                                "result": "",
+                                                                "notification_holder": false,
+                                                                "notification_executor": false
+                                                            },
+                                                            "id": {
+                                                                "id": e.target.id.replace("process_", "")
+                                                            }
+                                                        })
+                                                    });
+                                                    console.log("res.status", res.status)
+                                                    if (res.status == 200) {
+                                                        document.getElementById(e.target.id).innerText = "Выполнить задачу"
+                                                        showToast("Задача взята в работу", "info", 5000);
+                                                        document.getElementById("status").innerText = "В Работе"
+
+                                                    } else {
+                                                        showToast("Ошибка", "error", 5000);
+
+                                                    }
+                                                }())
+
+                                                {#get_UserTask()#}
+                                            } else {
+                                                document.getElementById("popup").style.display = "block";
+                                                document.getElementById("overlay").classList.add("show");
+
+                                            }
+
+                                        });
+                                    }
 
 
                                     document.getElementById("good").addEventListener("click", () => {

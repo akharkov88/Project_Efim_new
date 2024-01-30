@@ -16,64 +16,174 @@
 
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
-                    <div >
-                        <div >
-                            <span class="font-weight-bold">Edogaru</span>
-                            <span class="text-black-50">edogaru@mail.com.my</span>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="text-right">Profile Settings</h4>
-                            </div>
-                                <div class="col-md-6"><label class="labels">Имя</label><input type="text"
-                                                                                              class="form-control"
-                                                                                              placeholder="{{ get_UserProfile.first_name }}"
-                                                                                              value="{{ get_UserProfile.first_name }}"></div>
-                                <div class="col-md-6"><label class="labels">Фамилия</label><input type="text"
-                                                                                                  class="form-control"
-                                                                                                  value="{{ get_UserProfile.last_name }}"
-                                                                                                  placeholder="surname">
-                                </div>
 
-                            <div class="col-md-12"><label class="labels">Мобильный телефон</label><input type="text"
-                                                                                                         class="form-control"
-                                                                                                         value="{{ get_UserProfile.mobile }}">
-                            </div>
 
-                            <div class="col-md-12"><label class="labels">Рабочий телефон</label>
-                                <input type="text" class="form-control" value="{{ get_UserProfile.work_tel }}">
-                            </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Настройки профиля</h4>
+                    </div>
+                    <form action="">
 
-                            <div class="col-md-12"><label class="labels">Аккаунт Теллеграм</label>
-                                <input type="text" class="form-control" value="{{ get_UserProfile.telegram }}">
-                            </div>
 
-                            <div class="col-md-12"><label class="labels">Адрес</label><input type="text"
-                                                                                             class="form-control"
-                                                                                             placeholder="enter address line 1"
-                                                                                             value="{{ get_UserProfile.adress }}">
-                            </div>
-                            <div class="col-md-12"><label class="labels">Кабинет</label><input type="text"
-                                                                                               class="form-control"
-                                                                                               placeholder="enter address line 2"
-                                                                                               value="{{ get_UserProfile.office }}">
-                            </div>
+                        <div class="col-md-6">
+                            <label class="labels">Имя</label>
+                            <input type="text" name="first_name" class="form-control"
+                                   placeholder="{{ get_UserProfile.first_name }}"
+                                   value="{{ get_UserProfile.first_name }}">
+                        </div>
 
-                            <div class="col-md-12"><label class="labels">Email ID</label><input type="text"
-                                                                                                class="form-control"
-                                                                                                placeholder="enter email id"
-                                                                                                value="{{ get_UserProfile.email }}"></div>
+                        <div class="col-md-6">
+                            <label class="labels">Фамилия</label>
+                            <input type="text" name="last_name" class="form-control"
+                                   value="{{ get_UserProfile.last_name }}" placeholder="surname">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Мобильный телефон</label>
+                            <input
+                                    name="mobile"
+                                    type="text"
+                                    class="form-control"
+                                    value="{{ get_UserProfile.mobile }}">
+                        </div>
+                        <script>
+                            console.log("work_tel", {{ get_UserProfile|tojson|safe}})
+                        </script>
+                        <div class="col-md-12">
+                            <label class="labels">Рабочий телефон</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="worker_tel"
+                                   value="{{ get_UserProfile.worker_tel }}">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Аккаунт Теллеграм</label>
+                            <input type="text" class="form-control" name="telegram"
+                                   value="{{ get_UserProfile.telegram }}">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Адрес</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="adress"
+                                   placeholder="enter address line 1"
+                                   value="{{ get_UserProfile.adress }}">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Кабинет</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="office"
+                                   placeholder="enter address line 2"
+                                   value="{{ get_UserProfile.office }}">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Email ID</label>
+                            <input type="text"
+                                   class="form-control"
+                                   name="email"
+                                   placeholder="enter email id"
+                                   value="{{ get_UserProfile.email }}">
+                        </div>
+
+                    </form>
 
                     <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="button">Save Profile</button>
+                        <button class="btn btn-primary profile-button" id="Save" type="button">Save Profile
+                        </button>
                     </div>
-                        </div>
-                    </div>
-
                 </div>
+
             </div>
 
         </div>
     </div>
+
 </div>
+</div>
+</div>
+<script>
+
+
+    function validForm_global(elements) {
+        // let elements = $('form').serializeArray();
+        let elem_obj = {}
+
+        valid = true
+        for (let key of elements) {
+            elem_obj[key.name] = key.value
+
+            if (key.value == '') {
+                valid = false
+                document.getElementsByName(key.name)[0].setAttribute("required", true)
+            } else {
+                document.getElementsByName(key.name)[0].removeAttribute("required")
+            }
+        }
+
+
+        return [valid, elem_obj]
+    }
+
+    document.getElementById('Save').onclick = async function () {
+
+        {#let response = await fetch('/userprofile/set_userprofile', {#}
+        {#    method: 'POST',#}
+        {#    headers: {#}
+        {#        'Content-Type': 'application/json',#}
+        {#        Accept: 'application/json',#}
+        {#        "Authorization": getCookieValue("Authorization")#}
+        {#    },#}
+        {#    body: JSON.stringify({#}
+        {#        "NameTechTask_key": document.getElementById("first_table").innerHTML,#}
+        {#        "value_table": document.getElementById("first_table").innerHTML#}
+        {#    })#}
+        //});
+        {#let responseText = await response.text();#}
+        {##}
+        {#console.log("responseText", responseText)#}
+        console.log("validForm_global", validForm_global($('form').serializeArray()))
+
+        validation = validForm_global($('form').serializeArray())
+
+        console.log("validForm_global", validation[0])
+
+        const postData_global = async (url = '', data = {}) => {
+            // Формируем запрос
+
+            const response = await fetch(url, {
+                // Метод, если не указывать, будет использоваться GET
+                method: 'POST',
+                // Заголовок запроса
+                headers: {
+                    "Authorization": getCookieValue("Authorization"),
+                    'Content-Type': 'application/json',
+                    {#'accept': 'application/json'#}
+                },
+                // Данные
+                body: JSON.stringify(data)
+            });
+            if (response.status == 200) {
+
+                showToast("Данный успешно сохранены", "info", 5000);
+
+            }else
+            {
+                showToast("Ошибка не смог сохранить данные", "error", 5000);
+
+            }
+            // читаем ответ в формате JSON
+            {#console.log('response.json():', response.json())#}
+
+            {#return response.json();#}
+        }
+        postData_global('/userprofile/set_userprofile', validation[1])
+    };
+
+</script>
 <!-- /. PAGE INNER  -->
 </div>
 <!-- /. PAGE WRAPPER  -->

@@ -73,8 +73,8 @@ class UserProfileServices:
                 .filter(
                     or_(
                     tables.ListUserTask.user_create == user,
-                    tables.ListUserTask.user_executor.like("'"+user+"'"),
-                    tables.ListUserTask.user_executor.like('"'+user+'"')
+                    tables.ListUserTask.user_executor.ilike("%'"+user+"'%"),
+                    tables.ListUserTask.user_executor.ilike('%"'+user+'"%')
                 )
                 )
                 .all()
@@ -109,8 +109,8 @@ class UserProfileServices:
                 val_mas.append(hh)
 
 
-            if not operation:
-                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # if not operation:
+            #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
             return val_mas
 
@@ -118,6 +118,33 @@ class UserProfileServices:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+    def update_UserTask(self, user: str,User_data:models.ModelUserTaskUpdate,id:models.ModelUserTaskID) -> tables.ListUserTask:
+        try:
+            # User_data={'notification_holder': False, 'notification_executor': False}
+            # User_data={'notification_holder': True, 'notification_executor': True}
+            self.session.query(tables.ListUserTask).filter(tables.ListUserTask.id == id.id).update(dict(User_data))
+            self.session.commit()
+            operation = (
+                self.session
+                .query(tables.ListUserTask)
+                .filter(
+                    tables.ListUserTask.id == id.id
+                )
+                .first()
+            )
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            print(jsonable_encoder(operation))
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+
+
+
+
 
     def get_UserProfile(self,user:str) -> tables.UserPfofile:
         try:
@@ -127,6 +154,35 @@ class UserProfileServices:
             # )
             # self.session.add(operation)
             # self.session.commit()
+            operation = (
+                self.session
+                .query(tables.UserPfofile)
+                .filter(
+                    tables.UserPfofile.username == user,
+                )
+                .first()
+            )
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+    def set_UserProfile(self,user:str,User_data:models.ModelUserPfofile,) -> tables.UserPfofile:
+        try:
+
+            # operation = tables.UserPfofile(
+            #     user_name=user.username,
+            # )
+            # self.session.add(operation)
+            # self.session.commit()
+
+            self.session.query(tables.UserPfofile).filter(tables.UserPfofile.username == user).update(dict(User_data))
+            self.session.commit()
+
             operation = (
                 self.session
                 .query(tables.UserPfofile)
