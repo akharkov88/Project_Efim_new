@@ -63,8 +63,10 @@ async function Test() {
             document.getElementById("style_table").style.display = "block";
             document.getElementById("saveTable").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
-            console.log(seach_ID_table('tbody','earthWorks_'))
-
+            {#console.log(seach_ID_table('tbody','earthWorks_'))#}
+            for_event_tr('tr','stroka_');
+            up_obj_global_sum();
+            for_total_table();
         }
 
 
@@ -78,15 +80,15 @@ function seach_ID_table(elem,id){
     {#let temp = JSON.parse(responseText).value_table;#}
     {#console.log(temp);#}
     let temp = $(`#first_table ${elem}[id^="${id}"]`);
-    console.log(temp);
+    {#console.log(temp);#}
     let arr_search_id = []
     for (let key in temp) {
     if (temp.hasOwnProperty(key)) {
-    console.log('key : '+key)
+    {#console.log('key : '+key)#}
         arr_search_id.push(temp[key].id)
+        }
     }
-}
-    console.log(arr_search_id)
+    {#console.log(arr_search_id)#}
     //console.log(max_id_tr(arr_search_id))
     return max_id_tr(arr_search_id); // Макимальный ID
 {#console.log(Math.max(...arr_search_id))#}
@@ -95,14 +97,70 @@ function seach_ID_table(elem,id){
 function max_id_tr(arr){
     let arr_ID = []
     arr = arr.slice(0, -4)
-    console.log('arr:' + arr);
+    {#console.log('arr:' + arr);#}
 
     arr.forEach(e => {
-        console.log('e.slice(e.indexOf():' + e.slice(e.lastIndexOf('_')+1));
+        {#console.log('e.slice(e.indexOf():' + e.slice(e.lastIndexOf('_')+1));#}
         if(e.indexOf('_')!=-1) arr_ID.push(e.slice(e.lastIndexOf('_')+1))
     })
     return Math.max(...arr_ID)
 }
+
+function for_event_tr(elem,id,id_count){
+    let temp = $(`#first_table ${elem}[id^="${id}"]`);
+    let arr_search_id = [];
+    for (let key in temp) {
+    if (temp.hasOwnProperty(key)) {
+        arr_search_id.push(temp[key])
+        }
+    }
+    arr_search_id = arr_search_id.slice(0, -4)
+    arr_search_id.forEach(e =>event_tr(e))
+{#    console.log('!!!');
+    console.log(arr_search_id[0]);#}
+};
+
+function for_total_table(){
+    let temp = $(`#first_table tbody[id^='earthWorks_costWork_']`);
+    {#console.log('for_total_table: ', temp)#}
+    for (let key in temp) {
+        if (temp.hasOwnProperty(key)) {
+            if (["length", "prevObject", "context", "selector"].indexOf(key) == -1) {
+                {#console.log('for (let key in temp) key: ', temp[key].id.slice(temp[key].id.lastIndexOf('_')+1))#}
+                table_earthWorks_Total(temp[key].id.slice(temp[key].id.lastIndexOf('_')+1))
+            }
+        }
+    }
+    //table_earthWorks_Total(coll_table);
+}
+
+
+function up_obj_global_sum(){
+    let temp = $(`#first_table tbody`);
+    {#console.log('temp !!! ' + temp)#}
+    let temp_arr = Object.keys(temp).slice(0, -4);
+    {#temp = temp.slice(1, temp.length-2)#}
+    {#console.log(temp)#}
+    {#console.log(temp_arr)#}
+    for (let key in temp) {
+    if (temp.hasOwnProperty(key)) {
+    if (["length","prevObject","context","selector"].indexOf(key)== -1){
+        if (temp[key].childNodes[1].childNodes.length > 7){
+            if (temp[key].childNodes[1].childNodes[7].innerHTML != ''){
+                 obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML
+                }
+                  else {
+                      obj_global_sum[temp[key].id] = ''
+                }
+            }
+        }
+    }
+
+    }
+
+}
+
+
 
 
 
@@ -137,7 +195,7 @@ const table = document.getElementById('first_table');
 
 
     function objLine(id_count, forTable) {
-        if (id_count<seach_ID_table('tr','stroka_')) id_count = seach_ID_table('tr','stroka_')+1;
+
 
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) coll_table = seach_ID_table('tbody','earthWorks_')+1;
 
@@ -257,11 +315,16 @@ function closeButton (event,elem){
     elem = elem.id;
     document.getElementById(elem).childNodes[1].style.display = "none";
 }
-
+// sum от объекта
 function func_sum_total(id){
 let sum = 0;
-console.log(id);
+console.log('ID !!! ', id, 'obj_global_sum: ');
+
 let coll_table = id.slice(id.lastIndexOf('_')+1)
+console.log(obj_global_sum['earthWorks_costWork_'+ coll_table]);
+console.log(obj_global_sum['earthWorks_costMaterial_'+ coll_table]);
+console.log(obj_global_sum['earthWorks_Special_'+ coll_table]);
+
 sum = Number(obj_global_sum['earthWorks_costWork_'+ coll_table]) +
         Number(obj_global_sum['earthWorks_costMaterial_'+ coll_table]) +
         Number(obj_global_sum['earthWorks_Special_'+ coll_table]);
@@ -270,12 +333,13 @@ return sum;
 }
 
 function PTO_td_sum(elem_stroka){
+{#console.warn('!!! elem_stroka', elem_stroka)#}
     let sum_total = 0;
     let sum_analysis = 0;
     let dir_sum_total=0;
     let dir_sum_analysis = 0;
     $(`#${elem_stroka.parentElement.id} tr`).each(function () {
-        console.log('v if zahel this =  ' + this.id + '   ' + this.id.indexOf('stroka') + '  this.childNodes[13].innerText ' + this.childNodes[13].innerText)
+        {#console.log('v if zahel this =  ' + this.id + '   ' + this.id.indexOf('stroka') + '  this.childNodes[13].innerText ' + this.childNodes[13].innerText)#}
         if (this.id.indexOf('stroka')!=-1 ) {
             sum_total += Number(this.childNodes[13].innerText.replace(',','.'))
             dir_sum_total += Number(this.childNodes[27].innerText.replace(',','.'))
@@ -290,10 +354,13 @@ function PTO_td_sum(elem_stroka){
         elem_stroka.childNodes[31].innerText = (Number(elem_stroka.childNodes[27].innerText.replace(',','.')).toFixed(2)/Number(elem_stroka.childNodes[29].innerText.replace(',','.')).toFixed(2)).toFixed(2)
         }
 
-    console.log('присваиваю суммы: ' + sum_total.toFixed(2) + ' and ' + sum_analysis.toFixed(2))
+    {#console.log('присваиваю суммы: ' + sum_total.toFixed(2) + ' and ' + sum_analysis.toFixed(2))#}
     elem_stroka.parentElement.childNodes[1].childNodes[7].innerText = sum_total.toFixed(2);
     obj_global_sum[elem_stroka.parentElement.id] = Number(sum_total);
-    obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );;
+
+    // присвоение суммы в строчку ИТОГО
+    obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
+
     document.getElementById('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)).childNodes[1].childNodes[7].innerText = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)].toFixed(2);
 
     //func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
@@ -358,24 +425,29 @@ let obj_table_values = {};
 obj_table_values['earthWorks_costWork'] = {};
 
 function addLine(event, element){
-    if (id_count<seach_ID_table()) id_count = seach_ID_table() + 1;
+
+    if (id_count<seach_ID_table('tr','stroka_')) {
+            {#for_event_tr('tr','stroka_', id_count);#}
+            id_count = seach_ID_table('tr','stroka_')+1;
+        }
+
     element = element.parentElement.parentElement.parentElement.parentElement;
     let element_id = element.id;
     let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
 
     $(element).append(objLine(id_count, forObj))
-
+    {#console.warn('id_count = ' + id_count)#}
     let tr_math = document.getElementById('stroka_'+id_count)
 
     {# Объект для хранения предыдущих значений таблицы, хранятся данные введеные в ПТО разделе.
     При изменении данных в разделе Руководителя работ,
      #}
 
-    console.log(tr_math.childNodes)
+    {#console.log(tr_math.childNodes)#}
 
-    event_tr(tr_math)
+    event_tr(tr_math);
 
-    console.log(tr_math.childNodes)
+    {#console.log(tr_math)#}
     //  в td написать вызов функции onkeyup="javascript:dotest(this,event);"
 
     //let tr_math = document.getElementById('earthWorks_costWork_1')
@@ -386,9 +458,9 @@ function addLine(event, element){
     $(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
     let type = forObj;
     let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
-    console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
+    {#console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)#}
         var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
-        console.log("options = " + options)
+        {#console.log("options = " + options)#}
         if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
             {# Определить type по target.id#}
 
@@ -410,16 +482,26 @@ function addLine(event, element){
 
 function event_tr (tr_math){
 
+{#console.warn('tr_math: ' + tr_math.innerHTML)#}
+
 obj_table_values['earthWorks_costWork'][tr_math.id] = {}
-obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = "";
-obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = "";
-obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = "";
+if (tr_math.childNodes[9].innerText != '') {
+    obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = tr_math.childNodes[9].innerText
+} else obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = "";
+
+if (tr_math.childNodes[11].innerText != '') {
+    obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = tr_math.childNodes[11].innerText
+} else obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = "";
+
+if (tr_math.childNodes[15].innerText != '') {
+    obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = tr_math.childNodes[15].innerText
+} else obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = "";
 
 // события обработки ячеек таблицы
 tr_math.childNodes[9].addEventListener('keyup', function(event) {
 tr_math.childNodes[9].removeAttribute('data-title')
 {#console.log(obj_table_values['earthWorks_costWork'][tr_math][9] == '')#}
-console.log(obj_table_values['earthWorks_costWork'][tr_math.id]['9'])
+{#console.log(obj_table_values['earthWorks_costWork'][tr_math.id]['9'])#}
         if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText != ''){
 
         if (obj_table_values['earthWorks_costWork'][tr_math.id]['9'] == "" || Number(obj_table_values['earthWorks_costWork'][tr_math.id]['9']) == Number(tr_math.childNodes[23].innerText))
@@ -568,7 +650,7 @@ tr_math.childNodes[23].addEventListener('keyup', function(event) {
     if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 && tr_math.childNodes[23].innerText!='' && !isNaN(Number(tr_math.childNodes[23].innerText.replace(',','.')))){
         tr_math.childNodes[23].removeAttribute('data-title');
         if (tr_math.childNodes[17].innerText!='' && !isNaN(Number(tr_math.childNodes[17].innerText.replace(',','.')))){
-        console.log(tr_math.childNodes[23].innerText + ' - ' + tr_math.childNodes[17].innerText)
+        {#console.log(tr_math.childNodes[23].innerText + ' - ' + tr_math.childNodes[17].innerText)#}
             tr_math.childNodes[25].innerText = (Number(tr_math.childNodes[23].innerText.replace(',','.')) - Number(tr_math.childNodes[17].innerText.replace(',','.'))).toFixed(2)
         }
     } else if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
@@ -701,7 +783,7 @@ let value = e.value;
             e.setAttribute("required", true)
        } else if (arr_zaglav.indexOf(value) == -1){
         arr_zaglav.push(value)
-        console.log(arr_zaglav)
+        {#console.log(arr_zaglav)#}
         document.getElementById("style_table").style.display = "block";
         if (document.getElementById('result_total')) document.getElementById('result_total').remove()
         obj_global_sum['earthWorks_costWork_'+ coll_table] = "";
@@ -990,8 +1072,56 @@ let value = e.value;
                     `)
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
-                    document.getElementById("saveTable").style.display = "block"
+                    document.getElementById("saveTable").style.display = "block";
+                    table_earthWorks_Total(coll_table)
 
+
+
+
+
+
+   document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
+        {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
+
+            let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
+            zaglav = zaglav.value;
+            arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);
+
+            let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);
+            arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)
+            {#console.log(arr_zaglav);#}
+
+         document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+        let arr_test = []
+        $(`#first_table tbody`).each(function () {
+                    arr_test.push(this.id);
+                });
+                {#console.log('arr_test = ' + arr_test.length)#}
+                console.warn(arr_test)
+        if (arr_test.length == 1){
+        document.getElementById(`result_total`).remove()
+        document.getElementById('style_table').style.display = 'none';
+        document.getElementById("saveTable").style.display = "none";
+        }
+        counterTr();
+        }
+
+
+        coll_table++;
+        arr_coll_table.push(coll_table);
+        {#console.warn('counterTr(); из add_razdel')#}
+        counterTr();
+        }
+            else {
+            showToast('Заголовок есть' , 'warning' , 5000)
+            }
+        }
+
+function table_earthWorks_Total(coll_table){
 document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes[7].addEventListener('keyup', function(event){
     this.removeAttribute('data-title')
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
@@ -999,7 +1129,7 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
 obj_global_sum['Накладные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
     if (obj_global_sum['earthWorks_costWork_'+id_table] != ''){
-    console.log('popal')
+    {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costWork_'+id_table]).toFixed(2)
     }
 } else {
@@ -1015,9 +1145,9 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes
     this.removeAttribute('data-title')
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
-obj_global_sum['Вспомогательные_материалы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
+        obj_global_sum['Вспомогательные_материалы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
     if (obj_global_sum['earthWorks_costMaterial_'+id_table] != ''){
-    console.log('popal')
+    {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[5].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costMaterial_'+id_table]).toFixed(2)
     }
 } else {
@@ -1031,7 +1161,7 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[7].childNodes
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
 obj_global_sum['Транспортные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
     if (obj_global_sum['earthWorks_Special_'+id_table] != ''){
-    console.log('popal')
+    {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_Special_'+id_table]).toFixed(2)
     }
 } else {
@@ -1039,45 +1169,7 @@ obj_global_sum['Транспортные_расходы_' +  id_table] = this.in
         this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = '';
         };
 });
-
-   document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
-        console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))
-
-            let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
-            zaglav = zaglav.value;
-            arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);
-
-            let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);
-            arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)
-            console.log(arr_zaglav);
-
-         document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-        let arr_test = []
-        $(`#first_table tbody`).each(function () {
-                    arr_test.push(this.id);
-                });
-                console.log('arr_test = ' + arr_test.length)
-        if (arr_test.length == 0){
-        document.getElementById('style_table').style.display = 'none';
-        document.getElementById("saveTable").style.display = "none";
-        }
-        counterTr();
-        }
-
-
-        coll_table++;
-        arr_coll_table.push(coll_table);
-        console.warn('counterTr(); из add_razdel')
-        counterTr();
-        }
-            else {
-            showToast('Заголовок есть' , 'warning' , 5000)
-            }
-        }
+}
 
  function counterTr(){
 let arr_tbody = [];
@@ -1090,8 +1182,8 @@ let razdelov = 0;
                 });
                 if (arr_tbody.length >= 5){
           razdelov = arr_tbody.length / 5;
-          console.warn('razdelov v tablice = ', razdelov)
-          console.warn('arr_tbody = ', arr_tbody)
+          {#console.warn('razdelov v tablice = ', razdelov)#}
+          {#console.warn('arr_tbody = ', arr_tbody)#}
           }
                 {# собрать все цифры после '_' в массив и подствить в for 'J'#}
                 {#console.warn('arr_tbody = ' , arr_tbody,' arr_tbody.length = ' , arr_tbody.length);#}
@@ -1118,13 +1210,13 @@ arr_tr = [];
 }
 
 $(document).on('change', 'input', function () {
-console.log(this.id)
+{#console.log(this.id)#}
 
 if(this.id.indexOf('Form_') == -1){
-        console.log(this)
+        {#console.log(this)#}
         let val = $(this).val();
-        console.warn(val);
-        console.warn($(this)[0].list.id);
+        {#console.warn(val);#}
+        {#console.warn($(this)[0].list.id);#}
         $(this)[0].setAttribute('value', val); {# добавляется атрибут value в изменяемый input#}
         {#let options_id = $(this)[0].list.id
         let options = $(`datalist#${options_id}`)[0].options;
@@ -1139,7 +1231,7 @@ if(this.id.indexOf('Form_') == -1){
             id_count++;
             arr_id_count.push(id_count);
         } else if (event.target.type == 'button' && event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'delbtn'){
-        console.warn('tyt', event.target.id)
+        {#console.warn('tyt', event.target.id)#}
             delLine(event.target.id);
         }
 
@@ -1148,24 +1240,33 @@ if(this.id.indexOf('Form_') == -1){
 
 
     function delLine(cel){
-        console.warn('cel= ' + cel)
+        {#console.warn('cel= ' + cel)#}
         let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
         id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)
-        console.log('tbody = ' + id_table)
+        {#console.log('tbody = ' + id_table)#}
         let id_del = cel.slice(cel.lastIndexOf('_')+1, cel.length)
-        console.warn(id_del)
-        console.warn(document.getElementById('stroka_' + id_del))
+        {#console.warn('id_del !!! ' , id_del)#}
+
+        {#console.warn(document.getElementById('stroka_' + id_del).parentElement.id)#}
 
         let del_math_td = document.getElementById('stroka_' + id_del);
 
         if(!isNaN(del_math_td.parentElement.childNodes[1].childNodes[7].innerText)  && !isNaN(del_math_td.childNodes[13].innerText) {#&& !isNaN(del_math_td.parentElement.childNodes[1].childNodes[9].innerText)#}){
 
             del_math_td.parentElement.childNodes[1].childNodes[7].innerText = (Number(del_math_td.parentElement.childNodes[1].childNodes[7].innerText) - Number(del_math_td.childNodes[13].innerText)).toFixed(2)
+            {#console.log('!!! ', del_math_td.parentElement.childNodes[1].childNodes[7].innerText)#}
+            obj_global_sum[document.getElementById('stroka_' + id_del).parentElement.id] = del_math_td.parentElement.childNodes[1].childNodes[7].innerText;
+            let index = del_math_td.parentElement.id.slice(del_math_td.parentElement.id.lastIndexOf('_')+1);
+            obj_global_sum['earthWorks_Total_' + index] = Number(obj_global_sum['earthWorks_costWork_' + index]) + Number(obj_global_sum['earthWorks_costMaterial_' + index]) + Number(obj_global_sum['earthWorks_Special_' + index])
+            {#console.warn(document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText)#}
+            document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
+            //.childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
 
             if (del_math_td.parentElement.id.indexOf('earthWorks_costWork')!=-1 ){
                 del_math_td.parentElement.childNodes[1].childNodes[21].innerText = (Number(del_math_td.parentElement.childNodes[1].childNodes[21].innerText) - Number(del_math_td.childNodes[27].innerText)).toFixed(2)
                 if (!isNaN(del_math_td.parentElement.childNodes[1].childNodes[9].innerText)) {
                     del_math_td.parentElement.childNodes[1].childNodes[9].innerText = (Number(del_math_td.parentElement.childNodes[1].childNodes[9].innerText) - Number(del_math_td.childNodes[15].innerText)).toFixed(2)
+                    {#console.log((Number(del_math_td.parentElement.childNodes[1].childNodes[9].innerText) - Number(del_math_td.childNodes[15].innerText)).toFixed(2))#}
                     del_math_td.parentElement.childNodes[1].childNodes[23].innerText = (Number(del_math_td.parentElement.childNodes[1].childNodes[23].innerText) - Number(del_math_td.childNodes[29].innerText)).toFixed(2)
                 del_math_td.parentElement.childNodes[1].childNodes[11].innerText = (del_math_td.parentElement.childNodes[1].childNodes[7].innerText/del_math_td.parentElement.childNodes[1].childNodes[9].innerText).toFixed(2)
                 del_math_td.parentElement.childNodes[1].childNodes[25].innerText = (del_math_td.parentElement.childNodes[1].childNodes[21].innerText/del_math_td.parentElement.childNodes[1].childNodes[23].innerText).toFixed(2)
@@ -1192,17 +1293,17 @@ $("#div1").delegate(":input", "input", function (e) {
 let forObj = 'ListRazdel'
 let type = forObj;
 let id_count=e.target.id;
-console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)
+{#console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)#}
     var options = $(`#${forObj}`)[0].options;
-    console.log("options = " + options)
+    {#console.log("options = " + options)#}
     if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
-    console.log('tyt1')
+    {#console.log('tyt1')#}
         if ($(this).val().indexOf("Добавить в список \"") != -1) {
-    console.log('forObj',forObj)
+    {#console.log('forObj',forObj)#}
 
             set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),forObj)
-    console.log('1111111111111111111111')
-    console.log('1111111111111111111111',$(this).val().replace("Добавить в список \"", "").slice(0, -1))
+    {#console.log('1111111111111111111111')#}
+    {#console.log('1111111111111111111111',$(this).val().replace("Добавить в список \"", "").slice(0, -1))#}
 
 
             $(`#${forObj}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
