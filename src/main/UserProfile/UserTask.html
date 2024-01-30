@@ -55,12 +55,16 @@
                                                         "Content-Type": 'application/json',
                                                         "Authorization": getCookieValue("Authorization")
                                                     },
-                                                    body: JSON.stringify({"username":"admin"})
+                                                    body: JSON.stringify({"username": "admin"})
                                                 });
                                                 let responseText = await check_user.text();
                                                 console.log(responseText)
                                             }
+
                                             Get_user()
+                                            {#console.log({{ get_UserTask|tojson|safe}}.length)#}
+
+                                            {#document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value#}
                                         </script>
                                         {% for get_UserTask_for in get_UserTask %}
 
@@ -73,19 +77,19 @@
 
                                                 {#АВТОР#}
                                                 <td class="align-middle">
-                                                    <span >{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
+                                                    <span>{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
                                                 </td>
 
 
                                                 {#ИСПОЛНИТЕЛИ#}
                                                 <td class="align-middle">
-{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
-{#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
 
-                                            {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
-                                                    <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
+                                                    {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                        <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
 
-                                            {% endfor %}
+                                                    {% endfor %}
 
                                                 </td>
 
@@ -112,15 +116,32 @@
 
                                                 {#CТАТУС#}
                                                 <td class="align-middle">
-                                                    <span>{{ get_UserTask_for.status }}</span>
+                                                    <span id="status_{{ get_UserTask_for.id }}">{{ get_UserTask_for.status }}</span>
 
                                                 </td>
 
                                                 {#РЕШЕНИЕ#}
                                                 <td class="align-middle">
-                                                    <span>{{ get_UserTask_for.result }}</span>
+                                                    <span id="result_value_{{ get_UserTask_for.id }}">{{ get_UserTask_for.result }}</span>
 
-                                                    <button id="process">Взять в рвботу</button>
+                                                    {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower  %}
+
+
+                                                        {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
+                                                            <button id="process_{{ get_UserTask_for.id }}">Выполнить
+                                                                задачу
+                                                            </button>
+                                                        {% else %}
+                                                            <button id="process_{{ get_UserTask_for.id }}">Взять в
+                                                                работу
+                                                            </button>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <button style="display: none;"
+                                                                id="process_{{ get_UserTask_for.id }}">Взять в работу
+                                                        </button>
+                                                    {% endif %}
+
 
                                                 </td>
 
@@ -132,17 +153,17 @@
                                                         <!--  Создадим div, в который обернем заголовок и кнопки, а затем применем стили -->
                                                         <div class="popup__content">
                                                             <h2 class="popup__title">
-                                                                Вы действительно хотите удалить все товары из корзины?
+                                                                Результат работы
                                                             </h2>
 
                                                             <label>Код закрытия</label>
-                                                            <select class="form-control">
+                                                            <select id="kod" class="form-control">
                                                                 <option>Выполнено</option>
                                                                 <option>Отказ выполнять</option>
                                                             </select>
 
                                                             <label>Решение</label>
-                                                            <textarea class="form-control" rows="3"
+                                                            <textarea id="result" class="form-control" rows="3"
                                                                       placeholder="Введите резултаты работы"></textarea>
                                                         </div>
                                                         <div class="btn-container">
@@ -170,20 +191,20 @@
                                                                   d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
                                                         </svg>
 
-
-                                                        <svg viewBox="0 0 130.2 130.2">
-                                                            <circle class="path circle" fill="none" stroke="#D06079"
-                                                                    stroke-width="6" stroke-miterlimit="10" cx="65.1"
-                                                                    cy="65.1" r="62.1"/>
-                                                            <line class="path line" fill="none" stroke="#D06079"
-                                                                  stroke-width="6" stroke-linecap="round"
-                                                                  stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8"
-                                                                  y2="92.3"/>
-                                                            <line class="path line" fill="none" stroke="#D06079"
-                                                                  stroke-width="6" stroke-linecap="round"
-                                                                  stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4"
-                                                                  y2="92.2"/>
-                                                        </svg>
+                                                        {##}
+                                                        {#                                                        <svg viewBox="0 0 130.2 130.2">#}
+                                                        {#                                                            <circle class="path circle" fill="none" stroke="#D06079"#}
+                                                        {#                                                                    stroke-width="6" stroke-miterlimit="10" cx="65.1"#}
+                                                        {#                                                                    cy="65.1" r="62.1"/>#}
+                                                        {#                                                            <line class="path line" fill="none" stroke="#D06079"#}
+                                                        {#                                                                  stroke-width="6" stroke-linecap="round"#}
+                                                        {#                                                                  stroke-miterlimit="10" x1="34.4" y1="37.9" x2="95.8"#}
+                                                        {#                                                                  y2="92.3"/>#}
+                                                        {#                                                            <line class="path line" fill="none" stroke="#D06079"#}
+                                                        {#                                                                  stroke-width="6" stroke-linecap="round"#}
+                                                        {#                                                                  stroke-miterlimit="10" x1="95.8" y1="38" x2="34.4"#}
+                                                        {#                                                                  y2="92.2"/>#}
+                                                        {#                                                        </svg>#}
                                                         <button id="good" class="popup__button">
                                                             Отлично
                                                         </button>
@@ -198,12 +219,83 @@
 
 
                                 <script>
+                                    async function updatde_UserTask(data, e) {
+                                        res = await fetch('/userprofile/updateUserTasck', {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: 'application/json',
+                                                'Content-Type': 'application/json',
+                                                "Authorization": getCookieValue("Authorization")
+                                            },
+                                            body: JSON.stringify(data)
+                                        });
+                                        console.log("res.status", res.status)
+                                        if (res.status == 200) {
+                                            console.log("res.data", data)
+                                            console.log("res.data", data["id"]["id"])
 
-                                    document.getElementById("process").addEventListener("click", () => {
-                                        document.getElementById("popup").style.display = "block";
-                                        document.getElementById("overlay").classList.add("show");
+                                            document.getElementById("status_" + data["id"]["id"]).innerText = data["user_data"]["status"]
 
-                                    });
+
+                                            if (data["user_data"]["status"] == "В Работе") {
+
+                                                document.getElementById(e.target.id).innerText = "Выполнить задачу"
+                                                showToast("Задача взята в работу", "info", 5000);
+                                                String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
+                                                get_UserTask_global()
+
+                                            } else {
+
+                                                document.getElementById("process_" + data["id"]["id"]).style = "display: none;"
+                                                document.getElementById("result_value_" + data["id"]["id"]).innerText = data["user_data"]["result"]
+
+                                                document.getElementById("success").style.display = "block";
+                                                document.getElementById("popup").style.display = "none";
+                                                document.getElementById("overlay").classList.add("show");
+
+
+                                            }
+
+
+                                        } else {
+                                            showToast("Ошибка", "error", 5000);
+
+                                        }
+                                    }
+
+                                    for (v of {{ get_UserTask|tojson|safe}}) {
+                                        console.log("get_UserTask_for.id", v.id)
+                                        console.log("get_UserTask_for.id", document.getElementById("process_" + v.id))
+                                        document.getElementById("process_" + v.id).addEventListener("click", (e) => {
+                                            console.log("get_UserTask_for.id", e.target.id)
+                                            console.log("get_UserTask_for.id", document.getElementById(e.target.id))
+
+                                            if (document.getElementById(e.target.id).innerText == "Взять в работу") {
+
+                                                data = {
+                                                    "user_data": {
+                                                        "status": "В Работе",
+                                                        "result": "",
+                                                        "notification_holder": false,
+                                                        "notification_executor": false
+                                                    },
+                                                    "id": {
+                                                        "id": e.target.id.replace("process_", "")
+                                                    }
+                                                }
+                                                updatde_UserTask(data, e)
+
+                                                {#get_UserTask()#}
+                                            } else {
+                                                document.getElementById("popup").style.display = "block";
+                                                document.getElementById("overlay").classList.add("show");
+                                                document.getElementById("yes-btn").className += " " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
+
+
+                                            }
+
+                                        });
+                                    }
 
 
                                     document.getElementById("good").addEventListener("click", () => {
@@ -216,10 +308,23 @@
                                         document.getElementById("overlay").classList.remove("show");
                                     });
 
-                                    document.getElementById("yes-btn").addEventListener("click", () => {
-                                        document.getElementById("success").style.display = "block";
-                                        document.getElementById("popup").style.display = "none";
-                                        document.getElementById("overlay").classList.add("show");
+                                    document.getElementById("yes-btn").addEventListener("click", (e) => {
+
+                                        console.log(document.getElementById("yes-btn").className.split(" ")[1])
+
+                                        data = {
+                                            "user_data": {
+                                                "status": document.getElementById("kod").value,
+                                                "result": document.getElementById("result").value,
+                                                "notification_holder": true,
+                                                "notification_executor": false
+                                            },
+                                            "id": {
+                                                "id": document.getElementById("yes-btn").className.split(" ")[1]
+                                            }
+                                        }
+                                        updatde_UserTask(data, e)
+
 
                                     });
 

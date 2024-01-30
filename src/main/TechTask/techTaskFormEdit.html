@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
+            <script>console.log("roles_userroles_userroles_user",{{roles_user|tojson|safe}})
+</script>
 <head>
     {% include "indexShablon_head.html" %}
 
@@ -28,9 +29,11 @@
                         <div class="">
                             <div class="section__tabs tabs">
                                 <div class="tabs__head">
-                                    <div class="tabs__caption" data-tab="main">форма</div>
-                                    <div class="tabs__caption" data-tab="pto">ПТО</div>
-                                    <div class="tabs__caption" data-tab="about">инженер</div>
+                                    <div class="tabs__caption" data-tab="main">Тех Задание</div>
+                                    <div class="tabs__caption" data-tab="pto">Калькуляция</div>
+                                    <div class="tabs__caption" data-tab="about">КП</div>
+{#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
+{#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
                                 </div>
                                 <div class="tabs__body">
                                     <div class="tabs__content" data-tab="main">
@@ -52,6 +55,26 @@
 
                                             <!-- /.panel-body -->
                                         </div>
+                                    </div>
+                                    <div class="tabs__content" data-tab="about">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+
+                                            </div>
+                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
+
+                                        </div>
+
+                                    </div>
+                                    <div class="tabs__content" data-tab="about">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+
+                                            </div>
+                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
+
+                                        </div>
+
                                     </div>
                                     <div class="tabs__content" data-tab="about">
                                         <div class="panel panel-default">

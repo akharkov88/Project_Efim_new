@@ -1,13 +1,38 @@
+async function get_UserTask_global() {
+
+    res = await fetch('/userprofile/get_UserTask', {
+        headers: {
+            Accept: 'application/json',
+            "Authorization": getCookieValue("Authorization")
+        },
+    });
+    let responseText = await res.text();
+            console.log("res.status",res.status)
+
+    if (res.status == 200) {
+        Header_show_value = 0
+        for (v of JSON.parse(responseText)) {
+            // console.log(v.notification_executor)
+            if (v.notification_executor == true) {
+                Header_show_value++
+            }
+        }
+        document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value
+    }
+}
+
+get_UserTask_global()
+
 async function check_user_func() {
-console.log("check_user_func")
-console.log("check_user_func",getCookieValue("Authorization"))
+    console.log("check_user_func")
+    console.log("check_user_func", getCookieValue("Authorization"))
     check_user = await fetch('/auth/user/', {
         headers: {
             Accept: 'application/json',
             "Authorization": getCookieValue("Authorization")
         },
     });
-console.log("check_user_func",check_user.status )
+    console.log("check_user_func", check_user.status)
 
     if (check_user.status != 200) {
         document.location.href = '/auth/'
@@ -28,7 +53,7 @@ async function autroriz() {
     //     document.execCommand("Stop");
     // }    ;
 
-        if (sessionStorage.getItem('stopload')) { // если в хранилище есть переменная 'stopload'
+    if (sessionStorage.getItem('stopload')) { // если в хранилище есть переменная 'stopload'
         // sessionStorage.removeItem('stopload'); // удалить 'stopload' из хранилища
     } else { // остановить загрузку HTML страницы
         if (window.stop !== undefined) {
@@ -46,7 +71,6 @@ async function autroriz() {
 // debugger
 
 
-
     console.log("check_user.status", check_user.status)
     if (check_user.status != 200) {
 
@@ -55,9 +79,9 @@ async function autroriz() {
         console.log("check_user.status", check_user.status)
 
         if (sessionStorage.getItem('stopload')) { // если в хранилище есть переменная 'stopload'
- sessionStorage.removeItem('stopload');
-        }else {
-                    sessionStorage.setItem('stopload', 'none'); // занести переменную в хранилище
+            sessionStorage.removeItem('stopload');
+        } else {
+            sessionStorage.setItem('stopload', 'none'); // занести переменную в хранилище
 
             location.reload();
         }
@@ -86,35 +110,35 @@ function downloadFileFromURL(url, fileName) {
     xhr.send();
 }
 
-async function check_user_Admin(){
-if (window.location.pathname=='/main/adminMenu'){
-     check_user = await fetch('/auth/user/', {
-        headers: {
-            Accept: 'application/json',
-            "Authorization": getCookieValue("Authorization")
-        },
-    });
-    let responseText = await check_user.text();
-console.log("222222",JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
-    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")==-1) {
-        document.location.href = '/main'
+async function check_user_Admin() {
+    if (window.location.pathname == '/main/adminMenu') {
+        check_user = await fetch('/auth/user/', {
+            headers: {
+                Accept: 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+        });
+        let responseText = await check_user.text();
+        console.log("222222", JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
+        if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") == -1) {
+            document.location.href = '/main'
+        }
     }
-}
 
 }
 
 check_user_Admin()
 
 
-async function check_menu_Admin(){
-     check_user = await fetch('/auth/user/', {
+async function check_menu_Admin() {
+    check_user = await fetch('/auth/user/', {
         headers: {
             Accept: 'application/json',
             "Authorization": getCookieValue("Authorization")
         },
     });
     let responseText = await check_user.text();
-    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin")==-1) {
+    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") == -1) {
         showStuff("adminMenu")
     }
 
@@ -132,44 +156,60 @@ function showStuff(id) {
 check_menu_Admin()
 
 
-function getCookieValue(name)
-    {
-      const regex = new RegExp(`(^| )${name}=([^;]+)`)
-      const match = document.cookie.match(regex)
-      if (match) {
+function getCookieValue(name) {
+    const regex = new RegExp(`(^| )${name}=([^;]+)`)
+    const match = document.cookie.match(regex)
+    if (match) {
         return match[2]
-      }
-   }
-
-   function setCookie(name, value, options = {}) {
-
-  options = {
-    path: '/',
-    // при необходимости добавьте другие значения по умолчанию
-    ...options
-  };
-
-  if (options.expires instanceof Date) {
-    options.expires = options.expires.toUTCString();
-  }
-
-  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-  for (let optionKey in options) {
-    updatedCookie += "; " + optionKey;
-    let optionValue = options[optionKey];
-    if (optionValue !== true) {
-      updatedCookie += "=" + optionValue;
     }
-  }
+}
 
-  document.cookie = updatedCookie;
+function setCookie(name, value, options = {}) {
+
+    options = {
+        path: '/',
+        // при необходимости добавьте другие значения по умолчанию
+        ...options
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
 }
 
 // Пример использования:
 // setCookie('user', 'John', {secure: true, 'max-age': 3600});
 function deleteCookie(name) {
-  setCookie(name, "", {
-    'max-age': -1
-  })
+    setCookie(name, "", {
+        'max-age': -1
+    })
+}
+
+
+function validForm_global(elements) {
+    // let elements = $('form').serializeArray();
+    valid = true
+    for (let key of elements) {
+        if (key.value == '') {
+            valid = false
+            document.getElementsByName(key.name)[0].setAttribute("required", true)
+        } else {
+            document.getElementsByName(key.name)[0].removeAttribute("required")
+        }
+    }
+
+
+    return valid
 }

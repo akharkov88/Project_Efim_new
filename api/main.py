@@ -8,6 +8,9 @@ from fastapi import (
     Response,
     Path,
 )
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.encoders import jsonable_encoder
+
 from fastapi.responses import FileResponse
 
 from fastapi.responses import JSONResponse
@@ -189,9 +192,13 @@ def create_operation(
 
 
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
-def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = ""):
+def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = "",Auth_Service: AuthService = Depends()):
+    try:
+        user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask)}
+        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"]}
     )
 
 

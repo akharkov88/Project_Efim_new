@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from pydantic.main import ModelMetaclass
 from datetime import datetime, timezone,date
 from enum import Enum
-
+from typing import Optional
 class statusEnum(str, Enum):
     WAITING_FOR_WORKER = 'Назначена'
     IN_PROGRESS = 'В Работе'
@@ -12,8 +13,15 @@ class priorityEnum(str, Enum):
     low = 'Не важно'
     normal = 'Нормально'
     danger = 'Важно'
+class ModelUserTaskID(BaseModel):
+    id: int
+class ModelUserTaskUpdate(BaseModel):
+    status: statusEnum
+    result : str
+    notification_holder: bool
+    notification_executor: bool
 
-class ModelUserTask(BaseModel):
+class ModelUserTask(ModelUserTaskID):
     name: str
     user_create: str
     user_executor: str
@@ -23,6 +31,21 @@ class ModelUserTask(BaseModel):
     notification_holder: bool
     notification_executor: bool
     priority: priorityEnum
+
+
+class AllOptional(ModelMetaclass):
+    def __new__(self, name, bases, namespaces, **kwargs):
+        annotations = namespaces.get('__annotations__', {})
+        for base in bases:
+            annotations.update(base.__annotations__)
+        for field in annotations:
+            if not field.startswith('__'):
+                annotations[field] = Optional[annotations[field]]
+        namespaces['__annotations__'] = annotations
+        return super().__new__(self, name, bases, namespaces, **kwargs)
+
+class UpdatedItem(ModelUserTask, metaclass=AllOptional):
+    pass
 
 class ModelUserPfofile(BaseModel):
     first_name: str
