@@ -1,4 +1,4 @@
-async function get_UserTask() {
+async function get_UserTask_global() {
 
     res = await fetch('/userprofile/get_UserTask', {
         headers: {
@@ -21,7 +21,7 @@ async function get_UserTask() {
     }
 }
 
-get_UserTask()
+get_UserTask_global()
 
 async function check_user_func() {
     console.log("check_user_func")
