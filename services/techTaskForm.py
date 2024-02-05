@@ -26,17 +26,17 @@ class techTaskFormServices:
 
     def update_value(self, TechTaskDATA: models.UserTask) -> tables.TaskForm:
         try:
-            operation = tables.TaskForm(
-                NameTechTask=TechTaskDATA.NameTechTask,
-                TechTaskClient=TechTaskDATA.TechTaskClient,
-                TechTaskProject=TechTaskDATA.TechTaskProject,
-                TechTaskPPR=TechTaskDATA.TechTaskPPR,
-                TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
-                TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
-                TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
-                TechTaskPrice=TechTaskDATA.TechTaskPrice,
-                TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
-            )
+            # operation = tables.TaskForm(
+            #     NameTechTask=TechTaskDATA.NameTechTask,
+            #     TechTaskClient=TechTaskDATA.TechTaskClient,
+            #     TechTaskProject=TechTaskDATA.TechTaskProject,
+            #     TechTaskPPR=TechTaskDATA.TechTaskPPR,
+            #     TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
+            #     TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
+            #     TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
+            #     TechTaskPrice=TechTaskDATA.TechTaskPrice,
+            #     TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
+            # )
 
             # existing_row = self.session.query(tables.TaskForm).filter(tables.TaskForm.NameTechTask == TechTaskDATA.NameTechTask).first()
             # existing_row.column1 = 'new_value1'

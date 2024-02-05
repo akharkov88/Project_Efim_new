@@ -84,14 +84,14 @@ templates = Jinja2Templates(directory="src/main")
 #     #     return {"message": e.args}
 #     return files
 #
-# @router.post(
-#     '/update_value',
-#     response_model=models.UserTask,
-#     status_code=status.HTTP_200_OK,
-# )
-# def create_operation(
-#         user_data: models.UserTask,
-#         Task_Services: techTaskFormServices = Depends(),
-# ):
-#     return Task_Services.update_value(user_data)
+@router.post(
+    '/update_value',
+    response_model=models.UserTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        user_data: models.UserTask,
+        Task_Services: techTaskFormServices = Depends(),
+):
+    return Task_Services.update_value(user_data)
 

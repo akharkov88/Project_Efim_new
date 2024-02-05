@@ -23,8 +23,9 @@ fastapi = "^0.104.1"
 psycopg = {extras = ["binary", "pool"], version = "^3.1.13"}
 asyncpg = "^0.29.0"
 aiofiles = "^23.2.1"
-alchemy = "^20.5"
-urllib3 = "^2.2.0"
+telebot = "^0.0.5"
+filelock= "^3.13.1"
+pytelegrambotapi= "^4.15.4"
 
 [build-system]
 requires = ["poetry-core"]
