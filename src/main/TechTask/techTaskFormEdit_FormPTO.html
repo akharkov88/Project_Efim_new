@@ -48,6 +48,105 @@
 
 <script>
 
+ function pereschetTotalSum(){
+        let arr_test = []
+        $(`#first_table tbody`).each(function () {
+                    arr_test.push(this.id.slice(this.id.lastIndexOf('_')+1));
+                });
+        let arr_index =[]
+        for (let i=0; i<arr_test.length; i+=5){
+            if (!isNaN(arr_test[i])){
+                arr_index.push(arr_test[i])
+            }
+        }
+        console.warn(arr_index);
+        let sum = 0;
+        for (i of arr_index){
+            console.log(i)
+            sum += Number(obj_global_sum['ВСЕГО_'+i])
+        }
+        obj_global_sum['result_total'] = sum.toFixed(2)
+        $(`#result_total`)[0].childNodes[3].childNodes[13].innerText = obj_global_sum['result_total'];
+
+        }
+
+ function func_sum_vsego_razdel(elem_stroka){
+    let sum = 0;
+
+
+     let summa_v_itogo = 0;
+    let id_for_itogo = elem_stroka.parentElement.parentElement.id.slice(elem_stroka.parentElement.parentElement.id.lastIndexOf('_')+1)
+    console.log('id_for_itogo: ',id_for_itogo)
+    console.log('elem_stroka: ',elem_stroka.parentElement.parentElement.id.lastIndexOf('_')+1 )
+
+    if (Object.keys(obj_global_sum).indexOf('Накладные_расходы_'+ id_for_itogo)!=-1 && obj_global_sum['Накладные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costWork_'+ id_for_itogo]!= ''){
+
+        summa_v_itogo += Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText != Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText = (Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 &&obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
+        summa_v_itogo += Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText != Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText = (Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 &&obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_Special_'+ id_for_itogo]!= '') {
+        summa_v_itogo += Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText != Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText = (Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    console.log('summa_v_itogo ', summa_v_itogo.toFixed(2))
+    if (summa_v_itogo>=0 && obj_global_sum['earthWorks_Total_'+id_for_itogo]!= ''){
+        obj_global_sum['ВСЕГО_'+id_for_itogo] = (Number(obj_global_sum['earthWorks_Total_'+ id_for_itogo]) + Number(summa_v_itogo.toFixed(2))).toFixed(2);
+        console.log("присвоение ", obj_global_sum['earthWorks_Total_'+ id_for_itogo],' + ',  Number(summa_v_itogo.toFixed(2)) )
+
+        pereschetTotalSum();
+    } {#else {
+        obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
+    }#}
+    if (obj_global_sum['ВСЕГО_'+id_for_itogo] != '' && !isNaN(obj_global_sum['ВСЕГО_'+id_for_itogo])) {
+        document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[9].childNodes[13].innerText = obj_global_sum['ВСЕГО_'+id_for_itogo];
+    }
+
+    document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_'+ id_for_itogo]).toFixed(2);
+
+
+ }
+
+
+ function del_func (event){
+        {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
+            console.log('event!!!')
+            console.log(event)
+            let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
+            zaglav = zaglav.value;
+            arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);
+
+            let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);
+            arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)
+            {#console.log(arr_zaglav);#}
+
+         document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+         document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
+        let arr_test = []
+        $(`#first_table tbody`).each(function () {
+                    arr_test.push(this.id);
+                });
+                {#console.log('arr_test = ' + arr_test.length)#}
+                console.warn(arr_test)
+        if (arr_test.length == 1){
+        document.getElementById(`result_total`).remove()
+        document.getElementById('style_table').style.display = 'none';
+        document.getElementById("saveTable").style.display = "none";
+        }
+        counterTr();
+        }
 async function Test() {
 {#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
     let response = await fetch('/techTask/formPtoGet', {
@@ -70,6 +169,38 @@ async function Test() {
             for_event_tr('tr','stroka_');
             up_obj_global_sum();
             for_total_table();
+            {#alert({{roles_user|tojson|safe}})#}
+            table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+
+             $("button[id ^='del_razdel_']").on("click", function (event){
+                 del_func(event)
+
+        {#          let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);#}
+        {#    zaglav = zaglav.value;#}
+        {#    arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);#}
+        {##}
+        {#    let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);#}
+        {#    arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)#}
+            {#console.log(arr_zaglav);#}
+        {##}
+        {# document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
+        {# document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
+        {# document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
+        {# document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
+        {# document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
+        {#let arr_test = []#}
+        {#$(`#first_table tbody`).each(function () {#}
+        {#            arr_test.push(this.id);#}
+        {#        });#}
+                {#console.log('arr_test = ' + arr_test.length)#}
+        {#        console.warn(arr_test)#}
+        {#if (arr_test.length == 1){#}
+        {#document.getElementById(`result_total`).remove()#}
+        {#document.getElementById('style_table').style.display = 'none';#}
+        {#document.getElementById("saveTable").style.display = "none";#}
+        //{#}#}
+        {#counterTr();#}
+             })
         }
 
 
@@ -77,7 +208,30 @@ async function Test() {
 Test()
 
 {#let test_temp = '\n\n                    <tbody id="earthWorks_1">\n                    <tr><td colspan="6" style="padding: 0;"><input id="zagolovok_1" style="width: 100%; height: 100%; border:  0;" autocomplete="off" value="123">\n                               </td><td colspan="4"><button id="del_razdel_1" type="button" class="btn-primary"> Удалить раздел</button></td>\n                    </tr>\n                        <tr style="background-color: #fce1b3">\n                            <td rowspan="2">Тех столбец</td>\n                            <td>№</td>\n                            <td rowspan="2">Наименование</td>\n                            <td colspan="4">Стоимость</td>\n                            <td colspan="4">Справочная информация</td>\n                            <td colspan="8">Аналитический блок</td>\n                        </tr>\n\n                        <tr style="background-color: #fce1b3">\n                            <td>п/п</td>\n                            <td>Ед.изм.</td>\n                            <td>Кол-во</td>\n                            <td>Цена</td>\n                            <td>Всего</td>\n                            <td rowspan="1">Тр-затр (чел-дн)</td>\n                            <td rowspan="1">Столбец для анализа</td>\n                            <td rowspan="1"></td>\n                            <td rowspan="1">Примечание</td>\n                            <td>Кол-во</td>\n                            <td>Цена руб-ед</td>\n                            <td>Всего</td>\n                            <td>Тр-затр (чел-дн)</td>\n                            <td>Стоимость дня рабочего</td>\n                        </tr>\n                        </tbody>\n                        <tbody id="earthWorks_costWork_1">\n                        <tr>\n                            <td style="border-right: none;"></td>\n                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>\n                            <td contenteditable="false" id="earthWorks_costWork_addLine_1" style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">\n                            Стоимость работ\n                            <div style="display: none;"><button onclick="addLine(event,this)">addLine</button></div>\n                            </td>\n                            <td contenteditable="false"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        </tr>\n                    <tr id="stroka_1">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_1"></button></td>\n\n\n                            <td contenteditable="false">1</td>\n                            <td contenteditable="false" style="padding: 0;">\n\n                            <div id="div_costWork_1" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costWork_1" type="text" name="example" list="datalist_costWork_1" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWork_1">\n                            </datalist>\n                            </div></td>\n                            <td contenteditable="false" style="padding: 0;">\n                            <div id="div_costWorkEdIzm_1" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_EdIzm_1" type="text" name="example" list="datalist_costWorkEdIzm_1" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWorkEdIzm_1">\n                            </datalist>\n                            </div>\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_10">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_10"></button></td>\n\n\n                            <td contenteditable="false">2</td>\n                            <td contenteditable="false" style="padding: 0;">\n\n                            <div id="div_costWork_10" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costWork_10" type="text" name="example" list="datalist_costWork_10" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWork_10">\n                            </datalist>\n                            </div></td>\n                            <td contenteditable="false" style="padding: 0;">\n                            <div id="div_costWorkEdIzm_10" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_EdIzm_10" type="text" name="example" list="datalist_costWorkEdIzm_10" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWorkEdIzm_10">\n                            </datalist>\n                            </div>\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_11">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_11"></button></td>\n\n\n                            <td contenteditable="false">3</td>\n                            <td contenteditable="false" style="padding: 0;">\n\n                            <div id="div_costWork_11" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costWork_11" type="text" name="example" list="datalist_costWork_11" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWork_11">\n                            </datalist>\n                            </div></td>\n                            <td contenteditable="false" style="padding: 0;">\n                            <div id="div_costWorkEdIzm_11" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_EdIzm_11" type="text" name="example" list="datalist_costWorkEdIzm_11" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWorkEdIzm_11">\n                            </datalist>\n                            </div>\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_12">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_12"></button></td>\n\n\n                            <td contenteditable="false">4</td>\n                            <td contenteditable="false" style="padding: 0;">\n\n                            <div id="div_costWork_12" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costWork_12" type="text" name="example" list="datalist_costWork_12" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWork_12">\n                            </datalist>\n                            </div></td>\n                            <td contenteditable="false" style="padding: 0;">\n                            <div id="div_costWorkEdIzm_12" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_EdIzm_12" type="text" name="example" list="datalist_costWorkEdIzm_12" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWorkEdIzm_12">\n                            </datalist>\n                            </div>\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_13">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_13"></button></td>\n\n\n                            <td contenteditable="false">5</td>\n                            <td contenteditable="false" style="padding: 0;">\n\n                            <div id="div_costWork_13" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costWork_13" type="text" name="example" list="datalist_costWork_13" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWork_13">\n                            </datalist>\n                            </div></td>\n                            <td contenteditable="false" style="padding: 0;">\n                            <div id="div_costWorkEdIzm_13" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_EdIzm_13" type="text" name="example" list="datalist_costWorkEdIzm_13" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costWorkEdIzm_13">\n                            </datalist>\n                            </div>\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr></tbody><tbody id="earthWorks_costMaterial_1">\n                        <tr>\n                        <td style="border-right: none;"></td>\n                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>\n                            <td contenteditable="false" id="earthWorks_costMaterial_addLine_1" style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">\n                            Стоимость материала\n                            <div style="display: none;"><button onclick="addLine(event,this)">addLine</button></div>\n                            </td>\n                            <td contenteditable="false"></td>\n\n\n                            <td contenteditable="false" colspan="2"> Ед изм расчётные </td>\n\n                            <td contenteditable="false"> Ед изм (М2) для окраски </td>\n\n                            <td contenteditable="true"></td>\n\n                            <td contenteditable="false">Закупка по счету - ед изм расчётные</td>\n                            <td contenteditable="false">Остаток закупки</td>\n                            <td contenteditable="false">ед изм к закупке</td>\n                            <td contenteditable="false">руб-ед</td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false">Счёта</td>\n                            <td contenteditable="false">Срок поставки</td>\n                            <td contenteditable="false">ПРИМЕЧАНИЕ</td>\n                        </tr>\n                    <tr id="stroka_6">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_6"></button></td>\n<td contenteditable="false">1</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_6" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_6" type="text" name="example" list="datalist_costMaterial_6" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_6">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_7">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_7"></button></td>\n<td contenteditable="false">2</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_7" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_7" type="text" name="example" list="datalist_costMaterial_7" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_7">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_8">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_8"></button></td>\n<td contenteditable="false">3</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_8" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_8" type="text" name="example" list="datalist_costMaterial_8" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_8">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_9">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_9"></button></td>\n<td contenteditable="false">4</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_9" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_9" type="text" name="example" list="datalist_costMaterial_9" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_9">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_14">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_14"></button></td>\n<td contenteditable="false">5</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_14" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_14" type="text" name="example" list="datalist_costMaterial_14" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_14">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_15">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_15"></button></td>\n<td contenteditable="false">6</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_costMaterial_15" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_costMaterial_15" type="text" name="example" list="datalist_costMaterial_15" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_costMaterial_15">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr></tbody>\n\n                    <tbody id="earthWorks_Special_1">\n                    <tr>\n                    <td style="border-right: none;"></td>\n                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>\n                             <td contenteditable="false" id="earthWorks_Special_addLine_1" style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">\n                            Стоимость спецтехники\n                            <div style="display: none;"><button onclick="addLine(event,this)">addLine</button></div>\n                            </td>\n                            <td contenteditable="false"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n                            <td contenteditable="true"></td>\n\n                            <td contenteditable="false">Стоимость аренды</td>\n                            <td contenteditable="false">Телефон</td>\n                            <td contenteditable="false">Счет</td>\n                            <td contenteditable="false">Срок</td>\n\n                        </tr>\n\n                    <tr id="stroka_2">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_2"></button></td>\n<td contenteditable="false">1</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_2" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_2" type="text" name="example" list="datalist_Special_2" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_2">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_3">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_3"></button></td>\n<td contenteditable="false">2</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_3" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_3" type="text" name="example" list="datalist_Special_3" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_3">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_4">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_4"></button></td>\n<td contenteditable="false">3</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_4" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_4" type="text" name="example" list="datalist_Special_4" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_4">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_5">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_5"></button></td>\n<td contenteditable="false">4</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_5" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_5" type="text" name="example" list="datalist_Special_5" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_5">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_16">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_16"></button></td>\n<td contenteditable="false">5</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_16" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_16" type="text" name="example" list="datalist_Special_16" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_16">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr><tr id="stroka_17">\n<td contenteditable="false"><button type="button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_17"></button></td>\n<td contenteditable="false">6</td>\n                            <td contenteditable="true" style="padding: 0;">\n                            <div id="div_Special_17" style="border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">\n                            <input id="input_Special_17" type="text" name="example" list="datalist_Special_17" value="" style="width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">\n                            <datalist id="datalist_Special_17">\n                            </datalist>\n                            </div>\n                            </td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        <td contenteditable="true"></td>\n                        </tr></tbody>\n\n                     <tbody id="earthWorks_Total_1">\n                        <tr>\n                        <td style="border-right: none;"></td>\n                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>\n                            <td contenteditable="false" style="font-weight: bold;border-left: none;" colspan="4"> Итого\n                            </td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n                        </tr>\n                        <tr id="stroka">\n                        <td></td>\n                            <td contenteditable="false">1</td>\n                            <td contenteditable="false">\n                                Накладные расходы\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n                        </tr>\n\n                        <tr id="stroka">\n                        <td></td>\n                            <td contenteditable="false">2</td>\n                            <td contenteditable="false">\n                                Вспомогательные материалы\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n                        </tr>\n\n                        <tr id="stroka">\n                        <td></td>\n                            <td contenteditable="false">3</td>\n                            <td contenteditable="false">\n                                Транспортные расходы\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n                        </tr>\n\n                        <tr id="stroka">\n                        <td></td>\n                            <td contenteditable="false">4</td>\n                            <td contenteditable="false" style="font-weight: bold; text-align: right">\n                                ВСЕГО:\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n                        </tr>\n                        <tr id="stroka">\n                        <td></td>\n                            <td contenteditable="false">5</td>\n                            <td contenteditable="false" style="font-weight: bold;">\n                                В том числе НДС - 20% за нал от материалов\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n                        </tr>\n                    </tbody>\n\n                    <tbody id="result_total">\n                    <tr class="blank_row">\n                        <td colspan="3"></td>\n                    </tr>\n                        <tr>\n                        <td></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="false" style="font-weight: bold; text-align: right">\n                                ВСЕГО:\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        </tr>\n                        <tr>\n                        <td></td>\n                            <td contenteditable="false"></td>\n                            <td contenteditable="false" style="font-weight: bold;">\n                                В том числе НДС - 20% за нал от материалов\n                            </td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                            <td contenteditable="true"></td>\n                        </tr>\n                    </tbody>\n                    '#}
+function table_roles(role){
 
+
+    console.warn('!!!!', (role=='Admin'))
+if (role == 'Admin'){
+console.warn('admin!')
+$('.CostMaterial_disabled').attr("contenteditable","false") // tbody Стоимость материала раздел ПТО
+$('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
+$('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
+$('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
+//('data-title' , "Введите корректное значение")
+$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+
+{#$('.tehstolbec').attr("style","display: none;")#}
+} else if (role == 'supplier'){
+$('.CostMaterial_disabled').attr( "contenteditable","false" )
+$('.costWork_role_supplier').attr("contenteditable","true")
+$('.costWork_role_boss').attr("contenteditable","false")
+$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+{#$('.tehstolbec').attr("style","display: block;")#}
+} else if (role=='ENGINEER'){
+
+}
+}
 
 function seach_ID_table(elem,id){
     {#let temp = JSON.parse(responseText).value_table;#}
@@ -131,6 +285,7 @@ function for_total_table(){
             if (["length", "prevObject", "context", "selector"].indexOf(key) == -1) {
                 {#console.log('for (let key in temp) key: ', temp[key].id.slice(temp[key].id.lastIndexOf('_')+1))#}
                 table_earthWorks_Total(temp[key].id.slice(temp[key].id.lastIndexOf('_')+1))
+                console.warn(temp)
             }
         }
     }
@@ -148,9 +303,32 @@ function up_obj_global_sum(){
     for (let key in temp) {
     if (temp.hasOwnProperty(key)) {
     if (["length","prevObject","context","selector"].indexOf(key)== -1){
+
         if (temp[key].childNodes[1].childNodes.length > 7){
+
             if (temp[key].childNodes[1].childNodes[7].innerHTML != ''){
-                 obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML
+                console.log(temp[key])
+                 obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML;
+
+                 if (temp[key].id.indexOf('earthWorks_Total_') == 0){
+                    if (temp[key].childNodes[3].childNodes[7].innerText!= ''){
+                        obj_global_sum['Накладные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[3].childNodes[7].innerText.replace(',','.').replace('%','')
+                    }
+                    if (temp[key].childNodes[5].childNodes[7].innerText!= ''){
+                        obj_global_sum['Вспомогательные_материалы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[5].childNodes[7].innerText.replace(',','.').replace('%','')
+                    }
+                    if (temp[key].childNodes[7].childNodes[7].innerText!= ''){
+                        obj_global_sum['Транспортные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[7].childNodes[7].innerText.replace(',','.').replace('%','')
+                    }
+                    if (temp[key].childNodes[9].childNodes[13].innerText!= ''){
+                        obj_global_sum['ВСЕГО_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[9].childNodes[13].innerText.replace(',','.').replace('%','')
+
+                    }
+                    if (temp[key].childNodes[11].childNodes[13].innerText!= ''){
+                        obj_global_sum['ВСЕГО_НДС_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[11].childNodes[13].innerText
+                    }
+
+                 }
                 }
                   else {
                       obj_global_sum[temp[key].id] = ''
@@ -207,7 +385,7 @@ const table = document.getElementById('first_table');
         let addLineObj = new Object();
         addLineObj = {
             'earthWorks_costWork': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec" ><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 
 
                             <td contenteditable="false">
@@ -236,43 +414,43 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true" class="costWork_role_boss"></td>
+                        <td contenteditable="true" class="costWork_role_boss"></td>
+                        <td contenteditable="true" class="costWork_role_boss"></td>
+                        <td contenteditable="true" class="costWork_role_boss"></td>
+                        <td contenteditable="true" class="costWork_role_boss"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
-                            <td contenteditable="true" style="padding: 0;">
+                            <td contenteditable="true" style="padding: 0;" class="CostMaterial_disabled">
                             <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <input id = 'input_costMaterial_${id_count}' type="text"  name="example" list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
+                            <input id = 'input_costMaterial_${id_count}' class="CostMaterial_disabled_input" type="text"  name="example" list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
                             <datalist id="datalist_costMaterial_${id_count}">
                             </datalist>
                             </div>
                             </td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
 
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="false"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
+                            <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
                         </tr>`,
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
                             <td contenteditable="true" style="padding: 0;">
                             <div id="div_Special_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
@@ -291,10 +469,10 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
-                        <td contenteditable="true"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier"></td>
                         </tr>`,
         };
 
@@ -364,6 +542,48 @@ function PTO_td_sum(elem_stroka){
     // присвоение суммы в строчку ИТОГО
     obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
 
+    // подсчет ВСЕГО в одной таблице с вызовом из ячеек td
+    let summa_v_itogo = 0;
+    let id_for_itogo = elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)
+
+    console.log('id_for_itogo: ',id_for_itogo)
+    console.log('elem_stroka: ',elem_stroka )
+    console.log('elem_stroka: ',elem_stroka.parentElement.id)
+
+
+    console.warn('!!!', elem_stroka)
+    if (Object.keys(obj_global_sum).indexOf('Накладные_расходы_'+ id_for_itogo)!=-1 && obj_global_sum['Накладные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costWork_'+ id_for_itogo]!= ''){
+
+        summa_v_itogo += Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText != Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText = (Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 &&obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
+        summa_v_itogo += Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText != Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText = (Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 &&obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_Special_'+ id_for_itogo]!= '') {
+        summa_v_itogo += Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]
+        if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText != Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]){
+            document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText = (Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_Special_'+ id_for_itogo]).toFixed(2)
+        }
+    }
+    console.log('summa_v_itogo ', summa_v_itogo.toFixed(2))
+    if (summa_v_itogo>0 && obj_global_sum['earthWorks_Total_'+id_for_itogo]!= ''){
+        obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = (obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] + Number(summa_v_itogo.toFixed(2))).toFixed(2);
+        console.log("присвоение ", obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)],' + ',  Number(summa_v_itogo.toFixed(2)) )
+        pereschetTotalSum();
+    } {#else {
+        obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
+    }#}
+    if (obj_global_sum['ВСЕГО_'+id_for_itogo] != '' && !isNaN(obj_global_sum['ВСЕГО_'+id_for_itogo])) {
+        document.getElementById('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)).childNodes[9].childNodes[13].innerText = obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)];
+    }
+
+    console.log('!!!!', obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)])
     document.getElementById('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)).childNodes[1].childNodes[7].innerText = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)].toFixed(2);
 
     //func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
@@ -801,7 +1021,7 @@ let value = e.value;
                                </td><td colspan="4" ><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
-                            <td rowspan="2">Тех столбец</td>
+                            <td rowspan="2"  class="tehstolbec">Тех столбец</td>
                             <td>№</td>
                             <td rowspan="2">Наименование</td>
                             <td colspan="4">Стоимость</td>
@@ -922,12 +1142,12 @@ let value = e.value;
 
                         </tr>
                         <tr id = "stroka">
-                        <td></td>
+                        <td  class="tehstolbec" ></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Накладные расходы
                             </td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -947,12 +1167,12 @@ let value = e.value;
                         </tr>
 
                         <tr id = "stroka">
-                        <td></td>
+                        <td  class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Вспомогательные материалы
                             </td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -972,12 +1192,12 @@ let value = e.value;
                         </tr>
 
                         <tr id = "stroka">
-                        <td></td>
+                        <td  class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false">
                                 Транспортные расходы
                             </td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -997,7 +1217,7 @@ let value = e.value;
                         </tr>
 
                         <tr id = "stroka">
-                        <td></td>
+                        <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
                                 ВСЕГО:
@@ -1016,7 +1236,7 @@ let value = e.value;
 
                         </tr>
                         <tr id = "stroka">
-                        <td></td>
+                        <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold;">
                                 В том числе НДС - 20% за нал от материалов
@@ -1040,7 +1260,7 @@ let value = e.value;
                         <td colspan="100%"></td>
                     </tr>
                         <tr>
-                        <td></td>
+                        <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
                                 ВСЕГО:
@@ -1056,7 +1276,7 @@ let value = e.value;
                             <td contenteditable="true"></td>
                         </tr>
                         <tr>
-                        <td></td>
+                        <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold;">
                                 В том числе НДС - 20% за нал от материалов
@@ -1083,35 +1303,8 @@ let value = e.value;
 
 
 
-   document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){
-        {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
+  document.getElementById(`del_razdel_${coll_table}`).onclick = function (event){del_func (event)}
 
-            let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);
-            zaglav = zaglav.value;
-            arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);
-
-            let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);
-            arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)
-            {#console.log(arr_zaglav);#}
-
-         document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-         document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()
-        let arr_test = []
-        $(`#first_table tbody`).each(function () {
-                    arr_test.push(this.id);
-                });
-                {#console.log('arr_test = ' + arr_test.length)#}
-                console.warn(arr_test)
-        if (arr_test.length == 1){
-        document.getElementById(`result_total`).remove()
-        document.getElementById('style_table').style.display = 'none';
-        document.getElementById("saveTable").style.display = "none";
-        }
-        counterTr();
-        }
 
 
         coll_table++;
@@ -1130,15 +1323,19 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
 
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
-obj_global_sum['Накладные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','')
+obj_global_sum['Накладные_расходы_' +  id_table] = this.innerText.replace(',','.').replace('%','');
     if (obj_global_sum['earthWorks_costWork_'+id_table] != ''){
     {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costWork_'+id_table]).toFixed(2)
+        func_sum_vsego_razdel(this);
     }
 } else {
         this.setAttribute('data-title' , "Введите корректное значение");
         this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = '';
+        obj_global_sum['Накладные_расходы_'+id_table]=''
+        func_sum_vsego_razdel(this);
         };
+
 
 
 });
@@ -1152,10 +1349,13 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes
     if (obj_global_sum['earthWorks_costMaterial_'+id_table] != ''){
     {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[5].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_costMaterial_'+id_table]).toFixed(2)
+        func_sum_vsego_razdel(this);
     }
 } else {
         this.setAttribute('data-title' , "Введите корректное значение");
         this.parentElement.parentElement.childNodes[5].childNodes[13].innerText = '';
+        obj_global_sum['Вспомогательные_материалы_'+id_table]=''
+        func_sum_vsego_razdel(this);
         };
 });
 document.getElementById('earthWorks_Total_'+coll_table).childNodes[7].childNodes[7].addEventListener('keyup', function(event){
@@ -1166,15 +1366,20 @@ obj_global_sum['Транспортные_расходы_' +  id_table] = this.in
     if (obj_global_sum['earthWorks_Special_'+id_table] != ''){
     {#console.log('popal')#}
         this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = ((this.innerText.replace(',','.').replace('%',''))/100 * obj_global_sum['earthWorks_Special_'+id_table]).toFixed(2)
+        func_sum_vsego_razdel(this);
     }
 } else {
         this.setAttribute('data-title' , "Введите корректное значение");
         this.parentElement.parentElement.childNodes[7].childNodes[13].innerText = '';
+        obj_global_sum['Транспортные_расходы_'+id_table]='';
+        func_sum_vsego_razdel(this);
         };
 });
 }
 
  function counterTr(){
+ console.warn('counterTr')
+ console.log('arr_coll_table = ',arr_coll_table)
 let arr_tbody = [];
 let arr_tr = [];
 let last_index = 0;
@@ -1185,28 +1390,38 @@ let razdelov = 0;
                 });
                 if (arr_tbody.length >= 5){
           razdelov = arr_tbody.length / 5;
-          {#console.warn('razdelov v tablice = ', razdelov)#}
+          console.warn('razdelov v tablice = ', razdelov)
           {#console.warn('arr_tbody = ', arr_tbody)#}
           }
                 {# собрать все цифры после '_' в массив и подствить в for 'J'#}
                 {#console.warn('arr_tbody = ' , arr_tbody,' arr_tbody.length = ' , arr_tbody.length);#}
 for(let j = 1; j <= razdelov; j++){
+console.log('j=',j)
+
 {#arr_tr = [];#}
 for (let i of arr_tbody){
+{#console.log(arr_tbody)#}
+{#console.log('i=',i)#}
 arr_tr = [];
     if (i.slice(0, i.lastIndexOf('_')) != 'earthWorks'){
-        if(i.slice(i.lastIndexOf('_')+1, i.length) == arr_coll_table[j-1]){
+    console.log('first if ', i, ' || ', i.slice(i.lastIndexOf('_')+1, i.length))
+
+        {#if(i.slice(i.lastIndexOf('_')+1, i.length) == arr_coll_table[j-1]){#}
+        console.log('for if   ', i.slice(i.lastIndexOf('_')+1, i.length))
             $(`#${i} tr`).each(function () {
+            {#console.log(i, '=i    arr_tr=',arr_tr)#}
             {# if убрать, если нужно пронумеровать все строки#}
             if (this.id.indexOf('stroka')!=-1){
                     {#this.firstElementChild.innerHTML = arr_tr.length + 1;#}
                     this.childNodes[3].innerHTML = arr_tr.length + 1;
+                    {#console.log(this.childNodes[3])#}
+                    console.log(arr_tr.length + 1)
                     arr_tr.push(this.parentElement.id.slice(this.parentElement.id.lastIndexOf('_')+1));
                     }
             });
           {#console.log('arr_tr = ' + arr_tr)#}
         }
-    }
+
 }
 }
 
