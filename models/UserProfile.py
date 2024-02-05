@@ -21,7 +21,7 @@ class ModelUserTaskUpdate(BaseModel):
     notification_holder: bool
     notification_executor: bool
 
-class ModelUserTask(ModelUserTaskID):
+class ModelUserTask(BaseModel):
     name: str
     user_create: str
     user_executor: str
