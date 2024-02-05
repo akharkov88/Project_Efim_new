@@ -649,7 +649,7 @@ let obj_table_values = {};
 obj_table_values['earthWorks_costWork'] = {};
 
 function addLine(event, element){
-
+    event.preventDefault();
     if (id_count<seach_ID_table('tr','stroka_')) {
             {#for_event_tr('tr','stroka_', id_count);#}
             id_count = seach_ID_table('tr','stroka_')+1;
@@ -1053,7 +1053,7 @@ let value = e.value;
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costWork_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость работ
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
+                            <div style = "display: none"><button type="button" onclick="addLine(event,this)">addLine</button></div>
                             </td>
                             <td contenteditable="false"></td>
 
