@@ -33,10 +33,10 @@ class UserProfileServices:
 
             operation = tables.ListUserTask(
                 name=UserDATA.name,
-                user_create=UserDATA.user_create,
+                user_create=user.username,
                 user_executor=UserDATA.user_executor,
                 progress=UserDATA.progress,
-                status=UserDATA.status,
+                status="Назначена",
                 target_date=UserDATA.target_date,
                 notification_holder=False,
                 notification_executor=True,
