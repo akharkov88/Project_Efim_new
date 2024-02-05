@@ -10,6 +10,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.exceptions import HTTPException
 
+
 import telebot
 from telebot import types
 import threading
