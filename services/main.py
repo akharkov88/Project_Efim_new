@@ -120,6 +120,7 @@ class TaskServices:
 
     def getTechTaskNameTechTask_S(self,NameTechTask: models.UserTask) -> tables.TaskForm:
         try:
+            print("NameTechTaskNameTechTask",NameTechTask)
             operation = (
                 self.session
                 .query(tables.TaskForm)
