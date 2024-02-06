@@ -5,10 +5,15 @@ from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 import os
 from fastapi.middleware.cors import CORSMiddleware
-
+import requests
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.exceptions import HTTPException
+
+
+from services.Telegram import (
+    ClassTelegram,
+)
 
 
 import telebot
@@ -77,11 +82,23 @@ def telega():
     alphabet = ' 1234567890-йцукенгшщзхъфывапролджэячсмитьбюёqwertyuiopasdfghjklzxcvbnm?%.,()!:;'
 
 
-    @bot.message_handler(commands=['start'])
-    def start_message(message):
+    @bot.message_handler(commands=['start'],)
+    def start_message(message,):
         print(message)
         print(message)
-        bot.send_message(message.chat.id, "Здравствуйте, Сэр.")
+
+        headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        vv = {
+            "name_user_telegram": message.chat.username,
+            "id_telegram": message.chat.id,
+        }
+
+        # vv='username=ad&roles=&password=ad'
+        res = requests.post('http://127.0.0.1:8000/message/Telegram_set_message/', headers=headers, json=vv)
+        print(res.status_code)
+
+        # Class_Telegram.telega_set_message(id_telegram=message.chat.id,name_user_telegram=message.chat.username)
+        bot.send_message(message.chat.id, "Теперь я смогу Вам писать сообщения")
 
     question = ""
 
@@ -127,6 +144,7 @@ if __name__ == '__main__':
     t1 = threading.Thread(target=telega, args=(), daemon=True)
     t1.start()
     # telega_send_message("622070505", "getwiki(command)")
+    # telega_send_message("-1002089164577", "getwiki(command)")
     uvicorn.run(
         "main:app",
         reload=True,

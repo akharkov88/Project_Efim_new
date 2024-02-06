@@ -1,3 +1,49 @@
+async function send_telegram(user,text) {
+
+    res = await fetch('/message/Telegram_send_message', {
+        method:"POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(
+            {
+  "User": user,
+  "Value": text
+})
+    });
+    let responseText = await res.text();
+            console.log("res.status",res.status)
+
+    if (res.status == 200) {
+        console.log(responseText)
+    }
+}
+
+// send_telegram("admin", "getwiki(command)")
+
+async function send_telegram_group(text) {
+
+    res = await fetch('/message/Telegram_send_message_group', {
+        method:"POST",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body:JSON.stringify(
+            {
+  "Value": text
+})
+    });
+    let responseText = await res.text();
+            console.log("res.status",res.status)
+
+    if (res.status == 200) {
+        console.log(responseText)
+    }
+}
+
+// send_telegram_group( "Проверка")
 async function get_UserTask_global() {
 
     res = await fetch('/userprofile/get_UserTask', {

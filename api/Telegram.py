@@ -25,6 +25,9 @@ from services.main import (
     TaskServices,
 )
 
+from services.Telegram import (
+    ClassTelegram,
+)
 from services.techTaskForm import (
     techTaskFormServices,
 )
@@ -34,8 +37,8 @@ from services.auth import (
 )
 
 router = APIRouter(
-    prefix='/techTaskForm',
-    tags=['techTaskForm'],
+    prefix='/message',
+    tags=['message'],
 )
 
 templates = Jinja2Templates(directory="src/main")
@@ -44,17 +47,42 @@ templates = Jinja2Templates(directory="src/main")
 
 @router.post(
     '/Telegram_send_message',
-    response_model=models.UserTask,
+    # response_model=models.UserTask,
     status_code=status.HTTP_200_OK,
 )
 def create_operation(
-        user_data: models.UserTask,
-        Task_Services: techTaskFormServices = Depends(),
+        data: models.BaseTelegram,
+        Class_Telegram: ClassTelegram = Depends(),
 ):
-    return Task_Services.update_value(user_data)
+    return Class_Telegram.telega_send_message(data)
 
 
 
-def telega_send_message(id,text):
-    bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
-    bot.send_message(id, text)
+
+@router.post(
+    '/Telegram_send_message_group',
+    # response_model=models.UserTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        data: models.BaseTelegram_group,
+        Class_Telegram: ClassTelegram = Depends(),
+):
+    return Class_Telegram.telega_send_message_group(data)
+
+
+
+
+@router.post(
+    '/Telegram_set_message',
+    # response_model=models.UserTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        data: models.BaseUserTelegram,
+        Class_Telegram: ClassTelegram = Depends(),
+):
+    return Class_Telegram.telega_set_message(data)
+
+
+

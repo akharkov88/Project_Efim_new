@@ -36,3 +36,9 @@ from .UserProfile import (
     ModelUserTaskID,
     ModelUserTaskUpdate,
 )
+
+from .Telegram import (
+    BaseTelegram,
+    BaseUserTelegram,
+    BaseTelegram_group,
+)

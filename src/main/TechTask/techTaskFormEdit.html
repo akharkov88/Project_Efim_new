@@ -140,13 +140,15 @@
                                 document.getElementsByName(key.name)[0].removeAttribute("required")
                             }
                         }
+
+                        console.log("idButtonArridButtonArr",idButtonArr)
                         if (window.vlozheniya.length == 0) {
 
                             console.warn('TechTaskProject', window.vlozheniya)
                             if (idButtonArr.length > 1) {
-                                document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
-                                document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
-                                document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
+                                document.getElementById('Form_input' + Number(idButton - 1)).setAttribute("required", true)
+                                document.getElementById('Form_file' + Number(idButton - 1)).setAttribute("required", true)
+                                document.getElementById('Form_input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
                             } else {
                                 document.getElementById('addFile').setAttribute("class", 'valid_button')
                             }
@@ -154,19 +156,22 @@
 
                             valid = false
 
-                        } else if (idButtonArr.length >= 2 && document.getElementById('file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {
-                            console.warn('TechTaskProject', window.vlozheniya)
-                            document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
-                            document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
-                            document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
-                            alert('valid')
-                            valid = false
                         }
+                        {#else if (idButtonArr.length >= 2 && document.getElementById('Form_file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {#}
+                        {#    console.warn('TechTaskProject', window.vlozheniya)#}
+                        {#    document.getElementById('Form_input' + Number(idButton - 1)).setAttribute("required", true)#}
+                        {#    document.getElementById('Form_file' + Number(idButton - 1)).setAttribute("required", true)#}
+                        {#    document.getElementById('Form_input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');#}
+                        {#    alert('valid')#}
+                        {#    valid = false#}
+                        //}
 
                         return valid
                     }
 
                     document.getElementById('createTicket').onclick = function (event) {
+
+                        {#console.log()#}
                         event.preventDefault()
 
                         if (validForm(document.getElementById('formFrame'))) {

@@ -143,3 +143,15 @@ class UserPfofile(Base):
     # Base.metadata.create_all(engine)
 
 
+class Telegram(Base):
+    __tablename__ = 'telegram'
+    id = Column(Integer, primary_key=True)
+    Name_telegram = Column(String, nullable=False)
+    key = Column(String, nullable=False)
+    create_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class User_telegram(Base):
+    __tablename__ = 'UserTelegram'
+    id = Column(Integer, primary_key=True)
+    name_user_telegram = Column(String, nullable=False)
+    id_telegram = Column(String, nullable=False)
