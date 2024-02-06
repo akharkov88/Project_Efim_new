@@ -306,11 +306,11 @@ headers = {'Content-Type': 'application/json', 'Accept': 'application/json', "Au
 vv = {
     "NameTechTask": "Благостроиство парка",
     "TechTaskClient": "ООО ЖилСтройБыт",
-    "TechTaskProject": "string",
+    "TechTaskProject": '[{"name":"github (1) (1).txt","id":"cc70a1ce-f190-4259-87c8-8527df5df082","value_user":"test_file"}]',
     "TechTaskPPR": "string",
     "TechTaskOverhead": "string",
-    "TechTaskDateKP": "string",
-    "TechTaskDateEndWork": "string",
+    "TechTaskDateKP": "2024-02-07T14:24",
+    "TechTaskDateEndWork": "2024-02-08T14:24",
     "TechTaskPrice": "string",
     "TechTaskLeaderKP": "string"
 }

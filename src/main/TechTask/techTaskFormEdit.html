@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-            <script>console.log("roles_userroles_userroles_user",{{roles_user|tojson|safe}})
+<script>console.log("roles_userroles_userroles_user", {{roles_user|tojson|safe}})
 </script>
 <head>
     {% include "indexShablon_head.html" %}
@@ -32,8 +32,8 @@
                                     <div class="tabs__caption" data-tab="main">Тех Задание</div>
                                     <div class="tabs__caption" data-tab="pto">Калькуляция</div>
                                     <div class="tabs__caption" data-tab="about">КП</div>
-{#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
-{#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
+                                    {#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
+                                    {#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
                                 </div>
                                 <div class="tabs__body">
                                     <div class="tabs__content" data-tab="main">
@@ -118,7 +118,101 @@
                     }).catch((err) => {
                     console.log('------badly-----', err);
                 })
+
+
                 document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+                    let elem_obj = {}
+                    elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
+
+                    function validForm(obj) {
+                        valid = true
+                        console.log('validForm', obj)
+                        let elements = $('form').serializeArray();
+                        console.log('client1', elements)
+                        for (let key of elements) {
+                            elem_obj[key.name] = key.value
+                            if (key.value == '' || key.value == '[]') {
+                                valid = false
+                                console.warn(key, key.name, key.value)
+                                document.getElementsByName(key.name)[0].setAttribute("required", true)
+                            } else {
+                                document.getElementsByName(key.name)[0].removeAttribute("required")
+                            }
+                        }
+                        if (window.vlozheniya.length == 0) {
+
+                            console.warn('TechTaskProject', window.vlozheniya)
+                            if (idButtonArr.length > 1) {
+                                document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
+                                document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
+                                document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
+                            } else {
+                                document.getElementById('addFile').setAttribute("class", 'valid_button')
+                            }
+
+
+                            valid = false
+
+                        } else if (idButtonArr.length >= 2 && document.getElementById('file' + Number(idButtonArr[idButtonArr.length - 2])).value == '') {
+                            console.warn('TechTaskProject', window.vlozheniya)
+                            document.getElementById('input' + Number(idButton - 1)).setAttribute("required", true)
+                            document.getElementById('file' + Number(idButton - 1)).setAttribute("required", true)
+                            document.getElementById('input' + Number(idButton - 1)).setAttribute('placeholder', 'Вложите файл');
+                            alert('valid')
+                            valid = false
+                        }
+
+                        return valid
+                    }
+
+                    document.getElementById('createTicket').onclick = function (event) {
+                        event.preventDefault()
+
+                        if (validForm(document.getElementById('formFrame'))) {
+
+                            // Определяем функцию которая принимает в качестве параметров url и данные которые необходимо обработать:
+                            const postData2 = async (url = '', data = {}) => {
+                                // Формируем запрос
+                                data.TechTaskProject = JSON.stringify(window.vlozheniya)
+
+                                const response = await fetch(url, {
+                                    // Метод, если не указывать, будет использоваться GET
+                                    method: 'POST',
+                                    // Заголовок запроса
+                                    headers: {
+                                        "Authorization": getCookieValue("Authorization"),
+                                        'Content-Type': 'application/json'
+                                    },
+                                    // Данные
+                                    body: JSON.stringify(data)
+                                });
+                                if (response.status == 409) {
+                                    alert('Ошибка:' + (response.status) + ' Наименнование объекта уже существует')
+                                    console.log('Ошибка', (response.status))
+
+                                    let emailInput = document.getElementsByName('NameTechTask');
+                                    emailInput.focus();
+
+                                }
+                                // читаем ответ в формате JSON
+                                {#console.log('response.json():', response.json())#}
+
+                                {#return response.json();#}
+                            }
+                            postData2('/main/update_value', elem_obj)
+                                .then((data) => {
+                                    console.log('------успех-----', data);
+                                    window.location.href = '/main/techTask.html';
+                                }).catch((err) => {
+                                console.log('------badly-----', err);
+                            })
+
+                        } else {
+                            event.preventDefault()
+                        }
+                    }
+
 
                     const tabs = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
                         const head = document.querySelector('.tabs__head') // ищем элемент с кнопками и записываем в константу

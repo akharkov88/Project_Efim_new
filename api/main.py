@@ -155,6 +155,18 @@ def create_operation(
 ):
     return Task_Services.createTask_S(user_data,user)
 
+@router.post(
+    '/update_value',
+    response_model=models.UserTask,
+    status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        user_data: models.UserTask,
+        Task_Services: TaskServices = Depends(),
+):
+    return Task_Services.update_value(user_data)
+
+
 @router.get(
     '/getAllTask',
     response_model=list[models.UserTask],
