@@ -57,19 +57,42 @@
         for (let i=0; i<arr_test.length; i+=5){
             if (!isNaN(arr_test[i])){
                 arr_index.push(arr_test[i])
-
             }
         }
-        console.warn(arr_index);
+        console.warn('@@@arr_index = ',arr_index);
         let sum = 0;
+
+
         for (i of arr_index){
-            console.log(i)
-            sum += Number(obj_global_sum['ВСЕГО_'+i])
+            if (Object.keys(obj_global_sum).indexOf('ВСЕГО_'+i)!=-1) {
+                sum += Number(obj_global_sum['ВСЕГО_'+i])
+            }
         }
         obj_global_sum['result_total'] = sum.toFixed(2)
         $(`#result_total`)[0].childNodes[3].childNodes[13].innerText = obj_global_sum['result_total'];
-
         }
+
+    function pereschetTotalNDS(){
+        let arr_test = []
+        $(`#first_table tbody`).each(function () {
+                    arr_test.push(this.id.slice(this.id.lastIndexOf('_')+1));
+                });
+        let arr_index =[]
+        for (let i=0; i<arr_test.length; i+=5){
+            if (!isNaN(arr_test[i])){
+                arr_index.push(arr_test[i])
+            }
+        }
+        let sum = 0;
+
+        for (i of arr_index){
+            if (Object.keys(obj_global_sum).indexOf('ВСЕГО_НДС_'+i)!=-1) {
+                sum += Number(obj_global_sum['ВСЕГО_НДС_'+i])
+            }
+        }
+        $('#result_total')[0].childNodes[5].childNodes[13].innerText = sum.toFixed(2)
+
+    }
 
  function func_sum_vsego_razdel(elem_stroka){
     let sum = 0;
@@ -146,6 +169,8 @@
         document.getElementById('style_table').style.display = 'none';
         document.getElementById("saveTable").style.display = "none";
         }
+        pereschetTotalSum();
+        pereschetTotalNDS();
         counterTr();
         }
 async function Test() {
@@ -215,12 +240,11 @@ function table_roles(role){
     console.warn('!!!!', (role=='Admin'))
 if (role == 'Admin'){
 console.warn('admin!')
-$('.CostMaterial_disabled').attr("contenteditable","false") // tbody Стоимость материала раздел ПТО
-$('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
-$('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
-$('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
+$('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+$('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+$('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
 //('data-title' , "Введите корректное значение")
-$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+$('.CostMaterial_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
 
 {#$('.tehstolbec').attr("style","display: none;")#}
 } else if (role == 'supplier'){
@@ -230,7 +254,12 @@ $('.costWork_role_boss').attr("contenteditable","false")
 $('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
 {#$('.tehstolbec').attr("style","display: block;")#}
 } else if (role=='ENGINEER'){
-
+$('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+$('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
+$('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
+$('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
+//('data-title' , "Введите корректное значение")
+$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
 }
 }
 
@@ -348,7 +377,7 @@ function up_obj_global_sum(){
 
 
 document.getElementById('saveTable').onclick =async function () {
-
+    event.preventDefault();
     let response = await fetch('/techTask/formPtoCreateUpdate', {
   method: 'POST',
   headers: {
@@ -538,6 +567,15 @@ function PTO_td_sum(elem_stroka){
 
     {#console.log('присваиваю суммы: ' + sum_total.toFixed(2) + ' and ' + sum_analysis.toFixed(2))#}
     elem_stroka.parentElement.childNodes[1].childNodes[7].innerText = sum_total.toFixed(2);
+
+    // подсчет ВСЕГО_НДС
+    if (elem_stroka.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
+    console.log('EEE'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))
+    console.log(sum_total)
+        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((Number(sum_total) * 0.2) / 1.2).toFixed(2)
+        $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
+        pereschetTotalNDS();
+    }
     obj_global_sum[elem_stroka.parentElement.id] = Number(sum_total);
 
     // присвоение суммы в строчку ИТОГО

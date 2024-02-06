@@ -316,13 +316,13 @@
                                         <div class="row">
                                             <div class="form-group col-lg-3">
                                                 <label>Срок подготовки коммерческого предложения</label>
-                                                <input name="TechTaskDateKP" type="datetime-local" class="form-control"
+                                                <input name="TechTaskDateKP" type="date" class="form-control"
                                                        placeholder="dd.mm.yyyy">
                                             </div>
 
                                             <div class="form-group col-lg-3">
                                                 <label>Срок выполнения работ</label>
-                                                <input name="TechTaskDateEndWork" type="datetime-local"
+                                                <input name="TechTaskDateEndWork" type="date"
                                                        class="form-control"
                                                        placeholder="dd.mm.yyyy">
                                             </div>
@@ -401,6 +401,10 @@
                                                     const postData = async (url = '', data = {}) => {
                                                         // Формируем запрос
                                                         data.TechTaskProject = JSON.stringify(window.vlozheniya)
+                                                        console.log("!alarm!")
+                                                        console.log(data)
+                                                        console.log(data.TechTaskProject)
+
 
                                                         const response = await fetch(url, {
                                                             // Метод, если не указывать, будет использоваться GET
@@ -413,6 +417,8 @@
                                                             // Данные
                                                             body: JSON.stringify(data)
                                                         });
+                                                        console.log('!!!alarm response')
+                                                        console.log(response)
                                                         if (response.status == 409) {
                                                             alert('Ошибка:' + (response.status) + ' Наименнование объекта уже существует')
                                                             console.log('Ошибка', (response.status))
@@ -426,10 +432,12 @@
 
                                                         {#return response.json();#}
                                                     }
+
+
                                                     postData('/main/creatTask', elem_obj)
                                                         .then((data) => {
                                                             console.log('------успех-----', data);
-                                                            window.location.href = '/main/techTask.html';
+                                                            {#window.location.href = '/main/techTask.html';#}
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
                                                     })
