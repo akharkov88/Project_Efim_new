@@ -314,6 +314,7 @@ vv = {
     "TechTaskPrice": "string",
     "TechTaskLeaderKP": "string"
 }
+
 # vv='username=ad&roles=&password=ad'
 res = requests.post('http://127.0.0.1:8000/main/creatTask/', headers=headers, json=vv)
 print(res.status_code)
