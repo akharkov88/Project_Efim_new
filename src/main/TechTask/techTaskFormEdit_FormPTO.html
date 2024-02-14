@@ -32,12 +32,14 @@
                 </div>
 
                 <div class="style_table table-responsive-pto" id='style_table' style="display:none;">
-                    <table class="first iksweb" id="first_table" >
+                    <div class="style_table table-responsive-pto" id='table_pto'>
+                        <table class="first iksweb" id="first_table" >
 
-                    </table>
+                        </table>
 
 
 
+                </div>
                 </div>
                 <button id="saveTable"  style="display:none;">Сохранить изменения таблицы</button>
 
@@ -188,6 +190,7 @@ async function Test() {
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
             document.getElementById("first_table").innerHTML=JSON.parse(responseText).value_table
+            {#document.getElementById("first_table_supplier").innerHTML=JSON.parse(responseText).value_table#}
             document.getElementById("style_table").style.display = "block";
             document.getElementById("saveTable").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
@@ -201,31 +204,7 @@ async function Test() {
              $("button[id ^='del_razdel_']").on("click", function (event){
                  del_func(event)
 
-        {#          let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`);#}
-        {#    zaglav = zaglav.value;#}
-        {#    arr_zaglav.splice(arr_zaglav.indexOf(zaglav), 1);#}
-        {##}
-        {#    let cifra = event.target.id.slice(event.target.id.lastIndexOf('_')+1);#}
-        {#    arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_')+1))),1)#}
-            {#console.log(arr_zaglav);#}
-        {##}
-        {# document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
-        {# document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
-        {# document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
-        {# document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
-        {# document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_')+1)}`).remove()#}
-        {#let arr_test = []#}
-        {#$(`#first_table tbody`).each(function () {#}
-        {#            arr_test.push(this.id);#}
-        {#        });#}
-                {#console.log('arr_test = ' + arr_test.length)#}
-        {#        console.warn(arr_test)#}
-        {#if (arr_test.length == 1){#}
-        {#document.getElementById(`result_total`).remove()#}
-        {#document.getElementById('style_table').style.display = 'none';#}
-        {#document.getElementById("saveTable").style.display = "none";#}
-        //{#}#}
-        {#counterTr();#}
+
              })
         }
 
@@ -242,6 +221,7 @@ if (role == 'Admin'){
 console.warn('admin!')
 $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
 $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+{#$('.costWork_role_supplier').attr("style", "display:none") // блок снабжение#}
 $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
 //('data-title' , "Введите корректное значение")
 $('.CostMaterial_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
@@ -341,14 +321,14 @@ function up_obj_global_sum(){
                  obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML;
 
                  if (temp[key].id.indexOf('earthWorks_Total_') == 0){
-                    if (temp[key].childNodes[3].childNodes[7].innerText!= ''){
-                        obj_global_sum['Накладные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[3].childNodes[7].innerText.replace(',','.').replace('%','')
+                    if (temp[key].childNodes[3].childNodes[9].innerText!= ''){
+                        obj_global_sum['Накладные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[3].childNodes[9].innerText.replace(',','.').replace('%','')
                     }
-                    if (temp[key].childNodes[5].childNodes[7].innerText!= ''){
-                        obj_global_sum['Вспомогательные_материалы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[5].childNodes[7].innerText.replace(',','.').replace('%','')
+                    if (temp[key].childNodes[5].childNodes[9].innerText!= ''){
+                        obj_global_sum['Вспомогательные_материалы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[5].childNodes[9].innerText.replace(',','.').replace('%','')
                     }
-                    if (temp[key].childNodes[7].childNodes[7].innerText!= ''){
-                        obj_global_sum['Транспортные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[7].childNodes[7].innerText.replace(',','.').replace('%','')
+                    if (temp[key].childNodes[7].childNodes[9].innerText!= ''){
+                        obj_global_sum['Транспортные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[7].childNodes[9].innerText.replace(',','.').replace('%','')
                     }
                     if (temp[key].childNodes[9].childNodes[13].innerText!= ''){
                         obj_global_sum['ВСЕГО_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[9].childNodes[13].innerText.replace(',','.').replace('%','')
@@ -1062,27 +1042,27 @@ let value = e.value;
                         <tr style="background-color: #fce1b3">
                             <td rowspan="2"  class="tehstolbec">Тех столбец</td>
                             <td>№</td>
-                            <td rowspan="2">Наименование</td>
-                            <td colspan="4">Стоимость</td>
-                            <td colspan="4">Справочная информация</td>
-                            <td colspan="8">Аналитический блок</td>
+                            <td rowspan="2" style="font-weight: bold;">Наименование</td>
+                            <td colspan="4" style="font-weight: bold;">Стоимость</td>
+                            <td colspan="4" style="font-weight: bold;">Справочная информация</td>
+                            <td colspan="8" style="font-weight: bold;">Аналитический блок</td>
                         </tr>
 
                         <tr style="background-color: #fce1b3">
-                            <td>п/п</td>
-                            <td>Ед.изм.</td>
-                            <td>Кол-во</td>
-                            <td>Цена</td>
-                            <td>Всего</td>
-                            <td rowspan="1">Тр-затр (чел-дн)</td>
-                            <td rowspan="1">Столбец для анализа</td>
-                            <td rowspan="1"></td>
-                            <td rowspan="1">Примечание</td>
-                            <td>Кол-во</td>
-                            <td>Цена руб-ед</td>
-                            <td>Всего</td>
-                            <td>Тр-затр (чел-дн)</td>
-                            <td>Стоимость дня рабочего</td>
+                            <td style="font-weight: bold;">п/п</td>
+                            <td style="font-weight: bold;">Ед.изм.</td>
+                            <td style="font-weight: bold;">Кол-во</td>
+                            <td style="font-weight: bold;">Цена</td>
+                            <td style="font-weight: bold;">Всего</td>
+                            <td rowspan="1" style="font-weight: bold;">Тр-затр (чел-дн)</td>
+                            <td rowspan="1" style="font-weight: bold;">Столбец для анализа</td>
+                            <td rowspan="1" style="font-weight: bold;"></td>
+                            <td rowspan="1" style="font-weight: bold;">Примечание</td>
+                            <td style="font-weight: bold;">Кол-во</td>
+                            <td style="font-weight: bold;">Цена руб-ед</td>
+                            <td style="font-weight: bold;">Всего</td>
+                            <td style="font-weight: bold;">Тр-затр (чел-дн)</td>
+                            <td style="font-weight: bold;">Стоимость дня рабочего</td>
                         </tr>
                         </tbody>
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
@@ -1117,20 +1097,20 @@ let value = e.value;
                             <td contenteditable="false"></td>
 
 
-                            <td contenteditable="false" colspan="2"> Ед изм расчётные </td>
+                            <td contenteditable="false" colspan="2" style="font-weight: bold;"> Ед изм расчётные </td>
 
-                            <td contenteditable="false"> Ед изм (М2) для окраски </td>
+                            <td contenteditable="false" style="font-weight: bold;"> Ед изм (М2) для окраски </td>
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false">Закупка по счету - ед изм расчётные</td>
-                            <td contenteditable="false">Остаток закупки</td>
-                            <td contenteditable="false">ед изм к закупке</td>
-                            <td contenteditable="false">руб-ед</td>
+                            <td contenteditable="false" style="font-weight: bold;">Закупка по счету - ед изм расчётные</td>
+                            <td contenteditable="false" style="font-weight: bold;">Остаток закупки</td>
+                            <td contenteditable="false" style="font-weight: bold;">ед изм к закупке</td>
+                            <td contenteditable="false" style="font-weight: bold;">руб-ед</td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="false">Счёта</td>
-                            <td contenteditable="false">Срок поставки</td>
-                            <td contenteditable="false">ПРИМЕЧАНИЕ</td>
+                            <td contenteditable="false" style="font-weight: bold;">Счёта</td>
+                            <td contenteditable="false" style="font-weight: bold;">Срок поставки</td>
+                            <td contenteditable="false" style="font-weight: bold;">ПРИМЕЧАНИЕ</td>
                         </tr>
                     </tbody>
 
@@ -1151,10 +1131,10 @@ let value = e.value;
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false">Стоимость аренды</td>
-                            <td contenteditable="false">Телефон</td>
-                            <td contenteditable="false">Счет</td>
-                            <td contenteditable="false">Срок</td>
+                            <td contenteditable="false" style="font-weight: bold;">Стоимость аренды</td>
+                            <td contenteditable="false" style="font-weight: bold;">Телефон</td>
+                            <td contenteditable="false" style="font-weight: bold;">Счет</td>
+                            <td contenteditable="false" style="font-weight: bold;">Срок</td>
 
                         </tr>
 
@@ -1183,10 +1163,10 @@ let value = e.value;
                         <tr id = "stroka">
                         <td  class="tehstolbec" ></td>
                             <td contenteditable="false"></td>
-                            <td contenteditable="false">
+                            <td contenteditable="false" style="font-weight: bold;">
                                 Накладные расходы
                             </td>
-                            <td contenteditable="true">%</td>
+                            <td contenteditable="false">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -1208,10 +1188,10 @@ let value = e.value;
                         <tr id = "stroka">
                         <td  class="tehstolbec"></td>
                             <td contenteditable="false"></td>
-                            <td contenteditable="false">
+                            <td contenteditable="false" style="font-weight: bold;">
                                 Вспомогательные материалы
                             </td>
-                            <td contenteditable="true">%</td>
+                            <td contenteditable="false">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -1233,10 +1213,10 @@ let value = e.value;
                         <tr id = "stroka">
                         <td  class="tehstolbec"></td>
                             <td contenteditable="false"></td>
-                            <td contenteditable="false">
+                            <td contenteditable="false" style="font-weight: bold;">
                                 Транспортные расходы
                             </td>
-                            <td contenteditable="true">%</td>
+                            <td contenteditable="false">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -1280,7 +1260,7 @@ let value = e.value;
                             <td contenteditable="false" style="font-weight: bold;">
                                 В том числе НДС - 20% за нал от материалов
                             </td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false">%</td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
 
@@ -1357,7 +1337,7 @@ let value = e.value;
         }
 
 function table_earthWorks_Total(coll_table){
-document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes[7].addEventListener('keyup', function(event){
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[3].childNodes[9].addEventListener('keyup', function(event){
     this.removeAttribute('data-title')
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
 
@@ -1380,7 +1360,7 @@ obj_global_sum['Накладные_расходы_' +  id_table] = this.innerTex
 });
 
 
-document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes[7].addEventListener('keyup', function(event){
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes[9].addEventListener('keyup', function(event){
     this.removeAttribute('data-title')
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
@@ -1397,7 +1377,7 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[5].childNodes
         func_sum_vsego_razdel(this);
         };
 });
-document.getElementById('earthWorks_Total_'+coll_table).childNodes[7].childNodes[7].addEventListener('keyup', function(event){
+document.getElementById('earthWorks_Total_'+coll_table).childNodes[7].childNodes[9].addEventListener('keyup', function(event){
     this.removeAttribute('data-title')
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){

@@ -1,0 +1,43 @@
+<div class="panel-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <form role="form" id="formFrame">
+
+            <script>console.log("roles_user",{{roles_user|tojson|safe}})
+</script>
+
+                <div class="form-group">
+                <label ></label>
+                <div class="form-group">
+                    <label>Наименнование объекта</label>
+                    <input value="{{ getTechTaskName.NameTechTask }}"
+                           class="form-control" readonly>
+                </div>
+                <div class="form-group">
+
+                 </div>
+
+{#                    <button id='add_razdel' type="button" class="btn btn-primary"> Добавить раздел</button>#}
+{#                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>#}
+
+
+                </div>
+
+                <div class="style_table table-responsive-pto" id='style_table'>
+                    <div class="style_table table-responsive-pto" id='table_boss'>
+{#                    <table class="first iksweb" id="first_table_supplier" >#}
+{##}
+{#                    </table>#}
+
+
+
+                </div>
+                </div>
+                <button id="saveTable"  style="display:none;">Сохранить изменения таблицы</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+

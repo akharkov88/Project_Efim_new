@@ -1,0 +1,147 @@
+{#        <div class="panel-body">#}
+<div class="row">
+    {#                <div class="col-lg-12">#}
+    <form role="form" id="formFrame">
+        <div class="tabsCalcylator">
+            <div class="tabsCalcylator__head">
+                <div class="tabsCalcylator__caption" data-tab="enginer_pto">Инженер ПТО</div>
+                <div class="tabsCalcylator__caption" data-tab="supplier">Снабжение</div>
+                <div class="tabsCalcylator__caption" data-tab="boss_enginer_pto">Главный инженер</div>
+                <div class="tabsCalcylator__caption" data-tab="boss">Директор</div>
+                {#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
+                {#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
+            </div>
+            <div class="tabsCalcylator__body">
+                <div class="tabsCalcylator__content" data-tab="enginer_pto">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Список полей ПТО
+                        </div>
+                        {% include "TechTask/techTaskFormEdit_FormPTO.html" %}
+
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="tabsCalcylator__content" data-tab="supplier">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Список полей supplier
+                        </div>
+                        {% include "TechTask/techTaskFormEdit_FormSupplier.html" %}
+
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="tabsCalcylator__content" data-tab="boss_enginer_pto">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Список главный инженер
+                        </div>
+                        {% include "TechTask/techTaskFormEdit_FormBossEngierPto.html" %}
+
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                <div class="tabsCalcylator__content" data-tab="boss">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            список полей Директор
+                        </div>
+                        {% include "TechTask/techTaskFormEdit_FormBoss.html" %}
+
+                    </div>
+
+                </div>
+                <div class="tabsCalcylator__content" data-tab="about">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+
+                        </div>
+                        {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+    {#                </div>#}
+</div>
+</div>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => { // Структура страницы загружена и готова к взаимодействию
+
+        let elem_obj = {}
+        elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
+
+
+        const tabsCalcylator = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
+            const head = document.querySelector('.tabsCalcylator__head') // ищем элемент с кнопками и записываем в константу
+            const body = document.querySelector('.tabsCalcylator__body') // ищем элемент с контентом и записываем в константу
+
+            const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
+                console.warn('!!!')
+                console.warn(head.querySelector('.tabsCalcylator__caption_active').dataset.tab)
+
+                console.log("table_supplier",document.getElementById("table_supplier"))
+                console.log("first_tablefirst_table",document.getElementById("first_table"))
+
+                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'enginer_pto'){
+                    document.getElementById("table_pto").appendChild(document.getElementById("first_table"))
+                }
+                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'supplier'){
+                    document.getElementById("table_supplier").appendChild(document.getElementById("first_table"))
+                }
+                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss'){
+                    document.getElementById("table_boss").appendChild(document.getElementById("first_table"))
+                }
+                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss_enginer_pto'){
+                    document.getElementById("table_boss_enginer_pto").appendChild(document.getElementById("first_table"))
+                }
+
+
+                {#    $('#first_table').remove();#}
+                {#    #}
+                {##}
+                //}
+                return head.querySelector('.tabsCalcylator__caption_active').dataset.tab // возвращаем значение data-tab активной кнопки
+            }
+
+            const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
+                if (body.querySelector('.tabsCalcylator__content_active')) { // если уже есть активный элемент контента
+                    body.querySelector('.tabsCalcylator__content_active').classList.remove('tabsCalcylator__content_active') // то скрываем его
+                }
+                body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add('tabsCalcylator__content_active') // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
+            }
+
+// проверяем при загрузке страницы, есть ли активная вкладка
+            if (!head.querySelector('.tabsCalcylator__caption_active')) {  // если активной вкладки нет
+                head.querySelector('.tabsCalcylator__caption').classList.add('tabsCalcylator__caption_active') // то делаем активной по-умолчанию первую вкладку
+            }
+
+            setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой при загрузке страницы
+
+            head.addEventListener('click', e => { // при клике на .tabs__head
+                const caption = e.target.closest('.tabsCalcylator__caption') // узнаем, был ли клик на кнопке
+                if (!caption) return // если клик был не на кнопке, то прерываем выполнение функции
+                if (caption.classList.contains('tabs__caption_active')) return // если клик был на активной кнопке, то тоже прерываем выполнение функции и ничего не делаем
+
+                if (head.querySelector('.tabsCalcylator__caption_active')) { // если уже есть активная кнопка
+                    head.querySelector('.tabsCalcylator__caption_active').classList.remove('tabsCalcylator__caption_active') // то удаляем ей активный класс
+                }
+
+                caption.classList.add('tabsCalcylator__caption_active') // затем добавляем активный класс кнопке, на которой был клик
+
+                setActiveContent(getActiveTabName()) // устанавливаем активный элемент контента в соответствии с активной кнопкой
+            })
+        }
+
+        tabsCalcylator() // вызываем основную функцию
+
+    })
+</script>
