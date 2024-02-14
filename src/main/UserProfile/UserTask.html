@@ -72,7 +72,7 @@
 
                                                 {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
-                                                    <span class="ms-2">{{ get_UserTask_for.name }}</span>
+                                                    <span id="name_tasc_{{ get_UserTask_for.id }}" class="ms-2">{{ get_UserTask_for.name }}</span>
                                                 </th>
 
                                                 {#АВТОР#}
@@ -219,7 +219,21 @@
 
 
                                 <script>
-                                    async function updatde_UserTask(data, e) {
+                                    async function updatde_UserTask(data, e,name_task,rezult_task) {
+                                        console.log("datadata",data)
+                                        console.log("datadata",e)
+                                        console.log("useruseruseruser",window.get_UserTask[data.id.id-1].user_create)
+                                        let data_analiz=window.get_UserTask
+                                        console.log("useruseruseruser",data_analiz)
+                                        data_analiz.forEach(function (val,id){
+                                            if (val.id==data.id.id){
+                                                iskomiy_id=id
+                                                console.log("111",val.name)
+                                                console.log("111",val.user_create)
+                                                return
+                                            }
+                                        })
+                                        console.log("iskomiy_idiskomiy_id",iskomiy_id)
                                         res = await fetch('/userprofile/updateUserTasck', {
                                             method: "POST",
                                             headers: {
@@ -243,11 +257,13 @@
                                                 showToast("Задача взята в работу", "info", 5000);
                                                 String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
                                                 get_UserTask_global()
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> взята в работу`)
 
                                             } else {
 
                                                 document.getElementById("process_" + data["id"]["id"]).style = "display: none;"
                                                 document.getElementById("result_value_" + data["id"]["id"]).innerText = data["user_data"]["result"]
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
 
                                                 document.getElementById("success").style.display = "block";
                                                 document.getElementById("popup").style.display = "none";
@@ -262,9 +278,11 @@
 
                                         }
                                     }
-
+window.get_UserTask={{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
                                         console.log("get_UserTask_for.id", v.id)
+                                        console.log("get_UserTask_for.id", v)
+                                        console.log("11111get_UserTask_for.id", {{ get_UserTask|tojson|safe}}[0]["user_create"])
                                         console.log("get_UserTask_for.id", document.getElementById("process_" + v.id))
                                         document.getElementById("process_" + v.id).addEventListener("click", (e) => {
                                             console.log("get_UserTask_for.id", e.target.id)
@@ -283,7 +301,7 @@
                                                         "id": e.target.id.replace("process_", "")
                                                     }
                                                 }
-                                                updatde_UserTask(data, e)
+                                                updatde_UserTask(data, e,document.getElementById("name_tasc_" + data["id"]["id"]).innerText)
 
                                                 {#get_UserTask()#}
                                             } else {
@@ -323,7 +341,7 @@
                                                 "id": document.getElementById("yes-btn").className.split(" ")[1]
                                             }
                                         }
-                                        updatde_UserTask(data, e)
+                                        updatde_UserTask(data, e,document.getElementById("name_tasc_" + data["id"]["id"]).innerText,document.getElementById("result").value)
 
 
                                     });

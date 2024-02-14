@@ -43,7 +43,7 @@ def add_user():
     }, "userProfile": {
         "first_name": "Admin_fist",
         "last_name": "Admin_last",
-        "telegram": "Admin_teleg",
+        "telegram": "AlekseyKharkov88",
         "mobile": "890111111-12",
         "worker_tel": "4115566",
         "email": "admin@mail.ru",
@@ -309,8 +309,8 @@ vv = {
     "TechTaskProject": '[{"name":"github (1) (1).txt","id":"cc70a1ce-f190-4259-87c8-8527df5df082","value_user":"test_file"}]',
     "TechTaskPPR": "string",
     "TechTaskOverhead": "string",
-    "TechTaskDateKP": "2024-02-07T14:24",
-    "TechTaskDateEndWork": "2024-02-08T14:24",
+    "TechTaskDateKP": "2024-02-07",
+    "TechTaskDateEndWork": "2024-02-08",
     "TechTaskPrice": "string",
     "TechTaskLeaderKP": "string"
 }
@@ -319,3 +319,14 @@ vv = {
 res = requests.post('http://127.0.0.1:8000/main/creatTask/', headers=headers, json=vv)
 print(res.status_code)
 # print(res.text)
+
+vv = [
+    {"name_user_telegram": "AlekseyKharkov88",
+    "id_telegram": "622070505",}
+      ]
+
+for v in vv:
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    # vv='username=ad&roles=&password=ad'
+    res = requests.post('http://127.0.0.1:8000/message/Telegram_set_message/', headers=headers, json=v)
+    print(res.status_code)
