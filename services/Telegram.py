@@ -41,6 +41,8 @@ class ClassTelegram:
         # return jsonable_encoder(operation)
         # bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
         # bot.send_message("-1002089164577", data.Value)
+        tasks.send_message.delay("-1002089164577", data.Value)
+
         return HTTPException(status.HTTP_200_OK, detail="Ошибка повторите еще раз")
 
     def telega_send_message(self,data):
@@ -72,7 +74,7 @@ class ClassTelegram:
         # return jsonable_encoder(operation)
 
         tasks.send_message.delay(operation.id_telegram,data.Value)
-        tasks.some_foo.delay()
+        # tasks.some_foo.delay()
         return HTTPException(status.HTTP_200_OK,)
 
     def telega_set_message(self,data):

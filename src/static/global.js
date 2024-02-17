@@ -236,3 +236,10 @@ function validForm_global(elements) {
 
     return valid
 }
+
+function removeOptions(selectElement) {
+    while (selectElement.options.length > 0) {
+        selectElement.remove(0);
+    }
+}
+

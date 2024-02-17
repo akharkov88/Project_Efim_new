@@ -6,6 +6,12 @@ class BaseTechTaskPTO(BaseModel):
 
 class TechTaskPTO(BaseTechTaskPTO):
     value_table: str
+    description: str
+
+class TechTaskPTO_key(BaseTechTaskPTO):
+    sum: int
+class TechTaskPTO_id(BaseModel):
+    id: int
 
 # class BaseTechTaskPTO(TechTaskPTO):
 #     id: int

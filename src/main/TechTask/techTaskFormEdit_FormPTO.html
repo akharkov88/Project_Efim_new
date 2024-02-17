@@ -41,8 +41,21 @@
 
 
                 </div>
+
+            <div class="row">
+
+                             <label id="saveTable_description_label" style="display:none;">Описание изменений 20 символов</label>
+                            <input id="saveTable_description" style="display:none;" >
+                         <button id="saveTable"  style="display:none;">Сохранить изменения таблицы</button>
+
+                                            <label id="versionTable_label">Список версии</label>
+                                            <select id="versionTable" class="form-control">
+                                            </select>
+
+            </div>
+
                 </div>
-                <button id="saveTable"  style="display:none;">Сохранить изменения таблицы</button>
+
 
             </form>
         </div>
@@ -50,6 +63,80 @@
 </div>
 
 <script>
+
+
+function removeOptions(selectElement) {
+    while (selectElement.options.length > 0) {
+        selectElement.remove(0);
+    }
+}
+
+
+$('#versionTable').change(async function(){
+    id =$(this).val().slice($(this).val().indexOf("{")+1,$(this).val().indexOf("}"))
+        console.log($(this).val())
+        console.log("id",id)
+                removeOptions(document.getElementById('versionTable'));
+let response = await fetch('/techTask/formPtoGet_id', {
+  method: 'POST',
+  headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        "Authorization": getCookieValue("Authorization")
+  },
+  body: JSON.stringify({"id":id })
+});
+        let responseText = await response.text();
+        console.log("formPtoGet",JSON.parse(responseText))
+        if (response.status==200){
+         Napolneneie(JSON.parse(responseText))
+
+        }
+})
+
+$("#versionTable").on("focus",async function(){
+
+removeOptions(document.getElementById('versionTable'));
+                var opt = document.createElement('option');
+                {#opt.value = JSON.parse(responseText)[i]["id"];#}
+                opt.innerHTML =  "<option disabled selected value> Ожидайте </option>"
+                document.getElementById('versionTable').appendChild(opt);
+    let sum=10
+   let response = await fetch('/techTask/formPtoGet_key', {
+  method: 'POST',
+  headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        "Authorization": getCookieValue("Authorization")
+  },
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}} , "sum":sum})
+});
+        let responseText = await response.text();
+        console.log("formPtoGet",JSON.parse(responseText))
+        if (response.status==200){
+            console.log(document.getElementById('versionTable').options[0])
+            document.getElementById('versionTable').options[0].innerHTML =  "<option disabled selected value> При выборе подтянется архивная таблица </option>"
+
+
+            setTimeout(function (){
+            console.log(JSON.parse(responseText))
+            max = sum,
+            select = document.getElementById('versionTable');
+
+            for (var i = 0; i<JSON.parse(responseText).length; i++){
+            console.log("id",JSON.parse(responseText)[i]["id"])
+            console.log("description",JSON.parse(responseText)[i]["description"])
+
+                var opt = document.createElement('option');
+                {#opt.value = JSON.parse(responseText)[i]["id"];#}
+                opt.innerHTML = "id{"+JSON.parse(responseText)[i]["id"]+"},Время сохранения:"+JSON.parse(responseText)[i]["create_at"].slice(0,-13)+",  Описание:"+ (JSON.parse(responseText)[i]["description"]==null?"":JSON.parse(responseText)[i]["description"]);
+                select.appendChild(opt);
+            }
+            },500)
+        }
+
+})
+
 // функция для запрета enter кроме "Примечание"
 $('#first_table').keypress(
   function(event){
@@ -73,10 +160,22 @@ async function Test() {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
-            document.getElementById("first_table").innerHTML=JSON.parse(responseText).value_table
+         Napolneneie(JSON.parse(responseText))
+        }
+
+
+}
+Test()
+function Napolneneie(value){
+   document.getElementById("first_table").innerHTML=value.value_table
             {#document.getElementById("first_table_supplier").innerHTML=JSON.parse(responseText).value_table#}
             document.getElementById("style_table").style.display = "block";
             document.getElementById("saveTable").style.display = "block";
+            document.getElementById("saveTable_description").style.display = "block";
+            document.getElementById("saveTable_description_label").style.display = "block";
+            document.getElementById("recoverTable").style.display = "block";
+            document.getElementById("versionTable_label").style.display = "block";
+            document.getElementById("versionTable").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
             {#console.log(seach_ID_table('tbody','earthWorks_'))#}
             for_event_tr('tr','stroka_');
@@ -90,12 +189,7 @@ async function Test() {
              })
              {#$("input[id ^='input_']")#}
              event_input($("input[id ^='input_']"))
-
-        }
-
-
 }
-Test()
 function event_input(e) {
 console.log('!@#')
 console.log(e)
@@ -251,6 +345,11 @@ console.log(e.length)
         document.getElementById(`result_total`).remove()
         document.getElementById('style_table').style.display = 'none';
         document.getElementById("saveTable").style.display = "none";
+        document.getElementById("saveTable_description").style.display = "none";
+        document.getElementById("saveTable_description_label").style.display = "none";
+        document.getElementById("recoverTable").style.display = "none";
+        document.getElementById("versionTable_label").style.display = "none";
+        document.getElementById("versionTable").style.display = "none";
         }
         pereschetTotalSum();
         pereschetTotalNDS();
@@ -426,7 +525,7 @@ document.getElementById('saveTable').onclick =async function () {
         Accept: 'application/json',
         "Authorization": getCookieValue("Authorization")
   },
-  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}}, "value_table": document.getElementById("first_table").innerHTML})
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}},"description": document.getElementById("saveTable_description").getAttribute("value"), "value_table": document.getElementById("first_table").innerHTML})
 });
         let responseText = await response.text();
 
@@ -1422,6 +1521,11 @@ let value = e.value;
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
                     document.getElementById("saveTable").style.display = "block";
+                    document.getElementById("saveTable_description").style.display = "block";
+                    document.getElementById("saveTable_description_label").style.display = "block";
+                    document.getElementById("recoverTable").style.display = "block";
+                    document.getElementById("versionTable_label").style.display = "block";
+                    document.getElementById("versionTable").style.display = "block";
                     table_earthWorks_Total(coll_table)
 
 

@@ -28,6 +28,7 @@ class TechTaskServices:
             operation = tables.PTO_Value(
                 value_table=TechTaskDATA.value_table,
                 NameTechTask_key=TechTaskDATA.NameTechTask_key,
+                description=TechTaskDATA.description,
                 user_name=user.username,
             )
             self.session.add(operation)
@@ -60,6 +61,55 @@ class TechTaskServices:
                 .filter(
                     tables.PTO_Value.NameTechTask_key == TechTaskDATA.NameTechTask_key
                 )
+                .order_by(
+                    tables.PTO_Value.create_at.desc()
+                )
+                .first()
+            )
+            if not operation:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+        # return "operation"      # return "operation"
+
+
+    def getTechTaskPTO_key_S(self,TechTaskDATA: models.BaseTechTaskPTO ,user: tables.User,) -> tables.PTO_Value:
+        try:
+            operation = (
+                self.session
+                .query(tables.PTO_Value)
+                .filter(
+                    tables.PTO_Value.NameTechTask_key == TechTaskDATA.NameTechTask_key
+                )
+                .order_by(
+                    tables.PTO_Value.create_at.desc()
+                )
+                .all()
+            )
+            if not operation:
+                raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)[:TechTaskDATA.sum]
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+        # return "operation"
+    def getTechTaskPTO_id_S(self,TechTaskDATA: models.BaseTechTaskPTO ,user: tables.User,) -> tables.PTO_Value:
+        try:
+            operation = (
+                self.session
+                .query(tables.PTO_Value)
+                .filter(tables.PTO_Value.id == TechTaskDATA.id)
+
                 .order_by(
                     tables.PTO_Value.create_at.desc()
                 )
