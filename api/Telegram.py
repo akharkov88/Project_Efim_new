@@ -55,8 +55,8 @@ def create_operation(
         Class_Telegram: ClassTelegram = Depends(),
 ):
     # Class_Telegram.telega_send_message.delay(data)
-    Class_Telegram.telega_send_message(data)
-    return Response(status_code=status.HTTP_200_OK)
+
+    return Class_Telegram.telega_send_message(data)
 
 
 
@@ -70,8 +70,8 @@ def create_operation(
         data: models.BaseTelegram_group,
         Class_Telegram: ClassTelegram = Depends(),
 ):
-    Class_Telegram.telega_send_message_group.delay(data)
-    return Response(status_code=status.HTTP_200_OK)
+
+    return Class_Telegram.telega_send_message_group(data)
 
 
 
@@ -85,8 +85,8 @@ def create_operation(
         data: models.BaseUserTelegram,
         Class_Telegram: ClassTelegram = Depends(),
 ):
-    Class_Telegram.telega_set_message.delay(data)
-    return Response(status_code=status.HTTP_200_OK)
+
+    return Class_Telegram.telega_set_message(data)
 
 
 

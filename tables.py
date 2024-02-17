@@ -88,8 +88,9 @@ class PTO_Value(Base):
     id = Column(Integer, primary_key=True)
     NameTechTask_key = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True) #, primary_key=True
     user_name = Column(String, ForeignKey('users.username'), index=True)
-    value_table = Column(String, nullable=False)
+    description = Column(String)
     create_at = Column(DateTime(timezone=True), server_default=func.now())
+    value_table = Column(String, nullable=False)
 
 
 

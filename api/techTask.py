@@ -66,3 +66,16 @@ def create_operation(
 ):
     return Tech_TaskServices.getTechTaskPTO_S(user_data,user)
 
+
+@router.post(
+    '/formPtoGet',
+    # response_model=models.UserTask,
+    # status_code=status.HTTP_200_OK,
+)
+def create_operation(
+        user_data: models.BaseTechTaskPTO,
+        Tech_TaskServices: TechTaskServices = Depends(),
+        user: models.User = Depends(get_current_user),
+):
+    return Tech_TaskServices.getTechTaskPTO_S(user_data,user)
+
