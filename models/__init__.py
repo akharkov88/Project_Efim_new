@@ -17,7 +17,9 @@ from .operations import (
 
 from .techTask import (
     TechTaskPTO,
-    BaseTechTaskPTO
+    BaseTechTaskPTO,
+    TechTaskPTO_key,
+    TechTaskPTO_id
 )
 
 from .BaseFile_m import (

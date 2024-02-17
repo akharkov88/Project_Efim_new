@@ -26,6 +26,9 @@ aiofiles = "^23.2.1"
 telebot = "^0.0.5"
 filelock= "^3.13.1"
 pytelegrambotapi= "^4.15.4"
+redis = "^5.0.1"
+celery = "^5.2.2"
+flower = "^2.0.1"
 
 [build-system]
 requires = ["poetry-core"]

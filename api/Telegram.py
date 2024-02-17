@@ -41,8 +41,8 @@ router = APIRouter(
     tags=['message'],
 )
 
-templates = Jinja2Templates(directory="src/main")
 
+templates = Jinja2Templates(directory="src/main")
 
 
 @router.post(
@@ -54,6 +54,8 @@ def create_operation(
         data: models.BaseTelegram,
         Class_Telegram: ClassTelegram = Depends(),
 ):
+    # Class_Telegram.telega_send_message.delay(data)
+
     return Class_Telegram.telega_send_message(data)
 
 
@@ -68,6 +70,7 @@ def create_operation(
         data: models.BaseTelegram_group,
         Class_Telegram: ClassTelegram = Depends(),
 ):
+
     return Class_Telegram.telega_send_message_group(data)
 
 
@@ -82,7 +85,9 @@ def create_operation(
         data: models.BaseUserTelegram,
         Class_Telegram: ClassTelegram = Depends(),
 ):
+
     return Class_Telegram.telega_set_message(data)
+
 
 
 
