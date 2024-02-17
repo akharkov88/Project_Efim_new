@@ -92,16 +92,20 @@
                 console.log("first_tablefirst_table",document.getElementById("first_table"))
 
                 if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'enginer_pto'){
-                    document.getElementById("table_pto").appendChild(document.getElementById("first_table"))
+                    document.getElementById("table_pto").appendChild(document.getElementById("first_table"));
+                    $('.pto').attr("style", "display:none")
                 }
                 if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'supplier'){
-                    document.getElementById("table_supplier").appendChild(document.getElementById("first_table"))
+                    document.getElementById("table_supplier").appendChild(document.getElementById("first_table"));
+                    $('.pto').attr("style", "display:table-cell");
                 }
                 if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss'){
-                    document.getElementById("table_boss").appendChild(document.getElementById("first_table"))
+                    document.getElementById("table_boss").appendChild(document.getElementById("first_table"));
+                    $('.pto').attr("style", "display:table-cell");
                 }
                 if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss_enginer_pto'){
-                    document.getElementById("table_boss_enginer_pto").appendChild(document.getElementById("first_table"))
+                    document.getElementById("table_boss_enginer_pto").appendChild(document.getElementById("first_table"));
+                    $('.pto').attr("style", "display:table-cell");
                 }
 
 

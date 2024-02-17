@@ -217,29 +217,36 @@ function table_roles(role){
 
 
     console.warn('!!!!', (role=='Admin'))
-if (role == 'Admin'){
+if (role == 'ADMIN'){
 console.warn('admin!')
-$('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
-$('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
-{#$('.costWork_role_supplier').attr("style", "display:none") // блок снабжение#}
-$('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
-//('data-title' , "Введите корректное значение")
-$('.CostMaterial_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
+    $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+    {#$('.costWork_role_supplier').attr("style", "display:none") // блок снабжение#}
+    $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
+    //('data-title' , "Введите корректное значение")
+    $('.CostMaterial_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
 
 {#$('.tehstolbec').attr("style","display: none;")#}
-} else if (role == 'supplier'){
-$('.CostMaterial_disabled').attr( "contenteditable","false" )
-$('.costWork_role_supplier').attr("contenteditable","true")
-$('.costWork_role_boss').attr("contenteditable","false")
-$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
-{#$('.tehstolbec').attr("style","display: block;")#}
+} else if (role == 'SUPPLIER'){
+    console.warn('SUPPLIER!')
+    $('.CostMaterial_disabled').attr( "contenteditable","false" )
+    $('.costWork_role_supplier').attr("contenteditable","true")
+    $('.costWork_role_boss').attr("contenteditable","false")
+    $('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+    {#$('.tehstolbec').attr("style","display: block;")#}
 } else if (role=='ENGINEER'){
-$('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
-$('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
-$('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
-$('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
-//('data-title' , "Введите корректное значение")
-$('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+    $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
+    $('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
+    $('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
+    //('data-title' , "Введите корректное значение")
+    $('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
+} else if (role=='BOSS'){
+    $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+    $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
+    //('data-title' , "Введите корректное значение")
+    $('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
 }
 }
 
@@ -424,11 +431,11 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                        <td contenteditable="true" class="costWork_role_boss"></td>
-                        <td contenteditable="true" class="costWork_role_boss"></td>
-                        <td contenteditable="true" class="costWork_role_boss"></td>
-                        <td contenteditable="true" class="costWork_role_boss"></td>
-                        <td contenteditable="true" class="costWork_role_boss"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
@@ -450,14 +457,14 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="true"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
                         </tr>`,
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
@@ -479,10 +486,10 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
-                        <td contenteditable="true" class="costWork_role_supplier"></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
                         </tr>`,
         };
 
@@ -1045,7 +1052,7 @@ let value = e.value;
                             <td rowspan="2" style="font-weight: bold;">Наименование</td>
                             <td colspan="4" style="font-weight: bold;">Стоимость</td>
                             <td colspan="4" style="font-weight: bold;">Справочная информация</td>
-                            <td colspan="8" style="font-weight: bold;">Аналитический блок</td>
+                            <td colspan="8" style="font-weight: bold; display: none" class="pto">Аналитический блок</td>
                         </tr>
 
                         <tr style="background-color: #fce1b3">
@@ -1058,11 +1065,11 @@ let value = e.value;
                             <td rowspan="1" style="font-weight: bold;">Столбец для анализа</td>
                             <td rowspan="1" style="font-weight: bold;"></td>
                             <td rowspan="1" style="font-weight: bold;">Примечание</td>
-                            <td style="font-weight: bold;">Кол-во</td>
-                            <td style="font-weight: bold;">Цена руб-ед</td>
-                            <td style="font-weight: bold;">Всего</td>
-                            <td style="font-weight: bold;">Тр-затр (чел-дн)</td>
-                            <td style="font-weight: bold;">Стоимость дня рабочего</td>
+                            <td style="font-weight: bold; display: none" class="pto">Кол-во</td>
+                            <td style="font-weight: bold; display: none" class="pto">Цена руб-ед</td>
+                            <td style="font-weight: bold; display: none" class="pto">Всего</td>
+                            <td style="font-weight: bold; display: none" class="pto">Тр-затр (чел-дн)</td>
+                            <td style="font-weight: bold; display: none" class="pto">Стоимость дня рабочего</td>
                         </tr>
                         </tbody>
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
@@ -1080,11 +1087,11 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
                         </tr>
                     <tbody id = 'earthWorks_costMaterial_${coll_table}'>
                         <tr>
@@ -1103,14 +1110,14 @@ let value = e.value;
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false" style="font-weight: bold;">Закупка по счету - ед изм расчётные</td>
-                            <td contenteditable="false" style="font-weight: bold;">Остаток закупки</td>
-                            <td contenteditable="false" style="font-weight: bold;">ед изм к закупке</td>
-                            <td contenteditable="false" style="font-weight: bold;">руб-ед</td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="false" style="font-weight: bold;">Счёта</td>
-                            <td contenteditable="false" style="font-weight: bold;">Срок поставки</td>
-                            <td contenteditable="false" style="font-weight: bold;">ПРИМЕЧАНИЕ</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Закупка по счету - ед изм расчётные</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Остаток закупки</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">ед изм к закупке</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">руб-ед</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Счёта</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Срок поставки</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">ПРИМЕЧАНИЕ</td>
                         </tr>
                     </tbody>
 
@@ -1131,10 +1138,10 @@ let value = e.value;
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false" style="font-weight: bold;">Стоимость аренды</td>
-                            <td contenteditable="false" style="font-weight: bold;">Телефон</td>
-                            <td contenteditable="false" style="font-weight: bold;">Счет</td>
-                            <td contenteditable="false" style="font-weight: bold;">Срок</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Стоимость аренды</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Телефон</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Счет</td>
+                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Срок</td>
 
                         </tr>
 
@@ -1153,10 +1160,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" style="display: none" class="pto"></td>
+                            <td contenteditable="true" style="display: none" class="pto"></td>
+                            <td contenteditable="true" style="display: none" class="pto"></td>
+                            <td contenteditable="true" style="display: none" class="pto"></td>
 
 
                         </tr>
@@ -1177,10 +1184,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
@@ -1202,10 +1209,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"</td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
@@ -1227,10 +1234,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
