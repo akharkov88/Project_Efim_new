@@ -145,6 +145,7 @@ if __name__ == '__main__':
     t1.start()
     # telega_send_message("622070505", "getwiki(command)")
     # telega_send_message("-1002089164577", "getwiki(command)")
+
     uvicorn.run(
         "main:app",
         reload=True,

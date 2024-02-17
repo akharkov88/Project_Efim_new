@@ -1,6 +1,7 @@
 .idea
 .idea/
 .idea/*
+poetry.lock
 
 
 src/file

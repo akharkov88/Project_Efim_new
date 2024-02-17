@@ -3,7 +3,6 @@ import traceback
 import traceback
 
 
-import telebot
 from telebot import types
 
 from typing import (
@@ -20,8 +19,17 @@ from sqlalchemy.orm import Session
 
 import models
 import tables
+import tasks
+import telebot
 from services.auth import  get_session
 from fastapi.encoders import jsonable_encoder
+
+@tasks.celery.task
+def send_message2(id ,data):
+    bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
+    bot.send_message(id, data)
+    # print(123)
+    return True
 
 class ClassTelegram:
     def __init__(self, session: Session = Depends(get_session)):
@@ -31,8 +39,8 @@ class ClassTelegram:
 
 
         # return jsonable_encoder(operation)
-        bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
-        bot.send_message("-1002089164577", data.Value)
+        # bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
+        # bot.send_message("-1002089164577", data.Value)
         return HTTPException(status.HTTP_200_OK, detail="Ошибка повторите еще раз")
 
     def telega_send_message(self,data):
@@ -62,8 +70,9 @@ class ClassTelegram:
             return HTTPException(status.HTTP_204_NO_CONTENT, detail="Ошибка нет такого пользователя")
 
         # return jsonable_encoder(operation)
-        bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
-        bot.send_message(operation.id_telegram, data.Value)
+
+        tasks.send_message.delay(operation.id_telegram,data.Value)
+        tasks.some_foo.delay()
         return HTTPException(status.HTTP_200_OK,)
 
     def telega_set_message(self,data):

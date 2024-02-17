@@ -38,7 +38,7 @@ Base.metadata.create_all(engine)
 def add_user():
     vv = [{"user": {
         "username": "admin",
-        "roles": "[\"Admin\"]",
+        "roles": "[\"ADMIN\"]",
         "password": "admin"
     }, "userProfile": {
         "first_name": "Admin_fist",
@@ -54,7 +54,7 @@ def add_user():
 
         , {"user": {
             "username": "Naumov",
-            "roles": "[\"Admin\"]",
+            "roles": "[\"ADMIN\"]",
             "password": "Naumov"
         }, "userProfile": {
             "first_name": "Владимир",
@@ -69,7 +69,7 @@ def add_user():
         },
         {"user": {
             "username": "Efimov",
-            "roles": "[\"Admin\"]",
+            "roles": "[\"ADMIN\"]",
             "password": "Efimov"
         }, "userProfile": {
             "first_name": "Илья",
@@ -84,7 +84,7 @@ def add_user():
         }
         , {"user": {
             "username": "Kharkov",
-            "roles": "[\"Admin\"]",
+            "roles": "[\"ADMIN\"]",
             "password": "Kharkov"
         }, "userProfile": {
             "first_name": "Алексей",
