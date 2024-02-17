@@ -77,6 +77,7 @@ $('#versionTable').change(async function(){
         console.log($(this).val())
         console.log("id",id)
                 removeOptions(document.getElementById('versionTable'));
+    document.getElementById('versionTable').blur();
 let response = await fetch('/techTask/formPtoGet_id', {
   method: 'POST',
   headers: {
@@ -118,7 +119,6 @@ removeOptions(document.getElementById('versionTable'));
             document.getElementById('versionTable').options[0].innerHTML =  "<option disabled selected value> При выборе подтянется архивная таблица </option>"
 
 
-            setTimeout(function (){
             console.log(JSON.parse(responseText))
             max = sum,
             select = document.getElementById('versionTable');
@@ -132,7 +132,6 @@ removeOptions(document.getElementById('versionTable'));
                 opt.innerHTML = "id{"+JSON.parse(responseText)[i]["id"]+"},Время сохранения:"+JSON.parse(responseText)[i]["create_at"].slice(0,-13)+",  Описание:"+ (JSON.parse(responseText)[i]["description"]==null?"":JSON.parse(responseText)[i]["description"]);
                 select.appendChild(opt);
             }
-            },500)
         }
 
 })
@@ -173,7 +172,6 @@ function Napolneneie(value){
             document.getElementById("saveTable").style.display = "block";
             document.getElementById("saveTable_description").style.display = "block";
             document.getElementById("saveTable_description_label").style.display = "block";
-            document.getElementById("recoverTable").style.display = "block";
             document.getElementById("versionTable_label").style.display = "block";
             document.getElementById("versionTable").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
@@ -347,7 +345,6 @@ console.log(e.length)
         document.getElementById("saveTable").style.display = "none";
         document.getElementById("saveTable_description").style.display = "none";
         document.getElementById("saveTable_description_label").style.display = "none";
-        document.getElementById("recoverTable").style.display = "none";
         document.getElementById("versionTable_label").style.display = "none";
         document.getElementById("versionTable").style.display = "none";
         }
@@ -528,7 +525,15 @@ document.getElementById('saveTable').onclick =async function () {
   body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}},"description": document.getElementById("saveTable_description").getAttribute("value"), "value_table": document.getElementById("first_table").innerHTML})
 });
         let responseText = await response.text();
+     document.getElementById('saveTable_description').value=""
 
+ if (response.status==200){
+            showToast('Данные успешно сохранены' , 'info' , 5000)
+ }else{
+     showToast()
+            showToast('Ошибка сохранения' , 'warning' , 5000)
+
+ }
 console.log("responseText",responseText)
 
   };
@@ -1523,7 +1528,6 @@ let value = e.value;
                     document.getElementById("saveTable").style.display = "block";
                     document.getElementById("saveTable_description").style.display = "block";
                     document.getElementById("saveTable_description_label").style.display = "block";
-                    document.getElementById("recoverTable").style.display = "block";
                     document.getElementById("versionTable_label").style.display = "block";
                     document.getElementById("versionTable").style.display = "block";
                     table_earthWorks_Total(coll_table)
