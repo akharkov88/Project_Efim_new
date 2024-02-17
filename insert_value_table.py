@@ -201,6 +201,8 @@ async def insert_Suggest():
              "Special": ["Бурилка", "Манипулятор", "Турвышка 2 шт по 2м"],
              "ListRazdel": ["Земляные работы", "Бетонные работы", "Отделочные работы"],
              "costWorkEdIzm": ["кг", "шт", "м2"],
+             "costMaterialEdIzm": ["кг", "шт"],
+             "SpecialEdIzm": ["м-см"],
              }
 
     with sync_engine.connect() as conn:

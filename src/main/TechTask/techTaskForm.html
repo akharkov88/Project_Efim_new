@@ -437,7 +437,7 @@
                                                     postData('/main/creatTask', elem_obj)
                                                         .then((data) => {
                                                             console.log('------успех-----', data);
-                                                            {#window.location.href = '/main/techTask.html';#}
+                                                            window.location.href = '/main/techTask.html';
                                                         }).catch((err) => {
                                                         console.log('------badly-----', err);
                                                     })

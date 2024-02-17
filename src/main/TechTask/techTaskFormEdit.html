@@ -6,7 +6,7 @@
     {% include "indexShablon_head.html" %}
 
 </head>
-
+<script type="text/javascript" src="static/techTaskFormEditScript.js"></script>
 <body>
 <div id="wrapper">
     {% include "indexShablon.html" %}
@@ -30,8 +30,9 @@
                             <div class="section__tabs tabs">
                                 <div class="tabs__head">
                                     <div class="tabs__caption" data-tab="main">Тех Задание</div>
-                                    <div class="tabs__caption" data-tab="pto">Калькуляция</div>
+                                    <div class="tabs__caption" data-tab="pto">Расчет стоимости</div>
                                     <div class="tabs__caption" data-tab="about">КП</div>
+
                                     {#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
                                     {#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
                                 </div>
@@ -46,7 +47,18 @@
                                             <!-- /.panel-body -->
                                         </div>
                                     </div>
+
                                     <div class="tabs__content" data-tab="pto">
+                                        <div class="panelCalcylator panel-default">
+{#                                            <div class="panel-heading">#}
+{##}
+{#                                            </div>#}
+                                            {% include "TechTask/techTaskFormEdit_Calcylator.html" %}
+
+                                        </div>
+
+                                    </div>
+                                    <div class="tabs__content" data-tab="about">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
 
@@ -58,19 +70,9 @@
                                     </div>
                                     <div class="tabs__content" data-tab="about">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">
-
-                                            </div>
-                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
-
-                                        </div>
-
-                                    </div>
-                                    <div class="tabs__content" data-tab="about">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-
-                                            </div>
+{#                                            <div class="panel-heading">#}
+{##}
+{#                                            </div>#}
                                             {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
 
                                         </div>
