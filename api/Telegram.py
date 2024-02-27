@@ -50,7 +50,7 @@ templates = Jinja2Templates(directory="src/main")
     # response_model=models.UserTask,
     status_code=status.HTTP_200_OK,
 )
-def create_operation(
+async def create_operation(
         data: models.BaseTelegram,
         Class_Telegram: ClassTelegram = Depends(),
 ):
@@ -66,7 +66,7 @@ def create_operation(
     # response_model=models.UserTask,
     status_code=status.HTTP_200_OK,
 )
-def create_operation(
+async def create_operation(
         data: models.BaseTelegram_group,
         Class_Telegram: ClassTelegram = Depends(),
 ):
@@ -81,11 +81,10 @@ def create_operation(
     # response_model=models.UserTask,
     status_code=status.HTTP_200_OK,
 )
-def create_operation(
+async def create_operation(
         data: models.BaseUserTelegram,
         Class_Telegram: ClassTelegram = Depends(),
 ):
-
     return Class_Telegram.telega_set_message(data)
 
 

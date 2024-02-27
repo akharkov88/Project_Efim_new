@@ -93,6 +93,14 @@ def get_user(user: models.User = Depends(get_current_user),
              auth_service: AuthService = Depends(), ):
     return auth_service.get_all_user(user)
 
+@router.get(
+    '/get_all_username/',
+    # response_model=list[models.Username],
+)
+def get_user(user: models.User = Depends(get_current_user),
+             auth_service: AuthService = Depends(), ):
+    return auth_service.get_all_username()
+
 
 
 

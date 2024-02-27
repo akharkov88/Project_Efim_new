@@ -32,3 +32,5 @@ class UserCreate2(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = 'bearer'
+class Username(BaseModel):
+    username: str

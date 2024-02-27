@@ -4,6 +4,7 @@ from .auth import (
     UserCreate,
     UserCreate2,
     BaseUser,
+    Username,
 )
 from .main import (
     BaseTask,

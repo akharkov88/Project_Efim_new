@@ -80,7 +80,52 @@
                 <select id="versionTable" class="form-control" style="display:none;">
                 </select>
             </div>
-          </div>
+
+            <div class="form-group">
+                <label id="Otpravka_roles_label" style="display:none;">Передать задачу на следующий этап</label>
+                <select id="Otpravka_roles" class="form-control" style="display:none;">
+                  <option value="">--Выберите роль--</option>
+
+
+                {% if roles_user|lower != '["ENGINEER"]'|lower  %}
+
+                      <option value="ENGINEER">Инженер</option>
+
+                {% endif %}
+
+                {% if roles_user|lower != '["MAIN_ENGINEER"]'|lower  %}
+
+                      <option value="MAIN_ENGINEER">Главный Инженер</option>
+
+                {% endif %}
+
+                {% if roles_user|lower != '["BOSS"]'|lower  %}
+
+                      <option value="BOSS">Директор</option>
+
+                {% endif %}
+
+                {% if roles_user|lower != '["SUPPLIER"]'|lower  %}
+
+                      <option value="SUPPLIER">Снабжение</option>
+
+                {% endif %}
+
+                </select>
+            </div>
+
+               <div class="form-group">
+                    <label id="Otpravka_roles_label_comment" style="display:none;">Описание выполненых работ</label>
+                    <textarea id="Otpravka_roles_text" class="form-control" rows="3" placeholder="Введите описание" style="display:none;"></textarea>
+                </div>
+               <div class="form-group">
+
+                <button id="Otpravka_roles_button" class="btn btn-primary" style="display:none;">Подтвердить отправку</button>
+
+            </div>
+
+
+        </div>
             <div class="panel panel-default">
             <div class="panel-heading">
 
@@ -220,6 +265,7 @@ let response = await fetch('/techTask/formPtoGet_id', {
         }
 })
 
+
 $("#versionTable").on("focus",async function(){
 
 if ($('#first_table')[0].innerHTML != etalon_table){
@@ -309,7 +355,12 @@ function Napolneneie(value){
             document.getElementById("saveTable_description").style.display = "block";
             document.getElementById("saveTable_description_label").style.display = "block";
             document.getElementById("versionTable_label").style.display = "block";
+            document.getElementById("Otpravka_roles_label").style.display = "block";
+            document.getElementById("Otpravka_roles").style.display = "block";
             document.getElementById("versionTable").style.display = "block";
+            document.getElementById("Otpravka_roles_button").style.display = "block";
+            document.getElementById("Otpravka_roles_label_comment").style.display = "block";
+            document.getElementById("Otpravka_roles_text").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
             {#console.log(seach_ID_table('tbody','earthWorks_'))#}
             for_event_tr('tr','stroka_');
@@ -490,7 +541,12 @@ function event_input(e) {
              document.getElementById("saveTable_description").style.display = "none";
              document.getElementById("saveTable_description_label").style.display = "none";
              document.getElementById("versionTable_label").style.display = "none";
+             document.getElementById("Otpravka_roles_label").style.display = "none";
+             document.getElementById("Otpravka_roles").style.display = "none";
              document.getElementById("versionTable").style.display = "none";
+             document.getElementById("Otpravka_roles_button").style.display = "none";
+             document.getElementById("Otpravka_roles_label_comment").style.display = "none";
+             document.getElementById("Otpravka_roles_text").style.display = "none";
          }
          pereschetTotalSum();
          pereschetTotalNDS();
@@ -671,6 +727,10 @@ function up_obj_global_sum(){
 
 
 
+document.getElementById('Otpravka_roles_button').onclick =async function () {
+    event.preventDefault();
+
+}
 document.getElementById('saveTable').onclick =async function () {
     event.preventDefault();
     let response = await fetch('/techTask/formPtoCreateUpdate', {
@@ -1722,7 +1782,12 @@ let value = e.value;
                     document.getElementById("saveTable_description").style.display = "block";
                     document.getElementById("saveTable_description_label").style.display = "block";
                     document.getElementById("versionTable_label").style.display = "block";
+                    document.getElementById("Otpravka_roles_label").style.display = "block";
+                    document.getElementById("Otpravka_roles").style.display = "block";
                     document.getElementById("versionTable").style.display = "block";
+                    document.getElementById("Otpravka_roles_button").style.display = "block";
+                    document.getElementById("Otpravka_roles_label_comment").style.display = "block";
+                    document.getElementById("Otpravka_roles_text").style.display = "block";
                     table_earthWorks_Total(coll_table)
 
 

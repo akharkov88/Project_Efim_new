@@ -17,11 +17,18 @@ from fastapi import (
 )
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, not_
+from services.Telegram import ClassTelegram
 
 import models
+import json
 import tables
 from services.auth import  get_session
 from fastapi.encoders import jsonable_encoder
+class dotdict(dict):
+    """dot.notation access to dictionary attributes"""
+    __getattr__ = dict.get
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
 
 class UserProfileServices:
     def __init__(self, session: Session = Depends(get_session)):
@@ -30,33 +37,59 @@ class UserProfileServices:
 
     def create_UserTask(self,UserDATA: models.ModelUserTask ,user: tables.User,) -> tables.ListUserTask:
         try:
-
-            operation = tables.ListUserTask(
-                name=UserDATA.name,
-                user_create=user.username,
-                user_executor=UserDATA.user_executor,
-                progress=UserDATA.progress,
-                status="Назначена",
-                target_date=UserDATA.target_date,
-                notification_holder=False,
-                notification_executor=True,
-                priority=UserDATA.priority,
-                user_name=user.username,
+            operation = tables.ListUserTask(**dict(UserDATA)
 
             )
             self.session.add(operation)
+            self.session.flush()
             self.session.commit()
-            operation = (
-                self.session
-                .query(tables.ListUserTask)
-                # .filter(
-                #     tables.ListUserTask.customer_id == TechTaskDATA.customer_id,
-                # )
-                .all()
-            )
             if not operation:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
+            for user_data in ast.literal_eval(UserDATA.user_executor):
+                data=dotdict({"User":user_data,"Value":UserDATA.name})
+                ClassTelegram.telega_send_message(self,data)
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+
+    def create_UserTaskRoles(self,UserDATA: models.ModelUserTask ,user: tables.User,) -> tables.ListUserTask:
+        try:
+            user_mas=[]
+            data = ast.literal_eval(UserDATA.user_executor)
+            for user_data in data:
+                operation = (
+                    self.session
+                    .query(tables.User)
+                    .filter(
+                        or_(
+                            tables.User.roles == user_data,
+                            tables.User.roles.ilike("%'" + user_data + "'%"),
+                            tables.User.roles.ilike('%"' + user_data + '"%')
+                        )
+                    )
+                    .all()
+                )
+                if operation:
+                    for username in operation:
+                        user_mas.append(username.username)
+
+            UserDATA=dict(UserDATA)
+            UserDATA["user_executor"]=str(user_mas)
+            operation = tables.ListUserTask(**dict(UserDATA))
+            self.session.add(operation)
+            self.session.flush()
+            self.session.commit()
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            for user_data in user_mas:
+                data=dotdict({"User":user_data,"Value":UserDATA["name"]})
+                ClassTelegram.telega_send_message(self,data)
             return jsonable_encoder(operation)
 
         except:
@@ -95,6 +128,7 @@ class UserProfileServices:
 
                 save_executor = []
 
+                print(hh["user_executor"])
                 for user_executor_val in ast.literal_eval(hh["user_executor"]):
 
 

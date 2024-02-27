@@ -145,6 +145,7 @@
 
                                                 </td>
 
+
                                                 <div id="overlay"></div>
                                                 <div class="container">
 
@@ -217,7 +218,32 @@
                                     </table>
                                 </div>
 
+            <div class="form-group">
+                <label id="Type_label" >Выбор пользователей</label>
+                <select id="Type" class="form-control" >
+                  <option value="">--Выберите значение--</option>
+                      <option value="username">По имени</option>
+                      <option value="roles">По роли</option>
 
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label id="Otpravka_roles_label" >На кого надо назначить </label>
+                <select id="Otpravka_roles" class="form-control" >
+
+                </select>
+            </div>
+
+               <div class="form-group">
+                    <label id="Otpravka_roles_label_comment" >Описание выполненых работ</label>
+                    <textarea id="Otpravka_roles_text" class="form-control" rows="3" placeholder="Введите описание" ></textarea>
+                </div>
+               <div class="form-group">
+
+                <button id="Otpravka_roles_button" class="btn btn-primary" >Подтвердить отправку</button>
+
+            </div>
                                 <script>
                                     async function updatde_UserTask(data, e,name_task,rezult_task) {
                                         console.log("datadata",data)
