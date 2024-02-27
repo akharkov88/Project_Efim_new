@@ -1200,13 +1200,13 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pytelegrambotapi"
-version = "4.15.5"
+version = "4.16.1"
 description = "Python Telegram bot api."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytelegrambotapi-4.15.5-py3-none-any.whl", hash = "sha256:507a6702b28d9327f22952f7b8b41a3bb5ffb0a47e11f167f5a7fae14dc121ab"},
-    {file = "pytelegrambotapi-4.15.5.tar.gz", hash = "sha256:1a68707840fd4cf45d670a63fea39d6818b153faed76fe4cb6dec78cd6772fdd"},
+    {file = "pytelegrambotapi-4.16.1-py3-none-any.whl", hash = "sha256:85451b4fa1a47d99318a50aef361d177d2eb580c5ea6429fadb071cfad17fb35"},
+    {file = "pytelegrambotapi-4.16.1.tar.gz", hash = "sha256:7ecfdac60de4a4c254059fc0f1997ceeb5da72803ffe4f35544b3ec9e9629edb"},
 ]
 
 [package.dependencies]
