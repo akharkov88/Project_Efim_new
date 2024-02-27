@@ -66,6 +66,7 @@
             </div>
         </div>
         <div class="row col-lg-12">
+
             <div class="form-group">
 
                 <label id="saveTable_description_label" style="display:none;">Описание изменений 20 символов</label>
@@ -79,13 +80,27 @@
                 <select id="versionTable" class="form-control" style="display:none;">
                 </select>
             </div>
+          </div>
+            <div class="panel panel-default">
+            <div class="panel-heading">
 
-        </div>
+            <div class="form-group">
+                <label>Передать на следующий этап</label>
+                <input  >
+            </div>
+
+            </div>
+            </div>
+
+
+
+
 
     </form>
+    </div>
     {#                </div>#}
-</div>
-</div>
+
+
 
 
 <script>
@@ -309,18 +324,18 @@ function Napolneneie(value){
              event_input($("input[id ^='input_']"))
 }
 function event_input(e) {
-console.log('!@#')
-console.log(e)
-console.log(e.length)
+{#console.log('!@#')#}
+{#console.log(e)#}
+{#console.log(e.length)#}
     for (let i =0; i<e.length;i++){
      console.log(e[i])
     let forObj = e[i].id.slice(e[i].id.indexOf('_')+1, e[i].id.lastIndexOf('_'))
     let id_count = e[i].id.slice(e[i].id.lastIndexOf('_')+1)
-    console.log('count == ', id_count)
-    console.log('forObj == ',forObj)
+    {#console.log('count == ', id_count)#}
+    {#console.log('forObj == ',forObj)#}
     $(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
     let type = forObj;
-    console.warn('!@#this div_ : ', this)
+    {#console.warn('!@#this div_ : ', this)#}
     let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
     {#console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)#}
         var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
@@ -392,8 +407,7 @@ console.log(e.length)
  function func_sum_vsego_razdel(elem_stroka){
     let sum = 0;
 
-
-     let summa_v_itogo = 0;
+    let summa_v_itogo = 0;
     let id_for_itogo = elem_stroka.parentElement.parentElement.id.slice(elem_stroka.parentElement.parentElement.id.lastIndexOf('_')+1)
     console.log('id_for_itogo: ',id_for_itogo)
     console.log('elem_stroka: ',elem_stroka.parentElement.parentElement.id.lastIndexOf('_')+1 )
@@ -423,7 +437,15 @@ console.log(e.length)
         console.log("присвоение ", obj_global_sum['earthWorks_Total_'+ id_for_itogo],' + ',  Number(summa_v_itogo.toFixed(2)) )
 
         pereschetTotalSum();
-    } {#else {
+    }
+    if (obj_global_sum['earthWorks_Total_'+id_for_itogo]== '0'){
+        obj_global_sum['ВСЕГО_'+id_for_itogo] = 0;
+        document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[9].childNodes[13].innerText = obj_global_sum['ВСЕГО_'+id_for_itogo];
+
+    }
+
+
+    {#else {
         obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
     }#}
     if (obj_global_sum['ВСЕГО_'+id_for_itogo] != '' && !isNaN(obj_global_sum['ВСЕГО_'+id_for_itogo])) {
@@ -484,6 +506,10 @@ function table_roles(role){
 if (role == 'ADMIN'){
 console.warn('admin!')
     $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.Special_disabled').attr( "contenteditable","true" )
+    $('.percent').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_disabledSpecial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
     {#$('.costWork_role_supplier').attr("style", "display:none") // блок снабжение#}
     $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
@@ -495,6 +521,9 @@ console.warn('admin!')
 } else if (role == 'SUPPLIER'){
     console.warn('SUPPLIER!')
     $('.CostMaterial_disabled').attr( "contenteditable","false" )
+    $('.costWork_disabled').attr( "contenteditable","false" )
+    $('.Special_disabled').attr( "contenteditable","false" )
+    $('.percent').attr( "contenteditable","false" )
     $('.costWork_role_supplier').attr("contenteditable","true")
     $('.costWork_role_boss').attr("contenteditable","false")
     $('.CostMaterial_disabled_input').attr("readonly","readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
@@ -504,6 +533,9 @@ console.warn('admin!')
     {#$('.tehstolbec').attr("style","display: block;")#}
 } else if (role=='ENGINEER'){
     $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.Special_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.percent').attr("contenteditable","false") // tbody Стоимость материала раздел ПТО
     $('.costWork_role_supplier').attr("contenteditable","false") // блок снабжение
     $('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
     $('.costWork_role_boss').attr("data-title","неподходящая роль для ввода/изменения данных") // блок руководитель в разделе Стоимость работ
@@ -513,6 +545,9 @@ console.warn('admin!')
     $('.Special_disabled_input').removeAttr("readonly")
 } else if (role=='BOSS'){
     $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.Special_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.percent').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
     $('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
     //('data-title' , "Введите корректное значение")
@@ -706,13 +741,13 @@ const table = document.getElementById('first_table');
                             </td>
 
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="costWork_disabled"></td>
+                            <td contenteditable="true" class="costWork_disabled"></td>
                             <td contenteditable="false"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true" class="note"></td>
+                            <td contenteditable="true" class="costWork_disabled"></td>
+                            <td contenteditable="true" class="costWork_disabled"></td>
+                            <td contenteditable="true" class="costWork_disabled"></td>
+                            <td contenteditable="true" class="costWork_disabled note"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
@@ -775,13 +810,13 @@ const table = document.getElementById('first_table');
                             </td>
 
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="false"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true" class="note"></td>
+                            <td contenteditable="true" class="Special_disabled"></td>
+                            <td contenteditable="true" class="Special_disabled"></td>
+                            <td contenteditable="false" class="Special_disabled"></td>
+                            <td contenteditable="true" class="Special_disabled"></td>
+                            <td contenteditable="true" class="Special_disabled"></td>
+                            <td contenteditable="true" class="Special_disabled"></td>
+                            <td contenteditable="true" class="Special_disabled note"></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
@@ -988,7 +1023,16 @@ function addLine(event, element){
     let element_id = element.id;
     let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
 
-    $(element).append(objLine(id_count, forObj))
+
+
+    let table_values_roles = `` + objLine(id_count, forObj)
+    let roles_user = JSON.parse({{roles_user|tojson|safe}} )[0]
+    if (roles_user != 'ENGINEER'){
+
+        table_values_roles = table_values_roles.replaceAll('display: none','display:table-cell')
+    }
+
+    $(element).append(table_values_roles)
     {#console.warn('id_count = ' + id_count)#}
     let tr_math = document.getElementById('stroka_'+id_count)
     console.log('tr_math -==-')
@@ -1071,15 +1115,15 @@ function event_tr (tr_math){
 
 obj_table_values['earthWorks_costWork'][tr_math.id] = {}
 if (tr_math.childNodes[9].innerText != '') {
-    obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = tr_math.childNodes[9].innerText
+    obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2)
 } else obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = "";
 
 if (tr_math.childNodes[11].innerText != '') {
-    obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = tr_math.childNodes[11].innerText
+    obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = Number(tr_math.childNodes[11].innerText.replace(',','.')).toFixed(2)
 } else obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = "";
 
 if (tr_math.childNodes[15].innerText != '') {
-    obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = tr_math.childNodes[15].innerText
+    obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
 } else obj_table_values['earthWorks_costWork'][tr_math.id]['15'] = "";
 
 // события обработки ячеек таблицы
@@ -1089,9 +1133,11 @@ tr_math.childNodes[9].removeAttribute('data-title')
 {#console.log(obj_table_values['earthWorks_costWork'][tr_math.id]['9'])#}
         if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText != ''){
 
-        if (obj_table_values['earthWorks_costWork'][tr_math.id]['9'] == "" || Number(obj_table_values['earthWorks_costWork'][tr_math.id]['9']) == Number(tr_math.childNodes[23].innerText))
-            {obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = tr_math.childNodes[9].innerText
-            if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) tr_math.childNodes[23].innerText = Number(tr_math.childNodes[9].innerText).toFixed(2);
+        if (obj_table_values['earthWorks_costWork'][tr_math.id]['9'] == "" || Number(obj_table_values['earthWorks_costWork'][tr_math.id]['9']).toFixed(2) == Number(tr_math.childNodes[23].innerText.replace(',','.')).toFixed(2))
+            {obj_table_values['earthWorks_costWork'][tr_math.id]['9'] = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2)
+            if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) {
+                tr_math.childNodes[23].innerText = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2);
+            }
             }
 
         if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText != ''){
@@ -1108,15 +1154,27 @@ if(tr_math.childNodes[13].innerText != ''){
 });
 tr_math.childNodes[11].addEventListener('keyup', function(event) {
 tr_math.childNodes[11].removeAttribute('data-title')
+console.log('innerText')
+console.log(tr_math.childNodes[11].innerText)
 
     if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) &&   tr_math.childNodes[11].innerText != '' ){
 
+console.log('222innerText')
+console.log(Number(tr_math.childNodes[25].innerText))
 
-        if (obj_table_values['earthWorks_costWork'][tr_math.id]['11'] == "" || Number(obj_table_values['earthWorks_costWork'][tr_math.id]['11']) == Number(tr_math.childNodes[25].innerText))
-            {obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = tr_math.childNodes[11].innerText
 
-            if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) tr_math.childNodes[25].innerText = Number(tr_math.childNodes[11].innerText).toFixed(2);
+        if (obj_table_values['earthWorks_costWork'][tr_math.id]['11'] == "" || Number(obj_table_values['earthWorks_costWork'][tr_math.id]['11']).toFixed(2) == Number(tr_math.childNodes[25].innerText.replace(',','.')).toFixed(2))
+            {
+console.log('111innerText')
+
+            obj_table_values['earthWorks_costWork'][tr_math.id]['11'] = Number(tr_math.childNodes[11].innerText.replace(',','.')).toFixed(2)
+
+            if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1)
+            {
+                tr_math.childNodes[25].innerText = Number(tr_math.childNodes[11].innerText.replace(',','.')).toFixed(2);
             }
+            }
+
 
         if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText != '' ){
         tr_math.childNodes[13].innerText = (Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.'))).toFixed(2)
@@ -1143,7 +1201,7 @@ tr_math.childNodes[15].addEventListener('keyup', function(event) {
     if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1 && tr_math.childNodes[15].innerText!=''){
         if (tr_math.childNodes[13].innerText != ''){
             if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText != ''){
-            tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText).toFixed(2);
+            tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2);
                 tr_math.childNodes[17].innerText = (Number(tr_math.childNodes[13].innerText.replace(',','.')) / Number(tr_math.childNodes[15].innerText.replace(',','.'))).toFixed(2)
                 tr_math.childNodes[31].innerText = (Number(tr_math.childNodes[13].innerText.replace(',','.')) / Number(tr_math.childNodes[15].innerText.replace(',','.'))).toFixed(2)
                 PTO_td_sum(tr_math);
@@ -1153,7 +1211,7 @@ tr_math.childNodes[15].addEventListener('keyup', function(event) {
                     PTO_td_sum(tr_math);
                 }
         } else {
-            tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText).toFixed(2)
+            tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
         }
     }
 });
@@ -1357,7 +1415,9 @@ function set_setSuggest(customer_id, add_value,id_datalist) {
 let arr_zaglav = [];
 
 document.getElementById('add_razdel').onclick = function () {
-
+    if (JSON.parse({{roles_user|tojson|safe}} )[0] == 'SUPPLIER'){
+        return
+    }
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) coll_table = seach_ID_table('tbody','earthWorks_')+1;
 
 {#$("#style_table").style.display = 'block';#}
@@ -1491,7 +1551,7 @@ let value = e.value;
                             </td>
 
 
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -1510,12 +1570,12 @@ let value = e.value;
                                 Накладные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="percent"></td>
                             <td contenteditable="true"></td>
 
 
 
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -1535,12 +1595,12 @@ let value = e.value;
                                 Вспомогательные материалы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="percent"></td>
                             <td contenteditable="true"></td>
 
 
 
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -1560,12 +1620,12 @@ let value = e.value;
                                 Транспортные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="percent"></td>
                             <td contenteditable="true"></td>
 
 
 
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -1584,17 +1644,17 @@ let value = e.value;
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
                                 ВСЕГО:
                             </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
 
 
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
 
                         </tr>
                         <tr id = "stroka">
@@ -1604,11 +1664,11 @@ let value = e.value;
                                 В том числе НДС - 20% за нал от материалов
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="true" class="percent"></td>
                             <td contenteditable="true"></td>
 
 
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
@@ -1627,15 +1687,15 @@ let value = e.value;
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
                                 ВСЕГО:
                             </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
                         </tr>
                         <tr>
                         <td class="tehstolbec"></td>
@@ -1643,15 +1703,15 @@ let value = e.value;
                             <td contenteditable="false" style="font-weight: bold;">
                                 В том числе НДС - 20% за нал от материалов
                             </td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
 
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
-                            <td contenteditable="true"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
+                            <td contenteditable="false"></td>
                         </tr>
                     </tbody>
                     `)
@@ -1698,11 +1758,9 @@ obj_global_sum['Накладные_расходы_' +  id_table] = this.innerTex
 } else {
         this.setAttribute('data-title' , "Введите корректное значение");
         this.parentElement.parentElement.childNodes[3].childNodes[13].innerText = '';
-        obj_global_sum['Накладные_расходы_'+id_table]=''
+        obj_global_sum['Накладные_расходы_'+id_table]='';
         func_sum_vsego_razdel(this);
-        };
-
-
+        }
 
 });
 
@@ -1759,9 +1817,9 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[11].childNode
         this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = '';
         obj_global_sum['ВСЕГО_НДС_'+id_table]='';
         func_sum_vsego_razdel(this);
-        pereschetTotalNDS()
-        };
-});
+        pereschetTotalNDS();
+        }
+})  ;
 
 }
 
@@ -1891,10 +1949,24 @@ if(this.id.indexOf('Form_') == -1){
                 del_math_td.parentElement.childNodes[1].childNodes[25].innerText = '';
             }
         }
-
+        let idParelem = document.getElementById(`stroka_${id_del}`).parentElement.id;
+        console.log('idParelem  ', idParelem)
         document.getElementById(`stroka_${id_del}`).remove()
-
                 counterTr();
+
+                if (idParelem.indexOf('earthWorks_costMaterial_')!= -1 && $(`#${idParelem} tr`).length == 1){
+                    let temp = idParelem.slice(idParelem.lastIndexOf('_')+1);
+                    console.log(temp)
+                    obj_global_sum['ВСЕГО_НДС_'+temp]='';
+                    $(`#earthWorks_Total_${temp}`)[0].childNodes[11].childNodes[13].innerText = Number(0).toFixed(2)
+                } else if(idParelem.indexOf('earthWorks_costMaterial_')!= -1){
+                        PTO_td_sum($(`#${idParelem} tr`)[1]);
+                }
+
+                func_sum_vsego_razdel($(`#${idParelem} tr`)[0].childNodes[5]) ;
+                pereschetTotalSum();
+                pereschetTotalNDS();
+
     }
 
 

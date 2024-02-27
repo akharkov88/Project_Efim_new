@@ -6,7 +6,7 @@
     {% include "indexShablon_head.html" %}
 
 </head>
-<script type="text/javascript" src="static/techTaskFormEditScript.js"></script>
+{#<script type="text/javascript" src="static/techTaskFormEditScript.js"></script>#}
 <body>
 <div id="wrapper">
     {% include "indexShablon.html" %}
@@ -224,17 +224,43 @@
                     const tabs = () => { // объявляем основную функцию для вкладок, чтобы вся логика была в одном месте
                         const head = document.querySelector('.tabs__head') // ищем элемент с кнопками и записываем в константу
                         const body = document.querySelector('.tabs__body') // ищем элемент с контентом и записываем в константу
-
+                        const head2 = document.querySelector('.tabsCalcylator__head') // ищем элемент с кнопками и записываем в константу
+                        const body2 = document.querySelector('.tabsCalcylator__body')
                         const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
+                            console.log('TABS')
+                            console.log(head.querySelector('.tabs__caption_active').dataset.tab)
+                            if (head.querySelector('.tabs__caption_active').dataset.tab == 'pto') {
+
+                                //$('.pto').attr("style", "display:block")
+                                if (head2.querySelector('.tabsCalcylator__caption_active')) { // если уже есть активная кнопка
+                                    head2.querySelector('.tabsCalcylator__caption_active').classList.remove('tabsCalcylator__caption_active') // то удаляем ей активный класс
+                                }
+
+                                head2.querySelector('.tabsCalcylator__caption').classList.add('tabsCalcylator__caption_active')
+                                setActiveContent2()
+
+                            }
+
                             return head.querySelector('.tabs__caption_active').dataset.tab // возвращаем значение data-tab активной кнопки
+                        }
+                        const setActiveContent2 = () => { // объявляем функцию для установки активного элемента контента
+                            if (body2.querySelector('.tabsCalcylator__content_active')) { // если уже есть активный элемент контента
+                                console.warn('щас скрою')
+                                body2.querySelector('.tabsCalcylator__content_active').classList.remove('tabsCalcylator__content_active') // то скрываем его
+                            }
+                            body2.querySelector(`[data-tab='enginer_pto']`).classList.add('tabsCalcylator__content_active')
+                            document.getElementById("table_pto").appendChild(document.getElementById("first_table"));
+                            $('.pto').attr("style", "display:none")
                         }
 
                         const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
                             if (body.querySelector('.tabs__content_active')) { // если уже есть активный элемент контента
                                 body.querySelector('.tabs__content_active').classList.remove('tabs__content_active') // то скрываем его
                             }
+
                             body.querySelector(`[data-tab=${getActiveTabName()}]`).classList.add('tabs__content_active') // затем ищем элемент контента, у которого значение data-tab совпадает со значением data-tab активной кнопки и отображаем его
                         }
+
 
 // проверяем при загрузке страницы, есть ли активная вкладка
                         if (!head.querySelector('.tabs__caption_active')) {  // если активной вкладки нет
