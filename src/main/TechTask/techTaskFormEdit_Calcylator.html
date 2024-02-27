@@ -87,6 +87,7 @@
                   <option value="">--Выберите роль--</option>
 
 
+
                 {% if roles_user|lower != '["ENGINEER"]'|lower  %}
 
                       <option value="ENGINEER">Инженер</option>
@@ -263,6 +264,7 @@ let response = await fetch('/techTask/formPtoGet_id', {
 
         }
 })
+
 
 $("#versionTable").on("focus",async function(){
 
