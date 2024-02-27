@@ -60,7 +60,7 @@ def set_userprofile(request: Request,
 
 
 @router.get('/UserTask', response_model=List[models.Operation], )
-def get_operation(request: Request,
+async def get_operation(request: Request,
                   User_ProfileServices: UserProfileServices = Depends(),
                   Auth_Service: AuthService = Depends(), ):
     try:
@@ -69,7 +69,7 @@ def get_operation(request: Request,
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
         "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(
-            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
+            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username()}
     )
 
 
@@ -95,6 +95,18 @@ def create_operation(request: Request,
         user: models.User = Depends(get_current_user),
 ):
     return UserProfile_Services.create_UserTask(user_data, user)
+
+@router.post(
+    '/createUserTaskRoles',
+    # response_model=models.UserTask,
+    # status_code=status.HTTP_200_OK,
+)
+def create_operation(request: Request,
+        user_data: models.ModelUserTask= Depends(),
+        UserProfile_Services: UserProfileServices = Depends(),
+        user: models.User = Depends(get_current_user),
+):
+    return UserProfile_Services.create_UserTaskRoles(user_data, user)
 
 
 

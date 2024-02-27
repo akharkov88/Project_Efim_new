@@ -130,9 +130,8 @@ def telega():
             f.write(a)
         bot.send_message(message.from_user.id, "Готово")
 
-
-
-    bot.polling(none_stop=True)
+    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+    # bot.polling(none_stop=True)
 
 def telega_send_message(id,text):
     bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')

@@ -59,7 +59,7 @@ def add_user():
         }, "userProfile": {
             "first_name": "Владимир",
             "last_name": "Наумов",
-            "telegram": "string",
+            "telegram": "Frype",
             "mobile": "123",
             "worker_tel": "456",
             "email": "string",
@@ -324,7 +324,9 @@ print(res.status_code)
 
 vv = [
     {"name_user_telegram": "AlekseyKharkov88",
-    "id_telegram": "622070505",}
+    "id_telegram": "622070505"},
+    {"name_user_telegram": "Frype",
+    "id_telegram": "379116309"}
       ]
 
 for v in vv:

@@ -158,6 +158,25 @@ class AuthService:
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
+    def get_all_username(self,) :
+        try:
+            operation = (
+                self.session
+                .query(tables.UserPfofile.first_name,tables.UserPfofile.last_name )
+                .all()
+            )
+            # if not operation:
+            #     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            rez=[]
+            for user in operation:
+                rez.append(user.first_name+" & "+user.last_name)
+            return rez
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
     def update_user_roles(self, id, roles, user_data: models.UserCreate) -> bool:
         try:
             if json.loads(user_data.roles).count('Admin') > 0:

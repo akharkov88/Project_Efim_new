@@ -97,7 +97,7 @@ class ClassTelegram:
         if not operation:
             raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
         # return jsonable_encoder(operation)
-        return HTTPException(status.HTTP_200_OK, detail="Ошибка повторите еще раз")
+        return HTTPException(status.HTTP_200_OK)
 
         # return jsonable_encoder(operation)
 
