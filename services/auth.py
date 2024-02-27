@@ -162,15 +162,15 @@ class AuthService:
         try:
             operation = (
                 self.session
-                .query(tables.UserPfofile.first_name,tables.UserPfofile.last_name )
+                .query(tables.UserPfofile.username,tables.UserPfofile.first_name,tables.UserPfofile.last_name )
                 .all()
             )
             # if not operation:
             #     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
-            rez=[]
+            rez={}
             for user in operation:
-                rez.append(user.first_name+" & "+user.last_name)
+                rez[user.username]=user.first_name+" "+user.last_name
             return rez
         except:
             print(traceback.format_exc())

@@ -229,34 +229,8 @@
             </div>
 
             <div class="form-group">
-                <label id="Otpravka_roles_label" >Передать задачу на следующий этап</label>
+                <label id="Otpravka_roles_label" >На кого надо назначить </label>
                 <select id="Otpravka_roles" class="form-control" >
-                  <option value="">--Выберите роль--</option>
-
-
-                {% if roles_user|lower != '["ENGINEER"]'|lower  %}
-
-                      <option value="ENGINEER">Инженер</option>
-
-                {% endif %}
-
-                {% if roles_user|lower != '["MAIN_ENGINEER"]'|lower  %}
-
-                      <option value="MAIN_ENGINEER">Главный Инженер</option>
-
-                {% endif %}
-
-                {% if roles_user|lower != '["BOSS"]'|lower  %}
-
-                      <option value="BOSS">Директор</option>
-
-                {% endif %}
-
-                {% if roles_user|lower != '["SUPPLIER"]'|lower  %}
-
-                      <option value="SUPPLIER">Снабжение</option>
-
-                {% endif %}
 
                 </select>
             </div>
