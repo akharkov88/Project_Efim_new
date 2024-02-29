@@ -66,7 +66,8 @@
             </div>
         </div>
         <div class="row col-lg-12">
-
+            <div class="panel panel-default" id="panel_1" style="display:none;">
+            <div class="panel-heading">
             <div class="form-group">
 
                 <label id="saveTable_description_label" style="display:none;">Описание изменений 20 символов</label>
@@ -80,7 +81,11 @@
                 <select id="versionTable" class="form-control" style="display:none;">
                 </select>
             </div>
+            </div>
+            </div>
 
+            <div class="panel panel-default" id="panel_2" style="display:none;">
+            <div class="panel-heading">
             <div class="form-group">
                 <label id="Otpravka_roles_label" style="display:none;">Передать задачу на следующий этап</label>
                 <select id="Otpravka_roles" class="form-control" style="display:none;">
@@ -126,13 +131,9 @@
 
 
         </div>
-            <div class="panel panel-default">
-            <div class="panel-heading">
 
-            <div class="form-group">
-                <label>Передать на следующий этап</label>
-                <input  >
-            </div>
+
+
 
             </div>
             </div>
@@ -352,6 +353,8 @@ function Napolneneie(value){
             {#document.getElementById("first_table_supplier").innerHTML=JSON.parse(responseText).value_table#}
             document.getElementById("style_table").style.display = "block";
             document.getElementById("saveTable").style.display = "block";
+            document.getElementById("panel_2").style.display = "block";
+            document.getElementById("panel_1").style.display = "block";
             document.getElementById("saveTable_description").style.display = "block";
             document.getElementById("saveTable_description_label").style.display = "block";
             document.getElementById("versionTable_label").style.display = "block";
@@ -537,6 +540,8 @@ function event_input(e) {
          if (arr_test.length == 1) {
              document.getElementById(`result_total`).remove()
              document.getElementById('style_table').style.display = 'none';
+             document.getElementById('panel_1').style.display = 'none';
+             document.getElementById('panel_2').style.display = 'none';
              document.getElementById("saveTable").style.display = "none";
              document.getElementById("saveTable_description").style.display = "none";
              document.getElementById("saveTable_description_label").style.display = "none";
@@ -1779,6 +1784,8 @@ let value = e.value;
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
                     document.getElementById("saveTable").style.display = "block";
+                    document.getElementById("panel_1").style.display = "block";
+                    document.getElementById("panel_2").style.display = "block";
                     document.getElementById("saveTable_description").style.display = "block";
                     document.getElementById("saveTable_description_label").style.display = "block";
                     document.getElementById("versionTable_label").style.display = "block";
