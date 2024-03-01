@@ -27,6 +27,7 @@ from services.auth import (
     get_current_user,
 )
 from services.main import TaskServices
+from services.UserProfile import UserProfileServices
 
 router = APIRouter(
     prefix='/main',
@@ -204,13 +205,14 @@ def create_operation(
 
 
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
-def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = "",Auth_Service: AuthService = Depends()):
+def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = "",Auth_Service: AuthService = Depends(),User_ProfileServices: UserProfileServices = Depends(),):
     try:
         user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"]}
+        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"], "get_UserTask": User_ProfileServices.get_UserTask(
+            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles()}
     )
 
 

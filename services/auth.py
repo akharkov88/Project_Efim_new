@@ -208,6 +208,25 @@ class AuthService:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Запись с таким именем уже существует запись")
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+    def get_all_roles(self) -> bool:
+        try:
+            operation = (
+                self.session
+                .query(tables.ListUserRoles.role, tables.ListUserRoles.name_roles)
+                .all()
+            )
+
+            if not operation:
+                raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="")
+            rez={}
+            for user in operation:
+                rez[user.role]=user.name_roles
+            return rez
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Запись с таким именем уже существует запись")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
     def update_user_password(self, id, password, user_data: models.UserCreate) -> bool:
         try:

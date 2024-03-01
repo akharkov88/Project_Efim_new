@@ -37,7 +37,9 @@ class UserProfileServices:
 
     def create_UserTask(self,UserDATA: models.ModelUserTask ,user: tables.User,) -> tables.ListUserTask:
         try:
-            operation = tables.ListUserTask(**dict(UserDATA)
+            val=dict(UserDATA)
+            val["user_create"]=user.username
+            operation = tables.ListUserTask(**val
 
             )
             self.session.add(operation)
@@ -47,8 +49,17 @@ class UserProfileServices:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
             for user_data in ast.literal_eval(UserDATA.user_executor):
-                data=dotdict({"User":user_data,"Value":UserDATA.name})
-                ClassTelegram.telega_send_message(self,data)
+                operation2 = (
+                    self.session
+                    .query(tables.UserPfofile.last_name,tables.UserPfofile.first_name)
+                    .filter(
+                        tables.UserPfofile.username == user_data
+                    )
+                    .first()
+                )
+                if operation2:
+                    data=dotdict({"User":user_data,"Value":f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0]+" "+operation2[1]}>"})
+                    ClassTelegram.telega_send_message(self,data)
             return jsonable_encoder(operation)
 
         except:
@@ -80,6 +91,7 @@ class UserProfileServices:
 
             UserDATA=dict(UserDATA)
             UserDATA["user_executor"]=str(user_mas)
+            UserDATA["user_create"]=user.username
             operation = tables.ListUserTask(**dict(UserDATA))
             self.session.add(operation)
             self.session.flush()

@@ -69,7 +69,7 @@ async def get_operation(request: Request,
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
         "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(
-            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username()}
+            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles()}
     )
 
 
@@ -84,7 +84,7 @@ def get_operation(request: Request,
     return User_ProfileServices.get_UserTask(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
 
 
-@router.post(
+@router.get(
     '/createUserTask',
     # response_model=models.UserTask,
     # status_code=status.HTTP_200_OK,
@@ -96,7 +96,7 @@ def create_operation(request: Request,
 ):
     return UserProfile_Services.create_UserTask(user_data, user)
 
-@router.post(
+@router.get(
     '/createUserTaskRoles',
     # response_model=models.UserTask,
     # status_code=status.HTTP_200_OK,

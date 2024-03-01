@@ -102,33 +102,33 @@ def telega():
 
     question = ""
 
-    @bot.message_handler(content_types=['text'])
-    def get_text_messages(message):
-        command = message.text.lower()
-        if command == "не так":
-            bot.send_message(message.from_user.id, "а как?")
-            bot.register_next_step_handler(message, wrong)
-        else:
-            global question
-            question = command
-            # reply = "123"
-            # if reply == "вики ":
-            markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
-            item1=types.KeyboardButton("Факт")
-            item2=types.KeyboardButton("Поговорка")
-            markup.add(item1)
-            markup.add(item2)
-            # bot.send_message(message.from_user.id, getwiki(command),  reply_markup=markup)
-            bot.send_message(message.from_user.id, "getwiki(command)",  reply_markup=markup)
-            # else:
-            #     bot.send_message(message.from_user.id, reply)
+    # @bot.message_handler(content_types=['text'])
+    # def get_text_messages(message):
+    #     command = message.text.lower()
+    #     if command == "не так":
+    #         bot.send_message(message.from_user.id, "а как?")
+    #         bot.register_next_step_handler(message, wrong)
+    #     else:
+    #         global question
+    #         question = command
+    #         # reply = "123"
+    #         # if reply == "вики ":
+    #         markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
+    #         # item1=types.KeyboardButton("Факт")
+    #         # item2=types.KeyboardButton("Поговорка")
+    #         # markup.add(item1)
+    #         # markup.add(item2)
+    #         # bot.send_message(message.from_user.id, getwiki(command),  reply_markup=markup)
+    #         # bot.send_message(message.from_user.id, "getwiki(command)",  reply_markup=markup)
+    #         # else:
+    #         #     bot.send_message(message.from_user.id, reply)
 
 
-    def wrong(message):
-        a = f"{question},{message.text.lower()} \n"
-        with open('dialogues.txt', "a", encoding='utf-8') as f:
-            f.write(a)
-        bot.send_message(message.from_user.id, "Готово")
+    # def wrong(message):
+    #     a = f"{question},{message.text.lower()} \n"
+    #     with open('dialogues.txt', "a", encoding='utf-8') as f:
+    #         f.write(a)
+    #     bot.send_message(message.from_user.id, "Готово")
 
     bot.infinity_polling(timeout=10, long_polling_timeout=5)
     # bot.polling(none_stop=True)
@@ -146,14 +146,15 @@ def flower():
 
 
 if __name__ == '__main__':
-    # t1 = threading.Thread(target=telega, args=(), daemon=True)
-    # t1.start()
-    # t2 = threading.Thread(target=cel, args=(), daemon=True)
-    # t2.start()
-    # t3 = threading.Thread(target=flower, args=(), daemon=True)
-    # t3.start()
+    t1 = threading.Thread(target=telega, args=(), daemon=True)
+    t1.start()
+    t2 = threading.Thread(target=cel, args=(), daemon=True)
+    t2.start()
+    t3 = threading.Thread(target=flower, args=(), daemon=True)
+    t3.start()
     # telega_send_message("622070505", "getwiki(command)")
     # telega_send_message("-1002089164577", "getwiki(command)")
+    # telega_send_message("@AlekseyKharkov88", "getwiki(command)")
 
     uvicorn.run(
         "main:app",

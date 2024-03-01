@@ -23,7 +23,6 @@ class ModelUserTaskUpdate(BaseModel):
 
 class ModelUserTask(BaseModel):
     name: str
-    user_create: str
     user_executor: str
     status: statusEnum
     result : str
