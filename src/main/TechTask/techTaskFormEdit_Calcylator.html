@@ -86,7 +86,7 @@
 
             <div class="panel panel-default" id="panel_2" style="display:none;">
             <div class="panel-heading">
-                                <label id="Type_label">Создание новой задачи</label>
+                                <label id="Type_label">Передать на следующий этап</label>
 
                                 <div class="form-group">
                                     <label id="Type_label">Выбор пользователей</label>
@@ -129,9 +129,6 @@
 
                                 </div>
 <script>
-    console.log(111111111111111111)
-
-try{
                                     document.getElementById("Otpravka_roles_text").onkeypress = function (e) {
                                         var chr = String.fromCharCode(e.which);
                                         if ("&".indexOf(chr) != -1)
@@ -174,7 +171,7 @@ try{
                                         console.log("res.status", res.status)
                                         if (res.status == 200) {
                                             console.log(res.status)
-                                            window.location.reload();
+                                            window.location.href ="/main/techTask.html"
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
@@ -187,6 +184,9 @@ try{
                                     }
                                     document.getElementById('Type').onchange = async function (event) {
                                         event.preventDefault();
+                                        if ($('#first_table')[0].innerHTML != etalon_table){
+                                            showToast('Необходимо сохранить изменения в таблице' , 'danger' , 5000)
+                                        }
 
                                         removeOptions(document.getElementById('Otpravka_roles'));
                                         var opt = document.createElement('option');
@@ -230,10 +230,6 @@ try{
                                         }
                                     }
 
-} catch (e) {
-    console.log(e)
-  //
-}
 
 </script>
 
