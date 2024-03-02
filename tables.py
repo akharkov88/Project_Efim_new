@@ -156,3 +156,9 @@ class User_telegram(Base):
     id = Column(Integer, primary_key=True)
     name_user_telegram = Column(String, nullable=False)
     id_telegram = Column(String, nullable=False)
+
+class ListUserRoles(Base):
+    __tablename__ = 'ListUserRoles'
+    id = Column(Integer, primary_key=True)
+    role = Column(String, nullable=False)
+    name_roles = Column(String, nullable=False)

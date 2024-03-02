@@ -224,6 +224,31 @@ async def insert_Suggest():
 asyncio.run(insert_Suggest())
 
 
+
+async def addRoles():
+    value = [
+        {"ADMIN": "Администратор"},
+        {"ENGINEER": "Инженер"},
+        {"MAIN_ENGINEER": "Главный Инженер"},
+        {"SUPPLIER": "Снабжение"},
+        {"BOSS": "Директор"},
+             ]
+
+    with sync_engine.connect() as conn:
+        for customer_id in value:
+            operation = insert(tables.ListUserRoles).values(
+                role=list(customer_id.keys())[0],
+                name_roles=customer_id[list(customer_id.keys())[0]],
+            )
+            conn.execute(operation)
+            conn.commit()
+            # except:
+                #     pass
+
+
+asyncio.run(addRoles())
+
+
 async def insert_UserTask():
     vv = [{
         "name": "Разработка таблицы",

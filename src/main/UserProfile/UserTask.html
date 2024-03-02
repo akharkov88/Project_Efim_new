@@ -72,7 +72,8 @@
 
                                                 {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
-                                                    <span id="name_tasc_{{ get_UserTask_for.id }}" class="ms-2">{{ get_UserTask_for.name }}</span>
+                                                    <span id="name_tasc_{{ get_UserTask_for.id }}"
+                                                          class="ms-2">{{ get_UserTask_for.name }}</span>
                                                 </th>
 
                                                 {#АВТОР#}
@@ -124,7 +125,7 @@
                                                 <td class="align-middle">
                                                     <span id="result_value_{{ get_UserTask_for.id }}">{{ get_UserTask_for.result }}</span>
 
-                                                    {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower  %}
+                                                    {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower %}
 
 
                                                         {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
@@ -217,49 +218,163 @@
 
                                     </table>
                                 </div>
+                                <label id="Type_label">Создание новой задачи</label>
 
-            <div class="form-group">
-                <label id="Type_label" >Выбор пользователей</label>
-                <select id="Type" class="form-control" >
-                  <option value="">--Выберите значение--</option>
-                      <option value="username">По имени</option>
-                      <option value="roles">По роли</option>
+                                <div class="form-group">
+                                    <label id="Type_label">Выбор пользователей</label>
+                                    <select id="Type" class="form-control">
+                                        <option value="">--Выберите значение--</option>
+                                        <option value="username">По имени</option>
+                                        <option value="roles">По роли</option>
 
-                </select>
-            </div>
+                                    </select>
+                                </div>
 
-            <div class="form-group">
-                <label id="Otpravka_roles_label" >На кого надо назначить </label>
-                <select id="Otpravka_roles" class="form-control" >
+                                <div class="form-group" id="Otpravka_roles_forms" style="display:none;">
+                                    <label id="Otpravka_roles_label">На кого будет назначено. Все
+                                        пользователи/роли </label>
+                                    <select id="Otpravka_roles" class="form-control">
 
-                </select>
-            </div>
+                                    </select>
+                                </div>
 
-               <div class="form-group">
-                    <label id="Otpravka_roles_label_comment" >Описание выполненых работ</label>
-                    <textarea id="Otpravka_roles_text" class="form-control" rows="3" placeholder="Введите описание" ></textarea>
-                </div>
-               <div class="form-group">
+                                <div class="form-group" id="Opisanie_forms" style="display:none;">
+                                    <label id="Otpravka_roles_label_comment">Описание выполненых работ</label>
+                                    <textarea id="Otpravka_roles_text" class="form-control" rows="3"
+                                              placeholder="Введите описание"></textarea>
 
-                <button id="Otpravka_roles_button" class="btn btn-primary" >Подтвердить отправку</button>
+                                    <label id="Type_label">Приоритет</label>
+                                    <select id="priority" class="form-control">
+                                        <option value="Не важно">Не важно</option>
+                                        <option value="Нормально">Нормально</option>
+                                        <option value="Важно">Важно</option>
+                                    </select>
+                                    <label>Срок выполнения работ</label>
+                                    <input id="DateEndWork" type="date"
+                                           class="form-control"
+                                           placeholder="dd.mm.yyyy">
+                                </div>
+                                <div class="form-group" id="button_forms" style="display:none;">
 
-            </div>
+                                    <button id="Otpravka_roles_button" class="btn btn-primary">Подтвердить отправку
+                                    </button>
+
+                                </div>
                                 <script>
-                                    async function updatde_UserTask(data, e,name_task,rezult_task) {
-                                        console.log("datadata",data)
-                                        console.log("datadata",e)
-                                        console.log("useruseruseruser",window.get_UserTask[data.id.id-1].user_create)
-                                        let data_analiz=window.get_UserTask
-                                        console.log("useruseruseruser",data_analiz)
-                                        data_analiz.forEach(function (val,id){
-                                            if (val.id==data.id.id){
-                                                iskomiy_id=id
-                                                console.log("111",val.name)
-                                                console.log("111",val.user_create)
+
+                                    document.getElementById("Otpravka_roles_text").onkeypress = function (e) {
+                                        var chr = String.fromCharCode(e.which);
+                                        if ("&".indexOf(chr) != -1)
+                                            return false;
+                                    };
+                                    document.getElementById('Otpravka_roles_button').onclick = async function () {
+                                        event.preventDefault();
+                                        valid = true
+                                        if (document.getElementById('Otpravka_roles_text').value == "") {
+                                            valid = false
+                                            document.getElementById('Otpravka_roles_text').setAttribute("required", true)
+                                        }
+                                        if (document.getElementById('DateEndWork').value == "") {
+                                            valid = false
+                                            document.getElementById('DateEndWork').setAttribute("required", true)
+
+                                        }
+                                        if (valid == false) {
+                                            return
+                                        }
+                                        else {
+                                            console.log(document.getElementById('Otpravka_roles_text').value)
+                                            user = []
+                                            user.push(document.getElementById('Otpravka_roles').value)
+                                            if (document.getElementById('Type').value=="username"){
+                                               URL= `/userprofile/createUserTask?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                            }else{
+                                               URL= `/userprofile/createUserTaskRoles?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                            }
+                                            res = await fetch(URL, {
+                                                method: "GET",
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    'Content-Type': 'application/json',
+                                                    "Authorization": getCookieValue("Authorization")
+                                                },
+                                                {#body: JSON.stringify({})#}
+                                            });
+                                            console.log("res.status", res.status)
+                                            if (res.status == 200) {
+                                                console.log(res.status)
+                                                window.location.reload();
+                                            } else {
+                                                showToast("Ошибка", "error", 5000);
+
+                                            }
+                                        }
+                                    }
+                                    document.getElementById('Otpravka_roles').onchange = async function (event) {
+                                        document.getElementById("Opisanie_forms").style.display = "block";
+                                        document.getElementById("button_forms").style.display = "block";
+
+                                    }
+                                    document.getElementById('Type').onchange = async function (event) {
+                                        event.preventDefault();
+
+                                        removeOptions(document.getElementById('Otpravka_roles'));
+                                        var opt = document.createElement('option');
+                                        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+                                        document.getElementById('Otpravka_roles').appendChild(opt);
+                                        if ($(this).val() == "roles") {
+                                            document.getElementById("Opisanie_forms").style.display = "none";
+                                            document.getElementById("button_forms").style.display = "none";
+                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+
+
+                                            values = {{ all_roles|tojson|safe }}
+                                            for (value of Object.keys(values)) {
+                                                console.log("value", value)
+
+                                                var opt = document.createElement('option');
+                                                opt.value = value
+                                                opt.innerHTML = values[value]
+                                                document.getElementById('Otpravka_roles').appendChild(opt);
+
+
+                                            }
+                                        }
+
+                                        if ($(this).val() == "username") {
+                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+
+                                            values = {{ all_user|tojson|safe }}
+                                            for (value of Object.keys(values)) {
+                                                console.log("value", value)
+
+                                                var opt = document.createElement('option');
+                                                opt.value = value
+                                                opt.innerHTML = values[value]
+                                                document.getElementById('Otpravka_roles').appendChild(opt);
+
+
+                                            }
+                                        }
+                                    }
+
+                                    async function updatde_UserTask(data, e, name_task, rezult_task) {
+                                        console.log("datadata", data)
+                                        console.log("datadata", e)
+                                        console.log("useruseruseruser", window.get_UserTask[data.id.id - 1].user_create)
+                                        let data_analiz = window.get_UserTask
+                                        console.log("useruseruseruser", data_analiz)
+                                        data_analiz.forEach(function (val, id) {
+                                            if (val.id == data.id.id) {
+                                                iskomiy_id = id
+                                                console.log("111", val.name)
+                                                console.log("111", val.user_create)
                                                 return
                                             }
                                         })
-                                        console.log("iskomiy_idiskomiy_id",iskomiy_id)
+                                        console.log("iskomiy_idiskomiy_id", iskomiy_id)
                                         res = await fetch('/userprofile/updateUserTasck', {
                                             method: "POST",
                                             headers: {
@@ -304,7 +419,8 @@
 
                                         }
                                     }
-window.get_UserTask={{ get_UserTask|tojson|safe}}
+
+                                    window.get_UserTask = {{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
                                         console.log("get_UserTask_for.id", v.id)
                                         console.log("get_UserTask_for.id", v)
@@ -327,7 +443,7 @@ window.get_UserTask={{ get_UserTask|tojson|safe}}
                                                         "id": e.target.id.replace("process_", "")
                                                     }
                                                 }
-                                                updatde_UserTask(data, e,document.getElementById("name_tasc_" + data["id"]["id"]).innerText)
+                                                updatde_UserTask(data, e, document.getElementById("name_tasc_" + data["id"]["id"]).innerText)
 
                                                 {#get_UserTask()#}
                                             } else {
@@ -367,7 +483,7 @@ window.get_UserTask={{ get_UserTask|tojson|safe}}
                                                 "id": document.getElementById("yes-btn").className.split(" ")[1]
                                             }
                                         }
-                                        updatde_UserTask(data, e,document.getElementById("name_tasc_" + data["id"]["id"]).innerText,document.getElementById("result").value)
+                                        updatde_UserTask(data, e, document.getElementById("name_tasc_" + data["id"]["id"]).innerText, document.getElementById("result").value)
 
 
                                     });
