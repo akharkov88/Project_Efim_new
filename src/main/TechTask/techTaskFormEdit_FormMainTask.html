@@ -7,7 +7,7 @@
                     <input name="TechTaskClient"
                            value="{{ getTechTaskName.TechTaskClient }}"
                            class="form-control"
-                           placeholder="Введите описание" required>
+                           placeholder="Введите описание" required disabled>
                 </div>
 
 
@@ -16,7 +16,8 @@
                     <input name="NameTechTask"
                            value="{{ getTechTaskName.NameTechTask }}"
                            class="form-control"
-                           placeholder="Введите описание">
+                           placeholder="Введите описание"
+                           disabled>
                 </div>
 
                 <div name="TechTaskProject_form" class="form-group ">
@@ -24,11 +25,26 @@
                     <!-- hidden="true"-->
                     <div id="testText" class="testText"></div>
                     <input id="addFile" type="button" value="Добавить вложение"
-                           name="TechTaskProject">
+                           name="TechTaskProject"
+                           disabled>
 
                 </div>
 
                 <script>
+
+                    console.warn("roles_user EditForm:",{{roles_user|tojson|safe}})
+
+                    function role_ForfEdit(){
+                        if ({{roles_user|tojson|safe}}=='["ADMIN"]' || {{roles_user|tojson|safe}}=='["BOSS"]' || {{roles_user|tojson|safe}}=='["MAIN_ENGINEER"]'){
+                            console.log("!!!!!!!!!!!!!!")
+                            $('#formFrame').find('input:disabled').removeAttr('disabled');
+                            $('#formFrame').find('textarea:disabled').removeAttr('disabled');
+                            $('#formFrame').find('select:disabled').removeAttr('disabled');
+                            $('#formFrame').find('button:disabled').removeAttr('disabled');
+                            $('input[id^="Form_file"]')[0].setAttribute("disabled", true)
+                        }
+                    }
+
                     // Заголовки для таблиц
 
                     //<input type="text" name="example" list="exampleList"><datalist id="exampleList"><option value="A"><option value="B"></datalist>
@@ -126,6 +142,8 @@
                         button.value = "Удалить файл";
 
                         button.setAttribute("id", "idButton" + idButton);
+                        button.disabled = true;
+
                         let text = document.createElement("input");
 
                         text.type = "file";
@@ -139,6 +157,7 @@
 
                         let vvod = document.createElement("input");
                         vvod.setAttribute("id", "Form_input" + idButton)
+                        vvod.disabled = true;
 
                         vvod.type = "input";
                         vvod.value = item.value_user;
@@ -433,47 +452,52 @@
                     <label>ППР (проект производства работ)</label>
                     <textarea name="TechTaskPPR" class="form-control"
                               rows="3"
-                              placeholder="Введите описание">{{ getTechTaskName.TechTaskPPR }}</textarea>
+                              placeholder="Введите описание"
+                              disabled>{{ getTechTaskName.TechTaskPPR }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Накладные расходы на объекте</label>
                     <textarea name="TechTaskOverhead" class="form-control"
                               rows="3"
-                              placeholder="Введите описание">{{ getTechTaskName.TechTaskOverhead }}</textarea>
+                              placeholder="Введите описание"
+                              disabled>{{ getTechTaskName.TechTaskOverhead }}</textarea>
                 </div>
 
 
-                <div class="row">
-                    <div class="form-group col-lg-3">
+                <div class="form-group">
+                    <div class="form-group">
                         <label>Срок подготовки коммерческого
                             предложения</label>
                         <input name="TechTaskDateKP"
                                value="{{ getTechTaskName.TechTaskDateKP }}"
                                type="date" class="form-control"
-                               placeholder="dd.mm.yyyy">
+                               placeholder="dd.mm.yyyy"
+                               disabled>
                     </div>
 
-                    <index.htmldiv class="form-group col-lg-3">
+                    <div class="form-group">
                         <label>Срок выполнения работ</label>
                         <input name="TechTaskDateEndWork"
                                value="{{ getTechTaskName.TechTaskDateEndWork }}"
                                type="date"
                                class="form-control"
-                               placeholder="dd.mm.yyyy">
-                    </index.htmldiv>
+                               placeholder="dd.mm.yyyy"
+                               disabled>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>Условия оплаты</label>
                     <textarea name="TechTaskPrice" class="form-control"
                               rows="3"
-                              placeholder="Введите описание">{{ getTechTaskName.TechTaskPrice }}</textarea>
+                              placeholder="Введите описание"
+                              disabled>{{ getTechTaskName.TechTaskPrice }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label>Ответственный за КП</label>
-                    <select name="TechTaskLeaderKP" class="form-control">
+                    <select name="TechTaskLeaderKP" class="form-control" disabled>
                         <option>Главный инженер</option>
                         <option>Технический директор</option>
                         <option>Снабжение</option>
@@ -482,8 +506,8 @@
                     </select>
                 </div>
 
-                <button id="createTicket">Сохранить задание</button>
-                <button id="cancelTicket">Отмена</button>
+                <button id="createTicket" disabled>Сохранить задание</button>
+                <button id="cancelTicket" disabled>Отмена</button>
                 <script>
 
                 </script>
@@ -495,3 +519,8 @@
     </div>
     <!-- /.row (nested) -->
 </div>
+
+<script>
+    role_ForfEdit()
+
+</script>

@@ -15,7 +15,8 @@ referrer=document.referrer
     body: `grant_type=&username=${document.getElementById("login").value}&password=${document.getElementById("password").value}&scope=&client_id=&client_secret=`
     });
     let result = await response.json();
-
+    console.log("response.status")
+    console.log(response.status)
   if (response.status==200){
       // localStorage.setItem('Authorization', result.token_type+" "+result.access_token);
 
@@ -27,6 +28,9 @@ referrer=document.referrer
          document.location.href ='/main/'
      }
 
+  } else {
+    console.log('eror')
+    document.getElementById('authEror').style.display = 'block'
   }
 
 });
