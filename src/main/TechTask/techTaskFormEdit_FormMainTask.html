@@ -32,11 +32,15 @@
 
                 <script>
 
-                    console.warn("roles_user EditForm:",{{roles_user|tojson|safe}})
+                    //console.warn("roles_user EditForm:",{{roles_user|tojson|safe}})
 
                     function role_ForfEdit(){
-                        if ({{roles_user|tojson|safe}}=='["ADMIN"]' || {{roles_user|tojson|safe}}=='["BOSS"]' || {{roles_user|tojson|safe}}=='["MAIN_ENGINEER"]'){
+                        if ({{roles_user|tojson|safe}}=='["ADMIN"]' || {{roles_user|tojson|safe}}=='["BOSS"]' || {{roles_user|tojson|safe}}=='["MAIN_ENGINEER"]' || {{getTechTaskName.user_name|tojson|safe}} == {{user|tojson|safe}}){
                             console.log("!!!!!!!!!!!!!!")
+                            {#console.log("get_UserTaskget_UserTaskget_UserTask", {{get_UserTask|tojson|safe}})#}
+                            console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
+                            console.log("Авторизованный пользователь: ", {{user|tojson|safe}})
+                            console.log("автор ли пользователь: ", {{getTechTaskName.user_name|tojson|safe}} == {{user|tojson|safe}})
                             $('#formFrame').find('input:disabled').removeAttr('disabled');
                             $('#formFrame').find('textarea:disabled').removeAttr('disabled');
                             $('#formFrame').find('select:disabled').removeAttr('disabled');
