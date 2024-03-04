@@ -89,7 +89,7 @@ def add_user():
         }, "userProfile": {
             "first_name": "Алексей",
             "last_name": "Харьков",
-            "telegram": "string",
+            "telegram": "AlekseyKharkov88",
             "mobile": "string",
             "worker_tel": "string",
             "email": "string",

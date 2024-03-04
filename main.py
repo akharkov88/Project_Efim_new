@@ -74,6 +74,7 @@ app.mount(
 #     return HTMLResponse(content=open("src/auth.html").read(), status_code=200)
 
 def telega():
+
     bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
 
     # wikipedia.set_lang("ru")

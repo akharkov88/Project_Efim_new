@@ -211,8 +211,7 @@ def get_operationName(request: Request,Task_Services: TaskServices = Depends(),N
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"], "get_UserTask": User_ProfileServices.get_UserTask(
-            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles()}
+        "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"], "get_UserTask": User_ProfileServices.get_UserTask(user.username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles(),"user":user.username}
     )
 
 

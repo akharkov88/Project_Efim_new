@@ -15,6 +15,7 @@ from fastapi import (
     HTTPException,
     status,
 )
+import dateutil.parser
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, not_
 from services.Telegram import ClassTelegram
@@ -59,7 +60,13 @@ class UserProfileServices:
             for user_data in ast.literal_eval(UserDATA.user_executor):
 
                 if operation2:
-                    data=dotdict({"User":user_data,"Value":f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0]+" "+operation2[1]}>"})
+                    try:
+                        data = dotdict({"User": user_data,
+                                        "Value": f"На Вас назначения задача <{UserDATA.name[UserDATA.name.index(">")+2:].replace("</a>","",1)}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
+                    except:
+                        data = dotdict({"User": user_data,
+                                        "Value": f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
+
                     ClassTelegram.telega_send_message(self,data)
             return jsonable_encoder(operation)
 
@@ -111,9 +118,13 @@ class UserProfileServices:
             for user_data in user_mas:
                 if operation2:
                     # data = dotdict({"User": user_data, "Value": UserDATA["name"]})
+                    try:
+                        data = dotdict({"User": user_data,
+                                        "Value": f"На Вас назначения задача <{UserDATA.name[UserDATA.name.index(">")+2:].replace("</a>","",1)}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
+                    except:
+                        data = dotdict({"User": user_data,
+                                        "Value": f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
 
-                    data = dotdict({"User": user_data,
-                                    "Value": f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
                     ClassTelegram.telega_send_message(self,data)
             return jsonable_encoder(operation)
 
@@ -167,7 +178,8 @@ class UserProfileServices:
 
                 val_mas.append(hh)
 
-
+            for val in val_mas:
+                val["create_at"]=dateutil.parser.isoparse(val["create_at"]).strftime("%Y-%m-%d" )
             # if not operation:
             #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
