@@ -120,6 +120,12 @@
                                     </button>
 
                                 </div>
+
+                                <div  id="div_Save_excel" >
+                                    <button id="Save_excel" class="btn btn-primary">Сохранить в excel</button>
+
+</div>
+
 <script>
 
         console.warn('roles:')
@@ -133,6 +139,31 @@
         '["MAIN_ENGINEER"]':'Главный инженер',
         }
         document.getElementById('zaglav_user_name').innerText = name_roles[{{roles_user|tojson|safe}}]
+
+
+                                    document.getElementById('Save_excel').onclick = async function () {
+                                       event.preventDefault();
+
+                                        const xhr = new XMLHttpRequest(); // создаем объект XMLHttpRequest
+                                        xhr.open('POST', '/BaseFile/reports'); // указываем метод и URL сервера, куда будет отправлен файл
+                                        xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
+                                        xhr.setRequestHeader("Accept", "application/json"); // указываем метод и URL сервера, куда будет отправлен файл
+                                        xhr.setRequestHeader("Content-Type", "application/json"); // указываем метод и URL сервера, куда будет отправлен файл
+                                        xhr.send(JSON.stringify({"tables": $('#table_pto')[0].innerHTML}));
+                                        xhr.onload = function () {
+                                            if (xhr.status == 200) {
+                                                a = document.createElement('a')
+                                                a.href = 'javascript:void(0);'
+                                                a.target = "_blank"
+                                                a.onclick = function () {
+                                                    event.preventDefault();
+                                                    downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), "file_name.xls")
+                                                }
+                                                a.innerText = "file_name.xls"
+                                                a.click()
+                                            }
+                                        }
+                                   }
 
 
                                     document.getElementById("Otpravka_roles_text").onkeypress = function (e) {

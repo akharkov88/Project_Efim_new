@@ -147,12 +147,12 @@ def flower():
 
 
 if __name__ == '__main__':
-    t1 = threading.Thread(target=telega, args=(), daemon=True)
-    t1.start()
-    t2 = threading.Thread(target=cel, args=(), daemon=True)
-    t2.start()
-    t3 = threading.Thread(target=flower, args=(), daemon=True)
-    t3.start()
+    # t1 = threading.Thread(target=telega, args=(), daemon=True)
+    # t1.start()
+    # t2 = threading.Thread(target=cel, args=(), daemon=True)
+    # t2.start()
+    # t3 = threading.Thread(target=flower, args=(), daemon=True)
+    # t3.start()
     # telega_send_message("622070505", "getwiki(command)")
     # telega_send_message("-1002089164577", "getwiki(command)")
     # telega_send_message("@AlekseyKharkov88", "getwiki(command)")

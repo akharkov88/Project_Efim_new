@@ -27,3 +27,8 @@ class UUIDModelBase(ModelBase):
         index=True,
         nullable=False,
     )
+
+
+
+class Table_excel(BaseModel):
+    tables: str

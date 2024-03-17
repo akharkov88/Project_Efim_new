@@ -27,11 +27,137 @@
                                              alt="Check" width="60">
                                         <h3 class="my-4">СПИСОК ЗАДАЧ</h3>
                                     </div>
+
+                                    <fieldset>
+                                        <legend>Фильтры</legend>
+
+                                        <div>
+                                            <input type="checkbox" id="visible_completed" name="visible_completed"/>
+                                            <label for="visible_completed">Скрыть выполненые</label>
+
+                                        </div>
+                                        <div>
+
+                                            <input type="checkbox" id="priority_low" name="priority_low"/>
+                                            <label for="priority_low">Не важно</label>
+
+                                            <input type="checkbox" id="priority_normal" name="priority_normal"/>
+                                            <label for="priority_normal">Нормально</label>
+
+                                            <input type="checkbox" id="priority_high" name="priority_high"/>
+                                            <label for="priority_high">Важно</label>
+                                        </div>
+                                        {#  <div>#}
+                                        {#    <input type="checkbox" id="horns" name="horns" />#}
+                                        {#    <label for="horns">Horns</label>#}
+                                        {#  </div>#}
+                                    </fieldset>
+
+                                    <script>
+                                        document.getElementById('visible_completed').onchange = async function (event) {
+                                            if (event.target.checked) {
+                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(row.cells[5].innerText)
+                                                    if (row.cells[5].innerText.trim() == "Выполнено") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                for (var row = 0; row < rows.length; row++) {
+                                                    if (row.cells[5].innerText.trim() == "Выполнено") {
+                                                        rows[row].style.display = "table-row";
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                        document.getElementById('priority_low').onchange = async function (event) {
+                                            if (event.target.checked) {
+                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(row.cells[4].innerText.trim())
+                                                    if (row.cells[4].innerText.trim() == "Не важно") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                for (var row = 0; row < rows.length; row++) {
+
+                                                    console.log(rows[row])
+                                                    console.log(rows[row].cells[4])
+                                                    console.log(rows[row].cells[4].innerText.trim())
+                                                    if (rows[row].cells[4].innerText.trim() == "Не важно") {
+
+                                                        rows[row].style.display = "table-row";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        document.getElementById('priority_normal').onchange = async function (event) {
+
+                                            if (event.target.checked) {
+                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(row.cells[4].innerText.trim())
+                                                    if (row.cells[4].innerText.trim() == "Нормально") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                for (var row = 0; row < rows.length; row++) {
+
+                                                    console.log(rows[row])
+                                                    console.log(rows[row].cells[4])
+                                                    console.log(rows[row].cells[4].innerText.trim())
+                                                    if (rows[row].cells[4].innerText.trim() == "Нормально") {
+
+                                                        rows[row].style.display = "table-row";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        document.getElementById('priority_high').onchange = async function (event) {
+
+                                            if (event.target.checked) {
+                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(row.cells[4].innerText.trim())
+                                                    if (row.cells[4].innerText.trim() == "Важно") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                for (var row = 0; row < rows.length; row++) {
+
+                                                    console.log(rows[row])
+                                                    console.log(rows[row].cells[4])
+                                                    console.log(rows[row].cells[4].innerText.trim())
+                                                    if (rows[row].cells[4].innerText.trim() == "Важно") {
+
+                                                        rows[row].style.display = "table-row";
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+                                    </script>
+
+
                                     <div class="text-center pt-3 pb-2">
 
                                     </div>
 
-                                    <table class="table text-white mb-0">
+                                    <table class="table text-white mb-0" id="all_user_task">
                                         <thead>
                                         <tr>
                                             <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
@@ -44,31 +170,33 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <script>
+                                        {#                                        <script>#}
+                                        {##}
+                                        {##}
+                                        {#                                            async function Get_user() {#}
+                                        {#                                                check_user = await fetch('/auth/get_UserPfofile', {#}
+                                        {#                                                    method: 'POST',#}
+                                        {#                                                    headers: {#}
+                                        {#                                                        "Accept": 'application/json',#}
+                                        {#                                                        "Content-Type": 'application/json',#}
+                                        {#                                                        "Authorization": getCookieValue("Authorization")#}
+                                        {#                                                    },#}
+                                        {#                                                    body: JSON.stringify({"username": "admin"})#}
+                                        {#                                                });#}
+                                        {#                                                let responseText = await check_user.text();#}
+                                        {#                                                console.log(responseText)#}
+                                        {#                                            }#}
+                                        {##}
+                                        {#                                            Get_user()#}
+                                        {#console.log({{ get_UserTask|tojson|safe}}.length)#}
+                                        {##}
+                                        {#document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value#}
+                                        {#                                        </script>#}
 
 
-                                            async function Get_user() {
-                                                check_user = await fetch('/auth/get_UserPfofile', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        "Accept": 'application/json',
-                                                        "Content-Type": 'application/json',
-                                                        "Authorization": getCookieValue("Authorization")
-                                                    },
-                                                    body: JSON.stringify({"username": "admin"})
-                                                });
-                                                let responseText = await check_user.text();
-                                                console.log(responseText)
-                                            }
-
-                                            Get_user()
-                                            {#console.log({{ get_UserTask|tojson|safe}}.length)#}
-
-                                            {#document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value#}
-                                        </script>
                                         {% for get_UserTask_for in get_UserTask %}
 
-                                            <tr class="mark">
+                                            <tr class="mark" id={{ get_UserTask_for.id }}>
 
                                                 {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
@@ -128,19 +256,32 @@
                                                     {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower %}
 
 
-                                                        {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
-                                                            <button id="process_{{ get_UserTask_for.id }}">Выполнить
-                                                                задачу
-                                                            </button>
-                                                        {% else %}
-                                                            <button id="process_{{ get_UserTask_for.id }}">Взять в
-                                                                работу
-                                                            </button>
-                                                        {% endif %}
-                                                    {% else %}
-                                                        <button style="display: none;"
-                                                                id="process_{{ get_UserTask_for.id }}">Взять в работу
-                                                        </button>
+                                                            {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
+                                                                {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
+
+                                                                <button id="process_{{ get_UserTask_for.id }}">Выполнить
+                                                                    задачу
+                                                                </button>
+                                                            {% else %}
+                                                                            <label id="process_{{ get_UserTask_for.id }}">В работе
+                                                                </label>
+                                                            {% endif %}
+
+                                                            {% else %}
+                                                                {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
+
+                                                                <button id="process_{{ get_UserTask_for.id }}">Взять в
+                                                                    работу
+                                                                </button>
+                                                            {% else %}
+                                                                         <label id="process_{{ get_UserTask_for.id }}">Не взято в работу
+                                                                </label>
+                                                            {% endif %}
+                                                            {% endif %}
+
+
+
+
                                                     {% endif %}
 
 
@@ -281,15 +422,14 @@
                                         }
                                         if (valid == false) {
                                             return
-                                        }
-                                        else {
+                                        } else {
                                             console.log(document.getElementById('Otpravka_roles_text').value)
                                             user = []
                                             user.push(document.getElementById('Otpravka_roles').value)
-                                            if (document.getElementById('Type').value=="username"){
-                                               URL= `/userprofile/createUserTask?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
-                                            }else{
-                                               URL= `/userprofile/createUserTaskRoles?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                            if (document.getElementById('Type').value == "username") {
+                                                URL = `/userprofile/createUserTask?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                            } else {
+                                                URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
                                             }
                                             res = await fetch(URL, {
                                                 method: "GET",
@@ -326,7 +466,6 @@
                                             document.getElementById("Opisanie_forms").style.display = "none";
                                             document.getElementById("button_forms").style.display = "none";
                                             document.getElementById("Otpravka_roles_forms").style.display = "block";
-
 
 
                                             values = {{ all_roles|tojson|safe }}

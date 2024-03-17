@@ -37,14 +37,28 @@ class SuggestServices:
                 .filter(
                     tables.Suggest.customer_id == TechTaskDATA.customer_id,
                     tables.Suggest.value_table.ilike(looking_for)
-                ).limit(TechTaskDATA.count)
+                )
+                # .limit(TechTaskDATA.count)
                 .all()
             )
             if not operation:
 
                 raise HTTPException(status.HTTP_404_NOT_FOUND, detail="Отсутствуют значения заданным фильтрам")
             # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)
+            search=TechTaskDATA.search.lower()
+            rez = []
+            for val in jsonable_encoder(operation):
+                if rez:
+                    min = 100000
+                    min_id = 0
+                    for id, val_rez in enumerate(rez):
+                        if val["value_table"].lower().find(search) <= val_rez["value_table"].lower().find(search) and val["value_table"].lower().find(search) < min:
+                            min = val["value_table"].lower().find(search)
+                            min_id = id
+                    rez.insert(min_id, val)
+                else:
+                    rez.append(val)
+            return rez[:TechTaskDATA.count]
 
         # except:
         #     print(traceback.format_exc())

@@ -62,14 +62,17 @@ def set_userprofile(request: Request,
 @router.get('/UserTask', response_model=List[models.Operation], )
 async def get_operation(request: Request,
                   User_ProfileServices: UserProfileServices = Depends(),
-                  Auth_Service: AuthService = Depends(), ):
+                  Auth_Service: AuthService = Depends(),
+                        ):
     try:
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+
+    user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     return templates.TemplateResponse(
-        "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(
-            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles()}
+        "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(user.username
+            ),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles(),"get_my_UserPfofile":Auth_Service.get_my_UserPfofile(user)}
     )
 
 

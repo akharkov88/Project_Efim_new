@@ -244,7 +244,7 @@ class AuthService:
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
 
-    def get_my_UserPfofile(self, user_data: models.BaseUser) -> list[models.UserProfile]:
+    def get_my_UserPfofile(self, user_data: models.BaseUser) -> models.UserProfile:
                 operation = (
                     self.session
                     .query(tables.UserPfofile)
@@ -253,7 +253,10 @@ class AuthService:
                 )
                 if not operation:
                     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
-                return jsonable_encoder(operation)
+                my_profile=jsonable_encoder(operation)
+                my_profile["my_username"]=user_data.username
+
+                return my_profile
 
 
     def get_UserPfofile(self, user_data: models.BaseUser) -> list[models.UserProfile]:

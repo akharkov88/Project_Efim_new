@@ -1,3 +1,11 @@
+if(typeof(String.prototype.trim) === "undefined")
+{
+    String.prototype.trim = function()
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+}
+
 async function send_telegram(user,text) {
 
     res = await fetch('/message/Telegram_send_message', {

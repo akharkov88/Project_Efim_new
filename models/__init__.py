@@ -25,6 +25,7 @@ from .techTask import (
 
 from .BaseFile_m import (
     UUIDModelBase,
+    Table_excel
 )
 
 from .suggest import (
