@@ -1754,9 +1754,16 @@ textarea.form-control {
 input[type="search"] {
   -webkit-appearance: none;
 }
+
+/*@media (min-width: 768px) {*/
+/*  input[type="date"] {*/
+/*    line-height: 34px;*/
+/*    width: 25ch;*/
+/*  }*/
+/*}*/
 input[type="date"] {
   line-height: 34px;
-  width: 50%;
+  width: 25ch;
 }
 input[type="datetime-local"] {
   line-height: 34px;

@@ -4,19 +4,17 @@
     <form role="form" id="formFrame">
         <div class="tabsCalcylator">
             <div class="tabsCalcylator__head">
-                <div class="tabsCalcylator__caption" data-tab="enginer_pto">Инженер ПТО</div>
-                <div class="tabsCalcylator__caption" data-tab="supplier">Снабжение</div>
-                <div class="tabsCalcylator__caption" data-tab="boss_enginer_pto">Главный инженер</div>
-                <div class="tabsCalcylator__caption" data-tab="boss">Директор</div>
+                <div class="tabsCalcylator__caption" data-tab="enginer_pto" id="zaglav_user_name">Пользователь</div>
+{#                <div class="tabsCalcylator__caption" data-tab="supplier">Снабжение</div>#}
+{#                <div class="tabsCalcylator__caption" data-tab="boss_enginer_pto">Главный инженер</div>#}
+{#                <div class="tabsCalcylator__caption" data-tab="boss">Директор</div>#}
                 {#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
                 {#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
             </div>
             <div class="tabsCalcylator__body">
                 <div class="tabsCalcylator__content" data-tab="enginer_pto">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Список полей ПТО
-                        </div>
+
                         {% include "TechTask/techTaskFormEdit_FormPTO.html" %}
 
                         <!-- /.panel-body -->
@@ -24,9 +22,7 @@
                 </div>
                 <div class="tabsCalcylator__content" data-tab="supplier">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Список полей supplier
-                        </div>
+
                         {% include "TechTask/techTaskFormEdit_FormSupplier.html" %}
 
                         <!-- /.panel-body -->
@@ -34,9 +30,7 @@
                 </div>
                 <div class="tabsCalcylator__content" data-tab="boss_enginer_pto">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Список главный инженер
-                        </div>
+
                         {% include "TechTask/techTaskFormEdit_FormBossEngierPto.html" %}
 
                         <!-- /.panel-body -->
@@ -44,9 +38,7 @@
                 </div>
                 <div class="tabsCalcylator__content" data-tab="boss">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            список полей Директор
-                        </div>
+
                         {% include "TechTask/techTaskFormEdit_FormBoss.html" %}
 
                     </div>
@@ -129,6 +121,20 @@
 
                                 </div>
 <script>
+
+        console.warn('roles:')
+        console.warn({{roles_user|tojson|safe}})//==`"[\\"ENGINEER\\"]"`
+        console.warn({{roles_user|tojson|safe}}==`["ENGINEER"]`)//
+        let name_roles ={
+        '["ENGINEER"]':'Инженер ПТО',
+        '["ADMIN"]':'Admin',
+        '["BOSS"]':'Директор',
+        '["SUPPLIER"]':'Снабжение',
+        '["MAIN_ENGINEER"]':'Главный инженер',
+        }
+        document.getElementById('zaglav_user_name').innerText = name_roles[{{roles_user|tojson|safe}}]
+
+
                                     document.getElementById("Otpravka_roles_text").onkeypress = function (e) {
                                         var chr = String.fromCharCode(e.which);
                                         if ("&".indexOf(chr) != -1)
@@ -185,7 +191,8 @@
                                     }
                                     document.getElementById('Type').onchange = async function (event) {
                                         event.preventDefault();
-                                        if ($('#first_table')[0].innerHTML != etalon_table){
+                                        if (!etalon_table){
+                                        //($('#first_table')[0].innerHTML.replaceAll('display:none','display:table-cell') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
                                             showToast('Необходимо сохранить изменения в таблице' , 'danger' , 5000)
                                         }
 
@@ -236,14 +243,8 @@
 
         </div>
 
-
-
-
             </div>
             </div>
-
-
-
 
 
     </form>
@@ -274,20 +275,29 @@
 
                 if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'enginer_pto'){
                     document.getElementById("table_pto").appendChild(document.getElementById("first_table"));
-                    $('.pto').attr("style", "display:none")
+                    if ({{roles_user|tojson|safe}} == `["ENGINEER"]`) {
+                      //$('.pto').style.display = 'none'
+                      //$('.pto').attr("style", "display:none")
+                        $('.pto').css("display", "none");
+                    } else {
+                        $('.pto').css("display", "table-cells");
+                       // $('.pto').style.display = 'table-cell'
+                      //$('.pto').attr("style", "display:table-cell")
+                    }
+
                 }
-                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'supplier'){
-                    document.getElementById("table_supplier").appendChild(document.getElementById("first_table"));
-                    $('.pto').attr("style", "display:table-cell");
-                }
-                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss'){
-                    document.getElementById("table_boss").appendChild(document.getElementById("first_table"));
-                    $('.pto').attr("style", "display:table-cell");
-                }
-                if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss_enginer_pto'){
-                    document.getElementById("table_boss_enginer_pto").appendChild(document.getElementById("first_table"));
-                    $('.pto').attr("style", "display:table-cell");
-                }
+                {#if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'supplier'){#}
+                {#    document.getElementById("table_supplier").appendChild(document.getElementById("first_table"));#}
+                {#    $('.pto').attr("style", "display:table-cell");#}
+                //}
+                {#if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss'){#}
+                {#    document.getElementById("table_boss").appendChild(document.getElementById("first_table"));#}
+                {#    $('.pto').attr("style", "display:table-cell");#}
+                //}
+                {#if (head.querySelector('.tabsCalcylator__caption_active').dataset.tab == 'boss_enginer_pto'){#}
+                {#    document.getElementById("table_boss_enginer_pto").appendChild(document.getElementById("first_table"));#}
+                {#    $('.pto').attr("style", "display:table-cell");#}
+                //}
 
 
                 {#    $('#first_table').remove();#}
@@ -332,7 +342,8 @@
 
 //onbeforeunload   onunload
 window.onbeforeunload = function() {
-    if ($('#first_table')[0].innerHTML != etalon_table)
+    if (!etalon_table)
+    //($('#first_table')[0].innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table==''))
   return "Данные не сохранены. Точно перейти?";
 };
 
@@ -370,7 +381,8 @@ let response = await fetch('/techTask/formPtoGet_id', {
 
 $("#versionTable").on("focus",async function(){
 
-if ($('#first_table')[0].innerHTML != etalon_table){
+if (!etalon_table) {
+//($('#first_table')[0].innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
             showToast('Несохраненные изменения пропадут' , 'danger' , 5000)
 }
 removeOptions(document.getElementById('versionTable'));
@@ -421,6 +433,7 @@ $('#first_table').keypress(
     if (event.which == '13' && event.target.className.indexOf(' note')== -1) {
       event.preventDefault();
     }
+    etalon_table = false;
 });
 
 async function Test() {
@@ -443,12 +456,13 @@ async function Test() {
 
 }
 Test()
-let etalon_table = '';
+let etalon_table = true;
 console.log("etalon_table",etalon_table)
 function Napolneneie(value){
 
    document.getElementById("first_table").innerHTML=value.value_table
-   etalon_table = value.value_table;
+   //etalon_table = true
+   //value.value_table.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','');
    window.etalon_table=etalon_table
 
             {#document.getElementById("first_table_supplier").innerHTML=JSON.parse(responseText).value_table#}
@@ -484,7 +498,7 @@ function event_input(e) {
 {#console.log(e)#}
 {#console.log(e.length)#}
     for (let i =0; i<e.length;i++){
-     console.log(e[i])
+    // console.log(e[i])
     let forObj = e[i].id.slice(e[i].id.indexOf('_')+1, e[i].id.lastIndexOf('_'))
     let id_count = e[i].id.slice(e[i].id.lastIndexOf('_')+1)
     {#console.log('count == ', id_count)#}
@@ -615,6 +629,7 @@ function event_input(e) {
  function del_func (event) {
      {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
      if (JSON.parse({{roles_user|tojson|safe}})[0] != 'SUPPLIER') {
+         etalon_table = false;
          console.log('event!!!')
          console.log(event)
          let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`);
@@ -630,6 +645,7 @@ function event_input(e) {
          document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
+
          let arr_test = []
          $(`#first_table tbody`).each(function () {
              arr_test.push(this.id);
@@ -667,13 +683,23 @@ function table_roles(role){
 if (role == 'ADMIN'){
 console.warn('admin!')
     $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    {#$('.CostMaterial_disabled').css("background","#47ca42") // tbody Стоимость материала раздел ПТО#}
     $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    {#$('.costWork_disabled').css("background","#47ca42")#}
     $('.Special_disabled').attr( "contenteditable","true" )
+    {#$('.Special_disabled').css("background","#47ca42")#}
+
     $('.percent').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    {#$('.percent').css("background","#47ca42")#}
     $('.costWork_disabledSpecial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    {#$('.costWork_disabledSpecial_disabled').css("background","#47ca42")#}
+
     $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+    {#$('.costWork_role_supplier').css("background","#47ca42")#}
     {#$('.costWork_role_supplier').attr("style", "display:none") // блок снабжение#}
+
     $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
+    {#$('.costWork_role_boss').css("background","#47ca42")#}
     //('data-title' , "Введите корректное значение")
     $('.CostMaterial_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
     $('.costWork_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
@@ -850,7 +876,8 @@ document.getElementById('saveTable').onclick =async function () {
      document.getElementById('saveTable_description').value=""
 
  if (response.status==200){
-            etalon_table = document.getElementById("first_table").innerHTML
+            etalon_table = true
+            //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
      showToast()
@@ -910,11 +937,11 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true" class="costWork_disabled"></td>
                             <td contenteditable="true" class="costWork_disabled"></td>
                             <td contenteditable="true" class="costWork_disabled note"></td>
-                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
-                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
-                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
-                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
-                        <td contenteditable="true" class="costWork_role_boss pto" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
+                        <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
@@ -942,14 +969,14 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="true" class="CostMaterial_disabled"></td>
                             <td contenteditable="true" class="CostMaterial_disabled note"></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto note" style="display: none"></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none"> <input id="costWork_file_${id_count}" type="file"></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto note" style="display:none"></td>
                         </tr>`,
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
@@ -979,10 +1006,10 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true" class="Special_disabled"></td>
                             <td contenteditable="true" class="Special_disabled"></td>
                             <td contenteditable="true" class="Special_disabled note"></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display: none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto " style="display: none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""><input id="Special_file_${id_count}" type="file"></td>
+                        <td contenteditable="true" class="costWork_role_supplier pto " style="display:none""></td>
                         </tr>`,
         };
 
@@ -1160,12 +1187,33 @@ obj_table_values['earthWorks_costWork'] = {};
 
 
 
+function collaps_tbody(tbody, id, but){
+
+    console.log(but.innerText)
+    console.log(but)
+    let temp = $(`#earthWorks_${tbody}_addLine_${id}`)[0].parentElement.parentElement.childNodes
+    for (i = 3; i<temp.length; i++){
+           if(but.innerText == 'Свернуть'){
+           temp[i].setAttribute("style", "display:none")
+
+           } else {
+           temp[i].setAttribute("style", "display:table-cells")
+
+           }
+
+    }
+    but.innerText == 'Свернуть'? but.innerText = 'Развернуть' : but.innerText = 'Свернуть'
+
+}
+
+
 /**
  * Функция добавляет строку, события строки и присваевает ID элементам новой строки. Вызывается по нажатию кнопок AddLine в разделах таблицы
  * @addLine event, element
  */
 function addLine(event, element){
     event.preventDefault();
+    etalon_table = false;
     if (id_count<seach_ID_table('tr','stroka_')) {
             {#for_event_tr('tr','stroka_', id_count);#}
             id_count = seach_ID_table('tr','stroka_')+1;
@@ -1180,9 +1228,10 @@ function addLine(event, element){
     let table_values_roles = `` + objLine(id_count, forObj)
     let roles_user = JSON.parse({{roles_user|tojson|safe}} )[0]
 
-    if (roles_user != 'ENGINEER' && head.querySelector('.tabsCalcylator__caption_active').dataset.tab != 'enginer_pto'){
+    if (roles_user != 'ENGINEER'){
+    //&& head.querySelector('.tabsCalcylator__caption_active').dataset.tab != 'enginer_pto'
 
-        table_values_roles = table_values_roles.replaceAll('display: none','display:table-cell')
+        table_values_roles = table_values_roles.replaceAll('display:none','display:table-cell')
     }
 
     $(element).append(table_values_roles)
@@ -1210,6 +1259,12 @@ function addLine(event, element){
     let forEdIzm = tr_math.childNodes[7].childNodes[1].id;
     forEdIzm = forEdIzm.slice(forEdIzm.indexOf('_')+1,forEdIzm.lastIndexOf('_'))
     console.log('forEdIzm === ', forEdIzm)
+
+    // события на вложения
+    {#document.getElementById('costWork_file_' + id_count).onchange = uploadfile_func_table(id_count);#}
+    {#document.getElementById('Special_file_' + id_count).onchange = uploadfile_func_table(id_count);#}
+
+
 
     input_event_addLine(forEdIzm,id_count);
     input_event_addLine(forObj,id_count);
@@ -1468,6 +1523,8 @@ tr_math.childNodes[29].removeAttribute('data-title');
 }
 });
 
+
+
 }
 
 
@@ -1581,7 +1638,7 @@ let value = e.value;
                             <td rowspan="2" style="font-weight: bold;">Наименование</td>
                             <td colspan="4" style="font-weight: bold;">Стоимость</td>
                             <td colspan="4" style="font-weight: bold;">Справочная информация</td>
-                            <td colspan="8" style="font-weight: bold; display: none" class="pto">Аналитический блок</td>
+                            <td colspan="8" style="font-weight: bold; display:none" class="pto">Аналитический блок</td>
                         </tr>
 
                         <tr style="background-color: #fce1b3">
@@ -1594,20 +1651,20 @@ let value = e.value;
                             <td rowspan="1" style="font-weight: bold;">Столбец для анализа</td>
                             <td rowspan="1" style="font-weight: bold;"></td>
                             <td rowspan="1" style="font-weight: bold;">Примечание</td>
-                            <td style="font-weight: bold; display: none" class="pto">Кол-во</td>
-                            <td style="font-weight: bold; display: none" class="pto">Цена руб-ед</td>
-                            <td style="font-weight: bold; display: none" class="pto">Всего</td>
-                            <td style="font-weight: bold; display: none" class="pto">Тр-затр (чел-дн)</td>
-                            <td style="font-weight: bold; display: none" class="pto">Стоимость дня рабочего</td>
+                            <td style="font-weight: bold; display:none" class="pto">Кол-во</td>
+                            <td style="font-weight: bold; display:none" class="pto">Цена руб-ед</td>
+                            <td style="font-weight: bold; display:none" class="pto">Всего</td>
+                            <td style="font-weight: bold; display:none" class="pto">Тр-затр (чел-дн)</td>
+                            <td style="font-weight: bold; display:none" class="pto">Стоимость дня рабочего</td>
                         </tr>
                         </tbody>
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
                         <tr>
-                            <td style="border-right: none;"></td>
+                            <td><button id="button_costWork_collapse_${coll_table}" type="button" onclick="collaps_tbody('costWork', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costWork_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость работ
-                            <div style = "display: none"><button type="button" onclick="addLine(event,this)">addLine</button></div>
+                            <div style = "display:none"><button type="button" onclick="addLine(event,this)">addLine</button></div>
                             </td>
                             <td contenteditable="false"></td>
 
@@ -1616,19 +1673,19 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
-                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
-                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
-                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
-                            <td contenteditable="true" style="font-weight: bold; display: none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display:none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display:none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display:none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display:none" class="pto"></td>
+                            <td contenteditable="true" style="font-weight: bold; display:none" class="pto"></td>
                         </tr>
                     <tbody id = 'earthWorks_costMaterial_${coll_table}'>
                         <tr>
-                        <td style="border-right: none;"></td>
+                        <td><button id="button_costMaterial_collapse_${coll_table}" type="button" onclick="collaps_tbody('costMaterial', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costMaterial_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость материала
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
+                            <div style = "display:none"><button  onclick="addLine(event,this)">addLine</button></div>
                             </td>
                             <td contenteditable="false"></td>
 
@@ -1639,24 +1696,24 @@ let value = e.value;
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Закупка по счету - ед изм расчётные</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Остаток закупки</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">ед изм к закупке</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">руб-ед</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto"></td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Счёта</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Срок поставки</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">ПРИМЕЧАНИЕ</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Закупка по счету - ед изм расчётные</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Остаток закупки</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">ед изм к закупке</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">руб-ед</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto"></td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Счёта</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Срок поставки</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">ПРИМЕЧАНИЕ</td>
                         </tr>
                     </tbody>
 
                     <tbody id = 'earthWorks_Special_${coll_table}'>
                     <tr>
-                    <td style="border-right: none;"></td>
+                    <td><button id="button_Special_collapse_${coll_table}" type="button" onclick="collaps_tbody('Special', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                              <td contenteditable="false" id = 'earthWorks_Special_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость спецтехники
-                            <div style = "display: none"><button  onclick="addLine(event,this)">addLine</button></div>
+                            <div style = "display:none"><button  onclick="addLine(event,this)">addLine</button></div>
                             </td>
                             <td contenteditable="false"></td>
 
@@ -1667,10 +1724,10 @@ let value = e.value;
 
                             <td contenteditable="true"></td>
 
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Стоимость аренды</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Телефон</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Счет</td>
-                            <td contenteditable="false" style="font-weight: bold; display: none" class="pto">Срок</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Стоимость аренды</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Телефон</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Счет</td>
+                            <td contenteditable="false" style="font-weight: bold; display:none" class="pto">Срок</td>
 
                         </tr>
 
@@ -1689,10 +1746,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true" style="display: none" class="pto"></td>
-                            <td contenteditable="true" style="display: none" class="pto"></td>
-                            <td contenteditable="true" style="display: none" class="pto"></td>
-                            <td contenteditable="true" style="display: none" class="pto"></td>
+                            <td contenteditable="true" style="display:none" class="pto"></td>
+                            <td contenteditable="true" style="display:none" class="pto"></td>
+                            <td contenteditable="true" style="display:none" class="pto"></td>
+                            <td contenteditable="true" style="display:none" class="pto"></td>
 
 
                         </tr>
@@ -1713,10 +1770,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
@@ -1738,10 +1795,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"</td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"</td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
@@ -1763,10 +1820,10 @@ let value = e.value;
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
                             <td contenteditable="true"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
-                            <td contenteditable="true" style="display: none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
+                            <td contenteditable="true" style="display:none" class="costWork_role_boss pto"></td>
 
 
                         </tr>
@@ -1812,13 +1869,13 @@ let value = e.value;
 
                     <tbody id = 'result_total'>
                     <tr class="blank_row">
-                        <td colspan="100%"></td>
+
                     </tr>
                         <tr>
                         <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold; text-align: right">
-                                ВСЕГО:
+                                Итого по разделам:
                             </td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false"></td>
@@ -1834,8 +1891,8 @@ let value = e.value;
                         <td class="tehstolbec"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false" style="font-weight: bold;">
-                                В том числе НДС - 20% за нал от материалов
-                            </td>
+                               Итого НДС:
+                               </td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false"></td>
                             <td contenteditable="false"></td>
@@ -1848,6 +1905,11 @@ let value = e.value;
                         </tr>
                     </tbody>
                     `)
+
+{#<tr class="blank_row">#}
+{#<td colspan="100%"></td>#}
+{#                    </tr>#}
+
 
                     document.getElementById(`zagolovok_${coll_table}`).setAttribute('value', value);
                     document.getElementById("saveTable").style.display = "block";
@@ -2046,6 +2108,7 @@ if(this.id.indexOf('Form_') == -1){
 
 
     function delLine(cel){
+        etalon_table = false;
         {#console.warn('cel= ' + cel)#}
         let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
         id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)

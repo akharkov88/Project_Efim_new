@@ -252,7 +252,11 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                             }
                             body2.querySelector(`[data-tab='enginer_pto']`).classList.add('tabsCalcylator__content_active')
                             document.getElementById("table_pto").appendChild(document.getElementById("first_table"));
-                            $('.pto').attr("style", "display:none")
+                            if ({{roles_user|tojson|safe}} == `["ENGINEER"]`) {
+                                $('.pto').attr("style", "display:none")
+                            } else {
+                                $('.pto').attr("style", "display:table-cell")
+                            }
                         }
 
                         const setActiveContent = () => { // объявляем функцию для установки активного элемента контента
