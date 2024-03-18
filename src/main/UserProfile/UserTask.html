@@ -256,7 +256,7 @@
                                                     {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower %}
 
 
-                                                            {% if get_UserTask_for.notification_executor|lower == "false"|lower %}
+                                                            {% if get_UserTask_for.status|lower != "Назначена"|lower %}
                                                                 {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
                                                                 <button id="process_{{ get_UserTask_for.id }}">Выполнить
@@ -561,12 +561,19 @@
 
                                     window.get_UserTask = {{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
-                                        console.log("get_UserTask_for.id", v.id)
-                                        console.log("get_UserTask_for.id", v)
-                                        console.log("11111get_UserTask_for.id", {{ get_UserTask|tojson|safe}}[0]["user_create"])
-                                        console.log("get_UserTask_for.id", document.getElementById("process_" + v.id))
+
+                                        console.log("username",{{ get_my_UserPfofile.username|tojson|safe }}!=v.user_create)
+
+                                        if ({{ get_my_UserPfofile.username|tojson|safe }}!=v.user_create){
+
+
                                         document.getElementById("process_" + v.id).addEventListener("click", (e) => {
-                                            console.log("get_UserTask_for.id", e.target.id)
+                                            console.log("get_UserTask_for.id", e)
+
+                                            if (e.target.localName!="label"){
+
+                                            console.log("get_UserTask_for.id", e)
+                                            console.log("get_UserTask_for.id", e.target.localName)
                                             console.log("get_UserTask_for.id", document.getElementById(e.target.id))
 
                                             if (document.getElementById(e.target.id).innerText == "Взять в работу") {
@@ -592,8 +599,11 @@
 
 
                                             }
+                                            }
 
                                         });
+                                        }
+
                                     }
 
 
