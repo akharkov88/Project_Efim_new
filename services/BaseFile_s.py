@@ -110,77 +110,78 @@ class BaseFileServices:
             row_marker = 1
             for row in table.find_all('tr'):
                 column_marker = 1
-                # print(row)
+                print(row)
                 background_color = ""
                 if row.get("style") and row.get("style").find("background-color") != -1:
                     background_color = row.get("style")[row.get("style").find("background-color: ") + 19:]
                 columns = row.find_all('td')
                 for column in columns:
-                    print(column)
+                    if column.get("class")==None or "tehstolbec" not in column.get("class"):
+                        print(column)
 
-                    if column.datalist:
-                        column.datalist.decompose()
-                    text_value=""
-                    if len(str(column.get_text()).replace(" ","").replace("\n",""))==0:
-                        if column.div:
-                            if column.div.input:
-                                text_value=column.div.input.get("value")
-                        # else:
-                        #     text_value=column.get_text()
-                        ...
-                    else:
-                        if column.div:
-                            column.div.decompose()
-                        text_value=column.get_text()
-                    print(column)
+                        if column.datalist:
+                            column.datalist.decompose()
+                        text_value=""
+                        if len(str(column.get_text()).replace(" ","").replace("\n",""))==0:
+                            if column.div:
+                                if column.div.input:
+                                    text_value=column.div.input.get("value")
+                            # else:
+                            #     text_value=column.get_text()
+                            ...
+                        else:
+                            if column.div:
+                                column.div.decompose()
+                            text_value=column.get_text()
+                        print(column)
 
-                    print("text_value", "&&"+text_value+"&&")
-                    print("len text_value", len(text_value))
-                    if len(text_value)==4:
-                        pass
+                        print("text_value", "&&"+text_value+"&&")
+                        print("len text_value", len(text_value))
+                        if len(text_value)==4:
+                            pass
 
 
-                    if row_marker == 4 and column_marker == 3:
-                        ...
-                    while isinstance(sheet.cell(row=row_marker, column=column_marker), MergedCell):
-                        column_marker += 1
-                    sheet.cell(row=row_marker, column=column_marker, value=text_value)
-                    sheet.cell(row=row_marker, column=column_marker).border = thin_border
-                    sheet.cell(row=row_marker, column=column_marker).alignment = Alignment(horizontal='center')
-                    # print(with_column)
-                    # print(get_column_letter(column_marker))
-                    # print(text_value)
-                    # print(len(text_value))
-                    # if get_column_letter(column_marker)=="J":
-                    #     pass
-                    text_len = len(text_value)
-                    if text_len != 0 and with_column.setdefault(get_column_letter(column_marker), text_len + 2):
-                        if with_column[get_column_letter(column_marker)] <= text_len + 2:
-                            with_column[get_column_letter(column_marker)] = text_len + 2
-                            sheet.column_dimensions[get_column_letter(column_marker)].width = text_len + 2
-                    if background_color != "":
-                        sheet[row_marker][column_marker - 1].fill = PatternFill(start_color=background_color,
-                                                                                end_color=background_color,
-                                                                                fill_type="solid")
+                        if row_marker == 4 and column_marker == 3:
+                            ...
+                        while isinstance(sheet.cell(row=row_marker, column=column_marker), MergedCell):
+                            column_marker += 1
+                        sheet.cell(row=row_marker, column=column_marker, value=text_value)
+                        sheet.cell(row=row_marker, column=column_marker).border = thin_border
+                        sheet.cell(row=row_marker, column=column_marker).alignment = Alignment(horizontal='center')
+                        # print(with_column)
+                        # print(get_column_letter(column_marker))
+                        # print(text_value)
+                        # print(len(text_value))
+                        # if get_column_letter(column_marker)=="J":
+                        #     pass
+                        text_len = len(text_value)
+                        if text_len != 0 and with_column.setdefault(get_column_letter(column_marker), text_len + 2):
+                            if with_column[get_column_letter(column_marker)] <= text_len + 2:
+                                with_column[get_column_letter(column_marker)] = text_len + 2
+                                sheet.column_dimensions[get_column_letter(column_marker)].width = text_len + 2
+                        if background_color != "":
+                            sheet[row_marker][column_marker - 1].fill = PatternFill(start_color=background_color,
+                                                                                    end_color=background_color,
+                                                                                    fill_type="solid")
 
-                    if column.get("colspan") or column.get("rowspan"):
+                        if column.get("colspan") or column.get("rowspan"):
 
-                        merge_column = column_marker
-                        merge_row = row_marker
+                            merge_column = column_marker
+                            merge_row = row_marker
+                            if column.get("colspan"):
+                                print(column.get("colspan"))
+                                merge_column += int(column.get("colspan")) - 1
+                            if column.get("rowspan"):
+                                merge_row += int(column.get("rowspan")) - 1
+
+                            sheet.merge_cells(start_row=row_marker, start_column=column_marker, end_row=int(merge_row),
+                                              end_column=int(merge_column))
                         if column.get("colspan"):
-                            print(column.get("colspan"))
-                            merge_column += int(column.get("colspan")) - 1
-                        if column.get("rowspan"):
-                            merge_row += int(column.get("rowspan")) - 1
+                            column_marker += int(column.get("colspan")) - 1
+                        # if column.get("rowspan"):
+                        #     row_marker += int(column.get("rowspan"))-1
 
-                        sheet.merge_cells(start_row=row_marker, start_column=column_marker, end_row=int(merge_row),
-                                          end_column=int(merge_column))
-                    if column.get("colspan"):
-                        column_marker += int(column.get("colspan")) - 1
-                    # if column.get("rowspan"):
-                    #     row_marker += int(column.get("rowspan"))-1
-
-                    column_marker += 1
+                        column_marker += 1
                 row_marker += 1
             workbook.save(filename=pathlib.PurePath(pathlib.Path(os.path.abspath(os.getcwd())), "src", "file", name_fail))
         except:

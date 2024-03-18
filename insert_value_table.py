@@ -41,8 +41,8 @@ def add_user():
         "roles": "[\"ADMIN\"]",
         "password": "admin"
     }, "userProfile": {
-        "first_name": "Admin_fist",
-        "last_name": "Admin_last",
+        "first_name": "ИмяАдминина",
+        "last_name": "ФамилияАдмина",
         "telegram": "AlekseyKharkov88",
         "mobile": "890111111-12",
         "worker_tel": "4115566",
@@ -115,8 +115,8 @@ def add_user():
             "roles": "[\"ENGINEER\"]",
             "password": "ENGINEER"
         }, "userProfile": {
-            "first_name": "ENGINEER",
-            "last_name": "ENGINEERович",
+            "first_name": "ИмяИнженера",
+            "last_name": "ФамилияИнженера",
             "telegram": "string",
             "mobile": "string",
             "worker_tel": "string",
@@ -143,8 +143,8 @@ def add_user():
             "roles": "[\"MAIN_ENGINEER\"]",
             "password": "MAIN_ENGINEER"
         }, "userProfile": {
-            "first_name": "MAIN_ENGINEER",
-            "last_name": "MAIN_ENGINEERович",
+            "first_name": "ИмяГлавногоИнженера",
+            "last_name": "ФамилияГлавногоИнженера",
             "telegram": "string",
             "mobile": "string",
             "worker_tel": "string",
@@ -157,8 +157,8 @@ def add_user():
             "roles": "[\"BOSS\"]",
             "password": "BOSS"
         }, "userProfile": {
-            "first_name": "BOSS",
-            "last_name": "BOSSович",
+            "first_name": "ИмяДиректора",
+            "last_name": "ФамилияДиректора",
             "telegram": "string",
             "mobile": "string",
             "worker_tel": "string",

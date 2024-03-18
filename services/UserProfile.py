@@ -180,6 +180,8 @@ class UserProfileServices:
 
             for val in val_mas:
                 val["create_at"]=dateutil.parser.isoparse(val["create_at"]).strftime("%Y-%m-%d" )
+                if val["user_create"]==user:
+                    val["notification_executor"]=False
             # if not operation:
             #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
