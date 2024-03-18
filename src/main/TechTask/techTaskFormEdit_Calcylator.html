@@ -1639,6 +1639,7 @@ document.getElementById('add_razdel').onclick = function () {
     if (JSON.parse({{roles_user|tojson|safe}} )[0] == 'SUPPLIER'){
         return
     }
+    etalon_table = false;
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
         coll_table = seach_ID_table('tbody','earthWorks_')+1;
         }
@@ -1663,7 +1664,7 @@ let value = e.value;
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
                     <tr><td colspan="6" style="padding: 0;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;" autocomplete="off">
-                               </td><td colspan="4" ><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
+                               </td><td colspan="4" class="tehstolbec"><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
                             <td rowspan="2"  class="tehstolbec">Тех столбец</td>
