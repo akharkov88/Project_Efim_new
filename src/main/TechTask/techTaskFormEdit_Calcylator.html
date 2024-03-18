@@ -1639,7 +1639,9 @@ document.getElementById('add_razdel').onclick = function () {
     if (JSON.parse({{roles_user|tojson|safe}} )[0] == 'SUPPLIER'){
         return
     }
-        if (coll_table<=seach_ID_table('tbody','earthWorks_')) coll_table = seach_ID_table('tbody','earthWorks_')+1;
+        if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
+        coll_table = seach_ID_table('tbody','earthWorks_')+1;
+        }
 
 {#$("#style_table").style.display = 'block';#}
 let e = document.getElementById("select_one");
@@ -1661,7 +1663,7 @@ let value = e.value;
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
                     <tr><td colspan="6" style="padding: 0;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;" autocomplete="off">
-                               </td><td colspan="4" ><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
+                               </td><td colspan="4" class="tehstolbec"><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
                             <td rowspan="2"  class="tehstolbec">Тех столбец</td>
@@ -1691,7 +1693,7 @@ let value = e.value;
                         </tbody>
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
                         <tr>
-                            <td><button id="button_costWork_collapse_${coll_table}" type="button" onclick="collaps_tbody('costWork', ${coll_table}, this)">Свернуть</button></td>
+                            <td class="tehstolbec"><button id="button_costWork_collapse_${coll_table}" type="button" onclick="collaps_tbody('costWork', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costWork_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость работ
@@ -1712,7 +1714,7 @@ let value = e.value;
                         </tr>
                     <tbody id = 'earthWorks_costMaterial_${coll_table}'>
                         <tr>
-                        <td><button id="button_costMaterial_collapse_${coll_table}" type="button" onclick="collaps_tbody('costMaterial', ${coll_table}, this)">Свернуть</button></td>
+                        <td class="tehstolbec"><button id="button_costMaterial_collapse_${coll_table}" type="button" onclick="collaps_tbody('costMaterial', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costMaterial_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость материала
@@ -1740,7 +1742,7 @@ let value = e.value;
 
                     <tbody id = 'earthWorks_Special_${coll_table}'>
                     <tr>
-                    <td><button id="button_Special_collapse_${coll_table}" type="button" onclick="collaps_tbody('Special', ${coll_table}, this)">Свернуть</button></td>
+                    <td class="tehstolbec"><button id="button_Special_collapse_${coll_table}" type="button" onclick="collaps_tbody('Special', ${coll_table}, this)">Свернуть</button></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                              <td contenteditable="false" id = 'earthWorks_Special_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость спецтехники
@@ -1766,7 +1768,7 @@ let value = e.value;
 
                      <tbody id = 'earthWorks_Total_${coll_table}'>
                         <tr>
-                        <td style="border-right: none;"></td>
+                        <td style="border-right: none;" class="tehstolbec"></td>
                             <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" style="font-weight: bold;border-left: none;" colspan="4"> Итого
                             </td>
@@ -1793,8 +1795,6 @@ let value = e.value;
                             <td contenteditable="false">%</td>
                             <td contenteditable="true" class="percent"></td>
                             <td contenteditable="true"></td>
-
-
 
                             <td contenteditable="false"></td>
                             <td contenteditable="true"></td>
@@ -1936,7 +1936,10 @@ let value = e.value;
                         </tr>
                     </tbody>
                     `)
-
+                    if (JSON.parse({{roles_user|tojson|safe}} )[0] != 'ENGINEER'){
+                    $('.pto').css("display", "table-cells");
+                        //table_html.replaceAll('display:none','display:table-cells');
+                    }
 {#<tr class="blank_row">#}
 {#<td colspan="100%"></td>#}
 {#                    </tr>#}
