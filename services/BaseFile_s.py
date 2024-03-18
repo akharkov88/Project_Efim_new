@@ -119,6 +119,7 @@ class BaseFileServices:
                     if column.get("class")==None or "tehstolbec" not in column.get("class"):
                         print(column)
 
+
                         if column.datalist:
                             column.datalist.decompose()
                         text_value=""
