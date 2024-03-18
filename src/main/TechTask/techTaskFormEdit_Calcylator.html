@@ -761,13 +761,24 @@ console.warn('admin!')
     $('.CostMaterial_disabled_input').removeAttr("readonly") //$('.CostMaterial_disabled_input').removeAttr("readonly")
     $('.costWork_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
     $('.Special_disabled_input').removeAttr("readonly")
+} else if (role=='MAIN_ENGINEER'){
+    $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.Special_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
+    $('.percent').attr("contenteditable","false") // tbody Стоимость материала раздел ПТО
+    $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
+    $('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
+    //('data-title' , "Введите корректное значение")
+    $('.CostMaterial_disabled_input').removeAttr("readonly")
+    $('.costWork_disabled_input').removeAttr("readonly")
+    $('.Special_disabled_input').removeAttr("readonly")
 } else if (role=='BOSS'){
     $('.CostMaterial_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.costWork_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.Special_disabled').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.percent').attr("contenteditable","true") // tbody Стоимость материала раздел ПТО
     $('.costWork_role_supplier').attr("contenteditable","true") // блок снабжение
-    $('.costWork_role_boss').attr("contenteditable","false") // блок руководитель в разделе Стоимость работ
+    $('.costWork_role_boss').attr("contenteditable","true") // блок руководитель в разделе Стоимость работ
     //('data-title' , "Введите корректное значение")
     $('.CostMaterial_disabled_input').removeAttr("readonly")
     $('.costWork_disabled_input').removeAttr("readonly")
