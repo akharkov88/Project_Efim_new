@@ -1663,7 +1663,7 @@ let value = e.value;
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
                     <tr><td colspan="6" style="padding: 0;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;" autocomplete="off">
-                               </td><td colspan="4" class="tehstolbec"><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
+                               </td><td colspan="4" ><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
                             <td rowspan="2"  class="tehstolbec">Тех столбец</td>
@@ -1694,7 +1694,7 @@ let value = e.value;
                         <tbody id = 'earthWorks_costWork_${coll_table}'>
                         <tr>
                             <td class="tehstolbec"><button id="button_costWork_collapse_${coll_table}" type="button" onclick="collaps_tbody('costWork', ${coll_table}, this)">Свернуть</button></td>
-                            <td contenteditable="false" style="border-left: none; border-right: none;" class="tehstolbec"></td>
+                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costWork_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость работ
                             <div style = "display:none"><button type="button" onclick="addLine(event,this)">addLine</button></div>
@@ -1715,7 +1715,7 @@ let value = e.value;
                     <tbody id = 'earthWorks_costMaterial_${coll_table}'>
                         <tr>
                         <td class="tehstolbec"><button id="button_costMaterial_collapse_${coll_table}" type="button" onclick="collaps_tbody('costMaterial', ${coll_table}, this)">Свернуть</button></td>
-                            <td contenteditable="false" style="border-left: none; border-right: none;" class="tehstolbec"></td>
+                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" id = 'earthWorks_costMaterial_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость материала
                             <div style = "display:none"><button  onclick="addLine(event,this)">addLine</button></div>
@@ -1743,7 +1743,7 @@ let value = e.value;
                     <tbody id = 'earthWorks_Special_${coll_table}'>
                     <tr>
                     <td class="tehstolbec"><button id="button_Special_collapse_${coll_table}" type="button" onclick="collaps_tbody('Special', ${coll_table}, this)">Свернуть</button></td>
-                            <td contenteditable="false" style="border-left: none; border-right: none;" class="tehstolbec"></td>
+                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                              <td contenteditable="false" id = 'earthWorks_Special_addLine_${coll_table}' style="font-weight: bold; border-left: none;" colspan="4" onmouseover="showButton(event, this)" onmouseout="closeButton(event,this)">
                             Стоимость спецтехники
                             <div style = "display:none"><button  onclick="addLine(event,this)">addLine</button></div>
@@ -1769,7 +1769,7 @@ let value = e.value;
                      <tbody id = 'earthWorks_Total_${coll_table}'>
                         <tr>
                         <td style="border-right: none;" class="tehstolbec"></td>
-                            <td contenteditable="false" style="border-left: none; border-right: none;" class="tehstolbec"></td>
+                            <td contenteditable="false" style="border-left: none; border-right: none;"></td>
                             <td contenteditable="false" style="font-weight: bold;border-left: none;" colspan="4"> Итого
                             </td>
 
