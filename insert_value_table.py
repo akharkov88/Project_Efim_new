@@ -129,8 +129,8 @@ def add_user():
             "roles": "[\"SUPPLIER\"]",
             "password": "SUPPLIER"
         }, "userProfile": {
-            "first_name": "SUPPLIER",
-            "last_name": "SUPPLIERович",
+            "first_name": "ИмяСнабженца",
+            "last_name": "ФамилияСнабженца",
             "telegram": "string",
             "mobile": "string",
             "worker_tel": "string",

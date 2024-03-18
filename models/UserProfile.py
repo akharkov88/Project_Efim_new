@@ -55,5 +55,7 @@ class ModelUserPfofile(BaseModel):
     email: str
     adress: str
     office: str
+
+class ModelUserPfofile_my_username(ModelUserPfofile):
     my_username: str
 

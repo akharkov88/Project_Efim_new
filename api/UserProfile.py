@@ -76,7 +76,7 @@ async def get_operation(request: Request,
     )
 
 
-@router.get('/get_UserTask', response_model=List[models.ModelUserTask], )
+@router.get('/get_UserTask', )
 def get_operation(request: Request,
                   User_ProfileServices: UserProfileServices = Depends(),
                   Auth_Service: AuthService = Depends(), ):

@@ -39,6 +39,7 @@ from .UserProfile import (
     ModelUserPfofile,
     ModelUserTaskID,
     ModelUserTaskUpdate,
+    ModelUserPfofile_my_username,
 )
 
 from .Telegram import (
