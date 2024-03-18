@@ -247,7 +247,6 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                         }
                         const setActiveContent2 = () => { // объявляем функцию для установки активного элемента контента
                             if (body2.querySelector('.tabsCalcylator__content_active')) { // если уже есть активный элемент контента
-                                console.warn('щас скрою')
                                 body2.querySelector('.tabsCalcylator__content_active').classList.remove('tabsCalcylator__content_active') // то скрываем его
                             }
                             body2.querySelector(`[data-tab='enginer_pto']`).classList.add('tabsCalcylator__content_active')
