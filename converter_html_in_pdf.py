@@ -231,6 +231,7 @@ class Pareser_html(BeautifulSoup,FPDF):
                     i+=1
 
 
+
             i=1
 
         analiz_merge_row={}
