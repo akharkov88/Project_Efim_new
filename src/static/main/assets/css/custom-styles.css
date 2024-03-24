@@ -601,9 +601,10 @@ margin-top: 40px;
 
 .table-responsive-pto {
     width: 100%;
+    height: auto;
     margin-bottom: 15px;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     border: 1px solid #ddd;
@@ -989,7 +990,15 @@ body {
 /*  top: 0;*/
 /*  width: 100%;*/
 /*}*/
-/*#earthWorks_1 {*/
+/*#earthWorks_1 tr{*/
 /*      position: sticky;*/
 /*      top: 0;*/
+/*      border: 1px solid #454545;*/
 /*}*/
+.fixtable-fixed {
+	position: fixed;
+	top: 0;
+	z-index: 101;
+	background-color: #FCF8E4;
+	border-bottom: 1px solid #ddd;
+}
