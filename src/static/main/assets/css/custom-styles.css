@@ -991,11 +991,11 @@ body {
 /*  top: 0;*/
 /*  width: 100%;*/
 /*}*/
-/*#earthWorks_1 tr{*/
-/*      position: sticky;*/
-/*      top: 0;*/
-/*      border: 1px solid #454545;*/
-/*}*/
+#earthWorks_1{
+      position: sticky;
+      top: 0;
+      border: 1px solid #454545;
+}
 .fixtable-fixed {
 	position: fixed;
 	top: 0;
