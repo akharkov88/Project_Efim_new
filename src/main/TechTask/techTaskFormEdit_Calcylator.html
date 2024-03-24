@@ -1784,6 +1784,8 @@ document.getElementById('add_razdel').onclick = function () {
     if (JSON.parse({{roles_user|tojson|safe}} )[0] == 'SUPPLIER'){
         return
     }
+            let vblsota=window.innerHeight-100
+            $(".table-responsive-pto").css("height",`${vblsota}`)
     etalon_table = false;
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
         coll_table = seach_ID_table('tbody','earthWorks_')+1;
