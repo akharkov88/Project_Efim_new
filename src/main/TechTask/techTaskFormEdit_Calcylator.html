@@ -550,7 +550,7 @@ function event_input(e) {
             }
             return
         }
-        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 5)
+        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 30)
 
     });
 
@@ -1328,7 +1328,7 @@ function addLine(event, element){
             }
             return
         }
-        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 5)
+        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 30)
 
     });
     }
@@ -1571,7 +1571,7 @@ tr_math.childNodes[29].removeAttribute('data-title');
 
 
 
-function set_options_datalist(customer_id, search,id_datalist, count = 10) {
+function set_options_datalist(customer_id, search,id_datalist, count = 20) {
     $.ajax({
         method: 'POST',
         url: "/suggest/getSuggest",
@@ -1629,11 +1629,11 @@ function set_setSuggest(customer_id, add_value,id_datalist) {
     console.log("2set_options_datalist ", id_datalist)
             if (id_datalist.indexOf("_")!=-1){
             console.log('IF ',id_datalist)
-            set_options_datalist(id_datalist.slice(id_datalist.indexOf('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,5)
+            set_options_datalist(id_datalist.slice(id_datalist.indexOf('_')+1,id_datalist.lastIndexOf('_')),add_value,id_datalist,30)
 
             } else
                 {
-            set_options_datalist(id_datalist,add_value,id_datalist,5)
+            set_options_datalist(id_datalist,add_value,id_datalist,30)
 
                 }
 
@@ -2246,7 +2246,7 @@ let id_count=e.target.id;
         }
         return
     }
-    set_options_datalist(type, e.target.value, forObj, 5)
+    set_options_datalist(type, e.target.value, forObj, 30)
 
 });
 

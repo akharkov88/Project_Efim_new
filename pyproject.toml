@@ -29,6 +29,7 @@ pytelegrambotapi= "^4.15.4"
 redis = "^5.0.1"
 celery = "^5.2.2"
 flower = "^2.0.1"
+fpdf = "^1.7.2"
 
 [build-system]
 requires = ["poetry-core"]

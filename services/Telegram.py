@@ -43,6 +43,7 @@ class ClassTelegram:
         # bot.send_message("-1002089164577", data.Value)
         tasks.send_message.delay("-1002089164577", data.Value)
 
+
         return HTTPException(status.HTTP_200_OK, detail="Ошибка повторите еще раз")
 
     def telega_send_message(self,data):

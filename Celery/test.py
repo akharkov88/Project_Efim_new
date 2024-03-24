@@ -10,7 +10,12 @@ from celery import Celery
 from celery.schedules import crontab
 
 # app = Celery()
-app=Celery("task",broker='redis://localhost:6379')
+# app=Celery("task",broker='redis://localhost:6379')
+# app=Celery("task",broker='db+sqlite:///results.sqlite')
+_BACKEND_URI = 'sqla+sqlite:///results.sqlite'
+app =Celery('sqlite_queue_without_results', broker=_BACKEND_URI)
+
+
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     # Calls test('hello') every 10 seconds.
