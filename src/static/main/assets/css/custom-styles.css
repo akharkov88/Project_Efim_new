@@ -676,9 +676,9 @@ margin-top: 40px;
     -ms-user-select: none;
     user-select: none;
 }
-.style_table table{
-    height: 100%;
-}
+/*.style_table table{*/
+/*    height: 100%;*/
+/*}*/
 .table_parent{
 
 }
