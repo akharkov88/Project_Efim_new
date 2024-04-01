@@ -74,14 +74,12 @@ app.mount(
 #     return HTMLResponse(content=open("src/auth.html").read(), status_code=200)
 
 def telega():
-
     bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
 
     # wikipedia.set_lang("ru")
 
 
     alphabet = ' 1234567890-йцукенгшщзхъфывапролджэячсмитьбюёqwertyuiopasdfghjklzxcvbnm?%.,()!:;'
-
 
     @bot.message_handler(commands=['start'],)
     def start_message(message,):
@@ -100,7 +98,6 @@ def telega():
 
         # Class_Telegram.telega_set_message(id_telegram=message.chat.id,name_user_telegram=message.chat.username)
         bot.send_message(message.chat.id, "Теперь я смогу Вам писать сообщения")
-
     question = ""
 
     # @bot.message_handler(content_types=['text'])
@@ -130,14 +127,16 @@ def telega():
     #     with open('dialogues.txt', "a", encoding='utf-8') as f:
     #         f.write(a)
     #     bot.send_message(message.from_user.id, "Готово")
-
-    bot.infinity_polling(timeout=10, long_polling_timeout=5)
+    # bot.infinity_polling(timeout=10, long_polling_timeout=5)
+    bot.infinity_polling()
     # bot.polling(none_stop=True)
 
 def telega_send_message(id,text):
-    bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
-    bot.send_message(id, text)
-
+    try:
+        bot = telebot.TeleBot('6699554023:AAFv2VuN2NcqydlFlkK5qCpLmCzLL3Euy_g')
+        bot.send_message(id, text)
+    except:
+        pass
 
 def cel():
     os.system('celery -A tasks worker --loglevel=info')
@@ -156,7 +155,11 @@ if __name__ == '__main__':
     # telega_send_message("622070505", "getwiki(command)")
     # telega_send_message("-1002089164577", "getwiki(command)")
     # telega_send_message("@AlekseyKharkov88", "getwiki(command)")
-
+    #/home/aleksey/pythonProject/Project_Efim_new/.venv/lib/python3.12/site-packages/telebot/apihelper.py
+    #     try:
+    #         vv=_make_request(token, method_url, params=payload)
+    #     except:
+    #         return ""
     uvicorn.run(
         "main:app",
         reload=True,

@@ -4,8 +4,8 @@ import telebot
 
 
 
-# celery=Celery("task",broker='redis://localhost:6379')
-celery=Celery("task",broker='sqla+sqlite:///tasks.sqlite')
+celery=Celery("task",broker='redis://localhost:6379')
+# celery=Celery("task",broker='sqla+sqlite:///tasks.sqlite')
 # _RESULT_URI = 'db+sqlite:///results.sqlite3'
 # _BACKEND_URI = 'sqla+sqlite:///tasks.sqlite3'
 #
