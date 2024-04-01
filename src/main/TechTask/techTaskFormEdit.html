@@ -33,7 +33,7 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                                 <div class="tabs__head">
                                     <div class="tabs__caption" data-tab="main">Тех Задание</div>
                                     <div class="tabs__caption" data-tab="pto">Расчет стоимости</div>
-                                    <div class="tabs__caption" data-tab="about">КП</div>
+                                    <div class="tabs__caption" data-tab="KP">КП</div>
 
                                     {#                                    <div class="tabs__caption" data-tab="about">Главный Инженер</div>#}
                                     {#                                    <div class="tabs__caption" data-tab="about">Руководитель</div>#}
@@ -60,36 +60,16 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                                         </div>
 
                                     </div>
-                                    <div class="tabs__content" data-tab="about">
+                                    <div class="tabs__content" data-tab="KP">
                                         <div class="panel panel-default">
-                                            <div class="panel-heading">
 
-                                            </div>
-                                            {% include "TechTask/techTaskFormEdit_FormPTO.html" %}
+                                            {% include "TechTask/techTaskFormEdit_FormKP.html" %}
 
                                             <!-- /.panel-body -->
                                         </div>
                                     </div>
-                                    <div class="tabs__content" data-tab="about">
-                                        <div class="panel panel-default">
-{#                                            <div class="panel-heading">#}
-{##}
-{#                                            </div>#}
-                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
 
-                                        </div>
 
-                                    </div>
-                                    <div class="tabs__content" data-tab="about">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-
-                                            </div>
-                                            {% include "TechTask/techTaskFormEdit_FormNEW.html" %}
-
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +222,16 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                                 setActiveContent2()
 
                             }
+                            if (head.querySelector('.tabs__caption_active').dataset.tab == 'KP') {
+                            console.log('warn!')
 
+                            {#document.getElementById("KP_table").innerHTML = (document.getElementById("first_table").innerHTML);#}
+                            if ($('#first_table tbody').length > 0){
+                                KP_table();
+                            }
+
+
+                            }
                             return head.querySelector('.tabs__caption_active').dataset.tab // возвращаем значение data-tab активной кнопки
                         }
                         const setActiveContent2 = () => { // объявляем функцию для установки активного элемента контента
@@ -302,5 +291,96 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
 
 </body>
+<script>
+
+    function KP_table(){
+    let kp_table_text = ''
+    //document.getElementById("KP_table").innerHTML = (document.getElementById("first_table").innerHTML);
+
+    //$('#first_table')[0]
+    //console.log($('#first_table tbody tr'))
+    let temp_table = $('#first_table tbody')
+
+    // иду по всем tbody таблицы
+    for (let i=0; i<temp_table.length; i++){
+    console.log(temp_table[i])
+
+    if (temp_table[i].id.indexOf('earthWorks_')!= -1 && temp_table[i].id.indexOf('earthWorks_Total_') == -1 && temp_table[i].id.indexOf('earthWorks_costWork_')== -1 && temp_table[i].id.indexOf('earthWorks_costMaterial_')== -1 && temp_table[i].id.indexOf('earthWorks_Special_') == -1){
+     kp_table_text += '<tr> <td colspan="6" style="font-weight: bold;">'+temp_table[i].childNodes[1].childNodes[0].childNodes[0].value+'</td></tr>'
+     kp_table_text += `<tr style="background-color: #fce1b3">
+                            <td>№</td>
+                            <td rowspan="2" style="font-weight: bold;">Наименование</td>
+                            <td colspan="4" style="font-weight: bold;">Стоимость</td>
+                      </tr>
+
+                        <tr style="background-color: #fce1b3">
+                            <td style="font-weight: bold;">п/п</td>
+                            <td style="font-weight: bold;">Ед.изм.</td>
+                            <td style="font-weight: bold;">Кол-во</td>
+                            <td style="font-weight: bold;">Цена</td>
+                            <td style="font-weight: bold;">Всего</td>
+                        </tr>`;
+    }
+
+    // логика для tbody costWork costMaterial Special
+     if (temp_table[i].id.indexOf('earthWorks_costWork_')!= -1 || temp_table[i].id.indexOf('earthWorks_costMaterial_')!= -1 || temp_table[i].id.indexOf('earthWorks_Special_')!= -1){
+        // строчка заголовка tbody
+        kp_table_text += '<tr style="background-color: #baffae;font-weight: bold;">';
+        kp_table_text += '<td colspan="5">' + temp_table[i].childNodes[1].childNodes[5].innerHTML + '</td>'
+        kp_table_text += '<td>' +  temp_table[i].childNodes[1].childNodes[7].innerHTML + '</td>'
+        kp_table_text += '</tr>';
+        // иду по всем tr имеющим атрибут id
+        let temp_tbody_tr = $(`#${temp_table[i].id} tr[id]`)
+        for (let j=0; j<temp_tbody_tr.length; j++){
+            console.log(temp_tbody_tr[j])
+            kp_table_text += '<tr>';
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[3].innerHTML + '</td>'
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[5].childNodes[1].childNodes[1].value + '</td>'
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[7].childNodes[1].childNodes[1].value + '</td>'
+                kp_table_text += '<td contenteditable="true">' + '</td>'
+                kp_table_text += '<td contenteditable="true">' + '</td>'
+                kp_table_text += '<td contenteditable="true">' + '</td>'
+            kp_table_text += '</tr>';
+            //console.log(temp_tbody_tr[i].childNodes[3].innerHTML)
+
+        }
+    } else if (temp_table[i].id.indexOf('earthWorks_Total_')!= -1){
+         // строчка заголовка tbody
+        kp_table_text += '<tr style="background-color: #baffae;font-weight: bold;">';
+        kp_table_text += '<td colspan="5">' + temp_table[i].childNodes[1].childNodes[5].innerHTML + '</td>'
+        kp_table_text += '<td>' +  temp_table[i].childNodes[1].childNodes[7].innerHTML + '</td>'
+        kp_table_text += '</tr>';
+        // иду по всем tr имеющим атрибут id
+        let temp_tbody_tr = $(`#${temp_table[i].id} tr[id]`)
+        for (let j=0; j<temp_tbody_tr.length; j++){
+            console.log(temp_tbody_tr[j])
+            kp_table_text += '<tr>';
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[3].innerHTML + '</td>'
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[5].innerHTML + '</td>'
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[7].innerHTML + '</td>'
+                kp_table_text += '<td>' + temp_tbody_tr[j].childNodes[9].innerHTML + '</td>'
+                kp_table_text += '<td contenteditable="true">' + '</td>'
+                kp_table_text += '<td contenteditable="true">' + '</td>'
+            kp_table_text += '</tr>';
+            //console.log(temp_tbody_tr[i].childNodes[3].innerHTML)
+
+        }
+    }
+
+
+
+
+    }
+        let footer = document.getElementById('result_total')
+    kp_table_text += '<tr><td colspan="6"></td></tr>'
+
+    kp_table_text += '<tr><td></td>'+'<td>'+ footer.childNodes[3].childNodes[5].innerHTML +'</td>'+'<td>'+ footer.childNodes[3].childNodes[13].innerHTML +'</td>' + '</tr>';
+    kp_table_text += '<tr><td></td>'+'<td>'+ footer.childNodes[5].childNodes[5].innerHTML +'</td>'+'<td>'+ footer.childNodes[5].childNodes[13].innerHTML +'</td>' + '</tr>';
+
+       document.getElementById("KP_table").innerHTML = kp_table_text
+    }
+
+</script>
+
 
 </html>

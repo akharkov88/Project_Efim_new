@@ -688,7 +688,7 @@ margin-top: 40px;
     background-color: #FFFFFF;
 }
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
   line-height: 1.1;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   background:  radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);
@@ -703,11 +703,11 @@ caption:before, caption:after {
   margin: 0 10px;
 }
 
-th {
-  padding: 10px;
-  border: 1px solid #454545;
-  /*border: 1px solid #A9E2CC;*/
-}
+/*th {*/
+/*  padding: 10px;*/
+/*  border: 0.5px solid #454545;*/
+/*  !*border: 1px solid #A9E2CC;*!*/
+/*}*/
 td{
   font-size: 0.8em;
   padding: 5px 7px;
@@ -994,7 +994,7 @@ body {
 #earthWorks_1{
       position: sticky;
       top: 0;
-      border: 1px solid #454545;
+
 }
 .fixtable-fixed {
 	position: fixed;
