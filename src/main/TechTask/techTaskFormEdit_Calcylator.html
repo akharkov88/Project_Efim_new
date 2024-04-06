@@ -118,7 +118,14 @@
 </div>
 
 <script>
+        let blockDiv = document.createElement("div");
+        blockDiv.setAttribute('id', 'my_modal');
+        blockDiv.setAttribute('class', 'popup');
+        let h2 = document.createElement("h2");
+        h2.innerText = 'Text2'
+        blockDiv.appendChild(h2)
 
+        document.body.appendChild(blockDiv)
 
 
 
@@ -446,7 +453,7 @@ function sravnenie(){
     divtagForTable.appendChild(tagForTable)
     tagForTable.innerHTML = etalon_html_table;
     divtagForTable.setAttribute('id', 'idSravnenie');
-    divtagForTable.setAttribute('style', 'display: none');
+    {#divtagForTable.setAttribute('style', 'display: none');#}
     document.body.appendChild(divtagForTable)
     let stroki = []
     console.log('etalon:')
@@ -467,7 +474,12 @@ function sravnenie(){
 
     for(let i = 0; i<temp.length;i++){
     console.log('i in for:'+i)
-     if (etalon_html_table.indexOf(temp[i].id)!=0){
+     if (etalon_html_table.indexOf(temp[i].id)!=-1){
+            console.log('i in IF:'+i)
+            console.log('ID== '+ temp[i].id)
+            console.log('temp ')
+            console.log(temp)
+
         let tempStr = $(`#idSravnenie tr[id =${temp[i].id}]`)[0];
         if(temp[i].childNodes.length==tempStr.childNodes.length){
             for (let j = 0;j<temp[i].childNodes.length;j++){
@@ -500,7 +512,20 @@ function sravnenie(){
             }
 
      }  else {
-     console.log('строка ' + temp[i] + ' отсутсвует в "Эталоне"')
+     console.log('строка ' + temp[i].id + ' отсутсвует в "Эталоне"')
+        for (let j = 0;j<temp[i].childNodes.length;j++){
+                            if (temp[i].childNodes[j].localName=='td'){
+
+                                    if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                                        temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                                    } else {
+                                                 temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                            }
+
+                            }
+                        }
+
+
      }
 
     }
@@ -1115,8 +1140,9 @@ document.getElementById('saveTable').onclick =async function () {
             showToast('Ошибка сохранения' , 'warning' , 5000)
 
  }
+etalon_html_table = document.getElementById("first_table").innerHTML
 console.log("responseText",responseText)
-
+table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
   };
 
 let obj_global_sum = {};
