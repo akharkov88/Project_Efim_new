@@ -118,6 +118,10 @@
 </div>
 
 <script>
+
+
+
+
         window.onresize = function(event) {
             let vblsota=window.innerHeight-100
             $(".table-responsive-pto").css("height",`${vblsota}`)
@@ -431,6 +435,80 @@ window.onbeforeunload = function() {
   return "Данные не сохранены. Точно перейти?";
 };
 
+//setTimeout(function (name) {
+//  alert(`Привет, ${name}!`);
+//}, 3000, 'Василий');
+
+function sravnenie(){
+    //let tableSrav = document.createElement(etalon_html_table)
+    let tagForTable = document.createElement("table");
+    let divtagForTable = document.createElement("div");
+    divtagForTable.appendChild(tagForTable)
+    tagForTable.innerHTML = etalon_html_table;
+    divtagForTable.setAttribute('id', 'idSravnenie');
+    divtagForTable.setAttribute('style', 'display: none');
+    document.body.appendChild(divtagForTable)
+    let stroki = []
+    console.log('etalon:')
+        let temp2 = $("#idSravnenie tr[id ^='stroka_']");
+        {#console.log(temp);#}
+        for (let key = 0; key<temp2.length; key++) {
+            if ($("#first_table")[0].innerHTML.indexOf(temp2[key].id)==-1){
+                stroki.push(temp2[key].id)
+            }
+            console.log(temp2[key])
+
+        }
+        console.log('нет строк: '+stroki)
+
+    console.log('my table:')
+    let temp = $("#first_table tr[id ^='stroka_']");
+    {#console.log(temp);#}
+
+    for(let i = 0; i<temp.length;i++){
+    console.log('i in for:'+i)
+     if (etalon_html_table.indexOf(temp[i].id)!=0){
+        let tempStr = $(`#idSravnenie tr[id =${temp[i].id}]`)[0];
+        if(temp[i].childNodes.length==tempStr.childNodes.length){
+            for (let j = 0;j<temp[i].childNodes.length;j++){
+                if (temp[i].childNodes[j].localName=='td'){
+                   if(temp[i].childNodes[j].innerHTML!=tempStr.childNodes[j].innerHTML){
+                        if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                            temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                        } else if (temp[i].childNodes[j].childNodes[1].childNodes[1].value != tempStr.childNodes[j].childNodes[1].childNodes[1].value){
+                                     temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                }
+                   }
+                }
+            }
+        } else {
+                console.log('строка ' + temp[i].id + ' в другом разделе')
+                console.log(i)
+                console.log(temp[i].childNodes)
+                      for (let j = 0;j<temp[i].childNodes.length;j++){
+                            if (temp[i].childNodes[j].localName=='td'){
+
+                                    if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                                        temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                                    } else {
+                                                 temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                            }
+
+                            }
+                        }
+                //temp[i]
+            }
+
+     }  else {
+     console.log('строка ' + temp[i] + ' отсутсвует в "Эталоне"')
+     }
+
+    }
+
+    console.warn('SRAVNENIE END')
+    document.getElementById('idSravnenie').remove()
+    //divtagForTable.remove()
+}
 
 function removeOptions(selectElement) {
     while (selectElement.options.length > 0) {
@@ -457,8 +535,9 @@ let response = await fetch('/techTask/formPtoGet_id', {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
-         Napolneneie(JSON.parse(responseText))
 
+         Napolneneie(JSON.parse(responseText))
+        sravnenie();
         }
 })
 
@@ -519,7 +598,7 @@ $('#first_table').keypress(
     }
     etalon_table = false;
 });
-
+let etalon_html_table = ''
 async function Test() {
 {#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
     let response = await fetch('/techTask/formPtoGet', {
@@ -534,6 +613,7 @@ async function Test() {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
+         etalon_html_table = JSON.parse(responseText).value_table
          Napolneneie(JSON.parse(responseText))
         }
 
@@ -1026,7 +1106,8 @@ document.getElementById('saveTable').onclick =async function () {
      document.getElementById('saveTable_description').value=""
 
  if (response.status==200){
-            etalon_table = true
+            etalon_table = true;
+            etalon_html_table = document.getElementById("first_table").innerHTML
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
