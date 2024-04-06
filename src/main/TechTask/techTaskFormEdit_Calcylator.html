@@ -1133,6 +1133,7 @@ document.getElementById('saveTable').onclick =async function () {
  if (response.status==200){
             etalon_table = true;
             etalon_html_table = document.getElementById("first_table").innerHTML
+            table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
@@ -1140,9 +1141,9 @@ document.getElementById('saveTable').onclick =async function () {
             showToast('Ошибка сохранения' , 'warning' , 5000)
 
  }
-etalon_html_table = document.getElementById("first_table").innerHTML
+
 console.log("responseText",responseText)
-table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+
   };
 
 let obj_global_sum = {};
