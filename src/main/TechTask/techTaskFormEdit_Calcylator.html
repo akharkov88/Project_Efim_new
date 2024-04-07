@@ -118,14 +118,36 @@
 </div>
 
 <script>
+
+        function createModal(arr){
         let blockDiv = document.createElement("div");
         blockDiv.setAttribute('id', 'my_modal');
         blockDiv.setAttribute('class', 'popup');
-        let h2 = document.createElement("h2");
-        h2.innerText = 'Text2'
-        blockDiv.appendChild(h2)
+        let blockStrok = document.createElement("div");
+        let stroka = ' Отсутвуют строки: ';
+
+        console.warn('собираю строку')
+        console.warn(arr)
+            for (let i = 0;i<arr.length;i++){
+                stroka += arr[i] + '; ';
+            }
+        stroka += ' количество отсутвующих строк: ' + arr.length;
+        blockDiv.style.display = 'block';
+
+        blockStrok.innerHTML = stroka;
+        blockDiv.appendChild(blockStrok);
+
+        blockDiv.innerHTML+=`<div class="btn-container" style="text-align:center; margin: 10px;">
+
+                                                            <button id="yes-btn" class="popup__button" onclick="document.getElementById('my_modal').remove()"'>
+                                                                Ок
+                                                            </button>
+
+                                                        </div>`
 
         document.body.appendChild(blockDiv)
+        }
+
 
 
 
@@ -467,6 +489,10 @@ function sravnenie(){
 
         }
         console.log('нет строк: '+stroki)
+        if (stroki.length>0){
+            createModal(stroki);
+        } else {console.log('все есть')}
+
 
     console.log('my table:')
     let temp = $("#first_table tr[id ^='stroka_']");
@@ -1075,8 +1101,10 @@ function up_obj_global_sum(){
 
         if (temp[key].childNodes[1].childNodes.length > 7){
 
-            if (temp[key].childNodes[1].childNodes[7].innerHTML != ''){
-                console.log(temp[key])
+            if (temp[key].childNodes[1].childNodes[7].innerHTML != '' || temp[key].id.indexOf('earthWorks_Total_') == 0){
+                console.warn(temp[key])
+                console.warn(temp[key].childNodes[1].childNodes[7])
+                console.warn('temp[key]')
                  obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML;
 
                  if (temp[key].id.indexOf('earthWorks_Total_') == 0){
@@ -1161,7 +1189,7 @@ const table = document.getElementById('first_table');
 * @objLine
 */
     function objLine(id_count, forTable) {
-        if (coll_table<=seach_ID_table('tbody','earthWorks_')) coll_table = seach_ID_table('tbody','earthWorks_')+1;
+        if (coll_table<=seach_ID_table('tbody','earthWorks_')) {coll_table = seach_ID_table('tbody','earthWorks_')+1;}
 
         let addLineObj = new Object();
         addLineObj = {
@@ -1474,7 +1502,7 @@ function collaps_tbody(tbody, id, but){
 function addLine(event, element){
     event.preventDefault();
     etalon_table = false;
-    if (id_count<seach_ID_table('tr','stroka_')) {
+    if (id_count<=seach_ID_table('tr','stroka_')) {
             {#for_event_tr('tr','stroka_', id_count);#}
             id_count = seach_ID_table('tr','stroka_')+1;
         }
@@ -1906,6 +1934,9 @@ let value = e.value;
         obj_global_sum['earthWorks_Special_'+ coll_table] = "";
         obj_global_sum['earthWorks_Total_'+ coll_table] = "";
         obj_global_sum['Total_tbody_'+ coll_table] = "";
+        obj_global_sum['Вспомогательные_материалы_'+ coll_table] = "6";
+        obj_global_sum['Накладные_расходы_'+ coll_table] = "120";
+        obj_global_sum['Транспортные_расходы_'+ coll_table] = "10";
 
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
@@ -2040,7 +2071,7 @@ let value = e.value;
                                 Накладные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">120</td>
                             <td contenteditable="true"></td>
 
                             <td contenteditable="false"></td>
@@ -2063,7 +2094,7 @@ let value = e.value;
                                 Вспомогательные материалы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">6</td>
                             <td contenteditable="true"></td>
 
 
@@ -2088,7 +2119,7 @@ let value = e.value;
                                 Транспортные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">10</td>
                             <td contenteditable="true"></td>
 
 
@@ -2132,7 +2163,7 @@ let value = e.value;
                                 В том числе НДС - 20% за нал от материалов
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">20</td>
                             <td contenteditable="true"></td>
 
 
