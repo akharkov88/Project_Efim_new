@@ -1621,10 +1621,24 @@ tr_math.childNodes[9].removeAttribute('data-title')
                 tr_math.childNodes[23].innerText = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2);
             }
             }
+            if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
 
+                if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
+                tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[9]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[15].abbr.replace(',','.')))).toFixed(2);
+                } else {
+                    tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].innerText.replace(',','.')))*1).toFixed(2)
+                }
+                if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
+                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
+
+                }
+            }
         if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText != ''){
+
         tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
-        if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) tr_math.childNodes[27].innerText = ((Number(tr_math.childNodes[23].innerText.replace(',','.')) * Number(tr_math.childNodes[25].innerText.replace(',','.')))).toFixed(2);
+        if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) {
+            tr_math.childNodes[27].innerText = ((Number(tr_math.childNodes[23].innerText.replace(',','.')) * Number(tr_math.childNodes[25].innerText.replace(',','.')))).toFixed(2);
+        }
         }
 } else {tr_math.childNodes[13].innerText = '';
         tr_math.childNodes[9].setAttribute('data-title' , "Введите корректное значение");
@@ -1704,7 +1718,24 @@ tr_math.childNodes[15].addEventListener('focusout', function(event) {
         } else {
             tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
         }
-    }
+    } else if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
+                if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText!=''){
+                if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
+
+                        tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[15]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))).toFixed(2);
+
+
+                    } else {
+                        tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))*1).toFixed(2)
+                    }
+
+                     if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
+                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
+
+                }
+                }
+
+            }
 });
 
 tr_math.childNodes[23].addEventListener('keyup', function(event) {
