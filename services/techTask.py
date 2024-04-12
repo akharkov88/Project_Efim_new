@@ -197,7 +197,7 @@ class TechTaskServices:
                 else:
                    return {"state":NameTechTask.state,"user":""}
             utc = pytz.UTC
-            if jsonable_encoder(operation)["username"]==user.username or (utc.localize(datetime.datetime.fromisoformat(jsonable_encoder(operation)["update_at"]))+datetime.timedelta(minutes=5))<utc.localize(datetime.datetime.now()):
+            if jsonable_encoder(operation)["username"]==user.username or (datetime.datetime.fromisoformat(jsonable_encoder(operation)["update_at"])+datetime.timedelta(minutes=5))<utc.localize(datetime.datetime.utcnow()):
 
                 self.session.query(tables.WorkingTable).filter(
                     tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask).update({"username": user.username,"state":NameTechTask.state})

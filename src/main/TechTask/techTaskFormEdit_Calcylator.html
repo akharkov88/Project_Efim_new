@@ -170,7 +170,7 @@ async function upTableTime(n=5,state=true){
     }, 1000)
 }
     else{
-    alert(`Внимание заблокировано ${state_table.user}`)
+    {#alert(`Внимание заблокировано ${state_table.user}`)#}
         showToast(`Актуальная версия таблицы редактируется пользователем ${state_table.user} внесенные изменения сохраняться в другой версии ` , 'warning' , 5000)
 
     }
