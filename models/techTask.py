@@ -13,6 +13,21 @@ class TechTaskPTO_key(BaseTechTaskPTO):
 class TechTaskPTO_id(BaseModel):
     id: int
 
+class WorkingNameTechTask(BaseModel):
+    NameTechTask: str
+    state: bool
+
+
+class WorkingAll(WorkingNameTechTask):
+    update_at: str
+    username: str
+
+class Response_WorkingNameTechTask(BaseModel):
+    state: bool
+    user: str
+
+
+
 # class BaseTechTaskPTO(TechTaskPTO):
 #     id: int
 #     class Config:

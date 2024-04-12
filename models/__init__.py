@@ -20,7 +20,11 @@ from .techTask import (
     TechTaskPTO,
     BaseTechTaskPTO,
     TechTaskPTO_key,
-    TechTaskPTO_id
+    TechTaskPTO_id,
+    WorkingNameTechTask,
+    WorkingAll,
+    Response_WorkingNameTechTask
+
 )
 
 from .BaseFile_m import (

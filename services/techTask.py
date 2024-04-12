@@ -11,7 +11,7 @@ from fastapi import (
     status,
 )
 from sqlalchemy.orm import Session
-
+import pytz
 import models
 import tables
 from services.auth import  get_session
@@ -126,3 +126,106 @@ class TechTaskServices:
 
 
         # return "operation"
+
+    def GetWorkingTable_NameTechTask(self,NameTechTask: str,user: tables.User,):
+
+
+        try:
+            operation = (
+                self.session
+                .query(tables.WorkingTable)
+                .filter(
+                    tables.WorkingTable.NameTechTask == NameTechTask
+                )
+                .first()
+            )
+            if not operation:
+                operation = tables.WorkingTable(
+                    NameTechTask=NameTechTask,
+                    username=user.username,
+                    state=False
+                )
+                self.session.add(operation)
+                self.session.commit()
+                operation = (
+                    self.session
+                    .query(tables.WorkingTable)
+                    .filter(
+                        tables.WorkingTable.NameTechTask == NameTechTask
+                    )
+                    .first()
+                )
+                if not operation:
+
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+    def SetWorkingTable_NameTechTask(self,NameTechTask: models.WorkingNameTechTask,user: tables.User):
+
+
+        try:
+            operation = (
+                self.session
+                .query(tables.WorkingTable)
+                .filter(
+                    tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask
+                )
+                .first()
+            )
+            if not operation:
+                operation = tables.WorkingTable(
+                    NameTechTask=NameTechTask.NameTechTask,
+                    username=user.username,
+                    state=NameTechTask.state,
+                )
+                self.session.add(operation)
+                self.session.commit()
+                operation = (
+                    self.session
+                    .query(tables.WorkingTable)
+                    .filter(
+                        tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask
+                    )
+                    .first()
+                )
+                if not operation:
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                else:
+                   return {"state":NameTechTask.state,"user":""}
+            utc = pytz.UTC
+            if jsonable_encoder(operation)["username"]==user.username or (datetime.datetime.fromisoformat(jsonable_encoder(operation)["update_at"])+datetime.timedelta(minutes=5))>utc.localize(datetime.datetime.now()):
+
+                self.session.query(tables.WorkingTable).filter(
+                    tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask).update({"username": user.username,"state":NameTechTask.state})
+                self.session.commit()
+                operation = (
+                    self.session
+                    .query(tables.WorkingTable)
+                    .filter(
+                        tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask
+                    )
+                    .first()
+                )
+                if not operation:
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+                return {"state": NameTechTask.state, "user": ""}
+
+            else:
+                return {"state":False,"user":jsonable_encoder(operation)["username"]}
+            #
+            # if not operation:
+            #
+            #     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # else:
+            #     return {"state": True, "user": ""}
+            #
+            # # return jsonable_encoder(operation)
+            # return jsonable_encoder(operation)
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
