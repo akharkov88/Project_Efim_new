@@ -118,6 +118,64 @@
 </div>
 
 <script>
+
+let stopInterval;
+function upTableTime(n=5,state=true){
+    console.log(n)
+    console.log(state)
+     clearInterval(stopInterval);
+    if (!state) return
+
+    // Отправляем в таблицу True
+    let dateNow = new Date();
+    dateNow.setMinutes(dateNow.getMinutes()+n)
+    console.log(dateNow)
+    stopInterval = setInterval(()=>{
+        let dateTimeOut = new Date()
+        if (((dateNow - dateTimeOut)/60/1000).toFixed()==0){
+            alert('timeOut вышел: ' + dateNow)
+            clearInterval(stopInterval)
+            // Отправляем в таблицу false
+        } else {
+            console.log('date: ' + dateTimeOut.getHours() +':'+ dateTimeOut.getMinutes())
+        }
+    }, 1000)
+}
+ //upTableTime()
+
+
+        function createModal(arr){
+        let blockDiv = document.createElement("div");
+        blockDiv.setAttribute('id', 'my_modal');
+        blockDiv.setAttribute('class', 'popup');
+        let blockStrok = document.createElement("div");
+        let stroka = ' Отсутвуют строки: ';
+
+        console.warn('собираю строку')
+        console.warn(arr)
+            for (let i = 0;i<arr.length;i++){
+                stroka += arr[i] + '; ';
+            }
+        stroka += ' количество отсутвующих строк: ' + arr.length;
+        blockDiv.style.display = 'block';
+
+        blockStrok.innerHTML = stroka;
+        blockDiv.appendChild(blockStrok);
+
+        blockDiv.innerHTML+=`<div class="btn-container" style="text-align:center; margin: 10px;">
+
+                                                            <button id="yes-btn" class="popup__button" onclick="document.getElementById('my_modal').remove()"'>
+                                                                Ок
+                                                            </button>
+
+                                                        </div>`
+
+        document.body.appendChild(blockDiv)
+        }
+
+
+
+
         window.onresize = function(event) {
             let vblsota=window.innerHeight-100
             $(".table-responsive-pto").css("height",`${vblsota}`)
@@ -431,6 +489,102 @@ window.onbeforeunload = function() {
   return "Данные не сохранены. Точно перейти?";
 };
 
+//setTimeout(function (name) {
+//  alert(`Привет, ${name}!`);
+//}, 3000, 'Василий');
+
+function sravnenie(){
+    //let tableSrav = document.createElement(etalon_html_table)
+    let tagForTable = document.createElement("table");
+    let divtagForTable = document.createElement("div");
+    divtagForTable.appendChild(tagForTable)
+    tagForTable.innerHTML = etalon_html_table;
+    divtagForTable.setAttribute('id', 'idSravnenie');
+    divtagForTable.setAttribute('style', 'display: none');
+    document.body.appendChild(divtagForTable)
+    let stroki = []
+    console.log('etalon:')
+        let temp2 = $("#idSravnenie tr[id ^='stroka_']");
+        {#console.log(temp);#}
+        for (let key = 0; key<temp2.length; key++) {
+            if ($("#first_table")[0].innerHTML.indexOf(temp2[key].id)==-1){
+                stroki.push(temp2[key].id)
+            }
+            console.log(temp2[key])
+
+        }
+        console.log('нет строк: '+stroki)
+        if (stroki.length>0){
+            createModal(stroki);
+        } else {console.log('все есть')}
+
+
+    console.log('my table:')
+    let temp = $("#first_table tr[id ^='stroka_']");
+    {#console.log(temp);#}
+
+    for(let i = 0; i<temp.length;i++){
+    console.log('i in for:'+i)
+     if (etalon_html_table.indexOf(temp[i].id)!=-1){
+            console.log('i in IF:'+i)
+            console.log('ID== '+ temp[i].id)
+            console.log('temp ')
+            console.log(temp)
+
+        let tempStr = $(`#idSravnenie tr[id =${temp[i].id}]`)[0];
+        if(temp[i].childNodes.length==tempStr.childNodes.length){
+            for (let j = 0;j<temp[i].childNodes.length;j++){
+                if (temp[i].childNodes[j].localName=='td'){
+                   if(temp[i].childNodes[j].innerHTML!=tempStr.childNodes[j].innerHTML){
+                        if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                            temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                        } else if (temp[i].childNodes[j].childNodes[1].childNodes[1].value != tempStr.childNodes[j].childNodes[1].childNodes[1].value){
+                                     temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                }
+                   }
+                }
+            }
+        } else {
+                console.log('строка ' + temp[i].id + ' в другом разделе')
+                console.log(i)
+                console.log(temp[i].childNodes)
+                      for (let j = 0;j<temp[i].childNodes.length;j++){
+                            if (temp[i].childNodes[j].localName=='td'){
+
+                                    if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                                        temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                                    } else {
+                                                 temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                            }
+
+                            }
+                        }
+                //temp[i]
+            }
+
+     }  else {
+     console.log('строка ' + temp[i].id + ' отсутсвует в "Эталоне"')
+        for (let j = 0;j<temp[i].childNodes.length;j++){
+                            if (temp[i].childNodes[j].localName=='td'){
+
+                                    if(temp[i].childNodes[j].innerHTML.indexOf('type="text"')==-1){
+                                        temp[i].childNodes[j].style.backgroundColor='#ff9090'
+                                    } else {
+                                                 temp[i].childNodes[j].childNodes[1].childNodes[1].style.backgroundColor='#ff9090'
+                                            }
+
+                            }
+                        }
+
+
+     }
+
+    }
+
+    console.warn('SRAVNENIE END')
+    document.getElementById('idSravnenie').remove()
+    //divtagForTable.remove()
+}
 
 function removeOptions(selectElement) {
     while (selectElement.options.length > 0) {
@@ -457,8 +611,9 @@ let response = await fetch('/techTask/formPtoGet_id', {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
-         Napolneneie(JSON.parse(responseText))
 
+         Napolneneie(JSON.parse(responseText))
+        sravnenie();
         }
 })
 
@@ -518,8 +673,9 @@ $('#first_table').keypress(
       event.preventDefault();
     }
     etalon_table = false;
+    upTableTime();
 });
-
+let etalon_html_table = ''
 async function Test() {
 {#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
     let response = await fetch('/techTask/formPtoGet', {
@@ -534,6 +690,7 @@ async function Test() {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
+         etalon_html_table = JSON.parse(responseText).value_table
          Napolneneie(JSON.parse(responseText))
         }
 
@@ -731,6 +888,7 @@ function event_input(e) {
      {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
      if (JSON.parse({{roles_user|tojson|safe}})[0] != 'SUPPLIER') {
          etalon_table = false;
+         upTableTime();
          console.log('event!!!')
          console.log(event)
          let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`);
@@ -970,8 +1128,10 @@ function up_obj_global_sum(){
 
         if (temp[key].childNodes[1].childNodes.length > 7){
 
-            if (temp[key].childNodes[1].childNodes[7].innerHTML != ''){
-                console.log(temp[key])
+            if (temp[key].childNodes[1].childNodes[7].innerHTML != '' || temp[key].id.indexOf('earthWorks_Total_') == 0){
+                console.warn(temp[key])
+                console.warn(temp[key].childNodes[1].childNodes[7])
+                console.warn('temp[key]')
                  obj_global_sum[temp[key].id] = temp[key].childNodes[1].childNodes[7].innerHTML;
 
                  if (temp[key].id.indexOf('earthWorks_Total_') == 0){
@@ -1026,7 +1186,10 @@ document.getElementById('saveTable').onclick =async function () {
      document.getElementById('saveTable_description').value=""
 
  if (response.status==200){
-            etalon_table = true
+            etalon_table = true;
+            upTableTime(0,false);
+            etalon_html_table = document.getElementById("first_table").innerHTML
+            table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
@@ -1034,6 +1197,7 @@ document.getElementById('saveTable').onclick =async function () {
             showToast('Ошибка сохранения' , 'warning' , 5000)
 
  }
+
 console.log("responseText",responseText)
 
   };
@@ -1053,7 +1217,7 @@ const table = document.getElementById('first_table');
 * @objLine
 */
     function objLine(id_count, forTable) {
-        if (coll_table<=seach_ID_table('tbody','earthWorks_')) coll_table = seach_ID_table('tbody','earthWorks_')+1;
+        if (coll_table<=seach_ID_table('tbody','earthWorks_')) {coll_table = seach_ID_table('tbody','earthWorks_')+1;}
 
         let addLineObj = new Object();
         addLineObj = {
@@ -1089,9 +1253,9 @@ const table = document.getElementById('first_table');
                             <td contenteditable="true" class="costWork_disabled note"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
-                        <td contenteditable="false" style="display:none"></td>
+                        <td contenteditable="false" class="costWork_role_boss pto" style="display:none"></td>
                         <td contenteditable="true" class="costWork_role_boss pto" style="display:none"></td>
-                        <td contenteditable="false"  style="display:none"></td>
+                        <td contenteditable="false" class="costWork_role_boss pto" style="display:none"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
@@ -1366,7 +1530,8 @@ function collaps_tbody(tbody, id, but){
 function addLine(event, element){
     event.preventDefault();
     etalon_table = false;
-    if (id_count<seach_ID_table('tr','stroka_')) {
+    upTableTime();
+    if (id_count<=seach_ID_table('tr','stroka_')) {
             {#for_event_tr('tr','stroka_', id_count);#}
             id_count = seach_ID_table('tr','stroka_')+1;
         }
@@ -1485,10 +1650,24 @@ tr_math.childNodes[9].removeAttribute('data-title')
                 tr_math.childNodes[23].innerText = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2);
             }
             }
+            if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
 
+                if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
+                tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[9]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[15].abbr.replace(',','.')))).toFixed(2);
+                } else {
+                    tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].innerText.replace(',','.')))*1).toFixed(2)
+                }
+                if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
+                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
+
+                }
+            }
         if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText != ''){
+
         tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
-        if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) tr_math.childNodes[27].innerText = ((Number(tr_math.childNodes[23].innerText.replace(',','.')) * Number(tr_math.childNodes[25].innerText.replace(',','.')))).toFixed(2);
+        if (tr_math.parentElement.id.indexOf('earthWorks_costWork')!=-1) {
+            tr_math.childNodes[27].innerText = ((Number(tr_math.childNodes[23].innerText.replace(',','.')) * Number(tr_math.childNodes[25].innerText.replace(',','.')))).toFixed(2);
+        }
         }
 } else {tr_math.childNodes[13].innerText = '';
         tr_math.childNodes[9].setAttribute('data-title' , "Введите корректное значение");
@@ -1568,7 +1747,24 @@ tr_math.childNodes[15].addEventListener('focusout', function(event) {
         } else {
             tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
         }
-    }
+    } else if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
+                if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText!=''){
+                if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
+
+                        tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[15]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))).toFixed(2);
+
+
+                    } else {
+                        tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))*1).toFixed(2)
+                    }
+
+                     if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
+                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
+
+                }
+                }
+
+            }
 });
 
 tr_math.childNodes[23].addEventListener('keyup', function(event) {
@@ -1778,6 +1974,7 @@ document.getElementById('add_razdel').onclick = function () {
             let vblsota=window.innerHeight-100
             $(".table-responsive-pto").css("height",`${vblsota}`)
     etalon_table = false;
+    upTableTime();
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
         coll_table = seach_ID_table('tbody','earthWorks_')+1;
         }
@@ -1798,6 +1995,9 @@ let value = e.value;
         obj_global_sum['earthWorks_Special_'+ coll_table] = "";
         obj_global_sum['earthWorks_Total_'+ coll_table] = "";
         obj_global_sum['Total_tbody_'+ coll_table] = "";
+        obj_global_sum['Вспомогательные_материалы_'+ coll_table] = "6";
+        obj_global_sum['Накладные_расходы_'+ coll_table] = "120";
+        obj_global_sum['Транспортные_расходы_'+ coll_table] = "10";
 
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
@@ -1932,7 +2132,7 @@ let value = e.value;
                                 Накладные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">120</td>
                             <td contenteditable="true"></td>
 
                             <td contenteditable="false"></td>
@@ -1955,7 +2155,7 @@ let value = e.value;
                                 Вспомогательные материалы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">6</td>
                             <td contenteditable="true"></td>
 
 
@@ -1980,7 +2180,7 @@ let value = e.value;
                                 Транспортные расходы
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">10</td>
                             <td contenteditable="true"></td>
 
 
@@ -2024,7 +2224,7 @@ let value = e.value;
                                 В том числе НДС - 20% за нал от материалов
                             </td>
                             <td contenteditable="false">%</td>
-                            <td contenteditable="true" class="percent"></td>
+                            <td contenteditable="true" class="percent">20</td>
                             <td contenteditable="true"></td>
 
 
@@ -2282,6 +2482,7 @@ if(this.id.indexOf('Form_') == -1){
 
     function delLine(cel){
         etalon_table = false;
+        upTableTime();
         {#console.warn('cel= ' + cel)#}
         let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
         id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)
