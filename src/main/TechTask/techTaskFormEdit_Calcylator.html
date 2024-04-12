@@ -119,6 +119,31 @@
 
 <script>
 
+let stopInterval;
+function upTableTime(n=5,state=true){
+    console.log(n)
+    console.log(state)
+     clearInterval(stopInterval);
+    if (!state) return
+
+    // Отправляем в таблицу True
+    let dateNow = new Date();
+    dateNow.setMinutes(dateNow.getMinutes()+n)
+    console.log(dateNow)
+    stopInterval = setInterval(()=>{
+        let dateTimeOut = new Date()
+        if (((dateNow - dateTimeOut)/60/1000).toFixed()==0){
+            alert('timeOut вышел: ' + dateNow)
+            clearInterval(stopInterval)
+            // Отправляем в таблицу false
+        } else {
+            console.log('date: ' + dateTimeOut.getHours() +':'+ dateTimeOut.getMinutes())
+        }
+    }, 1000)
+}
+ //upTableTime()
+
+
         function createModal(arr){
         let blockDiv = document.createElement("div");
         blockDiv.setAttribute('id', 'my_modal');
@@ -648,6 +673,7 @@ $('#first_table').keypress(
       event.preventDefault();
     }
     etalon_table = false;
+    upTableTime();
 });
 let etalon_html_table = ''
 async function Test() {
@@ -862,6 +888,7 @@ function event_input(e) {
      {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
      if (JSON.parse({{roles_user|tojson|safe}})[0] != 'SUPPLIER') {
          etalon_table = false;
+         upTableTime();
          console.log('event!!!')
          console.log(event)
          let zaglav = document.getElementById(`zagolovok_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`);
@@ -1160,6 +1187,7 @@ document.getElementById('saveTable').onclick =async function () {
 
  if (response.status==200){
             etalon_table = true;
+            upTableTime(0,false);
             etalon_html_table = document.getElementById("first_table").innerHTML
             table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
@@ -1502,6 +1530,7 @@ function collaps_tbody(tbody, id, but){
 function addLine(event, element){
     event.preventDefault();
     etalon_table = false;
+    upTableTime();
     if (id_count<=seach_ID_table('tr','stroka_')) {
             {#for_event_tr('tr','stroka_', id_count);#}
             id_count = seach_ID_table('tr','stroka_')+1;
@@ -1945,6 +1974,7 @@ document.getElementById('add_razdel').onclick = function () {
             let vblsota=window.innerHeight-100
             $(".table-responsive-pto").css("height",`${vblsota}`)
     etalon_table = false;
+    upTableTime();
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
         coll_table = seach_ID_table('tbody','earthWorks_')+1;
         }
@@ -2452,6 +2482,7 @@ if(this.id.indexOf('Form_') == -1){
 
     function delLine(cel){
         etalon_table = false;
+        upTableTime();
         {#console.warn('cel= ' + cel)#}
         let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
         id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)
