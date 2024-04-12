@@ -119,8 +119,31 @@
 
 <script>
 
+
+async function status_table(state){
+
+    let response = await fetch('/techTask/SetWorkingTable_NameTechTask', {
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            "Authorization": getCookieValue("Authorization")
+      },
+      body: JSON.stringify({"NameTechTask": {{getTechTaskName.NameTechTask|tojson|safe}},"state": state})
+    });
+            let responseText = await response.text();
+            if (response.status==200){
+                return responseText
+            }
+            else{
+                return {"state":"error","user":""}
+
+            }
+}
+
+
 let stopInterval;
-function upTableTime(n=5,state=true){
+async function upTableTime(n=5,state=true){
     console.log(n)
     console.log(state)
      clearInterval(stopInterval);
@@ -130,16 +153,27 @@ function upTableTime(n=5,state=true){
     let dateNow = new Date();
     dateNow.setMinutes(dateNow.getMinutes()+n)
     console.log(dateNow)
+
+    state_table=JSON.parse(await status_table(true))
+    if (state_table.state){
+
     stopInterval = setInterval(()=>{
         let dateTimeOut = new Date()
         if (((dateNow - dateTimeOut)/60/1000).toFixed()==0){
-            alert('timeOut вышел: ' + dateNow)
+            console.log('timeOut вышел: ' + dateNow)
+            save_table_function()
             clearInterval(stopInterval)
             // Отправляем в таблицу false
         } else {
             console.log('date: ' + dateTimeOut.getHours() +':'+ dateTimeOut.getMinutes())
         }
     }, 1000)
+}
+    else{
+    alert(`Внимание заблокировано ${state_table.user}`)
+        showToast(`Актуальная версия таблицы редактируется пользователем ${state_table.user} внесенные изменения сохраняться в другой версии ` , 'warning' , 5000)
+
+    }
 }
  //upTableTime()
 
@@ -1170,7 +1204,7 @@ function up_obj_global_sum(){
 
 
 
-document.getElementById('saveTable').onclick =async function () {
+save_table_function=document.getElementById('saveTable').onclick =async function () {
     event.preventDefault();
     let response = await fetch('/techTask/formPtoCreateUpdate', {
   method: 'POST',
@@ -1190,6 +1224,7 @@ document.getElementById('saveTable').onclick =async function () {
             upTableTime(0,false);
             etalon_html_table = document.getElementById("first_table").innerHTML
             table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+            status_table(false)
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
