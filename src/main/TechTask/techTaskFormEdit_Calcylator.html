@@ -120,7 +120,7 @@
 <script>
 
 
-async function status_table(state){
+async function status_table(state,check=true){
 
     let response = await fetch('/techTask/SetWorkingTable_NameTechTask', {
       method: 'POST',
@@ -133,6 +133,12 @@ async function status_table(state){
     });
             let responseText = await response.text();
             if (response.status==200){
+
+                if (check && JSON.parse(responseText).id_actual_table!=etalon_ID){
+                    showToast('Появилась новая актуальная версия таблицы, необходимо обновить страницу' , 'warning' , 10000)
+
+                }
+
                 return responseText
             }
             else{
@@ -161,7 +167,7 @@ async function upTableTime(n=5,state=true){
         let dateTimeOut = new Date()
         if (((dateNow - dateTimeOut)/60/1000).toFixed()==0){
             console.log('timeOut вышел: ' + dateNow)
-            save_table_function()
+            save_table_function(description='Автосохранение')
             clearInterval(stopInterval)
             // Отправляем в таблицу false
         } else {
@@ -645,6 +651,7 @@ let response = await fetch('/techTask/formPtoGet_id', {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
+         document.getElementById('label_version').innerText="Загруженная версия  -  id{"+JSON.parse(responseText)["id"]+"},Время сохранения:"+JSON.parse(responseText)["create_at"]+",  Описание:"+ (JSON.parse(responseText)["description"]==null?"":JSON.parse(responseText)["description"])+",  Пользователь:"+JSON.parse(responseText)["user_name"];
 
          Napolneneie(JSON.parse(responseText))
         sravnenie();
@@ -692,7 +699,7 @@ removeOptions(document.getElementById('versionTable'));
 
                 var opt = document.createElement('option');
                 {#opt.value = JSON.parse(responseText)[i]["id"];#}
-                opt.innerHTML = "id{"+JSON.parse(responseText)[i]["id"]+"},Время сохранения:"+JSON.parse(responseText)[i]["create_at"].slice(0,-13)+",  Описание:"+ (JSON.parse(responseText)[i]["description"]==null?"":JSON.parse(responseText)[i]["description"]);
+                opt.innerHTML = "id{"+JSON.parse(responseText)[i]["id"]+"},Время сохранения:"+JSON.parse(responseText)[i]["create_at"]+",  Описание:"+ (JSON.parse(responseText)[i]["description"]==null?"":JSON.parse(responseText)[i]["description"])+",  Пользователь:"+JSON.parse(responseText)[i]["user_name"];
                 select.appendChild(opt);
             }
         }
@@ -724,8 +731,11 @@ async function Test() {
         let responseText = await response.text();
         console.log("formPtoGet",JSON.parse(responseText))
         if (response.status==200){
+         etalon_ID = JSON.parse(responseText).id
          etalon_html_table = JSON.parse(responseText).value_table
          Napolneneie(JSON.parse(responseText))
+
+         document.getElementById('label_version').innerText="Загруженная версия  -  id{"+JSON.parse(responseText)["id"]+"},Время сохранения:"+JSON.parse(responseText)["create_at"]+",  Описание:"+ (JSON.parse(responseText)["description"]==null?"":JSON.parse(responseText)["description"])+",  Пользователь:"+JSON.parse(responseText)["user_name"];
         }
 
 
@@ -1204,7 +1214,8 @@ function up_obj_global_sum(){
 
 
 
-save_table_function=document.getElementById('saveTable').onclick =async function () {
+save_table_function=document.getElementById('saveTable').onclick =async function (poin,description="Без описания") {
+    console.log("description",description)
     event.preventDefault();
     let response = await fetch('/techTask/formPtoCreateUpdate', {
   method: 'POST',
@@ -1213,18 +1224,20 @@ save_table_function=document.getElementById('saveTable').onclick =async function
         Accept: 'application/json',
         "Authorization": getCookieValue("Authorization")
   },
-  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}},"description": document.getElementById("saveTable_description").getAttribute("value"), "value_table": document.getElementById("first_table").innerHTML})
+  body: JSON.stringify({"NameTechTask_key": {{getTechTaskName.NameTechTask|tojson|safe}},"description":
+  document.getElementById("saveTable_description").getAttribute("value")?document.getElementById("saveTable_description").getAttribute("value"):description, "value_table": document.getElementById("first_table").innerHTML})
 
 });
         let responseText = await response.text();
-     document.getElementById('saveTable_description').value=""
+     document.getElementById('saveTable_description').setAttribute("value","")
 
  if (response.status==200){
             etalon_table = true;
             upTableTime(0,false);
             etalon_html_table = document.getElementById("first_table").innerHTML
             table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
-            status_table(false)
+            state_table=JSON.parse(await status_table(state=false,check=false))
+            etalon_ID=state_table.id_actual_table
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{

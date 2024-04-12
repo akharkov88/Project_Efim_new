@@ -69,7 +69,9 @@ class TechTaskServices:
             if not operation:
                 raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)
+            value_return=jsonable_encoder(operation)
+            value_return["create_at"]=datetime.datetime.fromisoformat(value_return["create_at"]).strftime("%Y-%m-%d %H:%M:%S")
+            return value_return
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
@@ -95,7 +97,13 @@ class TechTaskServices:
             if not operation:
                 raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)[:TechTaskDATA.sum]
+
+            value_return=jsonable_encoder(operation)
+
+            for i,val in enumerate(value_return):
+                value_return[i]["create_at"]=datetime.datetime.fromisoformat(value_return[i]["create_at"]).strftime("%Y-%m-%d %H:%M:%S")
+
+            return value_return[:TechTaskDATA.sum]
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
@@ -118,7 +126,9 @@ class TechTaskServices:
             if not operation:
                 raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)
+            value_return=jsonable_encoder(operation)
+            value_return["create_at"]=datetime.datetime.fromisoformat(value_return["create_at"]).strftime("%Y-%m-%d %H:%M:%S")
+            return value_return
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
@@ -127,53 +137,30 @@ class TechTaskServices:
 
         # return "operation"
 
-    def GetWorkingTable_NameTechTask(self,NameTechTask: str,user: tables.User,):
 
-
-        try:
-            operation = (
-                self.session
-                .query(tables.WorkingTable)
-                .filter(
-                    tables.WorkingTable.NameTechTask == NameTechTask
-                )
-                .first()
-            )
-            if not operation:
-                operation = tables.WorkingTable(
-                    NameTechTask=NameTechTask,
-                    username=user.username,
-                    state=False
-                )
-                self.session.add(operation)
-                self.session.commit()
-                operation = (
-                    self.session
-                    .query(tables.WorkingTable)
-                    .filter(
-                        tables.WorkingTable.NameTechTask == NameTechTask
-                    )
-                    .first()
-                )
-                if not operation:
-
-                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
-            # return jsonable_encoder(operation)
-            return jsonable_encoder(operation)
-        except:
-            print(traceback.format_exc())
-            raise HTTPException(status.HTTP_409_CONFLICT, detail="Error no name NameTechTask_key")
-            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
     def SetWorkingTable_NameTechTask(self,NameTechTask: models.WorkingNameTechTask,user: tables.User):
 
 
         try:
+            operation_ID_NameTechTask = (
+                self.session
+                .query(tables.PTO_Value)
+                .filter(
+                    tables.PTO_Value.NameTechTask_key == NameTechTask.NameTechTask
+                )
+                .order_by(
+                    tables.PTO_Value.create_at.desc()
+                )
+                .first()
+            )
+            id_actual_table=jsonable_encoder(operation_ID_NameTechTask)["id"]
             operation = (
                 self.session
                 .query(tables.WorkingTable)
                 .filter(
                     tables.WorkingTable.NameTechTask == NameTechTask.NameTechTask
                 )
+
                 .first()
             )
             if not operation:
@@ -195,7 +182,7 @@ class TechTaskServices:
                 if not operation:
                     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
                 else:
-                   return {"state":NameTechTask.state,"user":""}
+                   return {"state":NameTechTask.state,"user":"","id_actual_table":id_actual_table}
             utc = pytz.UTC
             if jsonable_encoder(operation)["username"]==user.username or (datetime.datetime.fromisoformat(jsonable_encoder(operation)["update_at"])+datetime.timedelta(minutes=5))<utc.localize(datetime.datetime.utcnow()):
 
@@ -212,10 +199,10 @@ class TechTaskServices:
                 )
                 if not operation:
                     raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
-                return {"state": NameTechTask.state, "user": ""}
+                return {"state": NameTechTask.state, "user": "","id_actual_table":id_actual_table}
 
             else:
-                return {"state":False,"user":jsonable_encoder(operation)["username"]}
+                return {"state":False,"user":jsonable_encoder(operation)["username"],"id_actual_table":id_actual_table}
             #
             # if not operation:
             #
