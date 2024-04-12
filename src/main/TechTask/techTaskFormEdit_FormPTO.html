@@ -3,64 +3,68 @@
         <div class="col-lg-12">
             <form role="form" id="formFrame">
 
-            <script>console.log("roles_user",{{roles_user|tojson|safe}})
-            </script>
+                <script>console.log("roles_user", {{roles_user|tojson|safe}})
+                </script>
 
                 <div class="form-group">
-                <label ></label>
-                <div class="form-group">
-                    <label>Наименнование объекта</label>
-                    <input value="{{ getTechTaskName.NameTechTask }}"
-                           class="form-control" readonly>
+                    <div class="form-group">
+                        <label>Наименнование объекта</label>
+                        <input value="{{ getTechTaskName.NameTechTask }}"
+                               class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <div id="div_name_razdel">
+                            <label>Добавление раздела</label>
+                            <div id="div1">
+                                <input id="select_one" type="text" list="ListRazdel" value="" class="form-control"
+                                       autocomplete="off">
+                                {# div_costWork_4  div   #}
+                                <datalist id="ListRazdel">
+                                </datalist>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <button id='add_razdel' type="button" class="btn btn-primary"> Добавить раздел</button>
+                        {#                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>#}
+                    </div>
+                    <div class="form-group">
+
+                        <label id="label_version"></label>
+
+                    </div>
                 </div>
-                <div class="form-group">
-                <div id="div_name_razdel">
-                    <label>Добавление раздела</label>
-                    <div id="div1">
-                    <input id="select_one" type="text"  list="ListRazdel" value="" class="form-control" autocomplete="off">
-                    {# div_costWork_4  div   #}
-                    <datalist id="ListRazdel">
-                    </datalist>
-                    </div>
 
-                    </div>
-                    </div>
-
-                    <button id='add_razdel' type="button" class="btn btn-primary"> Добавить раздел</button>
-{#                    <button id='del_razdel' type="button" class="btn btn-primary"> Удалить раздел</button>#}
-
-
-                </div>
 
                 <div class="style_table" id='style_table' style="display:none;">
                     <div class="style_table table-responsive-pto" id='table_pto'>
-                        <table class="first iksweb" id="first_table" >
+                        <table class="first iksweb" id="first_table">
 
                         </table>
 
 
-
-                </div>
-
+                    </div>
 
 
                 </div>
-{#                <div class="row">#}
-{#                <div class="form-group">#}
-{##}
-{#                             <label id="saveTable_description_label" style="display:none;">Описание изменений 20 символов</label>#}
-{#                            <input id="saveTable_description" class="form-control" style="display:none;" >#}
-{#                       </div>#}
-{#                         <div class="form-group">#}
-{#                         <button id="saveTable"  class="btn btn-primary" style="display:none;">Сохранить изменения таблицы</button>#}
-{#                            </div>#}
-{#                            <div class="form-group">#}
-{#                                            <label id="versionTable_label">Список версии</label>#}
-{#                                            <select id="versionTable" class="form-control">#}
-{#                                            </select>#}
-{#                                            </div>#}
-{##}
-{#                </div>#}
+                {#                <div class="row">#}
+                {#                <div class="form-group">#}
+                {##}
+                {#                             <label id="saveTable_description_label" style="display:none;">Описание изменений 20 символов</label>#}
+                {#                            <input id="saveTable_description" class="form-control" style="display:none;" >#}
+                {#                       </div>#}
+                {#                         <div class="form-group">#}
+                {#                         <button id="saveTable"  class="btn btn-primary" style="display:none;">Сохранить изменения таблицы</button>#}
+                {#                            </div>#}
+                {#                            <div class="form-group">#}
+                {#                                            <label id="versionTable_label">Список версии</label>#}
+                {#                                            <select id="versionTable" class="form-control">#}
+                {#                                            </select>#}
+                {#                                            </div>#}
+                {##}
+                {#                </div>#}
 
             </form>
         </div>
