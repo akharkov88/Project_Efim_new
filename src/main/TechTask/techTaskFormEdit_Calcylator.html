@@ -142,7 +142,7 @@ async function status_table(state,check=true){
                 return responseText
             }
             else{
-                return {"state":"error","user":""}
+                return {"state":"error","user":"","id_actual_table":""}
 
             }
 }
@@ -176,8 +176,13 @@ async function upTableTime(n=5,state=true){
     }, 1000)
 }
     else{
-    {#alert(`Внимание заблокировано ${state_table.user}`)#}
+        if (state_table.state!="error"){
         showToast(`Актуальная версия таблицы редактируется пользователем ${state_table.user} внесенные изменения сохраняться в другой версии ` , 'warning' , 5000)
+
+        }else{
+        showToast(`Ошибка сервера ` , 'error' , 5000)
+
+        }
 
     }
 }
@@ -301,7 +306,7 @@ async function upTableTime(n=5,state=true){
                                         console.log("res.status", res.status)
                                         if (res.status == 200) {
                                             console.log(res.status)
-                                            window.location.href ="/main/techTask.html"
+                                            {#window.location.href ="/main/techTask.html"#}
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
@@ -1241,7 +1246,7 @@ save_table_function=document.getElementById('saveTable').onclick =async function
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
-     showToast()
+
             showToast('Ошибка сохранения' , 'warning' , 5000)
 
  }
