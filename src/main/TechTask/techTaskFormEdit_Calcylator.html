@@ -19,6 +19,7 @@
 
                         <!-- /.panel-body -->
                     </div>
+
                 </div>
 {#                <div class="tabsCalcylator__content" data-tab="supplier">#}
 {#                    <div class="panel panel-default">#}
@@ -119,6 +120,24 @@
 
 <script>
 
+toggleCheckbox.onclick = function(){
+console.log(toggleCheckbox.checked)
+if (toggleCheckbox.checked){
+    //     editor_ADMIN  editor_ENGINEER  editor_MAIN_ENGINEER   editor_BOSS   editor_SUPPLIER
+    $('.editor_ADMIN').css("background","#c96eff")
+    $('.editor_ENGINEER').css("background","#f568d4")
+    $('.editor_MAIN_ENGINEER').css("background","#267a55")
+    $('.editor_BOSS').css("background","#ffe271")
+    $('.editor_SUPPLIER').css("background","#59d5ff")
+
+
+} else {
+    table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+    console.log('JSON.parse(responseText).id_actual_table')
+    console.log(JSON.parse(responseText).id_actual_table)
+    sravnenie(false)
+}
+}
 
 async function status_table(state,check=true){
 
@@ -533,7 +552,7 @@ window.onbeforeunload = function() {
 //  alert(`Привет, ${name}!`);
 //}, 3000, 'Василий');
 
-function sravnenie(){
+function sravnenie(modal=true){
     //let tableSrav = document.createElement(etalon_html_table)
     let tagForTable = document.createElement("table");
     let divtagForTable = document.createElement("div");
@@ -554,7 +573,7 @@ function sravnenie(){
 
         }
         console.log('нет строк: '+stroki)
-        if (stroki.length>0){
+        if (stroki.length>0 && modal){
             createModal(stroki);
         } else {console.log('все есть')}
 
@@ -655,6 +674,8 @@ let response = await fetch('/techTask/formPtoGet_id', {
 
          Napolneneie(JSON.parse(responseText))
         sravnenie();
+        toggleCheckbox.checked = false
+
         }
 })
 
@@ -794,6 +815,8 @@ function Napolneneie(value){
              })
              {#$("input[id ^='input_']")#}
              event_input($("input[id ^='input_']"))
+             //event_all_td();
+
 }
 function event_input(e) {
 {#console.log('!@#')#}
@@ -1229,7 +1252,8 @@ save_table_function=document.getElementById('saveTable').onclick =async function
 
 });
         let responseText = await response.text();
-     document.getElementById('saveTable_description').setAttribute("value","")
+     document.getElementById('saveTable_description').value = ''
+     //document.getElementById('saveTable_description').setAttribute("value","")
 
  if (response.status==200){
             etalon_table = true;
@@ -1239,6 +1263,7 @@ save_table_function=document.getElementById('saveTable').onclick =async function
             state_table=JSON.parse(await status_table(state=false,check=false))
             etalon_ID=state_table.id_actual_table
             //document.getElementById("first_table").innerHTML.replaceAll('display:none','').replaceAll('readonly="readonly"','').replaceAll('true','').replaceAll('false','').replaceAll('display:table-cell','')
+            Test();
             showToast('Данные успешно сохранены' , 'info' , 5000)
  }else{
      showToast()
@@ -1661,8 +1686,35 @@ function addLine(event, element){
                 arr_id_count.push(id_count);
 
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+
+    //event_all_td()
 }
 
+{#function event_all_td(){#}
+{#//alert('tyt')#}
+{#let all_td = $('#first_table td')#}
+{##}
+{#for (let cell_td in all_td){#}
+{#    if (!isNaN(cell_td)){#}
+{#        $('#first_table td')[cell_td].addEventListener('keyup', function(event) {#}
+{#        if ($('#first_table td')[cell_td].classList.length>0){#}
+{#            for (let i=0; i<$('#first_table td')[cell_td].classList.length; i++){#}
+{#                if ($('#first_table td')[cell_td].classList[i].indexOf('editor')!=-1){#}
+{#                    $('#first_table td')[cell_td].classList.remove($('#first_table td')[cell_td].classList[i])#}
+{#                }#}
+{#            }#}
+{#        }#}
+{#        $('#first_table td')[cell_td].classList.add(`editor_${(JSON.parse({{roles_user|tojson|safe}} )[0])}`);#}
+{#        //editor_ADMIN  editor_ENGINEER  editor_MAIN_ENGINEER   editor_BOSS   editor_SUPPLIER#}
+{#        console.warn($('#first_table td')[cell_td])#}
+{#        console.warn('alert')#}
+{#        console.warn('roles = ', (JSON.parse({{roles_user|tojson|safe}} )[0]))#}
+{#        })#}
+{#    }#}
+{##}
+//}
+//}
+{##}
 
 function event_tr (tr_math){
 
@@ -1934,6 +1986,70 @@ tr_math.childNodes[29].removeAttribute('data-title');
 }
 });
 
+let all_td_in_stroka = $(`#${tr_math.id} td`)
+let arr_key = ['Tab','Shift','Enter']
+console.log('alert')
+console.log(all_td_in_stroka)
+let notEmpty = false
+    for(let j in all_td_in_stroka){
+        if(!isNaN(j)){
+        {#console.log(j)#}
+
+            all_td_in_stroka[j].addEventListener('keyup', function(event) {
+            if (arr_key.indexOf(event.key)==-1){
+            if (all_td_in_stroka[j].classList.length>0){
+                for (let i=0; i<all_td_in_stroka[j].classList.length; i++){
+                    if (all_td_in_stroka[j].classList[i].indexOf('editor')!=-1){
+                        all_td_in_stroka[j].classList.remove(all_td_in_stroka[j].classList[i])
+                        notEmpty = true
+                    }
+                }
+            }
+            if (notEmpty){
+                all_td_in_stroka[j].classList.add(`editor_${(JSON.parse({{roles_user|tojson|safe}} )[0])}`);
+            } else if ((JSON.parse({{roles_user|tojson|safe}} )[0])!='ENGINEER'){
+                if (all_td_in_stroka[j].innerText!=''){
+                all_td_in_stroka[j].classList.add(`editor_${(JSON.parse({{roles_user|tojson|safe}} )[0])}`);
+                }
+            }
+
+
+            //editor_ADMIN  editor_ENGINEER  editor_MAIN_ENGINEER   editor_BOSS   editor_SUPPLIER
+            console.warn(all_td_in_stroka[j])
+            console.warn('alert')
+            console.warn('roles = ', (JSON.parse({{roles_user|tojson|safe}} )[0]))
+            }
+            })
+        }
+
+    }
+    console.log('ggg')
+    let all_input = $("input[id ^='input_']")
+        for(let j in all_input){
+            if(!isNaN(j)) {
+                console.log(j)
+                console.log(all_input[j])
+                all_input[j].addEventListener('change', function(event) {
+
+                     if (all_input[j].classList.length>0){
+                            for (let i=0; i<all_input[j].classList.length; i++){
+                                        if (all_input[j].classList[i].indexOf('editor')!=-1){
+                                            all_input[j].classList.remove(all_input[j].classList[i])
+                                            notEmpty = true
+                                        }
+                            }
+                     }
+                     if (notEmpty){
+                            all_input[j].classList.add(`editor_${(JSON.parse({{roles_user|tojson|safe}} )[0])}`);
+                        } else if ((JSON.parse({{roles_user|tojson|safe}} )[0])!='ENGINEER'){
+                            all_input[j].classList.add(`editor_${(JSON.parse({{roles_user|tojson|safe}} )[0])}`);
+                        }
+
+
+                })
+
+            }
+        }
 
 
 }
