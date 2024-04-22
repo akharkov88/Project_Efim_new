@@ -136,7 +136,7 @@ if (toggleCheckbox.checked){
     document.getElementById('legeng_story').style.display = 'none'
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
     console.log('JSON.parse(responseText).id_actual_table')
-    console.log(JSON.parse(responseText).id_actual_table)
+    //console.log(JSON.parse(responseText).id_actual_table)
     sravnenie(false)
 }
 }
@@ -682,6 +682,7 @@ let response = await fetch('/techTask/formPtoGet_id', {
          Napolneneie(JSON.parse(responseText))
         sravnenie();
         toggleCheckbox.checked = false
+        document.getElementById('legeng_story').style.display = 'none'
 
         }
 })
