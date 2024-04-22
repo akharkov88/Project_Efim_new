@@ -123,6 +123,7 @@
 toggleCheckbox.onclick = function(){
 console.log(toggleCheckbox.checked)
 if (toggleCheckbox.checked){
+    document.getElementById('legeng_story').style.display = 'block'
     //     editor_ADMIN  editor_ENGINEER  editor_MAIN_ENGINEER   editor_BOSS   editor_SUPPLIER
     $('.editor_ADMIN').css("background","#c96eff")
     $('.editor_ENGINEER').css("background","#f568d4")
@@ -132,6 +133,7 @@ if (toggleCheckbox.checked){
 
 
 } else {
+    document.getElementById('legeng_story').style.display = 'none'
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
     console.log('JSON.parse(responseText).id_actual_table')
     console.log(JSON.parse(responseText).id_actual_table)
