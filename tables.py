@@ -163,3 +163,11 @@ class ListUserRoles(Base):
     id = Column(Integer, primary_key=True)
     role = Column(String, nullable=False)
     name_roles = Column(String, nullable=False)
+
+
+class WorkingTable(Base):
+    __tablename__ = 'WorkingTable'
+    NameTechTask = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True, primary_key=True)
+    username = Column(String, ForeignKey('users.username'))
+    state = Column(Boolean, nullable=False)
+    update_at= Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())

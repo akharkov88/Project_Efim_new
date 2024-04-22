@@ -1004,6 +1004,36 @@ body {
 	border-bottom: 1px solid #ddd;
 }
 
+.demoToggleCheckbox {
+    display: none;
+}
+.demoToggleCheckbox + label {
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 17px;
+    position: relative;
+    cursor: pointer;
+}
+.demoToggleCheckbox + label:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+.demoToggleCheckbox:checked + label {
+    background-color: #33c53e;
+}
+.demoToggleCheckbox:checked + label:after {
+    transform: translateX(26px);
+}
+
 /*/////////////////*/
 
 

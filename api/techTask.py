@@ -10,6 +10,8 @@ from fastapi import (
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse, RedirectResponse
+
 
 import models
 
@@ -91,4 +93,49 @@ def create_operation(
         user: models.User = Depends(get_current_user),
 ):
     return Tech_TaskServices.getTechTaskPTO_id_S(user_data,user)
+
+# @router.get("/GetWorkingTable_NameTechTask")
+# async def GetWorkingTable(request: Request,
+#                # NameTechTask: models.WorkingNameTechTask,
+#                # Auth_Service: AuthService = Depends(),
+#                # Tech_TaskServices: TechTaskServices = Depends(),
+#                ):
+#     try:
+#         # Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+#         return ""
+#     except:
+#         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    # return Tech_TaskServices.GetWorkingTable_NameTechTask(NameTechTask)
+
+# @router.get('/GetWorkingTable_NameTechTask',response_model=models.WorkingAll,)
+# def get_operationName(request: Request,
+#                       NameTechTask: str ,
+#                       Auth_Service: AuthService = Depends(),
+#                       Tech_TaskServices: TechTaskServices = Depends(),
+#                       ):
+#     try:
+#         user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+#     except:
+#         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+#     return Tech_TaskServices.GetWorkingTable_NameTechTask(NameTechTask,user)
+
+
+
+@router.post('/SetWorkingTable_NameTechTask',
+    # response_model=models.Response_WorkingNameTechTask,
+    # response_model=models.UserTask,
+    # status_code=status.HTTP_200_OK,
+)
+def SetWorkingTable(
+        request: Request,
+        user_data: models.WorkingNameTechTask,
+        Tech_TaskServices: TechTaskServices = Depends(),
+        Auth_Service: AuthService = Depends(),
+
+):
+    try:
+        user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return Tech_TaskServices.SetWorkingTable_NameTechTask(user_data,user)
 

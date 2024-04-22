@@ -101,13 +101,6 @@ def get_operation(request: Request,):
 
 
 
-
-@router.get('/main/techTask.html',response_model=List[models.Operation],)
-def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
-    return templates.TemplateResponse(
-        "techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
-    )
-
 @router.get('/techTask.html',response_model=List[models.Operation],)
 def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
     return templates.TemplateResponse(
@@ -205,7 +198,11 @@ def create_operation(
 
 
 @router.get('/techTaskFormEdit.html',response_model=List[models.Operation],)
-def get_operationName(request: Request,Task_Services: TaskServices = Depends(),NameTechTask: str = "",Auth_Service: AuthService = Depends(),User_ProfileServices: UserProfileServices = Depends(),):
+def get_operationName(request: Request,
+                      Task_Services: TaskServices = Depends(),
+                      NameTechTask: str = "",
+                      Auth_Service: AuthService = Depends(),
+                      User_ProfileServices: UserProfileServices = Depends(),):
     try:
         user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
