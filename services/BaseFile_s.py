@@ -118,6 +118,11 @@ class BaseFileServices:
                             if column.div:
                                 if column.div.input:
                                     text_value=column.div.input.get("value")
+                            if column.input:
+                                if column.input.get("value")!=None:
+                                    if column.input.get("value")!="":
+                                        text_value = column.input.get("value")
+
                         else:
                             if column.div:
                                 column.div.decompose()
