@@ -122,7 +122,9 @@ class BaseFileServices:
                                 if column.input.get("value")!=None:
                                     if column.input.get("value")!="":
                                         text_value = column.input.get("value")
-
+                                        # background_color
+                                        if str(column.input.get("id")).find("zagolovok_")!=-1:
+                                            background_color="a94442"
                         else:
                             if column.div:
                                 column.div.decompose()
@@ -166,6 +168,7 @@ class BaseFileServices:
                 row_marker += 1
             workbook.save(filename=pathlib.PurePath(pathlib.Path(os.path.abspath(os.getcwd())), "src", "file", name_fail))
         except:
+            print(traceback.format_exc())
             workbook.save(filename="converter_html_in_xlsx.xlsx")
 
         return name_fail
