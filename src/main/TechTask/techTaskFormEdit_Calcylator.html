@@ -962,6 +962,7 @@ function event_input(e) {
  function del_func (event) {
      {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
      if (JSON.parse({{roles_user|tojson|safe}})[0] != 'SUPPLIER') {
+
          etalon_table = false;
          upTableTime();
          console.log('event!!!')
@@ -1005,6 +1006,16 @@ function event_input(e) {
          pereschetTotalSum();
          pereschetTotalNDS();
          counterTr();
+          let maskTable = $('.maska')
+                if ($('*[id^=earthWorks_]').length != 0){
+                if (maskTable.length == 0){
+                    $('*[id^=earthWorks_]')[0].classList.add('maska');
+                } else {
+                    maskTable[0].classList.remove("maska")
+                    //$('.maska')[0].classList.remove('maska')
+                    $('*[id^=earthWorks_]')[0].classList.add('maska');
+                }
+                }
      }
  }
 
@@ -2180,7 +2191,7 @@ let value = e.value;
 
         $("#first_table").append(`<tbody id = "earthWorks_${coll_table}">
                     <tr><td colspan="6" style="padding: 0; height: 1px;"><input id = 'zagolovok_${coll_table}' style = "width: 100%; height: 100%; border:  0;" autocomplete="off">
-                               </td><td colspan="4" class="tehstolbec"><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
+                               </td><td colspan="4" class="tehstolbec but_del_razdel"><button id='del_razdel_${coll_table}' type="button" class="btn-primary"> Удалить раздел</button></td>
                     </tr>
                         <tr style="background-color: #fce1b3">
                             <td rowspan="2"  class="tehstolbec">Тех столбец</td>
@@ -2494,6 +2505,18 @@ let value = e.value;
             else {
             showToast('Заголовок есть' , 'warning' , 5000)
             }
+                let maskTable = $('.maska')
+                if ($('*[id^=earthWorks_]').length != 0){
+                if (maskTable.length == 0){
+                    $('*[id^=earthWorks_]')[0].classList.add('maska');
+                } else {
+                    maskTable[0].classList.remove("maska")
+                    //$('.maska')[0].classList.remove('maska')
+                    $('*[id^=earthWorks_]')[0].classList.add('maska');
+                }
+                }
+
+
         }
 
 function table_earthWorks_Total(coll_table){

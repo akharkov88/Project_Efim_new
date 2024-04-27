@@ -991,10 +991,13 @@ body {
 /*  top: 0;*/
 /*  width: 100%;*/
 /*}*/
-#earthWorks_1{
+.maska{
       position: sticky;
       top: 0;
-
+      z-index: 1;
+}
+.but_del_razdel{
+    background: white;
 }
 .fixtable-fixed {
 	position: fixed;
