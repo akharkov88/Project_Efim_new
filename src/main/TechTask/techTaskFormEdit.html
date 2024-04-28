@@ -293,7 +293,34 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
 </body>
 <script>
+      console.log('!@#')
+      var tx = document.getElementsByTagName('textarea');//РАСТЯГИВАЕМ_textarea
+        for (var i = 0; i < tx.length; i++) {
+            //tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;overflow-y:hidden;');
+            tx[i].addEventListener("focus", OnInput, false);
+            tx[i].addEventListener("input", OnInput, false);
+            tx[i].addEventListener("focusout", OnOutFocus);
+        }
+        function OnInput() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';//////console.log(this.scrollHeight);
+        }
+        function OnOutFocus() {
+            this.style.height = 'auto';
+        }
 
+
+
+                                            let my_elements = $('textarea[name^=TechTask]')
+                                            console.log('client1', my_elements)
+                                            for (let i = 0; i<my_elements.length; i++) {
+                                            let temp = my_elements[i]
+                                                console.log('temp=' + temp)
+                                                console.log(temp.height)
+                                                temp.setAttribute('height','1px')
+
+                                                console.log(my_elements[i].style)
+                                            }
     function KP_table(){
     let kp_table_text = ''
     //document.getElementById("KP_table").innerHTML = (document.getElementById("first_table").innerHTML);
