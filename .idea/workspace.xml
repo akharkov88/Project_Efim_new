@@ -4,22 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a7409a8d-2754-4218-8451-94798c0fa24b" name="Changes" comment="fix timeout">
+    <list default="true" id="69fddd48-7afa-409e-86ff-e3babd90257d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test_excel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/шапка.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/techTask.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/techTask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/BaseFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/BaseFile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/converter_html_in_xlsx.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/converter_html_in_xlsx.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/BaseFile_s.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/BaseFile_s.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_FormKP.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_FormKP.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/static/global.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/static/global.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,58 +28,36 @@
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
+  &quot;associatedIndex&quot;: 5
 }</component>
-  <component name="ProjectId" id="2eqwSANk1u6yiPwewPaub5Csilz" />
+  <component name="ProjectId" id="2fVIauD2uwlEMHwIDTKxvujEolf" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Node.js.CodeWars.js.executor": "Run",
-    "Python.insert_value_table.executor": "Run",
     "Python.main.executor": "Run",
-    "Python.testPYTON.executor": "Run",
+    "Python.test_excel.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/aleksey/pythonProject/Project_Efim_new",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "inlay.hints",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/services" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="CodeWars.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/CodeWars.js" working-dir="$PROJECT_DIR$">
-      <method v="2" />
-    </configuration>
-    <configuration name="insert_value_table" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Project_Efim_new" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/insert_value_table.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project_Efim_new" />
       <option name="ENV_FILES" value="" />
@@ -104,7 +81,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="testPYTON" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test_excel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Project_Efim_new" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,7 +95,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testPYTON.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_excel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -130,9 +107,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.insert_value_table" />
-        <item itemvalue="Python.testPYTON" />
-        <item itemvalue="Node.js.CodeWars.js" />
+        <item itemvalue="Python.test_excel" />
       </list>
     </recent_temporary>
   </component>
@@ -146,45 +121,46 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a7409a8d-2754-4218-8451-94798c0fa24b" name="Changes" comment="" />
-      <created>1712645414517</created>
+      <changelist id="69fddd48-7afa-409e-86ff-e3babd90257d" name="Changes" comment="" />
+      <created>1713879885801</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1712645414517</updated>
-      <workItem from="1712645416351" duration="45000" />
-      <workItem from="1712645468661" duration="93000" />
-      <workItem from="1712645569167" duration="616000" />
-      <workItem from="1712651286821" duration="1253000" />
-      <workItem from="1712660647384" duration="11803000" />
-      <workItem from="1712725778233" duration="7273000" />
-      <workItem from="1712825928025" duration="8361000" />
-      <workItem from="1712909025080" duration="2824000" />
-      <workItem from="1712913746458" duration="181000" />
-      <workItem from="1712913937667" duration="895000" />
-      <workItem from="1712915832502" duration="64000" />
-      <workItem from="1712916214937" duration="1369000" />
+      <updated>1713879885801</updated>
+      <workItem from="1713879888103" duration="1574000" />
+      <workItem from="1713969719664" duration="65000" />
+      <workItem from="1714580606530" duration="2111000" />
+      <workItem from="1714583060698" duration="8610000" />
+      <workItem from="1714642344497" duration="608000" />
+      <workItem from="1714660448464" duration="350000" />
     </task>
-    <task id="LOCAL-00001" summary="fix timeout">
-      <option name="closed" value="true" />
-      <created>1712909276328</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1712909276328</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix timeout" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix timeout" />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_excel.py</url>
+          <line>95</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html</url>
+          <line>304</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html</url>
+          <line>307</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project_Efim_new$insert_value_table.coverage" NAME="insert_value_table Coverage Results" MODIFIED="1712913988807" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project_Efim_new$testPYTON.coverage" NAME="testPYTON Coverage Results" MODIFIED="1712753247506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1712916262929" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1714660449305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project_Efim_new$test_excel.coverage" NAME="test_excel Coverage Results" MODIFIED="1714584058899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

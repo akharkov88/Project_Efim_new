@@ -295,7 +295,9 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 <script>
 
     function KP_table(){
-    let kp_table_text = ''
+
+    let kp_table_text = '<table>'
+
     //document.getElementById("KP_table").innerHTML = (document.getElementById("first_table").innerHTML);
 
     //$('#first_table')[0]
@@ -304,7 +306,6 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
     // иду по всем tbody таблицы
     for (let i=0; i<temp_table.length; i++){
-    console.log(temp_table[i])
 
     if (temp_table[i].id.indexOf('earthWorks_')!= -1 && temp_table[i].id.indexOf('earthWorks_Total_') == -1 && temp_table[i].id.indexOf('earthWorks_costWork_')== -1 && temp_table[i].id.indexOf('earthWorks_costMaterial_')== -1 && temp_table[i].id.indexOf('earthWorks_Special_') == -1){
      kp_table_text += '<tr> <td colspan="6" style="font-weight: bold;">'+temp_table[i].childNodes[1].childNodes[0].childNodes[0].value+'</td></tr>'
@@ -378,7 +379,7 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
     kp_table_text += '<tr><td></td>'+'<td>'+ footer.childNodes[3].childNodes[5].innerHTML +'</td>'+'<td>'+ footer.childNodes[3].childNodes[13].innerHTML +'</td>' + '</tr>';
     kp_table_text += '<tr><td></td>'+'<td>'+ footer.childNodes[5].childNodes[5].innerHTML +'</td>'+'<td>'+ footer.childNodes[5].childNodes[13].innerHTML +'</td>' + '</tr>';
 
-       document.getElementById("KP_table").innerHTML = kp_table_text
+       document.getElementById("KP_table").innerHTML = kp_table_text+"</table>"
     }
 
 </script>
