@@ -88,6 +88,21 @@ def getReportss(
     return file_name
 
 
+@router.post(
+    '/reports_KP',
+)
+def getReportss(
+        tables: models.Table_excel,
+        # user: models.User = Depends(get_current_user),
+        BaseFileServices_s: BaseFileServices = Depends(),
+):
+
+
+    file_name=BaseFileServices_s.reports_PTO_KP(tables)
+
+    return file_name
+
+
 #
 # @router.post("/reports",status_code = status.HTTP_200_OK)
 # async def getReports(table: models.table_excel,BaseFileServices: BaseFileServices = Depends(),):#url: str,
