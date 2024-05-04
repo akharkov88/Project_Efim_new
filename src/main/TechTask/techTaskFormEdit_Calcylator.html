@@ -1352,7 +1352,7 @@ const table = document.getElementById('first_table');
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
-                            <td contenteditable="true" style="padding: 0; height: 1px;" class="CostMaterial_disabled">
+                            <td contenteditable="false" style="padding: 0; height: 1px;" class="CostMaterial_disabled">
                             <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
                             <input id = 'input_costMaterial_${id_count}' class="CostMaterial_disabled_input" type="text"   list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
                             <datalist id="datalist_costMaterial_${id_count}">
@@ -1387,7 +1387,7 @@ const table = document.getElementById('first_table');
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
-                            <td contenteditable="true" style="padding: 0; height: 1px;">
+                            <td contenteditable="false" style="padding: 0; height: 1px;">
                             <div id="div_Special_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
                             <input id = 'input_Special_${id_count}' type="text"  class="Special_disabled_input" list="datalist_Special_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
                             <datalist id="datalist_Special_${id_count}">
@@ -1483,23 +1483,12 @@ console.log('ПТО СУММ')
     {#console.log('присваиваю суммы: ' + sum_total.toFixed(2) + ' and ' + sum_analysis.toFixed(2))#}
     elem_stroka.parentElement.childNodes[1].childNodes[7].innerText = sum_total.toFixed(2);
 
-    // подсчет ВСЕГО_НДС
-    if (elem_stroka.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
-    console.log('EEE'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))
-    console.log(sum_total)
-        //   *20/120   * на % и / на 120
-        if ($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText != '' && !isNaN($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%',''))){
-        let proc = $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
-        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((Number(sum_total) * proc) / 120).toFixed(2)
-        $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
-        pereschetTotalNDS();
-        }
 
-    }
     obj_global_sum[elem_stroka.parentElement.id] = Number(sum_total);
 
     // присвоение суммы в строчку ИТОГО
     obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = func_sum_total('earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1) );
+
 
     // подсчет ВСЕГО в одной таблице с вызовом из ячеек td
     let summa_v_itogo = 0;
@@ -1550,6 +1539,20 @@ console.log('ПТО СУММ')
     elem_stroka.parentElement.childNodes[1].childNodes[25].innerText = (dir_sum_total.toFixed(2)/dir_sum_analysis.toFixed(2)).toFixed(2);
 
     }
+
+         // подсчет ВСЕГО_НДС
+    {#if (elem_stroka.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){#}
+    //}
+      console.log('EEE'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))
+    console.log(sum_total)
+        //   *20/120   * на % и / на 120
+        if ($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText != '' && !isNaN($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%',''))){
+        let proc = $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
+        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] * proc) / 120).toFixed(2)
+        $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
+        {#alert('tyt')#}
+        pereschetTotalNDS();
+        }
 }
 
 /**
@@ -1774,9 +1777,9 @@ tr_math.childNodes[9].removeAttribute('data-title')
             if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
 
                 if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
-                tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[9]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[15].abbr.replace(',','.')))).toFixed(2);
+                tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[9]).abbr.replaceAll(',','.')) * Number(eval(tr_math.childNodes[15].abbr.replaceAll(',','.')))).toFixed(2);
                 } else {
-                    tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].innerText.replace(',','.')))*1).toFixed(2)
+                    tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].innerText.replaceAll(',','.')))*1).toFixed(2)
                 }
                 if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
                     tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
@@ -1869,19 +1872,19 @@ tr_math.childNodes[15].addEventListener('focusout', function(event) {
             tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
         }
     } else if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
-                if (!isNaN(tr_math.childNodes[9].innerText.replace(',','.')) && tr_math.childNodes[9].innerText!=''){
-                if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
+                if (!isNaN(tr_math.childNodes[9].innerText.replaceAll(',','.')) && tr_math.childNodes[9].innerText!=''){
+                if (!isNaN(tr_math.childNodes[15].innerText.replaceAll(',','.')) && tr_math.childNodes[15].innerText!=''){
 
-                        tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[15]).abbr.replace(',','.')) * Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))).toFixed(2);
+                        tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[15]).abbr.replaceAll(',','.')) * Number(eval(tr_math.childNodes[9].abbr.replaceAll(',','.')))).toFixed(2);
                         PTO_td_sum(tr_math);
 
                     } else {
-                        tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].abbr.replace(',','.')))*1).toFixed(2)
+                        tr_math.childNodes[9].innerText = (Number(eval(tr_math.childNodes[9].abbr.replaceAll(',','.')))*1).toFixed(2)
                         PTO_td_sum(tr_math);
                     }
 
                      if (!isNaN(tr_math.childNodes[11].innerText.replace(',','.')) && tr_math.childNodes[11].innerText!=''){
-                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replace(',','.')) * Number(tr_math.childNodes[11].innerText.replace(',','.')))).toFixed(2)
+                    tr_math.childNodes[13].innerText = ((Number(tr_math.childNodes[9].innerText.replaceAll(',','.')) * Number(tr_math.childNodes[11].innerText.replaceAll(',','.')))).toFixed(2)
                     PTO_td_sum(tr_math);
                 }
                 }
@@ -2581,9 +2584,9 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[11].childNode
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
 
-    if (obj_global_sum['earthWorks_costMaterial_'+id_table] != ''){
+    if (obj_global_sum['ВСЕГО_'+id_table] != ''){
     {#console.log('popal')#}
-        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['earthWorks_costMaterial_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/120).toFixed(2)
+        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/120).toFixed(2)
         obj_global_sum['ВСЕГО_НДС_'+id_table]=this.parentElement.parentElement.childNodes[11].childNodes[13].innerText;
         func_sum_vsego_razdel(this);
         pereschetTotalNDS()
