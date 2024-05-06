@@ -41,14 +41,15 @@ def add_user():
         "roles": "[\"ADMIN\"]",
         "password": "admin"
     }, "userProfile": {
-        "first_name": "ИмяАдминина",
-        "last_name": "ФамилияАдмина",
+        "first_name": "AdminАлексей",
+        "last_name": "AdminХарьков",
         "telegram": "AlekseyKharkov88",
         "mobile": "890111111-12",
         "worker_tel": "4115566",
         "email": "admin@mail.ru",
         "adress": "улица",
-        "office": "пока нет"
+        "office": "пока нет",
+        "department": "пока нет"
     }
     }
 
@@ -64,7 +65,8 @@ def add_user():
             "worker_tel": "456",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         },
         {"user": {
@@ -79,7 +81,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }
         , {"user": {
@@ -94,7 +97,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }, {"user": {
             "username": "NoAdmin",
@@ -108,7 +112,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }, {"user": {
             "username": "ENGINEER",
@@ -122,7 +127,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }, {"user": {
             "username": "SUPPLIER",
@@ -136,7 +142,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }, {"user": {
             "username": "MAIN_ENGINEER",
@@ -150,7 +157,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }, {"user": {
             "username": "BOSS",
@@ -164,7 +172,8 @@ def add_user():
             "worker_tel": "string",
             "email": "string",
             "adress": "string",
-            "office": "string"
+            "office": "string",
+            "department": "пока нет"
         }
         }
     ]
@@ -172,9 +181,11 @@ def add_user():
     for ff in vv:
         res = requests.post('http://127.0.0.1:8000/auth/sign-up/', json=ff["user"])
         print(res.status_code)
-        headers = {'Content-Type': 'application/json', 'Accept': 'application/json', "Authorization": "Bearer " + json.loads(res.text)['access_token']}
+        headers = {'Content-Type': 'application/json', 'Accept': 'application/json',
+                   "Authorization": "Bearer " + json.loads(res.text)['access_token']}
 
-        res2 = requests.post('http://127.0.0.1:8000/userprofile/set_userprofile', headers=headers, json=ff["userProfile"])
+        res2 = requests.post('http://127.0.0.1:8000/userprofile/set_userprofile', headers=headers,
+                             json=ff["userProfile"])
         print(res2.status_code)
     # print(res.text)
 
@@ -195,7 +206,14 @@ token_user = add_user()
 async def insert_Suggest():
     value = {"costWork": ["Грунтование м/к", "Изготовление м/к ферм с грунтованием",
                           "Устройство свай недостающих, с армированием и бетонированием", "Окраска м/к ", "Монтаж м/к"],
-             "costMaterial": ["Труба проф. 80х3", "Труба проф. 100х3", "Труба6756571 проф. 60х30х2", "Труба656571 проф. 60х30х2", "Труба65енк71 проф. 60х30х2", "Труба657541 проф. 60х30х2", "Трубеа6571 проф. 60х30х2", "Труба6571ку проф. 60х30х2", "Труба655471 проф. 60х30х2", "Труба проф. 60х30х2", "Труба6571 проф. 60х30х2", "Труба16 проф. 60х30х2", "Трубарп1 проф. 60х30х2", "Труба541 проф. 60х30х2", "Труба81 проф. 60х30х2", "Труба7 проф. 60х30х2", "Труба6 проф. 60х30х2", "Труба5 проф. 60х30х2", "Труба4 проф. 60х30х2", "Труба3 проф. 60х30х2", "Труба1 проф. 60х30х2", "Труба11 проф. 60х30х2", "Труба проф. 40х2",
+             "costMaterial": ["Труба проф. 80х3", "Труба проф. 100х3", "Труба6756571 проф. 60х30х2",
+                              "Труба656571 проф. 60х30х2", "Труба65енк71 проф. 60х30х2", "Труба657541 проф. 60х30х2",
+                              "Трубеа6571 проф. 60х30х2", "Труба6571ку проф. 60х30х2", "Труба655471 проф. 60х30х2",
+                              "Труба проф. 60х30х2", "Труба6571 проф. 60х30х2", "Труба16 проф. 60х30х2",
+                              "Трубарп1 проф. 60х30х2", "Труба541 проф. 60х30х2", "Труба81 проф. 60х30х2",
+                              "Труба7 проф. 60х30х2", "Труба6 проф. 60х30х2", "Труба5 проф. 60х30х2",
+                              "Труба4 проф. 60х30х2", "Труба3 проф. 60х30х2", "Труба1 проф. 60х30х2",
+                              "Труба11 проф. 60х30х2", "Труба проф. 40х2",
                               "Лист 12", "Лист 10", "Грунт-эмаль 3 в 1", "Распорный анкер М12 (для крепления стоек)",
                               "Труба проф. 60х3"],
              "Special": ["Бурилка", "Манипулятор", "Турвышка 2 шт по 2м"],
@@ -224,7 +242,6 @@ async def insert_Suggest():
 asyncio.run(insert_Suggest())
 
 
-
 async def addRoles():
     value = [
         {"ADMIN": "Администратор"},
@@ -232,7 +249,7 @@ async def addRoles():
         {"MAIN_ENGINEER": "Главный Инженер"},
         {"SUPPLIER": "Снабжение"},
         {"BOSS": "Директор"},
-             ]
+    ]
 
     with sync_engine.connect() as conn:
         for customer_id in value:
@@ -243,7 +260,7 @@ async def addRoles():
             conn.execute(operation)
             conn.commit()
             # except:
-                #     pass
+            #     pass
 
 
 asyncio.run(addRoles())
@@ -349,10 +366,10 @@ print(res.status_code)
 
 vv = [
     {"name_user_telegram": "AlekseyKharkov88",
-    "id_telegram": "622070505"},
+     "id_telegram": "622070505"},
     {"name_user_telegram": "Frype",
-    "id_telegram": "379116309"}
-      ]
+     "id_telegram": "379116309"}
+]
 
 for v in vv:
     headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}

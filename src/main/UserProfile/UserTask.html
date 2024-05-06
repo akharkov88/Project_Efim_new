@@ -200,7 +200,8 @@
 
                                                 {#НАЗВАНИЕ ЗАДАЧИ#}
                                                 <th>
-                                                    <span style="font-weight:normal"id="name_tasc_{{ get_UserTask_for.id }}"
+                                                    <span style="font-weight:normal"
+                                                          id="name_tasc_{{ get_UserTask_for.id }}"
                                                           class="ms-2">{{ get_UserTask_for.name|safe }}</span>
                                                 </th>
 
@@ -256,28 +257,29 @@
                                                     {% if get_UserTask_for.status|lower == "В Работе"|lower or  get_UserTask_for.status|lower == "Назначена"|lower %}
 
 
-                                                            {% if get_UserTask_for.status|lower != "Назначена"|lower %}
-                                                                {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
+                                                        {% if get_UserTask_for.status|lower != "Назначена"|lower %}
+                                                            {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
                                                                 <button id="process_{{ get_UserTask_for.id }}">Выполнить
                                                                     задачу
                                                                 </button>
                                                             {% else %}
-                                                                            <label id="process_{{ get_UserTask_for.id }}">В работе
+                                                                <label id="process_{{ get_UserTask_for.id }}">В работе
                                                                 </label>
                                                             {% endif %}
 
-                                                            {% else %}
-                                                                {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
+                                                        {% else %}
+                                                            {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
                                                                 <button id="process_{{ get_UserTask_for.id }}">Взять в
                                                                     работу
                                                                 </button>
                                                             {% else %}
-                                                                         <label id="process_{{ get_UserTask_for.id }}">Не взято в работу
+                                                                <label id="process_{{ get_UserTask_for.id }}">Не взято в
+                                                                    работу
                                                                 </label>
                                                             {% endif %}
-                                                            {% endif %}
+                                                        {% endif %}
 
 
 
@@ -427,9 +429,9 @@
                                             user = []
                                             user.push(document.getElementById('Otpravka_roles').value)
                                             if (document.getElementById('Type').value == "username") {
-                                                URL = `/userprofile/createUserTask?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                                URL = `/userprofile/createUserTask?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=&priority=${document.getElementById('priority').value}`
                                             } else {
-                                                URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
+                                                URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=&priority=${document.getElementById('priority').value}`
                                             }
                                             res = await fetch(URL, {
                                                 method: "GET",
@@ -470,7 +472,7 @@
 
                                             values = {{ all_roles|tojson|safe }}
                                             for (value of Object.keys(values)) {
-                                                console.log("value", value)
+                                                console.log("11value", value)
 
                                                 var opt = document.createElement('option');
                                                 opt.value = value
@@ -487,14 +489,16 @@
 
                                             values = {{ all_user|tojson|safe }}
                                             for (value of Object.keys(values)) {
-                                                console.log("value", value)
+                                                console.log("22value", value)
+                                                console.log("value", window.my_UserPfofile.my_username)
+                                                console.log("value", window.my_UserPfofile.my_username != value)
+                                                if (window.my_UserPfofile.my_username != value) {
+                                                    var opt = document.createElement('option');
+                                                    opt.value = value
+                                                    opt.innerHTML = values[value]
+                                                    document.getElementById('Otpravka_roles').appendChild(opt);
 
-                                                var opt = document.createElement('option');
-                                                opt.value = value
-                                                opt.innerHTML = values[value]
-                                                document.getElementById('Otpravka_roles').appendChild(opt);
-
-
+                                                }
                                             }
                                         }
                                     }
@@ -562,46 +566,46 @@
                                     window.get_UserTask = {{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
 
-                                        console.log("username",{{ get_my_UserPfofile.username|tojson|safe }}!=v.user_create)
+                                        console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} != v.user_create)
 
-                                        if ({{ get_my_UserPfofile.username|tojson|safe }}!=v.user_create){
+                                        if ({{ get_my_UserPfofile.username|tojson|safe }} != v.user_create) {
 
 
-                                        document.getElementById("process_" + v.id).addEventListener("click", (e) => {
-                                            console.log("get_UserTask_for.id", e)
+                                            document.getElementById("process_" + v.id).addEventListener("click", (e) => {
+                                                console.log("get_UserTask_for.id", e)
 
-                                            if (e.target.localName!="label"){
+                                                if (e.target.localName != "label") {
 
-                                            console.log("get_UserTask_for.id", e)
-                                            console.log("get_UserTask_for.id", e.target.localName)
-                                            console.log("get_UserTask_for.id", document.getElementById(e.target.id))
+                                                    console.log("get_UserTask_for.id", e)
+                                                    console.log("get_UserTask_for.id", e.target.localName)
+                                                    console.log("get_UserTask_for.id", document.getElementById(e.target.id))
 
-                                            if (document.getElementById(e.target.id).innerText == "Взять в работу") {
+                                                    if (document.getElementById(e.target.id).innerText == "Взять в работу") {
 
-                                                data = {
-                                                    "user_data": {
-                                                        "status": "В Работе",
-                                                        "result": "",
-                                                        "notification_holder": false,
-                                                        "notification_executor": false
-                                                    },
-                                                    "id": {
-                                                        "id": e.target.id.replace("process_", "")
+                                                        data = {
+                                                            "user_data": {
+                                                                "status": "В Работе",
+                                                                "result": "",
+                                                                "notification_holder": false,
+                                                                "notification_executor": false
+                                                            },
+                                                            "id": {
+                                                                "id": e.target.id.replace("process_", "")
+                                                            }
+                                                        }
+                                                        updatde_UserTask(data, e, document.getElementById("name_tasc_" + data["id"]["id"]).innerText)
+
+                                                        {#get_UserTask()#}
+                                                    } else {
+                                                        document.getElementById("popup").style.display = "block";
+                                                        document.getElementById("overlay").classList.add("show");
+                                                        document.getElementById("yes-btn").className += " " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
+
+
                                                     }
                                                 }
-                                                updatde_UserTask(data, e, document.getElementById("name_tasc_" + data["id"]["id"]).innerText)
 
-                                                {#get_UserTask()#}
-                                            } else {
-                                                document.getElementById("popup").style.display = "block";
-                                                document.getElementById("overlay").classList.add("show");
-                                                document.getElementById("yes-btn").className += " " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
-
-
-                                            }
-                                            }
-
-                                        });
+                                            });
                                         }
 
                                     }

@@ -124,6 +124,7 @@ class ListUserTask(Base ):
     notification_holder = Column(Boolean)
     notification_executor = Column(Boolean)
     priority = Column(String)
+    connection = Column(String)
 
 
 
@@ -138,11 +139,7 @@ class UserPfofile(Base):
     email = Column(String)
     adress = Column(String)
     office = Column(String)
-
-
-    # from  database import engine
-    # from  tables import Base
-    # Base.metadata.create_all(engine)
+    department = Column(String)
 
 
 class Telegram(Base):

@@ -1,27 +1,25 @@
-if(typeof(String.prototype.trim) === "undefined")
-{
-    String.prototype.trim = function()
-    {
+if (typeof (String.prototype.trim) === "undefined") {
+    String.prototype.trim = function () {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
 }
 
-async function send_telegram(user,text) {
+async function send_telegram(user, text) {
 
     res = await fetch('/message/Telegram_send_message', {
-        method:"POST",
+        method: "POST",
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body:JSON.stringify(
+        body: JSON.stringify(
             {
-  "User": user,
-  "Value": text
-})
+                "User": user,
+                "Value": text
+            })
     });
     let responseText = await res.text();
-            console.log("res.status",res.status)
+    console.log("res.status", res.status)
 
     if (res.status == 200) {
         console.log(responseText)
@@ -33,18 +31,18 @@ async function send_telegram(user,text) {
 async function send_telegram_group(text) {
 
     res = await fetch('/message/Telegram_send_message_group', {
-        method:"POST",
+        method: "POST",
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body:JSON.stringify(
+        body: JSON.stringify(
             {
-  "Value": text
-})
+                "Value": text
+            })
     });
     let responseText = await res.text();
-            console.log("res.status",res.status)
+    console.log("res.status", res.status)
 
     if (res.status == 200) {
         console.log(responseText)
@@ -150,8 +148,8 @@ async function check_user_Admin() {
             },
         });
         let responseText = await check_user.text();
-        console.log("222222", JSON.parse(JSON.parse(responseText).roles).indexOf("Admin"))
-        if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") == -1) {
+        console.log("222222", JSON.parse(JSON.parse(responseText).roles).indexOf("admin"))
+        if (JSON.parse(JSON.parse(responseText).roles).indexOf("admin") == -1) {
             document.location.href = '/main'
         }
     }
@@ -252,78 +250,76 @@ function removeOptions(selectElement) {
 }
 
 
-
-
-                                function transliterate(word) {
-                     let a = {
-                                    "Ё": "YO",
-                                    "Й": "I",
-                                    "Ц": "TS",
-                                    "У": "U",
-                                    "К": "K",
-                                    "Е": "E",
-                                    "Н": "N",
-                                    "Г": "G",
-                                    "Ш": "SH",
-                                    "Щ": "SCH",
-                                    "З": "Z",
-                                    "Х": "H",
-                                    "Ъ": "'",
-                                    "ё": "yo",
-                                    "й": "i",
-                                    "ц": "ts",
-                                    "у": "u",
-                                    "к": "k",
-                                    "е": "e",
-                                    "н": "n",
-                                    "г": "g",
-                                    "ш": "sh",
-                                    "щ": "sch",
-                                    "з": "z",
-                                    "х": "h",
-                                    "ъ": "'",
-                                    "Ф": "F",
-                                    "Ы": "I",
-                                    "В": "V",
-                                    "А": "A",
-                                    "П": "P",
-                                    "Р": "R",
-                                    "О": "O",
-                                    "Л": "L",
-                                    "Д": "D",
-                                    "Ж": "ZH",
-                                    "Э": "E",
-                                    "ф": "f",
-                                    "ы": "i",
-                                    "в": "v",
-                                    "а": "a",
-                                    "п": "p",
-                                    "р": "r",
-                                    "о": "o",
-                                    "л": "l",
-                                    "д": "d",
-                                    "ж": "zh",
-                                    "э": "e",
-                                    "Я": "Ya",
-                                    "Ч": "CH",
-                                    "С": "S",
-                                    "М": "M",
-                                    "И": "I",
-                                    "Т": "T",
-                                    "Ь": "'",
-                                    "Б": "B",
-                                    "Ю": "YU",
-                                    "я": "ya",
-                                    "ч": "ch",
-                                    "с": "s",
-                                    "м": "m",
-                                    "и": "i",
-                                    "т": "t",
-                                    "ь": "'",
-                                    "б": "b",
-                                    "ю": "yu"
-                                };
-                                    return word.split('').map(function (char) {
-                                        return a[char] || char;
-                                    }).join("");
-                                }
+function transliterate(word) {
+    let a = {
+        "Ё": "YO",
+        "Й": "I",
+        "Ц": "TS",
+        "У": "U",
+        "К": "K",
+        "Е": "E",
+        "Н": "N",
+        "Г": "G",
+        "Ш": "SH",
+        "Щ": "SCH",
+        "З": "Z",
+        "Х": "H",
+        "Ъ": "'",
+        "ё": "yo",
+        "й": "i",
+        "ц": "ts",
+        "у": "u",
+        "к": "k",
+        "е": "e",
+        "н": "n",
+        "г": "g",
+        "ш": "sh",
+        "щ": "sch",
+        "з": "z",
+        "х": "h",
+        "ъ": "'",
+        "Ф": "F",
+        "Ы": "I",
+        "В": "V",
+        "А": "A",
+        "П": "P",
+        "Р": "R",
+        "О": "O",
+        "Л": "L",
+        "Д": "D",
+        "Ж": "ZH",
+        "Э": "E",
+        "ф": "f",
+        "ы": "i",
+        "в": "v",
+        "а": "a",
+        "п": "p",
+        "р": "r",
+        "о": "o",
+        "л": "l",
+        "д": "d",
+        "ж": "zh",
+        "э": "e",
+        "Я": "Ya",
+        "Ч": "CH",
+        "С": "S",
+        "М": "M",
+        "И": "I",
+        "Т": "T",
+        "Ь": "'",
+        "Б": "B",
+        "Ю": "YU",
+        "я": "ya",
+        "ч": "ch",
+        "с": "s",
+        "м": "m",
+        "и": "i",
+        "т": "t",
+        "ь": "'",
+        "б": "b",
+        "ю": "yu"
+    };
+    return word.split('').map(function (char) {
+        return a[char] || char;
+    }).join("");
+}

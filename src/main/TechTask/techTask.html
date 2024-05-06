@@ -29,10 +29,10 @@
 
             </div>
             <!-- /. ROW  -->
-<!--//////////////////////////////////////////////////-->
+            <!--//////////////////////////////////////////////////-->
 
-<!--//////////////////////////////////////////////////-->
-<!--//////////////////////////////////////////////////-->
+            <!--//////////////////////////////////////////////////-->
+            <!--//////////////////////////////////////////////////-->
 
             <div class="row">
 
@@ -67,57 +67,89 @@
 
 
             {% for getAllTask in getAllTask_S|reverse %}
-            <div class="row">
+                <div class="row">
 
-                <div class="panel col-md-12 col-sm-12 col-xs-12">
+                    <div class="panel col-md-12 col-sm-12 col-xs-12">
 
-                    <div class="text-center no-boder col-md-4 col-sm-12 col-xs-12">
-                        <div class="panel-body">
-                            <div>
-                                {{getAllTask.NameTechTask}}
+                        <div class="text-center no-boder col-md-4 col-sm-12 col-xs-12">
+                            <div class="panel-body">
+                                <div>
+                                    {{ getAllTask.NameTechTask }}
 
+                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="text-center no-boder col-md-4 col-sm-12 col-xs-12">
-                        <div class="panel-body">
-                            <div>
-                                {{getAllTask.TechTaskClient}}
+                        <div class="text-center no-boder col-md-4 col-sm-12 col-xs-12">
+                            <div class="panel-body">
+                                <div>
+                                    {{ getAllTask.TechTaskClient }}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
-                        <div class="panel-body">
-                            <div>
-                                Тестирование
+                        <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
+                            <div class="panel-body">
+                                <div id="status">
+                                    Тестирование
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <script>
+                            console.log("getAllTask", {{ getAllTask.ListUserTask|tojson }})
+                            list_user_tasks={{ getAllTask.ListUserTask|tojson }}
+                            let info_status=""
+                            for (list_user_task of list_user_tasks){
+                                console.log(list_user_task)
+                                let info_Ispolnitel=""
+                                for (executor of list_user_task.UserPfofile_executor){
+                                    info_Ispolnitel+=`${executor.first_name} ${executor.last_name},`
+                                }
+                                info_Ispolnitel.trim(",")
+                                info_status+=`<div>Создал задачу: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}\nИсполнитель: ${info_Ispolnitel}\n Статус: ${list_user_task.status}\n контрольный срок: ${list_user_task.target_date} </div><div></div>`
+                            }
+                            console.log(info_status)
+                            if (list_user_tasks.length==0){
+                                info_status="Еще не было активных задач"
+                                document.getElementById("status").style.backgroundColor='#ff9090'
+                            }else if (info_status==""){
+                                info_status="Все задачи выполнены"
+                                document.getElementById("status").style.backgroundColor='#5cb85c'
+
+                            }
+                            else {
+                                console.log("backgroundColor")
+                                document.getElementById("status").style.backgroundColor='#f0ad4e'
+                            }
+
+                            document.getElementById("status").innerHTML=info_status
+
+                        </script>
 
 
-                    <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
+                        <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
 
-                        <!--                    <div class="text-center  row-md-2">-->
-                        <div class="panel-heading">
-                            <button id="getAllTask_{{getAllTask.id}}" onclick="location.href = '/main/techTaskFormEdit.html?NameTechTask={{getAllTask.NameTechTask}}';" style="    " class="text-center" type="button">
-                                Изменить/посмотреть
-                            </button>
+                            <!--                    <div class="text-center  row-md-2">-->
+                            <div class="panel-heading">
+                                <button id="getAllTask_{{ getAllTask.id }}"
+                                        onclick="location.href = '/main/techTaskFormEdit.html?NameTechTask={{ getAllTask.NameTechTask }}';"
+                                        style="    " class="text-center" type="button">
+                                    Изменить/посмотреть
+                                </button>
+
+                            </div>
 
                         </div>
+                        <script>
+                            $("#getAllTask_{{getAllTask.id}}").on("click", function () {
+                                console.log(999)
+                            })
+                        </script>
+
 
                     </div>
-                    <script>
-                        $("#getAllTask_{{getAllTask.id}}").on("click", function () {
-                            console.log(999)
-                        })
-                    </script>
-
-
                 </div>
-            </div>
             {% endfor %}
             <!-- /. ROW  -->
         </div>
@@ -125,7 +157,7 @@
     </div>
     <!-- /. PAGE WRAPPER  -->
 </div>
-    {% include "indexShablon_end.html" %}
+{% include "indexShablon_end.html" %}
 
 
 </body>
