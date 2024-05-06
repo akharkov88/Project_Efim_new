@@ -1036,6 +1036,17 @@ body {
 .demoToggleCheckbox:checked + label:after {
     transform: translateX(26px);
 }
+.user-task-table{
+    border-collapse: collapse;
+        border: 1px solid #000;
+}
+
+.user-task-table th{
+       border: 1px solid #000;
+
+       vertical-align: bottom;
+       border-bottom: 1px solid #000;
+}
 
 /*/////////////////*/
 
