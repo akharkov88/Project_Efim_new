@@ -244,7 +244,7 @@ class AuthService:
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
 
 
-    def get_my_UserPfofile(self, user_data: models.BaseUser) -> models.UserProfile:
+    def get_my_UserPfofile(self, user_data: models.BaseUser) -> models.ModelUserPfofile_my_username:
                 operation = (
                     self.session
                     .query(tables.UserPfofile)

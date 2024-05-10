@@ -95,7 +95,10 @@ class UserProfileServices:
                 )
                 if operation:
                     for username in operation:
-                        user_mas.append(username.username)
+                        if (username.username!=user.username):
+                            user_mas.append(username.username)
+            if user_mas.__len__()==0:
+                raise HTTPException(status.HTTP_409_CONFLICT, detail="Нет пользователей на кого можно назначить")
 
             val=dict(UserDATA)
             val["user_executor"]=str(user_mas)

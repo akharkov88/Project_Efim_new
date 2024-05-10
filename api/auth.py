@@ -135,7 +135,7 @@ def get_user(id: int,password: str,user: models.User = Depends(get_current_user)
 
 @router.get(
     '/get_my_UserPfofile/',
-    response_model=models.ModelUserPfofile,
+    response_model=models.ModelUserPfofile_my_username,
 )
 def get_user(user: models.User = Depends(get_current_user),
              auth_service: AuthService = Depends(), ):

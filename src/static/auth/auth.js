@@ -23,6 +23,7 @@ referrer=document.referrer
       document.cookie="Authorization="+result.token_type+" "+result.access_token+"; path=/;"
      if (referrer!="" && referrer!= "http://127.0.0.1:8000/auth/") {
 
+         if (document.location.host=new URL(referrer).host)
          document.location.href = referrer
      }else{
          document.location.href ='/main/'
