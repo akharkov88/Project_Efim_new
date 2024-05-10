@@ -434,9 +434,10 @@ let calculate = function(n) {
       furm.addEventListener("focusout", (n) => {
         console.log('focusout ')
         n = n.target
-        console.warn(n)
+        {#console.warn(n)#}
         if (n.innerText == n.abbr){
-        n.innerText = (calculate(n)).toFixed(2);
+        !isNaN(calculate(n))?n.innerText = (calculate(n)).toFixed(2):n.innerText = (calculate(n));
+
         }
       })
 furm.addEventListener('keyup', function(event) {
@@ -1548,7 +1549,8 @@ console.log('ПТО СУММ')
         //   *20/120   * на % и / на 120
         if ($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText != '' && !isNaN($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%',''))){
         let proc = $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
-        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] * proc) / 120).toFixed(2)
+        {#alert(proc)#}
+        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] * Number(proc)) / (100+Number(proc))).toFixed(2)
         $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
         {#alert('tyt')#}
         pereschetTotalNDS();
@@ -2584,9 +2586,10 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[11].childNode
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
 
-    if (obj_global_sum['ВСЕГО_'+id_table] != ''){
+    if (obj_global_sum['ВСЕГО_'+id_table] != '' && Object.keys(obj_global_sum).indexOf('ВСЕГО_'+id_table)!=-1){
     {#console.log('popal')#}
-        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/120).toFixed(2)
+        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/(100+Number(this.innerText.replace(',','.').replace('%','')))).toFixed(2)
+        {#this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (Number(this.innerText.replace(',','.').replace('%','') )/(100+Number(this.innerText.replace(',','.').replace('%','')))).toFixed(2)#}
         obj_global_sum['ВСЕГО_НДС_'+id_table]=this.parentElement.parentElement.childNodes[11].childNodes[13].innerText;
         func_sum_vsego_razdel(this);
         pereschetTotalNDS()
