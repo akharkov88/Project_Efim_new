@@ -119,10 +119,9 @@
 </div>
 
 <script>
-console.log("getTechTaskNamegetTechTaskName",JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}}))
+
 toggleCheckbox.onclick = function(){
 console.log(toggleCheckbox.checked)
-
 if (toggleCheckbox.checked){
     document.getElementById('legeng_story').style.display = 'block'
     //     editor_ADMIN  editor_ENGINEER  editor_MAIN_ENGINEER   editor_BOSS   editor_SUPPLIER
@@ -244,8 +243,8 @@ async function upTableTime(n=5,state=true){
 
 
         window.onresize = function(event) {
-            let vblsota=window.innerHeight-100
-            $(".table-responsive-pto").css("height",`${vblsota}`)
+            resize_div_for_table()
+
         };
         console.warn('roles:')
         console.warn({{roles_user|tojson|safe}})//==`"[\\"ENGINEER\\"]"`
@@ -307,19 +306,14 @@ async function upTableTime(n=5,state=true){
                                             return
                                         }
 
-                                        document.getElementById("Opisanie_forms").style.display = "none";
-                                        document.getElementById("button_forms").style.display = "none";
-                                        document.getElementById("Otpravka_roles_forms").style.display = "block";
-                                        document.getElementById("Otpravka_roles").style.display = "block";
-
                                         console.log(document.getElementById('Otpravka_roles_text').value)
                                         user = []
                                         user.push(document.getElementById('Otpravka_roles').value)
                                         if (document.getElementById('Type').value=="username"){
-                                           URL= `/userprofile/createUserTask?name={{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+                                           URL= `/userprofile/createUserTask?name={{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
                                         }else{
 
-                                           URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+                                           URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}`
                                         }
                                         res = await fetch(URL, {
                                             method: "GET",
@@ -333,7 +327,6 @@ async function upTableTime(n=5,state=true){
                                         console.log("res.status", res.status)
                                         if (res.status == 200) {
                                             console.log(res.status)
-                                            showToast('Задача сформирована' , 'info' , 5000)
                                             {#window.location.href ="/main/techTask.html"#}
                                         } else {
                                             showToast("Ошибка", "error", 5000);
@@ -345,7 +338,7 @@ async function upTableTime(n=5,state=true){
                                         document.getElementById("button_forms").style.display = "block";
 
                                     }
-                                     document.getElementById('Type').onchange = async function (event) {
+                                    document.getElementById('Type').onchange = async function (event) {
                                         event.preventDefault();
                                         if (!etalon_table){
                                         //($('#first_table')[0].innerHTML.replaceAll('display:none','display:table-cell') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
@@ -383,7 +376,6 @@ async function upTableTime(n=5,state=true){
                                             values = {{ all_user|tojson|safe }}
                                             for (value of Object.keys(values)) {
                                                 console.log("value", value)
-                                                if (window.my_UserPfofile.my_username != value) {
 
                                                 var opt = document.createElement('option');
                                                 opt.value = value
@@ -391,7 +383,6 @@ async function upTableTime(n=5,state=true){
                                                 document.getElementById('Otpravka_roles').appendChild(opt);
 
 
-                                            }
                                             }
                                         }
                                     }
@@ -443,9 +434,10 @@ let calculate = function(n) {
       furm.addEventListener("focusout", (n) => {
         console.log('focusout ')
         n = n.target
-        console.warn(n)
+        {#console.warn(n)#}
         if (n.innerText == n.abbr){
-        n.innerText = (calculate(n)).toFixed(2);
+        !isNaN(calculate(n))?n.innerText = (calculate(n)).toFixed(2):n.innerText = (calculate(n));
+
         }
       })
 furm.addEventListener('keyup', function(event) {
@@ -817,8 +809,6 @@ function Napolneneie(value){
             {#console.log(seach_ID_table('tbody','earthWorks_'))#}
 
             //let vblsota=window.innerHeight*3/4
-            let vblsota=window.innerHeight-100
-            $(".table-responsive-pto").css("height",`${vblsota}`)
             //$('.pto').css("display", "table-cells");
 
             for_event_tr('tr','stroka_');
@@ -833,6 +823,9 @@ function Napolneneie(value){
              {#$("input[id ^='input_']")#}
              event_input($("input[id ^='input_']"))
              //event_all_td();
+             let vblsota=window.innerHeight-100
+                $(".table-responsive-pto").css("height",`${vblsota}`)
+
 
 }
 function event_input(e) {
@@ -1026,6 +1019,7 @@ function event_input(e) {
                 }
                 }
      }
+     resize_div_for_table()
  }
 
 
@@ -1323,7 +1317,7 @@ const table = document.getElementById('first_table');
         let addLineObj = new Object();
         addLineObj = {
             'earthWorks_costWork': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"  class="tehstolbec" ><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec" style="white-space: nowrap;"><button type = "button" aria-hidden="true" class="delbtn fa fa-plus-square-o" id="addbtn${id_count}" style="margin-right: 5px;" onclick="addBetweenLine(event.target.id)"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 
 
                             <td contenteditable="false">
@@ -1359,7 +1353,7 @@ const table = document.getElementById('first_table');
                         <td contenteditable="false" class="costWork_role_boss pto" style="display:none"></td>
                         </tr>`,
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec" style="white-space: nowrap;"><button type = "button" aria-hidden="true" class="delbtn fa fa-plus-square-o" id="addbtn${id_count}" style="margin-right: 5px;" onclick="addBetweenLine(event.target.id)"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
                             <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;" class="CostMaterial_disabled">
                             <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
@@ -1394,7 +1388,7 @@ const table = document.getElementById('first_table');
                         <td contenteditable="true" class="costWork_role_supplier pto note" style="display:none"></td>
                         </tr>`,
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
-<td contenteditable="false"  class="tehstolbec"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
+<td contenteditable="false"  class="tehstolbec" style="white-space: nowrap;"><button type = "button" aria-hidden="true" class="delbtn fa fa-plus-square-o" id="addbtn${id_count}" style="margin-right: 5px;" onclick="addBetweenLine(event.target.id)"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
                             <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;">
                             <div id="div_Special_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
@@ -1557,7 +1551,8 @@ console.log('ПТО СУММ')
         //   *20/120   * на % и / на 120
         if ($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText != '' && !isNaN($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%',''))){
         let proc = $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
-        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] * proc) / 120).toFixed(2)
+        {#alert(proc)#}
+        obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = ((obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] * Number(proc)) / (100+Number(proc))).toFixed(2)
         $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]
         {#alert('tyt')#}
         pereschetTotalNDS();
@@ -1624,16 +1619,121 @@ function collaps_tbody(tbody, id, but){
            }
 
     }
-    but.innerText == 'Свернуть'? but.innerText = 'Развернуть' : but.innerText = 'Свернуть'
+    but.innerText == 'Свернуть'? but.innerText = 'Развернуть' : but.innerText = 'Свернуть';
+
+    resize_div_for_table();
 
 }
 
+function addBetweenLine(id){
+    console.log("id")
+    console.log(id)
+    upTableTime();
+    if (id_count<=seach_ID_table('tr','stroka_')) {
+            {#for_event_tr('tr','stroka_', id_count);#}
+            id_count = seach_ID_table('tr','stroka_')+1;
+        }
+    let element = $(`#${id}`).closest('td')
+
+    let element_id = element.parent().parent()[0].id
+    let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
+    console.log(forObj)
+    let table_values_roles = `` + objLine(id_count, forObj)
+    let roles_user = JSON.parse({{roles_user|tojson|safe}} )[0]
+
+    if (roles_user != 'ENGINEER'){
+    //&& head.querySelector('.tabsCalcylator__caption_active').dataset.tab != 'enginer_pto'
+
+        table_values_roles = table_values_roles.replaceAll('display:none','display:table-cell')
+    }
+
+    {#$(element).append(table_values_roles)#}
+    $(`#${id}`).closest('td').parent('tr').after(table_values_roles);
+    {#console.warn('id_count = ' + id_count)#}
+    let tr_math = document.getElementById('stroka_'+id_count)
+    console.log('tr_math -==-')
+    console.log(tr_math)
+
+    {# Объект для хранения предыдущих значений таблицы, хранятся данные введеные в ПТО разделе.
+    При изменении данных в разделе Руководителя работ,
+     #}
+
+    {#console.log(tr_math.childNodes)#}
+
+    event_tr(tr_math);
+
+    {#console.log(tr_math)#}
+    //  в td написать вызов функции onkeyup="javascript:dotest(this,event);"
+
+    //let tr_math = document.getElementById('earthWorks_costWork_1')
+    //tr_math.childNodes[1].childNodes[7]
+
+    forObj = forObj.slice(forObj.indexOf('_')+1)
+
+    let forEdIzm = tr_math.childNodes[7].childNodes[1].id;
+    forEdIzm = forEdIzm.slice(forEdIzm.indexOf('_')+1,forEdIzm.lastIndexOf('_'))
+    console.log('forEdIzm === ', forEdIzm)
+
+    // события на вложения
+    {#document.getElementById('costWork_file_' + id_count).onchange = uploadfile_func_table(id_count);#}
+    {#document.getElementById('Special_file_' + id_count).onchange = uploadfile_func_table(id_count);#}
+
+
+
+    input_event_addLine(forEdIzm,id_count);
+    input_event_addLine(forObj,id_count);
+
+    function input_event_addLine(forObj, id_count){
+        $(`#div_${forObj}_${id_count}`).delegate(":input", "input", function (e) {
+    let type = forObj;
+    console.warn('!@#this div_ : ', this)
+    let id_count=e.target.id.slice(e.target.id.lastIndexOf('_')+1)
+    {#console.log("stroka = " + " #datalist_" + forObj + "_"+id_count)#}
+        var options = $("#datalist_" + forObj + "_"+id_count)[0].options;
+        {#console.log("options = " + options)#}
+        if (options.length != 0 && options[options.length - 1].value == $(this).val()) {
+            {# Определить type по target.id#}
+
+            if ($(this).val().indexOf("Добавить в список \"") != -1) {
+                set_setSuggest(type, $(this).val().replace("Добавить в список \"", "").slice(0, -1),`datalist_${forObj}_${id_count}`)
+                $(`#input_${forObj}_${id_count}`).val($(this).val().replace("Добавить в список \"", "").slice(0, -1));
+            }
+            return
+        }
+        set_options_datalist(type, e.target.value,"datalist_" + forObj +"_"+id_count, 30)
+
+    });
+    }
+
+    counterTr();
+                id_count++;
+                arr_id_count.push(id_count);
+
+    table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
+    resize_div_for_table()
+    {#$(`#${id}`).closest('td').parent('tr').after("<tr id = 'third'><td>5</td><td>6</td></tr>");#}
+
+}
+
+function resize_div_for_table(){
+            let vblsota=window.innerHeight-100
+            let vv=first_table.offsetHeight
+            if (vv>vblsota){
+                $(".table-responsive-pto").css("height",`${vblsota}`)
+            } else {
+                $(".table-responsive-pto").css("height",`${vv}`)
+            }
+}
 
 /**
  * Функция добавляет строку, события строки и присваевает ID элементам новой строки. Вызывается по нажатию кнопок AddLine в разделах таблицы
  * @addLine event, element
  */
 function addLine(event, element){
+    //  добавление к строке $('#delbtn_1').closest('td').parent('tr').after("<tr id = 'third'><td>5</td><td>6</td></tr>");
+    console.log('tyt')
+    console.log(event)
+    console.log(element)
     event.preventDefault();
     etalon_table = false;
     upTableTime();
@@ -1643,10 +1743,12 @@ function addLine(event, element){
         }
 
     element = element.parentElement.parentElement.parentElement.parentElement;
+    console.log("element")
+    console.log(element)
     let element_id = element.id;
     let forObj = element_id.slice(0, element_id.lastIndexOf('_'))
 
-    const head = document.querySelector('.tabsCalcylator__head') // ищем элемент с кнопками и записываем в константу
+    //const head = document.querySelector('.tabsCalcylator__head') // ищем элемент с кнопками и записываем в константу
 
     let table_values_roles = `` + objLine(id_count, forObj)
     let roles_user = JSON.parse({{roles_user|tojson|safe}} )[0]
@@ -1719,7 +1821,7 @@ function addLine(event, element){
                 arr_id_count.push(id_count);
 
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
-
+    resize_div_for_table()
     //event_all_td()
 }
 
@@ -2172,8 +2274,7 @@ document.getElementById('add_razdel').onclick = function () {
     if (JSON.parse({{roles_user|tojson|safe}} )[0] == 'SUPPLIER'){
         return
     }
-            let vblsota=window.innerHeight-100
-            $(".table-responsive-pto").css("height",`${vblsota}`)
+
     etalon_table = false;
     upTableTime();
         if (coll_table<=seach_ID_table('tbody','earthWorks_')) {
@@ -2527,7 +2628,7 @@ let value = e.value;
                     $('*[id^=earthWorks_]')[0].classList.add('maska');
                 }
                 }
-
+            resize_div_for_table()
 
         }
 
@@ -2593,9 +2694,10 @@ document.getElementById('earthWorks_Total_'+coll_table).childNodes[11].childNode
     let id_table = this.parentElement.parentElement.id.slice(this.parentElement.parentElement.id.lastIndexOf('_')+1)
         if (!isNaN(this.innerText.replace(',','.').replace('%','')) && this.innerText != ''){
 
-    if (obj_global_sum['ВСЕГО_'+id_table] != ''){
+    if (obj_global_sum['ВСЕГО_'+id_table] != '' && Object.keys(obj_global_sum).indexOf('ВСЕГО_'+id_table)!=-1){
     {#console.log('popal')#}
-        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/120).toFixed(2)
+        this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (this.innerText.replace(',','.').replace('%',''))/(100+Number(this.innerText.replace(',','.').replace('%','')))).toFixed(2)
+        {#this.parentElement.parentElement.childNodes[11].childNodes[13].innerText = (obj_global_sum['ВСЕГО_'+id_table] * (Number(this.innerText.replace(',','.').replace('%','') )/(100+Number(this.innerText.replace(',','.').replace('%','')))).toFixed(2)#}
         obj_global_sum['ВСЕГО_НДС_'+id_table]=this.parentElement.parentElement.childNodes[11].childNodes[13].innerText;
         func_sum_vsego_razdel(this);
         pereschetTotalNDS()
@@ -2688,6 +2790,16 @@ if(this.id.indexOf('Form_') == -1){
             delLine(event.target.id);
             }
         }
+
+        /*
+        else if (event.target.type == 'button' && event.target.id.slice(0,event.target.id.lastIndexOf('_')) == 'addbtn'){
+           console.log('click')
+           if (JSON.parse({{roles_user|tojson|safe}} )[0]!= 'SUPPLIER'){
+               addBetweenLine(event.target.id);
+           }
+
+        }
+        */
 
 });
 
@@ -2786,6 +2898,7 @@ if(this.id.indexOf('Form_') == -1){
                 func_sum_vsego_razdel($(`#${idParelem} tr`)[0].childNodes[5]);
                 pereschetTotalSum();
                 pereschetTotalNDS();
+                resize_div_for_table()
 
     }
 

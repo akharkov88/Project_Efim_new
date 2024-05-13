@@ -238,7 +238,7 @@ $(document).ready(function(){
                         const head2 = document.querySelector('.tabsCalcylator__head') // ищем элемент с кнопками и записываем в константу
                         const body2 = document.querySelector('.tabsCalcylator__body')
                         const getActiveTabName = () => { // объявляем функцию для получения названия активной вкладки
-                            console.log('TABS')
+                            console.log('TABS tyt')
                             console.log(head.querySelector('.tabs__caption_active').dataset.tab)
                             if (head.querySelector('.tabs__caption_active').dataset.tab == 'pto') {
 
@@ -249,6 +249,20 @@ $(document).ready(function(){
 
                                 head2.querySelector('.tabsCalcylator__caption').classList.add('tabsCalcylator__caption_active')
                                 setActiveContent2()
+                                console.log('tytytytytyt')
+                                let timerId
+                                new Promise((resolve,reject)=>{
+                                     timerId = setInterval(()=>{
+                                        console.log('1111')
+                                        if (first_table.offsetHeight!=0){
+                                            resize_div_for_table();
+                                            resolve()
+                                        }
+                                    },500)
+                                    setTimeout(() => { clearInterval(timerId);}, 2000);
+                                })
+                                .then(()=>clearInterval(timerId))
+
 
                             }
                             if (head.querySelector('.tabs__caption_active').dataset.tab == 'KP') {
