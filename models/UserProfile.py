@@ -62,3 +62,10 @@ class ModelUserPfofile(BaseModel):
 class ModelUserPfofile_my_username(ModelUserPfofile):
     my_username: str
 
+class eventDepartment(str, Enum):
+    add = 'add'
+    dell = 'del'
+class ModelgetDepartment(BaseModel):
+    value: str
+    event: eventDepartment
+

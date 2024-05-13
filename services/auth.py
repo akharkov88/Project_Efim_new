@@ -140,7 +140,7 @@ class AuthService:
 
     def get_all_user(self, user_data: models.UserCreate) -> list[models.UserCreate2]:
         try:
-            if json.loads(user_data.roles).count('Admin') > 0:
+            if json.loads(user_data.roles).count('ADMIN') > 0:
                 operation = (
                     self.session
                     .query(tables.User)

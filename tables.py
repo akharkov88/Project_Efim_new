@@ -161,10 +161,19 @@ class ListUserRoles(Base):
     role = Column(String, nullable=False)
     name_roles = Column(String, nullable=False)
 
-
+"""
+таблица управляет захватом редактирования
+"""
 class WorkingTable(Base):
     __tablename__ = 'WorkingTable'
     NameTechTask = Column(String, ForeignKey('TechTaskForm.NameTechTask'), index=True, primary_key=True)
     username = Column(String, ForeignKey('users.username'))
     state = Column(Boolean, nullable=False)
     update_at= Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
+
+
+class departmentTable(Base):
+    __tablename__ = 'departmentTable'
+    department = Column(String, index=True, primary_key=True)
+    username = Column(String, ForeignKey('users.username'))
+    create_at = Column(DateTime(timezone=True), server_default=func.now())

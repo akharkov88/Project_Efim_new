@@ -121,3 +121,28 @@ def update_UserTasck(
         user: models.User = Depends(get_current_user),
 ):
     return UserProfile_Services.update_UserTask(user,user_data,id)
+
+
+
+@router.get('/getDepartmentTable', )
+def get_operation(request: Request,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  Auth_Service: AuthService = Depends(), ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return User_ProfileServices.get_getDepartmentTable(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
+
+
+@router.post('/setDepartmentTable', )
+def setDepartmentTable(request: Request,
+                  user_data: models.ModelgetDepartment,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  Auth_Service: AuthService = Depends(), ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return User_ProfileServices.set_getDepartmentTable(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username,user_data)
+

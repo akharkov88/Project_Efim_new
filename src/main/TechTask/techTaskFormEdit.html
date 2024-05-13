@@ -29,6 +29,31 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                     <section class="section col-lg-12">
 
                         <div class="">
+
+
+                                        <div class="form-group">
+
+<a class="content_toggle" href="#">Посмотреть историю задач</a>
+
+<div id="history_techTask" class="content_block" style="display: none;">
+  <p>Блок скрытого текста...</p>
+</div>
+                                        </div>
+
+<script>
+$(document).ready(function(){
+  $('.content_toggle').click(function(){
+    $('.content_block').slideToggle(300, function(){
+      if ($(this).is(':hidden')) {
+        $('.content_toggle').html('Посмотреть историю задач');
+      } else {
+        $('.content_toggle').html('Скрыть историю задач');
+      }
+    });
+    return false;
+  });
+});
+</script>
                             <div class="section__tabs tabs">
                                 <div class="tabs__head">
                                     <div class="tabs__caption" data-tab="main">Тех Задание</div>
@@ -55,6 +80,9 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 {#                                            <div class="panel-heading">#}
 {##}
 {#                                            </div>#}
+
+
+
                                             {% include "TechTask/techTaskFormEdit_Calcylator.html" %}
 
                                         </div>
@@ -292,6 +320,27 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
 
 </body>
+<script>
+                            console.log("getTechTaskName", {{ getTechTaskName|tojson }})
+                          console.log("getAllTask", {{ getTechTaskName.ListUserTask|tojson }})
+                            list_user_tasks = {{ getTechTaskName.ListUserTask|tojson }}
+                            let info_status = ""
+                            for (list_user_task of list_user_tasks) {
+                                console.log(list_user_task)
+                                let info_Ispolnitel = ""
+                                for (executor of list_user_task.UserPfofile_executor) {
+                                    info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
+                                }
+                                info_Ispolnitel.trim(",")
+                                info_status += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> ${list_user_task.target_date} ; <b>${list_user_task.name} </b></p>`
+                            }
+                            console.log(info_status)
+
+
+                            document.getElementById("history_techTask").innerHTML = info_status
+
+
+                        </script>
 <script>
       console.log('!@#')
       var tx = document.getElementsByTagName('textarea');//РАСТЯГИВАЕМ_textarea

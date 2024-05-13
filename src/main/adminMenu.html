@@ -40,7 +40,8 @@
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4" class="form-group">
-                                    <button type="submit" id="creat" class="btn btn-default" style="margin-top: 25px">Добавить пользователя
+                                    <button type="submit" id="creat" class="btn btn-default" style="margin-top: 25px">
+                                        Добавить пользователя
                                     </button>
                                     <script>
                                         document.getElementById(`creat`).onclick = async function (event) {
@@ -61,7 +62,7 @@
 
                                                 if (update_roles.status == 201) {
                                                     console.log("успешно")
-                                                    location.reload();
+                                                    {#location.reload();#}
                                                 }
                                             } else {
                                                 showToast("Необходимо заполнить поля", "warning", 5000);
@@ -104,7 +105,7 @@
                                     },
                                 });
                                 let responseText = await check_user.text();
-
+                                console.log(responseText)
                                 if (check_user.status == 200) {
                                     id = 1
                                     await async function () {
@@ -127,7 +128,7 @@
                                                     },
                                                 });
                                                 let responseText = await check_user.text();
-                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") != -1) {
+                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("ADMIN") != -1) {
                                                     if (document.getElementById(`select_${id}`).options[document.getElementById(`select_${id}`).selectedIndex].value != "") {
                                                         if (document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') != "") {
                                                             new_roles = JSON.parse('["' + document.getElementById(`Roles_${idEvent}`).value.split(",").join('","') + '"]')
@@ -154,7 +155,7 @@
                                                         });
                                                         let update_roles_responseText = await update_roles.text();
                                                         if (update_roles.status == 200) {
-                                                            location.reload();
+                                                            {#location.reload();#}
                                                         } else {
                                                             showToast("Ошибка", "error", 5000);
 
@@ -180,14 +181,14 @@
                                                     },
                                                 });
                                                 let responseText = await check_user.text();
-                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") != -1) {
-                                                    console.log("check_user.status",check_user.status)
+                                                if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).indexOf("ADMIN") != -1) {
+                                                    console.log("check_user.status", check_user.status)
                                                     if (document.getElementById(`Password_${id}`).value != "") {
 
-    console.log(document.getElementById(`Password_${id}`).value)
-    console.log(idEvent)
-    console.log(document.getElementById(`id_${idEvent}`))
-    console.log(document.getElementById(`id_${idEvent}`).value)
+                                                        console.log(document.getElementById(`Password_${id}`).value)
+                                                        console.log(idEvent)
+                                                        console.log(document.getElementById(`id_${idEvent}`))
+                                                        console.log(document.getElementById(`id_${idEvent}`).value)
                                                         let update_password = await fetch(`/auth/update_password_user?id=${document.getElementById(`id_${idEvent}`).value}&password=${document.getElementById(`Password_${id}`).value}`, {
                                                             method: 'POST',
                                                             headers: {
@@ -198,7 +199,7 @@
                                                         });
                                                         let update_password_responseText = await update_password.text();
                                                         if (update_password.status == 200) {
-                                                            location.reload();
+                                                            {#location.reload();#}
                                                         } else {
                                                             showToast("Ошибка", "error", 5000);
 
@@ -254,7 +255,7 @@
                     <label>Изменить Roles</label>
                     <select id="select_${id}" class="form-control">
                         <option></option>
-                        <option>Admin</option>
+                        <option>ADMIN</option>
                         <option>mainEngineer</option>
                         <option>engineer</option>
                         <option>mainAccountant</option>

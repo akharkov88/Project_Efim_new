@@ -148,8 +148,8 @@ async function check_user_Admin() {
             },
         });
         let responseText = await check_user.text();
-        console.log("222222", JSON.parse(JSON.parse(responseText).roles).indexOf("admin"))
-        if (JSON.parse(JSON.parse(responseText).roles).indexOf("admin") == -1) {
+        console.log("222222", JSON.parse(JSON.parse(responseText).roles).indexOf("ADMIN"))
+        if (JSON.parse(JSON.parse(responseText).roles).indexOf("ADMIN") == -1) {
             document.location.href = '/main'
         }
     }
@@ -167,7 +167,7 @@ async function check_menu_Admin() {
         },
     });
     let responseText = await check_user.text();
-    if (JSON.parse(JSON.parse(responseText).roles).indexOf("Admin") == -1) {
+    if (JSON.parse(JSON.parse(responseText).roles).indexOf("ADMIN") == -1) {
         showStuff("adminMenu")
     }
 

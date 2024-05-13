@@ -34,7 +34,6 @@ async_engine = create_async_engine(url=Settings.database_url,
 Base.metadata.drop_all(engine)
 Base.metadata.create_all(engine)
 
-
 def add_user():
     vv = [{"user": {
         "username": "admin",
@@ -181,6 +180,8 @@ def add_user():
     for ff in vv:
         res = requests.post('http://127.0.0.1:8000/auth/sign-up/', json=ff["user"])
         print(res.status_code)
+
+
         headers = {'Content-Type': 'application/json', 'Accept': 'application/json',
                    "Authorization": "Bearer " + json.loads(res.text)['access_token']}
 
@@ -336,8 +337,8 @@ async def insert_UserTask():
 asyncio.run(insert_UserTask())
 
 # headers = {'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json'}
-#
-#
+# #
+# #
 # res = requests.post('http://127.0.0.1:8000/auth/sign-in/',headers=headers, data="grant_type=&username=admin&password=admin&scope=&client_id=&client_secret=")
 # # res = requests.get('http://127.0.0.1:8000/auth/')
 # print(res.status_code)
@@ -376,3 +377,36 @@ for v in vv:
     # vv='username=ad&roles=&password=ad'
     res = requests.post('http://127.0.0.1:8000/message/Telegram_set_message/', headers=headers, json=v)
     print(res.status_code)
+
+user={
+        "username": "admin",
+        "roles": "[\"ADMIN\"]",
+        "password": "admin"
+}
+
+
+headers = {'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json'}
+#
+#
+res = requests.post('http://127.0.0.1:8000/auth/sign-in/',headers=headers, data="grant_type=&username=admin&password=admin&scope=&client_id=&client_secret=")
+access_token=json.loads(res.text)
+def add_department():
+    global access_token
+    vv=[
+        {
+          "value": "отдел снабжения",
+          "event": "add"
+        },
+        {
+          "value": "отдел закупки",
+          "event": "add"
+        }
+    ]
+
+    for ff in vv:
+        headers = {'Content-Type': 'application/json', 'Accept': 'application/json',
+                   "Authorization": "Bearer " + access_token["access_token"]}
+
+        res = requests.post('http://127.0.0.1:8000/userprofile/setDepartmentTable', headers=headers, json=ff)
+        print(res.status_code)
+add_department()

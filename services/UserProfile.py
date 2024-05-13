@@ -276,3 +276,53 @@ class UserProfileServices:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
             # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+
+    def get_getDepartmentTable(self,user:str) -> tables.UserPfofile:
+        try:
+
+            operation = (
+                self.session
+                .query(tables.departmentTable)
+                .first()
+            )
+            if not operation:
+                return []
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
+
+    def set_getDepartmentTable(self,user:str,UserDATA: models.ModelgetDepartment ) -> tables.departmentTable:
+        try:
+            if UserDATA.event=="add":
+                operation = tables.departmentTable(
+                    department=UserDATA.value,
+                    username=user,
+                )
+                self.session.add(operation)
+                self.session.commit()
+
+            if UserDATA.event=="del":
+                operation2 = (
+                    self.session
+                    .query(tables.departmentTable)
+                    .filter(
+                        tables.departmentTable.department==UserDATA.value,
+                    )
+                    .delete()
+                )
+                self.session.commit()
+
+            operation = (
+                self.session
+                .query(tables.departmentTable)
+                .all()
+            )
+            if not operation:
+                return list()
+            return list(jsonable_encoder(operation))
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")

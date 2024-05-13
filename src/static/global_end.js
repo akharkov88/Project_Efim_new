@@ -53,8 +53,8 @@ async function get_UserTask_global() {
 
         list_task = JSON.parse(responseText)
         console.log("list_task", list_task)
-
         for (v of list_task) {
+
             if (v.status == "Назначена" && JSON.parse(v.user_executor.split("'").join('"')).indexOf(window.my_UserPfofile.my_username) != -1) {
                 zadachi_no_work++
             }
@@ -66,7 +66,7 @@ async function get_UserTask_global() {
 
             if (v.status == "Назначена" || v.status == "В Работе") {
                 for (UserPfofile of v.UserPfofile_executor) {
-                    if (UserPfofile.department==window.my_UserPfofile.department) {
+                    if (UserPfofile.department == window.my_UserPfofile.department) {
 
                         department_task++
                         break
@@ -81,7 +81,6 @@ async function get_UserTask_global() {
             }
         }
         document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value
-
         if (document.getElementById("zadachi_no_work")) {
             document.getElementById("zadachi_no_work").innerText = zadachi_no_work
         }

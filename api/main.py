@@ -101,12 +101,6 @@ def get_operation(request: Request,):
 
 
 
-@router.get('/techTask.html',response_model=List[models.Operation],)
-def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
-    return templates.TemplateResponse(
-        "TechTask/techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
-    )
-
 @router.get('/indexShablon.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
@@ -209,6 +203,12 @@ def get_operationName(request: Request,
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return templates.TemplateResponse(
         "TechTask/techTaskFormEdit.html", {"request": request,"getTechTaskName":Task_Services.getTechTaskNameTechTask_S(NameTechTask),"roles_user":jsonable_encoder(user)["roles"], "get_UserTask": User_ProfileServices.get_UserTask(user.username),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles(),"user":user.username}
+    )
+
+@router.get('/techTask.html',response_model=List[models.Operation],)
+def get_operation(request: Request,Task_Services: TaskServices = Depends(),):
+    return templates.TemplateResponse(
+        "TechTask/techTask.html", {"request": request,"getAllTask_S":Task_Services.getAllTask_S()}
     )
 
 
