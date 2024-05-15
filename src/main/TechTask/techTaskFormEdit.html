@@ -74,9 +74,15 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
                                 </div>
 
-</div>
 
-                                        <div class="form-group">
+                                <div class="form-group">
+                                    <H4 id="Type_label">Активные задачи</H4>
+<a class="content_toggle2" href="#">Скрыть автивные задачи</a>
+
+                                    <div id="history_techTask_activ"  class="content_block2">
+                                    </div>
+                                </div>
+  <div  id="history_techTask_div" class="form-group">
                                 <H4 id="Type_label">История задач</H4>
 
 <a class="content_toggle" href="#">Посмотреть историю задач</a>
@@ -94,6 +100,16 @@ $(document).ready(function(){
         $('.content_toggle').html('Посмотреть историю задач');
       } else {
         $('.content_toggle').html('Скрыть историю задач');
+      }
+    });
+    return false;
+  });
+  $('.content_toggle2').click(function(){
+    $('.content_block2').slideToggle(300, function(){
+      if ($(this).is(':hidden')) {
+        $('.content_toggle2').html('Показать автивные задачи');
+      } else {
+        $('.content_toggle2').html('Скрыть автивные задачи');
       }
     });
     return false;
@@ -385,6 +401,7 @@ $(document).ready(function(){
                           console.log("getAllTask", {{ getTechTaskName.ListUserTask|tojson }})
                             list_user_tasks = {{ getTechTaskName.ListUserTask|tojson }}
                             let info_status = ""
+                            let info_status_activ = ""
                             for (list_user_task of list_user_tasks) {
                                 console.log(list_user_task)
                                 let info_Ispolnitel = ""
@@ -392,12 +409,39 @@ $(document).ready(function(){
                                     info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
                                 }
                                 info_Ispolnitel.trim(",")
+                                if (list_user_task.status=="Назначена" || list_user_task.status=="В Работе"){
+                                    if ("newnewnewnew",new Date(list_user_task.target_date)<=new Date()){
+                                        info_status_activ += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> <font color="red">${list_user_task.target_date} </font>; <b>${list_user_task.name} </b></p>`
+
+                                    }else{
+                                        info_status_activ += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> <font color="green">${list_user_task.target_date} </font>; <b>${list_user_task.name} </b></p>`
+                                    }
+
+
+                                }
+                                if (list_user_task.status=="Отказ выполнять"){
+                                info_status += `<font color="red"><p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> ${list_user_task.target_date} ; <b>${list_user_task.name} </b></p></font>`
+
+                                }
+                                if (list_user_task.status=="Выполнено"){
                                 info_status += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> ${list_user_task.target_date} ; <b>${list_user_task.name} </b></p>`
+
+                                }
                             }
                             console.log(info_status)
 
-
+                            if (info_status==""){
+                            document.getElementById("history_techTask_div").setAttribute("style", "display:none")
+                            }else{
                             document.getElementById("history_techTask").innerHTML = info_status
+                            }
+                            if (info_status_activ==""){
+                                document.getElementById("history_techTask").innerHTML = "Отсутствуют активные задачи"
+
+                            }else{
+                            document.getElementById("history_techTask").innerHTML = info_status
+                            }
+                            document.getElementById("history_techTask_activ").innerHTML = info_status_activ
 
 
                         </script>
