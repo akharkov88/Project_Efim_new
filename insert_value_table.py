@@ -405,7 +405,9 @@ def add_department():
 
     for ff in vv:
         headers = {'Content-Type': 'application/json', 'Accept': 'application/json',
-                   "Authorization": "Bearer " + access_token["access_token"]}
+                   "Authorization": "Bearer " + access_token["access_token"],
+                   "Cookie": "Authorization=bearer " + access_token["access_token"]
+                   }
 
         res = requests.post('http://127.0.0.1:8000/userprofile/setDepartmentTable', headers=headers, json=ff)
         print(res.status_code)
