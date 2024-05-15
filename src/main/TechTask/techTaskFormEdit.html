@@ -295,19 +295,18 @@ $(document).ready(function(){
 
                                 head2.querySelector('.tabsCalcylator__caption').classList.add('tabsCalcylator__caption_active')
                                 setActiveContent2()
-                                console.log('tytytytytyt')
-                                let timerId
-                                new Promise((resolve,reject)=>{
-                                     timerId = setInterval(()=>{
-                                        console.log('1111')
-                                        if (first_table.offsetHeight!=0){
-                                            resize_div_for_table();
-                                            resolve()
-                                        }
-                                    },500)
-                                    setTimeout(() => { clearInterval(timerId);}, 2000);
-                                })
-                                .then(()=>clearInterval(timerId))
+                                {#let timerId#}
+                                {#new Promise((resolve,reject)=>{#}
+                                {#     timerId = setInterval(()=>{#}
+                                {#        console.log('1111')#}
+                                {#        if (first_table.offsetHeight!=0){#}
+                                {#            resize_div_for_table();#}
+                                {#            resolve()#}
+                                {#        }#}
+                                {#    },500)#}
+                                {#    setTimeout(() => { clearInterval(timerId);}, 2000);#}
+                                {#//})#}
+                                {#.then(()=>clearInterval(timerId))#}
 
 
                             }
