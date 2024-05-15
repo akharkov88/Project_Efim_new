@@ -75,6 +75,32 @@
 
 </div>
 <script>
+ $(document).ready(function(){
+
+         $(document).on('focusin', 'textarea[name=textAreaComment]', function () {
+              $(this).hide();
+              {#$(this).style = "display: none;"#}
+              textarea = $(this).closest('tr').find('input[name=textInputComment]');
+              textarea.show().focus().val($(this).val());//show, focus and get value from input
+         });
+
+         $(document).on('focusout', 'input[name=textInputComment]', function () {
+              $(this).hide();
+              textarea = $(this).closest('tr').find('textarea[name=textAreaComment]');
+              textarea.show().val($(this).val());//get value from textarea
+               //$('textarea').css("height", $("textarea").prop("scrollHeight"))
+               console.log("$(this).closest('tr').clientHeight")
+               console.log($(this).closest('tr').clientHeight)
+              textarea[0].style.height=`${textarea[0].scrollHeight}px`
+
+
+              {#this.style.height = `${this.scrollHeight}px`;#}
+         });
+  });
+{#window.onload = function(){#}
+{#    console.log('onload')#}
+{#    console.log(first_table.innerHTML)#}
+{#//}#}
 
 toggleCheckbox.onclick = function(){
 console.log(toggleCheckbox.checked)
@@ -350,7 +376,7 @@ async function upTableTime(n=5,state=true){
         </div>
 
             </div>
-            </div>
+{#            </div>#}
 
 
     </form>
@@ -780,11 +806,24 @@ function Napolneneie(value){
              {#$("input[id ^='input_']")#}
              event_input($("input[id ^='input_']"))
              //event_all_td();
+             {#resize_div_for_table()#}
              let vblsota=window.innerHeight-100
                 $(".table-responsive-pto").css("height",`${vblsota}`)
 
+             textarea_value()
+
 
 }
+/**
+* textarea_value - функция для наполнения textarea текстом сохраненным в input
+*/
+function textarea_value(){
+    let spisok = $('[id^=textarea_]')
+    for(let i=0; i<spisok.length; i++){
+        spisok[i].value = $(spisok[i].closest('tr')).find('input[name=textInputComment]')[0].value
+    }
+}
+
 function event_input(e) {
 {#console.log('!@#')#}
 {#console.log(e)#}
@@ -1015,6 +1054,7 @@ console.warn('admin!')
     $('.CostMaterial_disabled_input').css("background","#baffae")
     $('.costWork_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
     $('.costWork_disabled_input').css("background","#baffae")
+    $('.costWork_disabled_textarea').css("background","#baffae")
     $('.Special_disabled_input').removeAttr("readonly")//$('.CostMaterial_disabled_input').attr("readonly","readonly")
     $('.Special_disabled_input').css("background","#baffae")
 {#$('.tehstolbec').attr("style","display: none;")#}
@@ -1280,10 +1320,12 @@ const table = document.getElementById('first_table');
                             <td contenteditable="false">
 
                             </td>
-                            <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;">
+                            <td contenteditable="false" class="costWork_disabled_input" style="padding: 0; height: 1px; height: -moz-available;">
 
                             <div id="div_costWork_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <input id = 'input_costWork_${id_count}' type="text"  class="costWork_disabled_input"  list="datalist_costWork_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
+                            <textarea id = 'textarea_costWork_${id_count}' name="textAreaComment" class="costWork_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top;"></textarea>
+
+                            <input id = 'input_costWork_${id_count}' name="textInputComment" type="text"  class="costWork_disabled_input"  list="datalist_costWork_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); display: none;" autocomplete="off">
                             <datalist id="datalist_costWork_${id_count}">
                             </datalist>
                             </div></td>
@@ -1312,9 +1354,12 @@ const table = document.getElementById('first_table');
             'earthWorks_costMaterial': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec" style="white-space: nowrap;"><button type = "button" aria-hidden="true" class="delbtn fa fa-plus-square-o" id="addbtn${id_count}" style="margin-right: 5px;" onclick="addBetweenLine(event.target.id)"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
-                            <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;" class="CostMaterial_disabled">
+
+                            <td contenteditable="false" class="CostMaterial_disabled_input" style="padding: 0; height: 1px; height: -moz-available;">
                             <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <input id = 'input_costMaterial_${id_count}' class="CostMaterial_disabled_input" type="text"   list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
+                            <textarea id = 'textarea_costMaterial_${id_count}' name="textAreaComment" class="CostMaterial_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top;"></textarea>
+
+                            <input id = 'input_costMaterial_${id_count}' name="textInputComment" class="CostMaterial_disabled_input" type="text"   list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); display: none;" autocomplete="off">
                             <datalist id="datalist_costMaterial_${id_count}">
                             </datalist>
                             </div>
@@ -1503,8 +1548,11 @@ console.log('ПТО СУММ')
          // подсчет ВСЕГО_НДС
     {#if (elem_stroka.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){#}
     //}
-      console.log('EEE'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))
-    console.log(sum_total)
+        if (Object.keys(obj_global_sum).indexOf('ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))!=-1 && obj_global_sum['ВСЕГО_' + elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)]!=''){
+        console.log('EEE'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))
+        console.log(sum_total)
+        console.log(Object.keys(obj_global_sum))
+        console.log(sum_total)
         //   *20/120   * на % и / на 120
         if ($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText != '' && !isNaN($('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%',''))){
         let proc = $('#earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1))[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
@@ -1514,6 +1562,9 @@ console.log('ПТО СУММ')
         {#alert('tyt')#}
         pereschetTotalNDS();
         }
+
+        }
+
 }
 
 /**
