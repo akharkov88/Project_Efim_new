@@ -48,7 +48,7 @@ def add_user():
         "email": "admin@mail.ru",
         "adress": "улица",
         "office": "пока нет",
-        "department": "пока нет"
+        "department": "отдел закупки"
     }
     }
 
@@ -65,7 +65,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел снабжения"
         }
         },
         {"user": {
@@ -81,7 +81,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел снабжения"
         }
         }
         , {"user": {
@@ -97,7 +97,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел закупки"
         }
         }, {"user": {
             "username": "NoAdmin",
@@ -112,7 +112,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел снабжения"
         }
         }, {"user": {
             "username": "ENGINEER",
@@ -127,7 +127,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел закупки"
         }
         }, {"user": {
             "username": "SUPPLIER",
@@ -142,7 +142,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел снабжения"
         }
         }, {"user": {
             "username": "MAIN_ENGINEER",
@@ -157,7 +157,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел закупки"
         }
         }, {"user": {
             "username": "BOSS",
@@ -172,7 +172,7 @@ def add_user():
             "email": "string",
             "adress": "string",
             "office": "string",
-            "department": "пока нет"
+            "department": "отдел снабжения"
         }
         }
     ]

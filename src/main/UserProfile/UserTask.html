@@ -163,6 +163,7 @@
                                             <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
                                             <th scope="col">АВТОР</th>
                                             <th scope="col">ИСПОЛНИТЕЛИ</th>
+                                            <th scope="col">отдел</th>
                                             <th scope="col">ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК</th>
                                             <th scope="col">ПРИОРИТЕТ</th>
                                             <th scope="col">СТАТУС</th>
@@ -218,6 +219,19 @@
 
                                                     {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
                                                         <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
+
+                                                    {% endfor %}
+
+                                                </td>
+
+
+                                                {#отдел исполнителей#}
+                                                <td class="align-middle">
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+                                                    {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+
+                                                    {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                        <span>{{ UserPfofile_executor_for.department }},</span>
 
                                                     {% endfor %}
 
