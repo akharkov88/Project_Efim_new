@@ -292,7 +292,7 @@ async function upTableTime(n=5,state=true){
                                         user = []
                                         user.push(document.getElementById('Otpravka_roles').value)
                                         if (document.getElementById('Type').value=="username"){
-                                           URL= `/userprofile/createUserTask?name={{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+                                           URL= `/userprofile/createUserTask?name=<a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
                                         }else{
 
                                            URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
@@ -359,6 +359,7 @@ async function upTableTime(n=5,state=true){
                                             values = {{ all_user|tojson|safe }}
                                             for (value of Object.keys(values)) {
                                                 console.log("value", value)
+                                                if (window.my_UserPfofile.my_username != value) {
 
                                                 var opt = document.createElement('option');
                                                 opt.value = value
@@ -366,6 +367,7 @@ async function upTableTime(n=5,state=true){
                                                 document.getElementById('Otpravka_roles').appendChild(opt);
 
 
+                                            }
                                             }
                                         }
                                     }

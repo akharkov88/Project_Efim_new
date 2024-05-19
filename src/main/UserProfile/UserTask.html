@@ -283,6 +283,7 @@
                                                             {% endif %}
 
                                                         {% else %}
+                                                            <script>console.log("1111",{{ get_my_UserPfofile.username }})</script>
                                                             {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
                                                                 <button id="process_{{ get_UserTask_for.id }}">Взять в
@@ -554,7 +555,7 @@
                                                 document.getElementById(e.target.id).innerText = "Выполнить задачу"
                                                 showToast("Задача взята в работу", "info", 5000);
                                                 String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
-                                                get_UserTask_global()
+                                                {#get_UserTask_global()#}
                                                 send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> взята в работу`)
 
                                             } else {
@@ -580,6 +581,7 @@
                                     window.get_UserTask = {{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
 
+                                        console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} != v.user_create)
                                         console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} != v.user_create)
 
                                         if ({{ get_my_UserPfofile.username|tojson|safe }} != v.user_create) {
