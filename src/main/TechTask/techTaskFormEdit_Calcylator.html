@@ -75,14 +75,21 @@
 
 </div>
 <script>
+
+
+/**
+* функция для динамического изменения textarea в таблице в зависимости от контента
+*/
  $(document).ready(function(){
 
-         $(document).on('focusin', 'textarea[name=textAreaComment]', function () {
+         $(document).on('focusin', 'textarea[name=textAreaComment]'||'div[id^=div_costWork_]', function () {
               $(this).hide();
               {#$(this).style = "display: none;"#}
               textarea = $(this).closest('tr').find('input[name=textInputComment]');
               textarea.show().focus().val($(this).val());//show, focus and get value from input
          });
+
+         //div_costWork_2
 
          $(document).on('focusout', 'input[name=textInputComment]', function () {
               $(this).hide();
@@ -90,8 +97,11 @@
               textarea.show().val($(this).val());//get value from textarea
                //$('textarea').css("height", $("textarea").prop("scrollHeight"))
                console.log("$(this).closest('tr').clientHeight")
-               console.log($(this).closest('tr').clientHeight)
+               console.log(textarea[0].scrollHeight)
+               textarea[0].style.height = 'auto';
               textarea[0].style.height=`${textarea[0].scrollHeight}px`
+
+              {#textarea[0].style.height = (this.scrollHeight) + 'px';#}
 
 
               {#this.style.height = `${this.scrollHeight}px`;#}
@@ -1327,7 +1337,7 @@ const table = document.getElementById('first_table');
                             <td contenteditable="false" class="costWork_disabled_input" style="padding: 0; height: 1px; height: -moz-available;">
 
                             <div id="div_costWork_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <textarea id = 'textarea_costWork_${id_count}' name="textAreaComment" class="costWork_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top;"></textarea>
+                            <textarea id = 'textarea_costWork_${id_count}' name="textAreaComment" class="costWork_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top; overflow: hidden" ></textarea>
 
                             <input id = 'input_costWork_${id_count}' name="textInputComment" type="text"  class="costWork_disabled_input"  list="datalist_costWork_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); display: none;" autocomplete="off">
                             <datalist id="datalist_costWork_${id_count}">
@@ -1361,7 +1371,7 @@ const table = document.getElementById('first_table');
 
                             <td contenteditable="false" class="CostMaterial_disabled_input" style="padding: 0; height: 1px; height: -moz-available;">
                             <div id="div_costMaterial_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <textarea id = 'textarea_costMaterial_${id_count}' name="textAreaComment" class="CostMaterial_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top;"></textarea>
+                            <textarea id = 'textarea_costMaterial_${id_count}' name="textAreaComment" class="CostMaterial_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top; overflow: hidden;"></textarea>
 
                             <input id = 'input_costMaterial_${id_count}' name="textInputComment" class="CostMaterial_disabled_input" type="text"   list="datalist_costMaterial_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); display: none;" autocomplete="off">
                             <datalist id="datalist_costMaterial_${id_count}">
@@ -1396,9 +1406,12 @@ const table = document.getElementById('first_table');
             'earthWorks_Special': `<tr id = "stroka_${id_count}">
 <td contenteditable="false"  class="tehstolbec" style="white-space: nowrap;"><button type = "button" aria-hidden="true" class="delbtn fa fa-plus-square-o" id="addbtn${id_count}" style="margin-right: 5px;" onclick="addBetweenLine(event.target.id)"><button type = "button" aria-hidden="true" class="delbtn fa fa-trash-o" id="delbtn_${id_count}"></button></td>
 <td contenteditable="false"></td>
-                            <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;">
+                            <td contenteditable="false" style="padding: 0; height: 1px; height: -moz-available;" class="Special_disabled_input">
                             <div id="div_Special_${id_count}" style = "border: 0; padding: 0; margin: 0; width: 100%; height: 100%;">
-                            <input id = 'input_Special_${id_count}' type="text"  class="Special_disabled_input" list="datalist_Special_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);" autocomplete="off">
+                            <textarea id = 'textarea_Special_${id_count}' name="textAreaComment" class="Special_disabled_input" style=" border:  0;  resize: none; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); height: 100%; vertical-align: top; overflow: hidden;"></textarea>
+
+                            <input id = 'input_Special_${id_count}' name="textInputComment" class="Special_disabled_input" type="text"   list="datalist_Special_${id_count}"  value= ''   style = "width: 100%; height: 100%; border:  0; background: radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2); display: none;" autocomplete="off">
+
                             <datalist id="datalist_Special_${id_count}">
                             </datalist>
                             </div>
@@ -1724,7 +1737,7 @@ function addBetweenLine(id){
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
     resize_div_for_table()
     {#$(`#${id}`).closest('td').parent('tr').after("<tr id = 'third'><td>5</td><td>6</td></tr>");#}
-
+    toggleCheckbox.checked = false
 }
 
 function resize_div_for_table(){
@@ -1834,6 +1847,7 @@ function addLine(event, element){
 
     table_roles(JSON.parse({{roles_user|tojson|safe}} )[0])
     resize_div_for_table()
+    toggleCheckbox.checked = false
     //event_all_td()
 }
 
@@ -2801,6 +2815,15 @@ if(this.id.indexOf('Form_') == -1){
         if (JSON.parse({{roles_user|tojson|safe}} )[0]!= 'SUPPLIER'){
             delLine(event.target.id);
             }
+        }
+        {# клик по td в поле наименование#}
+        else if (event.target.id.indexOf('div_costWork_')!=-1 || event.target.id.indexOf('div_costMaterial_')!=-1 || event.target.id.indexOf('div_Special_')!=-1){
+
+            textarea = $(event.target.childNodes).closest('tr').find('textarea[name=textAreaComment]');
+            textarea.hide();
+            textarea = $(event.target.childNodes).closest('tr').find('input[name=textInputComment]');
+            textarea.show().focus();//show, focus and get value from input
+
         }
 
         /*
