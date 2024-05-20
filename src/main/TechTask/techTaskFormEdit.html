@@ -16,7 +16,7 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="page-header" style="margin: 10px 0 0;">
+                    <h1 class="page-header">
                         Создание технического задания
                     </h1>
                 </div>
@@ -30,8 +30,10 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
 
                         <div class="">
 
- <div class="panel panel-default">
  <div class="panel-heading">
+
+                    <div class="form-group panel panel-default">
+                    <div class="form-group panel-heading" style="margin-bottom: 0px;">
                                 <H4 id="Type_label">Сформировать задачи по данному ТЗ на сотрудников (по ФИО, Отделу, Роли)</H4>
 
                                 <div class="form-group">
@@ -84,11 +86,6 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                                     </div>
                                 </div>
   <div  id="history_techTask_div" class="form-group">
-</div>
-
-
-                                        <div class="form-group">
-                                        <div class="panel-heading">
                                 <H4 id="Type_label">История задач</H4>
 
 <a class="content_toggle" href="#">Посмотреть историю задач</a>
