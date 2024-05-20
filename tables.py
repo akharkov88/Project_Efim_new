@@ -62,6 +62,8 @@ class TaskForm(Base):
     TechTaskLeaderKP = Column(String) #  Отвественный
     user_name = Column(String, ForeignKey('users.username'), index=True)
     create_at = Column(DateTime, server_default=func.now())
+    TechTask_sketch = Column(String) #  эскиз
+    TechTask_plan = Column(String) #  чертеж
 
     # date = Column(Date)
     # kind = Column(String)

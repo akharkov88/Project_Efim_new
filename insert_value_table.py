@@ -357,7 +357,9 @@ vv = {
     "TechTaskDateKP": "2024-02-07",
     "TechTaskDateEndWork": "2024-02-08",
     "TechTaskPrice": "string",
-    "TechTaskLeaderKP": "string"
+    "TechTaskLeaderKP": "string",
+    "TechTask_plan": '{"TechTaskDate_plan":["2024-05-10"],"TechTaskPPR_plan":["xdvdvxd"]}',
+    "TechTask_sketch": '{"TechTaskDate_sketch":["2024-05-15"],"TechTaskPPR_sketch":["xdvdv"]}'
 }
 
 # vv='username=ad&roles=&password=ad'

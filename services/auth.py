@@ -248,7 +248,7 @@ class AuthService:
                 operation = (
                     self.session
                     .query(tables.UserPfofile)
-                    .filter(tables.User.username == user_data.username)
+                    .filter(tables.UserPfofile.username == user_data.username)
                     .first()
                 )
                 if not operation:
