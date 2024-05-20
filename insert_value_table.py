@@ -358,8 +358,8 @@ vv = {
     "TechTaskDateEndWork": "2024-02-08",
     "TechTaskPrice": "string",
     "TechTaskLeaderKP": "string",
-    "TechTask_plan": '{"TechTaskDate_plan":["2024-05-10"],"TechTaskPPR_plan":["xdvdvxd"]}',
-    "TechTask_sketch": '{"TechTaskDate_sketch":["2024-05-15"],"TechTaskPPR_sketch":["xdvdv"]}'
+    "TechTask_plan": '{"TechTaskDate_plan":"2024-05-29","checked":true,"TechTaskPPR_plan":"нужен чертеж"}',
+    "TechTask_sketch": '{"TechTaskDate_sketch":"2024-05-14","checked":true,"TechTaskPPR_sketch":"нужен эскиз"}'
 }
 
 # vv='username=ad&roles=&password=ad'

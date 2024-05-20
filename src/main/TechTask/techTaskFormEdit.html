@@ -8,6 +8,7 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
     {% include "indexShablon_head.html" %}
 
 </head>
+{#<script type="text/javascript" src="static/TechTask/techTask.js"></script>#}
 {#<script type="text/javascript" src="static/techTaskFormEditScript.js"></script>#}
 <body>
 <div id="wrapper">
@@ -46,7 +47,7 @@ console.log("AuthorAuthor", {{getTechTaskName.user_name|tojson|safe}})
                                 <div class="form-group" id="Otpravka_roles_forms" style="display:none;">
                                     <label id="Otpravka_roles_label">На кого будет назначено. Все
                                         пользователи/роли </label>
-                                    <select id="я" class="form-control">
+                                    <select id="Otpravka_roles" class="form-control">
 
                                     </select>
                                 </div>
@@ -162,6 +163,7 @@ $(document).ready(function(){
 
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </section>
                 </div>
@@ -563,5 +565,6 @@ $(document).ready(function(){
 
 </script>
 
+<script type="text/javascript" src="/static/TechTask/techTask.js"></script>
 
 </html>

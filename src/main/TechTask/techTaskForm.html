@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
 <div id="wrapper">
 
     {% include "indexShablon.html" %}
@@ -49,30 +50,67 @@
                                                    placeholder="Введите описание">
                                         </div>
 
-                                        {# <div name="TechTaskProject_form" class="form-group addFile">
-                                            <label>Проект/чертеж</label>
-                                            <!--                                            <form id="myForm" action="/submit" method="post">-->
 
-                                            <input name="TechTaskProject" type="file" id="file" name="file"/>
-                                            <!--                                            </form>-->
-
-                                        </div>#}
-                                        <!-- Добавление новой кнопки -->
                                         <div name="TechTaskProject_form" class="form-group ">
-                                            <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
-                                            <!-- hidden="true"-->
+
                                             <div id="testText" class="testText"></div>
                                             <input id="addFile" type="button" value="Добавить вложение"
                                                    name="TechTaskProject">
 
                                         </div>
-                                        <!--                                            </form>"-->
 
 
-                                        <!--    <form id="myForm" action="/submit" method="post">-->
-                                        <!--      <input type="file" onclick="submitForm(event)">-->
-                                        <!--&lt;!&ndash;      <input type="submit" value="Отправить" onclick="submitForm(event)">&ndash;&gt;-->
-                                        <!--    </form>-->
+
+                                        <div class="form-group">
+                                            <label>ППР (проект производства работ)</label>
+                                            <textarea name="TechTaskPPR" class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
+                                        </div>
+
+    {% include "/TechTask/shablony_teshtask/techTask_startForm.html" %}
+
+
+                                        <div class="form-group">
+                                            <label>Накладные расходы на объекте</label>
+                                            <textarea name="TechTaskOverhead" class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                                <label>Срок подготовки коммерческого предложения</label>
+                                                <input name="TechTaskDateKP" type="date" class="form-control"
+                                                       placeholder="dd.mm.yyyy">
+
+                                        </div>
+                                        <div class="form-group">
+
+                                                <label>Срок выполнения работ</label>
+                                                <input name="TechTaskDateEndWork" type="date"
+                                                       class="form-control"
+                                                       placeholder="dd.mm.yyyy">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Условия оплаты</label>
+                                            <textarea name="TechTaskPrice" class="form-control" rows="3"
+                                                      placeholder="Введите описание"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Ответственный за КП</label>
+                                            <select name="TechTaskLeaderKP" class="form-control">
+                                                <option>Главный инженер</option>
+                                                <option>Технический директор</option>
+                                                <option>Снабжение</option>
+                                                <option>ПТО</option>
+                                                <option>Директор</option>
+                                            </select>
+                                        </div>
+
+                                        <button id="createTicket">Создать задание</button>
 
                                         <script>
                                             // Заголовки для таблиц
@@ -298,157 +336,8 @@
                                                 }
                                             }
                                         </script>
-                                        <div class="form-group">
-                                            <label>ППР (проект производства работ)</label>
-                                            <textarea name="TechTaskPPR" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
-                                        </div>
-
-                                        <div class="form-group col-lg-12">
-                                            <label>Набор работ ППР(проект производства работ)</label>
-
-                                            <div class="checkbox">
-                                            <input type="checkbox" id="checkbox_sketch" class="">
-                                            <label for="checkbox_sketch" style="font-weight:bold;">Эскиз</label>
-                                            </div>
-                                            <div id="div_checkbox_sketch" style="display: none;padding: 10px;" class="panel panel-default">
-                                            <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
-                                                    <div class="form-group">
-                                                <label>Вложенный файл эскиза</label>
-
-                                                    <input type="file" id="">
-                                                    </div>
-
-                                                    <div class="form-group" >
-                                                <label>Установленный срок выполнения работ</label>
-                                                <input name="TechTaskDate_sketch" type="date"
-                                                       class="form-control"
-                                                       placeholder="dd.mm.yyyy">
-                                                    </div>
-
-                                            </div>
-
-                                                <div class="form-group">
-                                                    <label>Комментарий к эскизу</label>
-                                                    <textarea name="TechTaskPPR_sketch" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
-                                                    <div class="checkbox">
-
-                                                        <input type="checkbox" id="" class="">
-                                                        <label for="">Согласован Главным Инженером</label>
-                                                    </div>
-
-                                                    <div class="checkbox">
-                                                        <input type="checkbox" id="" class="">
-                                                        <label for="">Согласован Директором</label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="checkbox">
-                                            <input type="checkbox" id="checkbox_plan" class="">
-                                            <label for="checkbox_plan" style="font-weight:bold;">Чертеж</label>
-                                            </div>
-                                            <div id="div_checkbox_plan" style="display: none;padding: 10px;" class="panel panel-default">
-                                            <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
-                                                    <div class="form-group">
-                                                <label>Вложенный файл чертеж</label>
-
-                                                    <input type="file" id="">
-                                                    </div>
-
-                                                    <div class="form-group" >
-                                                <label>Установленный срок выполнения работ</label>
-                                                <input name="TechTaskDate_plan" type="date"
-                                                       class="form-control"
-                                                       placeholder="dd.mm.yyyy">
-                                                    </div>
-
-                                            </div>
-
-                                                <div class="form-group">
-                                                <label>Комментарий к чертежу</label>
-                                                    <textarea name="TechTaskPPR_plan" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
-                                                    <div class="checkbox">
-
-                                                        <input type="checkbox" id="" class="">
-                                                        <label for="">Согласован Главным Инженером</label>
-                                                    </div>
-
-                                                    <div class="checkbox">
-                                                        <input type="checkbox" id="" class="">
-                                                        <label for="">Согласован Директором</label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <label>Накладные расходы на объекте</label>
-                                            <textarea name="TechTaskOverhead" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
-                                        </div>
-
-
-                                        <div class="form-group">
-
-                                                <label>Срок подготовки коммерческого предложения</label>
-                                                <input name="TechTaskDateKP" type="date" class="form-control"
-                                                       placeholder="dd.mm.yyyy">
-
-                                        </div>
-                                        <div class="form-group">
-
-                                                <label>Срок выполнения работ</label>
-                                                <input name="TechTaskDateEndWork" type="date"
-                                                       class="form-control"
-                                                       placeholder="dd.mm.yyyy">
-
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Условия оплаты</label>
-                                            <textarea name="TechTaskPrice" class="form-control" rows="3"
-                                                      placeholder="Введите описание"></textarea>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label>Ответственный за КП</label>
-                                            <select name="TechTaskLeaderKP" class="form-control">
-                                                <option>Главный инженер</option>
-                                                <option>Технический директор</option>
-                                                <option>Снабжение</option>
-                                                <option>ПТО</option>
-                                                <option>Директор</option>
-                                            </select>
-                                        </div>
-
-                                        <button id="createTicket">Создать задание</button>
                                         <script>
-                                        checkbox_sketch.onclick = function(){
-                                        console.log('press')
-                                        if (checkbox_sketch.checked){
-                                            document.getElementById('div_checkbox_sketch').style.display = 'block'
-                                        }else{
-                                            document.getElementById('div_checkbox_sketch').style.display = 'none'
-                                        }
-                                        }
-                                        checkbox_plan.onclick = function(){
-                                        console.log('press')
-                                        if (checkbox_plan.checked){
-                                            document.getElementById('div_checkbox_plan').style.display = 'block'
-                                        }else{
-                                            document.getElementById('div_checkbox_plan').style.display = 'none'
-                                        }
-                                        }
+
 
                                             console.log('!@#')
                                             var tx = document.getElementsByTagName('textarea');//РАСТЯГИВАЕМ_textarea
@@ -480,23 +369,28 @@
                                                     console.log("name",key.name)
                                                     if ($("#checkbox_sketch").is(":checked")!=true){
                                                         if (key.name.indexOf("_sketch")!=-1){
+                                                            elem_obj["TechTask_sketch"]["checked"]=false
 
                                                             continue
                                                         }
                                                     }else{
                                                         if (key.name.indexOf("_sketch")!=-1) {
-                                                            elem_obj["TechTask_sketch"][key.name]=[key.value]
+                                                            elem_obj["TechTask_sketch"][key.name]=key.value
+                                                            elem_obj["TechTask_sketch"]["checked"]=true
 
                                                         }
                                                     }
 
                                                     if ($("#checkbox_plan").is(":checked")!=true){
                                                         if (key.name.indexOf("_plan")!=-1){
+                                                            elem_obj["TechTask_plan"]["checked"]=false
+
                                                             continue
                                                         }
                                                     }else {
                                                         if (key.name.indexOf("_plan")!=-1) {
-                                                            elem_obj["TechTask_plan"][key.name]=[key.value]
+                                                            elem_obj["TechTask_plan"][key.name]=key.value
+                                                            elem_obj["TechTask_plan"]["checked"]=true
 
                                                         }
                                                     }
@@ -616,6 +510,7 @@
 
 {% include "indexShablon_end.html" %}
 
+<script type="text/javascript" src="/static/TechTask/techTask.js"></script>
 
 </body>
 
