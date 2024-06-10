@@ -321,13 +321,18 @@ async function upTableTime(n=5,state=true){
                                             console.log(res.status)
                                             showToast('Задача сформирована' , 'info' , 5000)
                                             {#window.location.href ="/main/techTask.html"#}
+                                            document.getElementById("Otpravka_roles_forms").style.display = "none";
+                                            document.getElementById("Opisanie_forms").style.display = "none";
+                                            document.getElementById("Opisanie_forms").style.display = "none";
+                                            document.getElementById("button_forms").style.display = "none";
+                                            document.getElementById('Type').getElementsByTagName('option')[0].selected = 'selected'
+
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
                                         }
                                     }
 
-                                    console.log("Otpravka_rolesOtpravka_roles",document.getElementById('Otpravka_roles'))
                                     document.getElementById('Otpravka_roles').onchange = async function (event) {
                                         document.getElementById("Opisanie_forms").style.display = "block";
                                         document.getElementById("button_forms").style.display = "block";
