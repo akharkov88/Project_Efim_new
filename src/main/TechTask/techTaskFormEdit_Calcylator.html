@@ -319,8 +319,7 @@ async function upTableTime(n=5,state=true){
                                         console.log("res.status", res.status)
                                         if (res.status == 200) {
                                             console.log(res.status)
-                                            showToast('Задача сформирована' , 'info' , 5000)
-                                            showToast('Для отображения в списке дел Необходимо обновить страницу' , 'info' , 5000)
+                                            showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу' , 'info' , 5000)
                                             {#window.location.href ="/main/techTask.html"#}
                                             document.getElementById("Otpravka_roles_forms").style.display = "none";
                                             document.getElementById("Opisanie_forms").style.display = "none";
