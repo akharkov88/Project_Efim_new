@@ -21,7 +21,7 @@ Base = declarative_base()
 from sqlalchemy.orm import Mapped,mapped_column
 import datetime
 from sqlalchemy.sql import func
-
+from sqlalchemy.dialects.postgresql import ARRAY
 
 class User(Base):
     __tablename__ = 'users'
@@ -127,6 +127,7 @@ class ListUserTask(Base ):
     notification_executor = Column(Boolean)
     priority = Column(String)
     connection = Column(String)
+    control = Column(ARRAY(String))
 
 
 

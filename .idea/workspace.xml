@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7409a8d-2754-4218-8451-94798c0fa24b" name="Changes" comment="departament">
-      <change afterPath="$PROJECT_DIR$/src/main/Form_User_Tasck.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/static/main/Form_User_tasck.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insert_value_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/insert_value_table.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Form_User_Tasck.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Form_User_Tasck.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/UserProfile/UserTask.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/UserProfile/UserTask.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tables.py" beforeDir="false" afterPath="$PROJECT_DIR$/tables.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +28,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -62,7 +70,7 @@
     &quot;Python.testPYTON.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;NewTask&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/aleksey/pythonProject/Project_Efim_new&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -157,6 +165,7 @@
         <item itemvalue="Python.insert_value_table" />
         <item itemvalue="Python.testPYTON" />
         <item itemvalue="Node.js.CodeWars.js" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -203,7 +212,11 @@
       <workItem from="1716291661308" duration="38000" />
       <workItem from="1716303329760" duration="311000" />
       <workItem from="1716383315367" duration="61000" />
-      <workItem from="1718039705718" duration="5245000" />
+      <workItem from="1718039705718" duration="5806000" />
+      <workItem from="1718136404881" duration="3255000" />
+      <workItem from="1718176489332" duration="2806000" />
+      <workItem from="1718224644159" duration="1136000" />
+      <workItem from="1718730666438" duration="1205000" />
     </task>
     <task id="LOCAL-00001" summary="fix timeout">
       <option name="closed" value="true" />
@@ -293,7 +306,31 @@
       <option name="project" value="LOCAL" />
       <updated>1718045034187</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="departament">
+      <option name="closed" value="true" />
+      <created>1718045041899</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1718045041899</updated>
+    </task>
+    <task id="LOCAL-00013" summary="departament">
+      <option name="closed" value="true" />
+      <created>1718045368540</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1718045368540</updated>
+    </task>
+    <task id="LOCAL-00014" summary="departament">
+      <option name="closed" value="true" />
+      <created>1718045697759</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1718045697759</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,8 +373,17 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html</url>
           <line>278</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="95" />
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html</url>
+          <line>337</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/TechTask/techTaskFormEdit_Calcylator.html</url>
+          <line>342</line>
+          <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/services/UserProfile.py</url>
@@ -356,7 +402,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/insert_value_table.py</url>
-          <line>341</line>
+          <line>345</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -371,12 +417,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/insert_value_table.py</url>
-          <line>413</line>
+          <line>417</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/insert_value_table.py</url>
-          <line>414</line>
+          <line>418</line>
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -409,12 +455,22 @@
           <line>135</line>
           <option name="timeStamp" value="90" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/api/__init__.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/.venv/lib/python3.12/site-packages/pydantic/typing.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Project_Efim_new$insert_value_table.coverage" NAME="insert_value_table Coverage Results" MODIFIED="1716138833851" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1718039730942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project_Efim_new$insert_value_table.coverage" NAME="insert_value_table Coverage Results" MODIFIED="1718141083385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Project_Efim_new$main.coverage" NAME="main Coverage Results" MODIFIED="1718224940805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Project_Efim_new$testPYTON.coverage" NAME="testPYTON Coverage Results" MODIFIED="1712753247506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

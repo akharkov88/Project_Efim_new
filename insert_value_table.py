@@ -277,7 +277,8 @@ async def insert_UserTask():
         "target_date": "2024-01-20",
         "notification_holder": False,
         "notification_executor": True,
-        "priority": "Не важно"
+        "priority": "Не важно",
+        "control":['Naumov', 'Efimov']
     }, {
         "name": "Реализация создание задач",
         "user_create": "admin",
@@ -287,7 +288,8 @@ async def insert_UserTask():
         "target_date": "2024-01-21",
         "notification_holder": False,
         "notification_executor": True,
-        "priority": "Нормально"
+        "priority": "Нормально",
+        "control":['Naumov']
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "admin",
@@ -297,7 +299,8 @@ async def insert_UserTask():
         "target_date": "2024-01-22",
         "notification_holder": False,
         "notification_executor": True,
-        "priority": "Важно"
+        "priority": "Важно",
+        "control":['Efimov']
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "Efimov",
@@ -307,7 +310,8 @@ async def insert_UserTask():
         "target_date": "2024-01-22",
         "notification_holder": False,
         "notification_executor": True,
-        "priority": "Важно"
+        "priority": "Важно",
+        "control":['admin']
     }]
 
     with sync_engine.connect() as conn:

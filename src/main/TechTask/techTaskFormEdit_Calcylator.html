@@ -276,7 +276,7 @@ async function upTableTime(n=5,state=true){
                                    }
 
 
-                                    document.getElementById("Otpravka_roles_text").onkeypress = function (e) {
+                                    document.getElementById("Opisanie_text").onkeypress = function (e) {
                                         var chr = String.fromCharCode(e.which);
                                         if ("&".indexOf(chr) != -1)
                                             return false;
@@ -284,8 +284,8 @@ async function upTableTime(n=5,state=true){
                                     document.getElementById('Otpravka_roles_button').onclick = async function () {
                                         event.preventDefault();
                                         valid = true
-                                        if (document.getElementById('Otpravka_roles_text').value == "") {
-                                            document.getElementById('Otpravka_roles_text').setAttribute("required", true)
+                                        if (document.getElementById('Opisanie_text').value == "") {
+                                            document.getElementById('Opisanie_text').setAttribute("required", true)
 
                                             valid = false
                                         }
@@ -298,14 +298,16 @@ async function upTableTime(n=5,state=true){
                                             return
                                         }
 
-                                        console.log(document.getElementById('Otpravka_roles_text').value)
+                                        console.log(document.getElementById('Opisanie_text').value)
                                         user = []
                                         user.push(document.getElementById('Otpravka_roles').value)
                                         if (document.getElementById('Type').value=="username"){
-                                           URL= `/userprofile/createUserTask?name=<a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+
+
+                                           URL= `/userprofile/createUserTask?name=<a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
                                         }else{
 
-                                           URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+                                           URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
                                         }
                                         res = await fetch(URL, {
                                             method: "GET",
@@ -806,7 +808,7 @@ function Napolneneie(value){
             document.getElementById("versionTable").style.display = "block";
             document.getElementById("Otpravka_roles_button").style.display = "block";
             document.getElementById("Otpravka_roles_label_comment").style.display = "block";
-            document.getElementById("Otpravka_roles_text").style.display = "block";
+            document.getElementById("Opisanie_text").style.display = "block";
             {#seach_ID_table(JSON.parse(responseText).value_table);#}
             {#console.log(seach_ID_table('tbody','earthWorks_'))#}
 
@@ -1018,7 +1020,7 @@ function event_input(e) {
              document.getElementById("versionTable").style.display = "none";
              document.getElementById("Otpravka_roles_button").style.display = "none";
              document.getElementById("Otpravka_roles_label_comment").style.display = "none";
-             document.getElementById("Otpravka_roles_text").style.display = "none";
+             document.getElementById("Opisanie_text").style.display = "none";
          }
          pereschetTotalSum();
          pereschetTotalNDS();
@@ -2629,7 +2631,7 @@ let value = e.value;
                     document.getElementById("versionTable").style.display = "block";
                     document.getElementById("Otpravka_roles_button").style.display = "block";
                     document.getElementById("Otpravka_roles_label_comment").style.display = "block";
-                    document.getElementById("Otpravka_roles_text").style.display = "block";
+                    document.getElementById("Opisanie_text").style.display = "block";
                     table_earthWorks_Total(coll_table)
 
 
