@@ -56,38 +56,58 @@ def set_userprofile(request: Request,
                     user: models.User = Depends(get_current_user),
 
                     ):
-    return User_ProfileServices.set_UserProfile(user.username,User_data)
+    return User_ProfileServices.set_UserProfile(user.username, User_data)
 
 
 @router.get('/UserTask', response_model=List[models.Operation], )
 async def get_operation(request: Request,
-                  User_ProfileServices: UserProfileServices = Depends(),
-                  Auth_Service: AuthService = Depends(),
+                        User_ProfileServices: UserProfileServices = Depends(),
+                        Auth_Service: AuthService = Depends(),
                         ):
     try:
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
 
-    user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    user = Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     return templates.TemplateResponse(
-        "/UserProfile/UserTask.html", {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(user.username
-            ),"all_user": Auth_Service.get_all_username(),"all_roles":Auth_Service.get_all_roles(),"get_my_UserPfofile":Auth_Service.get_my_UserPfofile(user),"UserTask_Control":User_ProfileServices.get_UserTask_Control(user.username)}
+        "/UserProfile/UserTask.html",
+        {"request": request, "get_UserTask": User_ProfileServices.get_UserTask(user.username
+                                                                               ),
+         "all_user": Auth_Service.get_all_username(), "all_roles": Auth_Service.get_all_roles(),
+         "get_my_UserPfofile": Auth_Service.get_my_UserPfofile(user),
+         "UserTask_Control": User_ProfileServices.get_UserTask_Control(user.username)}
     )
 
 
-@router.get('/UserTask_Control', )#, response_model=List[models.Operation]
+@router.get('/UserTask_Search_id', )  # , response_model=List[models.Operation]
 async def get_operation(request: Request,
-                  User_ProfileServices: UserProfileServices = Depends(),
-                  Auth_Service: AuthService = Depends(),
+                        id_tasck: models.ModelUserTaskID = Depends(),
+                        User_ProfileServices: UserProfileServices = Depends(),
+                        Auth_Service: AuthService = Depends(),
                         ):
     try:
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
 
-    user=Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    # user = Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    return User_ProfileServices.services_UserTask_Search_id(id_tasck)
+
+
+@router.get('/UserTask_Control', )  # , response_model=List[models.Operation]
+async def get_operation(request: Request,
+                        User_ProfileServices: UserProfileServices = Depends(),
+                        Auth_Service: AuthService = Depends(),
+                        ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+
+    user = Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     return User_ProfileServices.get_UserTask_Control(user.username)
+
 
 @router.get('/get_UserTask', )
 def get_operation(request: Request,
@@ -97,7 +117,8 @@ def get_operation(request: Request,
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return User_ProfileServices.get_UserTask(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
+    return User_ProfileServices.get_UserTask(
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
 
 
 @router.get(
@@ -106,11 +127,12 @@ def get_operation(request: Request,
     # status_code=status.HTTP_200_OK,
 )
 def create_operation(request: Request,
-        user_data: models.ModelUserTask= Depends(),
-        UserProfile_Services: UserProfileServices = Depends(),
-        user: models.User = Depends(get_current_user),
-):
+                     user_data: models.ModelUserTask = Depends(),
+                     UserProfile_Services: UserProfileServices = Depends(),
+                     user: models.User = Depends(get_current_user),
+                     ):
     return UserProfile_Services.create_UserTask(user_data, user)
+
 
 @router.get(
     '/createUserTaskRoles',
@@ -118,12 +140,11 @@ def create_operation(request: Request,
     # status_code=status.HTTP_200_OK,
 )
 def create_operation(request: Request,
-        user_data: models.ModelUserTask= Depends(),
-        UserProfile_Services: UserProfileServices = Depends(),
-        user: models.User = Depends(get_current_user),
-):
+                     user_data: models.ModelUserTask = Depends(),
+                     UserProfile_Services: UserProfileServices = Depends(),
+                     user: models.User = Depends(get_current_user),
+                     ):
     return UserProfile_Services.create_UserTaskRoles(user_data, user)
-
 
 
 @router.post('/updateUserTasck', response_model=models.ModelUserTask, )
@@ -133,8 +154,7 @@ def update_UserTasck(
         UserProfile_Services: UserProfileServices = Depends(),
         user: models.User = Depends(get_current_user),
 ):
-    return UserProfile_Services.update_UserTask(user,user_data,id)
-
+    return UserProfile_Services.update_UserTask(user, user_data, id)
 
 
 @router.get('/getDepartmentTable', )
@@ -145,17 +165,18 @@ def get_operation(request: Request,
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return User_ProfileServices.get_getDepartmentTable(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
+    return User_ProfileServices.get_getDepartmentTable(
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
 
 
 @router.post('/setDepartmentTable', )
 def setDepartmentTable(request: Request,
-                  user_data: models.ModelgetDepartment,
-                  User_ProfileServices: UserProfileServices = Depends(),
-                  Auth_Service: AuthService = Depends(), ):
+                       user_data: models.ModelgetDepartment,
+                       User_ProfileServices: UserProfileServices = Depends(),
+                       Auth_Service: AuthService = Depends(), ):
     try:
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return User_ProfileServices.set_getDepartmentTable(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username,user_data)
-
+    return User_ProfileServices.set_getDepartmentTable(
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username, user_data)
