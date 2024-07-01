@@ -25,6 +25,7 @@ import json
 import tables
 from services.auth import  get_session
 from fastapi.encoders import jsonable_encoder
+from sqlalchemy.dialects.postgresql import Any
 class dotdict(dict):
     """dot.notation access to dictionary attributes"""
     __getattr__ = dict.get
@@ -40,6 +41,36 @@ class UserProfileServices:
         try:
             val=dict(UserDATA)
             val["user_create"]=user.username
+            if val["connection"]!=None:
+                if json.loads(val["connection"]).get("UserTasck",False):
+                    find_User_tasck = (
+                        self.session
+                        .query(tables.ListUserTask)
+                        .filter(
+                            or_(
+                                tables.ListUserTask.id  == int(json.loads(val["connection"])["UserTasck"]),
+                            )
+                        )
+                        .all()
+                    )
+                    if not find_User_tasck:
+                        return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+
+                    if jsonable_encoder(find_User_tasck)[0]["control"]== None:
+                        val["control"] = [user.username]
+                    else:
+                        val["control"] = [user.username]
+                        for user_data in jsonable_encoder(find_User_tasck)[0]["control"]:
+                            if user_data not in val["control"]:
+                                val["control"].append(user_data)
+
+                    for user_data in ast.literal_eval(UserDATA.user_executor):
+                        if user_data not in val["control"]:
+
+                            val["control"].append(user_data)
+
+
+
             operation = tables.ListUserTask(**val
 
             )
@@ -48,7 +79,7 @@ class UserProfileServices:
             self.session.commit()
             if not operation:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
-            # return jsonable_encoder(operation)
+            # return jsonable_encoder(find_User_tasck)
             operation2 = (
                 self.session
                 .query(tables.UserPfofile.last_name, tables.UserPfofile.first_name)
@@ -156,6 +187,63 @@ class UserProfileServices:
             for hh in jsonable_encoder(operation):
                 # print(hh["user_create"])
                 # print(self.get_UserProfile(hh["user_create"]))
+
+                save_val = {}
+
+                if save_val.get(hh["user_create"],False):
+                    hh["UserPfofile_create"] = hh["user_create"]
+                else:
+                    save_val[hh["user_create"]]=self.get_UserProfile(hh["user_create"])
+                    hh["UserPfofile_create"] = save_val[hh["user_create"]]
+
+                save_executor = []
+
+                # print(hh["user_executor"])
+                for user_executor_val in ast.literal_eval(hh["user_executor"]):
+
+
+                    if save_val.get(user_executor_val, False):
+                        save_executor.append(save_val[user_executor_val])
+                    else:
+                        save_val[user_executor_val] = self.get_UserProfile(user_executor_val)
+                        save_executor.append(save_val[user_executor_val])
+
+                hh["UserPfofile_executor"] = save_executor
+
+                val_mas.append(hh)
+
+            for val in val_mas:
+                val["create_at"]=dateutil.parser.isoparse(val["create_at"]).strftime("%Y-%m-%d" )
+                if val["user_create"]==user:
+                    val["notification_executor"]=False
+            # if not operation:
+            #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return val_mas
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key")
+            # raise JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message': "Уже существует запись"})
+    def get_UserTask_Control(self, user: str) -> tables.ListUserTask:
+        try:
+
+            operation = (
+                self.session
+                .query(tables.ListUserTask)
+                .filter(
+                     tables.ListUserTask.control.any(user)
+                )
+                .filter(
+                    and_(
+                        tables.ListUserTask.user_create !=user,
+                        tables.ListUserTask.user_executor.notlike("%'" + user + "'%")
+                    )
+                )
+                .all()
+            )
+            val_mas=[]
+            for hh in jsonable_encoder(operation):
 
                 save_val = {}
 

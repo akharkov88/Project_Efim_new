@@ -130,7 +130,6 @@ class ListUserTask(Base ):
     control = Column(ARRAY(String))
 
 
-
 class UserPfofile(Base):
     __tablename__ = 'UserPfofile'
     username = Column(String, ForeignKey('users.username'), index=True, primary_key=True)
