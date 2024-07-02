@@ -310,10 +310,7 @@
 
                                                 </td>
                                                 <script>
-                                                        console.log('POPAL!!')
-
                                                         if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {
-                                                            console.log('POPAL!!')
                                                             document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'
                                                         }
 
