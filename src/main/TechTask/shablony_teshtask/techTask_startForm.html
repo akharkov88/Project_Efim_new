@@ -1,6 +1,4 @@
 <div class="form-group col-lg-12">
-    <label>Набор работ ППР(проект производства работ)</label>
-
     <div class="checkbox">
         <input type="checkbox" id="checkbox_sketch" class="">
         <label for="checkbox_sketch" style="font-weight:bold;">Эскиз</label>
@@ -15,7 +13,7 @@
 
             <div class="form-group">
                 <label>Установленный срок выполнения работ</label>
-                <input name="TechTaskDate_sketch" id="TechTaskDate_sketch" type="date"
+                <input name="TechTaskDate_sketch" type="date"
                        class="form-control"
                        placeholder="dd.mm.yyyy">
             </div>
@@ -24,7 +22,7 @@
 
         <div class="form-group">
             <label>Комментарий к эскизу</label>
-            <textarea id="TechTaskPPR_sketch"  name="TechTaskPPR_sketch" class="form-control" rows="3"
+            <textarea name="TechTaskPPR_sketch" class="form-control" rows="3"
                       placeholder="Введите описание"></textarea>
             <div class="checkbox">
 
@@ -55,7 +53,7 @@
 
             <div class="form-group">
                 <label>Установленный срок выполнения работ</label>
-                <input name="TechTaskDate_plan" id="TechTaskDate_plan" type="date"
+                <input name="TechTaskDate_plan" type="date"
                        class="form-control"
                        placeholder="dd.mm.yyyy">
             </div>
@@ -64,7 +62,7 @@
 
         <div class="form-group">
             <label>Комментарий к чертежу</label>
-            <textarea id="TechTaskPPR_plan" name="TechTaskPPR_plan" class="form-control" rows="3"
+            <textarea name="TechTaskPPR_plan" class="form-control" rows="3"
                       placeholder="Введите описание"></textarea>
             <div class="checkbox">
 
@@ -81,4 +79,164 @@
     </div>
 
 
+    <div class="checkbox">
+        <input type="checkbox" id="checkbox_analysis" class="">
+        <label for="checkbox_analysis" style="font-weight:bold;">Анализ
+            проектной документации</label>
+    </div>
+    <div id="div_checkbox_analysis" style="display: none;padding: 10px;"
+         class="panel panel-default">
+        <div class="form-group"
+             style="display: flex; justify-content: flex-start; gap: 20px;">
+            <div class="form-group">
+                <label>Вложенный файл анализа проектной документации</label>
+
+                <input type="file" id="">
+            </div>
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input name="TechTaskDate_analysis" type="date"
+                       class="form-control"
+                       placeholder="dd.mm.yyyy">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий к анализу проектной документации</label>
+            <textarea name="TechTaskPPR_analysis" class="form-control" rows="3"
+                      placeholder="Введите описание"></textarea>
+            <div class="checkbox">
+
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Главным Инженером</label>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Директором</label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="checkbox">
+        <input type="checkbox" id="checkbox_counting" class="">
+        <label for="checkbox_counting" style="font-weight:bold;">Подсчет объемов
+            работ</label>
+    </div>
+    <div id="div_checkbox_counting" style="display: none;padding: 10px;"
+         class="panel panel-default">
+        <div class="form-group"
+             style="display: flex; justify-content: flex-start; gap: 20px;">
+            <div class="form-group">
+                <label>Вложенный файл подсчета объемов работ</label>
+
+                <input type="file" id="">
+            </div>
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input name="TechTaskDate_counting" type="date"
+                       class="form-control"
+                       placeholder="dd.mm.yyyy">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий к подсчету объемов работ</label>
+            <textarea name="TechTaskPPR_counting" class="form-control" rows="3"
+                      placeholder="Введите описание"></textarea>
+            <div class="checkbox">
+
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Главным Инженером</label>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Директором</label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="checkbox">
+        <input type="checkbox" id="checkbox_calcylator" class="">
+        <label for="checkbox_calcylator" style="font-weight:bold;">Расчет
+            стоимости</label>
+    </div>
+    <div id="div_checkbox_calcylator" style="display: none;padding: 10px;"
+         class="panel panel-default">
+        <div class="form-group"
+             style="display: flex; justify-content: flex-start; gap: 20px;">
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input name="TechTaskDate_checkbox_calcylator" type="date"
+                       class="form-control"
+                       placeholder="dd.mm.yyyy">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий</label>
+            <textarea name="TechTaskPPR_calcylator" class="form-control"
+                      rows="3"
+                      placeholder="Введите описание"></textarea>
+            <div class="checkbox">
+
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Главным Инженером</label>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Директором</label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="checkbox">
+        <input type="checkbox" id="checkbox_KP" class="">
+        <label for="checkbox_KP" style="font-weight:bold;">Подготовка КП</label>
+    </div>
+    <div id="div_checkbox_KP" style="display: none;padding: 10px;"
+         class="panel panel-default">
+        <div class="form-group"
+             style="display: flex; justify-content: flex-start; gap: 20px;">
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input name="TechTaskDate_checkbox_KP" type="date"
+                       class="form-control"
+                       placeholder="dd.mm.yyyy">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий</label>
+            <textarea name="TechTaskPPR_KP" class="form-control" rows="3"
+                      placeholder="Введите описание"></textarea>
+            <div class="checkbox">
+
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Главным Инженером</label>
+            </div>
+
+            <div class="checkbox">
+                <input type="checkbox" id="" class="">
+                <label for="">Согласован Директором</label>
+            </div>
+
+        </div>
+</div>
 </div>
