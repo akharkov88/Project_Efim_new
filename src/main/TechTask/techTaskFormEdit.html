@@ -367,8 +367,8 @@ $(document).ready(function(){
                             console.log("getTechTaskName", {{ getTechTaskName|tojson }})
                           console.log("getAllTask", {{ getTechTaskName.ListUserTask|tojson }})
                             list_user_tasks = {{ getTechTaskName.ListUserTask|tojson }}
-                            let info_status = ""
-                            let info_status_activ = ""
+                            let info_status = "<table style='border-collapse:collapse'><td><b>Создал задачу</b></td><td><b>Исполнитель:</b></td><td><b>Статус:</b></td><td><b>контрольный срок:</b></td><td><b> тех. задание</b></td>"
+                            let info_status_activ = "<table style='border-collapse:collapse'><td><b>Создал задачу</b></td><td><b>Исполнитель:</b></td><td><b>Статус:</b></td><td><b>контрольный срок:</b></td><td><b> тех. задание</b></td>"
                             for (list_user_task of list_user_tasks) {
                                 console.log(list_user_task)
                                 let info_Ispolnitel = ""
@@ -378,20 +378,20 @@ $(document).ready(function(){
                                 info_Ispolnitel.trim(",")
                                 if (list_user_task.status=="Назначена" || list_user_task.status=="В Работе"){
                                     if ("newnewnewnew",new Date(list_user_task.target_date)<=new Date()){
-                                        info_status_activ += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> <font color="red">${list_user_task.target_date} </font>; <b>${list_user_task.name} </b></p>`
+                                        info_status_activ += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td>${info_Ispolnitel}; </td><td> ${list_user_task.status};</td> <td> <font color="red">${list_user_task.target_date} </font>; </td><td><b>${list_user_task.name} </b></td></tr>`
 
                                     }else{
-                                        info_status_activ += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> <font color="green">${list_user_task.target_date} </font>; <b>${list_user_task.name} </b></p>`
+                                        info_status_activ += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td> ${info_Ispolnitel};</td> <td> ${list_user_task.status};</td> <td>  <font color="green">${list_user_task.target_date} </font>;</td><td> <b>${list_user_task.name} </b></p></td> </tr>`
                                     }
 
 
                                 }
                                 if (list_user_task.status=="Отказ выполнять"){
-                                info_status += `<font color="red"><p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> ${list_user_task.target_date} ; <b>${list_user_task.name} </b></p></font>`
+                                info_status += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ;</td> <td><b>${list_user_task.name} </b></p></font></td> </tr>`
 
                                 }
                                 if (list_user_task.status=="Выполнено"){
-                                info_status += `<p><b>Создал задачу</b>: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; <b>Исполнитель:</b> ${info_Ispolnitel}; <b>Статус:</b> ${list_user_task.status}; <b>контрольный срок:</b> ${list_user_task.target_date} ; <b>${list_user_task.name} </b></p>`
+                                info_status += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ; </td> <td><b>${list_user_task.name} </b></p></td> </tr>`
 
                                 }
                             }
@@ -552,6 +552,9 @@ $(document).ready(function(){
 
                     TechTaskDate_plan.value=plan.TechTaskDate_plan
                     TechTaskPPR_plan.value=plan.TechTaskPPR_plan
+
+                    var today = new Date().toISOString().split('T')[0];
+                    document.getElementById("DateEndWork").setAttribute('min', today);
 
                 </script>
 
