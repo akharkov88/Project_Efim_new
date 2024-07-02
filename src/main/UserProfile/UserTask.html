@@ -58,28 +58,8 @@
                                         document.getElementById('visible_completed').onchange = async function (event) {
                                             if (event.target.checked) {
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                    console.log(row.cells[5].innerText)
-                                                    if (row.cells[5].innerText.trim() == "Выполнено") {
-                                                        row.style.display = 'none';
-                                                    }
-                                                }
-
-                                            } else {
-
-                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
-                                                for (var row = 0; row < rows.length; row++) {
-                                                    if (row.cells[5].innerText.trim() == "Выполнено") {
-                                                        rows[row].style.display = "table-row";
-                                                    }
-                                                }
-                                            }
-
-                                        }
-                                        document.getElementById('priority_low').onchange = async function (event) {
-                                            if (event.target.checked) {
-                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                    console.log(row.cells[4].innerText.trim())
-                                                    if (row.cells[4].innerText.trim() == "Не важно") {
+                                                    console.log(row.cells[8].innerText)
+                                                    if (row.cells[8].innerText.trim() == "Выполнено") {
                                                         row.style.display = 'none';
                                                     }
                                                 }
@@ -90,9 +70,39 @@
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
-                                                    console.log(rows[row].cells[4])
-                                                    console.log(rows[row].cells[4].innerText.trim())
-                                                    if (rows[row].cells[4].innerText.trim() == "Не важно") {
+                                                    console.log(rows[row].cells[8])
+                                                    console.log(rows[row].cells[8].innerText.trim())
+                                                    if (rows[row].cells[8].innerText.trim() == "Выполнено") {
+
+                                                        rows[row].style.display = "table-row";
+                                                    }
+                                                }
+                                                {#for (var row = 0; row < rows.length; row++) {#}
+                                                {#    if (row.cells[8].innerText.trim() == "Выполнено") {#}
+                                                {#        rows[row].style.display = "table-row";#}
+                                                {#    }#}
+                                                //}
+                                            }
+
+                                        }
+                                        document.getElementById('priority_low').onchange = async function (event) {
+                                            if (event.target.checked) {
+                                                for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(row.cells[7].innerText.trim())
+                                                    if (row.cells[7].innerText.trim() == "Не важно") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+
+                                            } else {
+
+                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                for (var row = 0; row < rows.length; row++) {
+
+                                                    console.log(rows[row])
+                                                    console.log(rows[row].cells[7])
+                                                    console.log(rows[row].cells[7].innerText.trim())
+                                                    if (rows[row].cells[7].innerText.trim() == "Не важно") {
 
                                                         rows[row].style.display = "table-row";
                                                     }
@@ -103,8 +113,8 @@
 
                                             if (event.target.checked) {
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                    console.log(row.cells[4].innerText.trim())
-                                                    if (row.cells[4].innerText.trim() == "Нормально") {
+                                                    console.log(row.cells[7].innerText.trim())
+                                                    if (row.cells[7].innerText.trim() == "Нормально") {
                                                         row.style.display = 'none';
                                                     }
                                                 }
@@ -115,9 +125,9 @@
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
-                                                    console.log(rows[row].cells[4])
-                                                    console.log(rows[row].cells[4].innerText.trim())
-                                                    if (rows[row].cells[4].innerText.trim() == "Нормально") {
+                                                    console.log(rows[row].cells[7])
+                                                    console.log(rows[row].cells[7].innerText.trim())
+                                                    if (rows[row].cells[7].innerText.trim() == "Нормально") {
 
                                                         rows[row].style.display = "table-row";
                                                     }
@@ -128,8 +138,8 @@
 
                                             if (event.target.checked) {
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                    console.log(row.cells[4].innerText.trim())
-                                                    if (row.cells[4].innerText.trim() == "Важно") {
+                                                    console.log(row.cells[7].innerText.trim())
+                                                    if (row.cells[7].innerText.trim() == "Важно") {
                                                         row.style.display = 'none';
                                                     }
                                                 }
@@ -140,9 +150,9 @@
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
-                                                    console.log(rows[row].cells[4])
-                                                    console.log(rows[row].cells[4].innerText.trim())
-                                                    if (rows[row].cells[4].innerText.trim() == "Важно") {
+                                                    console.log(rows[row].cells[7])
+                                                    console.log(rows[row].cells[7].innerText.trim())
+                                                    if (rows[row].cells[7].innerText.trim() == "Важно") {
 
                                                         rows[row].style.display = "table-row";
                                                     }
