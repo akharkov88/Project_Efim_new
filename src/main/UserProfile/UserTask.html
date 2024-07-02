@@ -19,6 +19,7 @@
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-md-12 col-xl-10">
 
+
                                 <div class="card mask-custom">
                                     {#                                    <ta class="card-body p-4 text-white">#}
 
@@ -170,32 +171,9 @@
                                             <th scope="col">ПРИОРИТЕТ</th>
                                             <th scope="col">СТАТУС</th>
                                             <th scope="col">РЕШЕНИЕ</th>
-                                            <th scope="col">Сформировать связанную задачи</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {#                                        <script>#}
-                                        {##}
-                                        {##}
-                                        {#                                            async function Get_user() {#}
-                                        {#                                                check_user = await fetch('/auth/get_UserPfofile', {#}
-                                        {#                                                    method: 'POST',#}
-                                        {#                                                    headers: {#}
-                                        {#                                                        "Accept": 'application/json',#}
-                                        {#                                                        "Content-Type": 'application/json',#}
-                                        {#                                                        "Authorization": getCookieValue("Authorization")#}
-                                        {#                                                    },#}
-                                        {#                                                    body: JSON.stringify({"username": "admin"})#}
-                                        {#                                                });#}
-                                        {#                                                let responseText = await check_user.text();#}
-                                        {#                                                console.log(responseText)#}
-                                        {#                                            }#}
-                                        {##}
-                                        {#                                            Get_user()#}
-                                        {#console.log({{ get_UserTask|tojson|safe}}.length)#}
-                                        {##}
-                                        {#document.getElementById("Header_show").innerHTML = '<i class="fa fa-bell fa-fw"></i>' + Header_show_value#}
-                                        {#                                        </script>#}
 
 
                                         {% for get_UserTask_for in get_UserTask %}
@@ -222,8 +200,17 @@
 
                                                         <span style="font-weight:normal"
                                                               id="connection_tasc_{{ get_UserTask_for.id }}"
-                                                              class="ms-2">{{ get_UserTask_for.connection|safe }}</span>
+                                                              class="ms-2"></span>
+                                                        <script>
+                                                            if (JSON.parse({{ get_UserTask_for.connection|tojson }})["UserTasck"] != undefined) {
+                                                                document.getElementById("connection_tasc_{{ get_UserTask_for.id }}").innerText = "связь с задачей №" + JSON.parse({{ get_UserTask_for.connection|tojson }}).UserTasck
 
+                                                            }
+                                                            if (JSON.parse({{ get_UserTask_for.connection|tojson }})["TechTask"] != undefined) {
+                                                                document.getElementById("connection_tasc_{{ get_UserTask_for.id }}").innerText = "связь ТЗ"
+
+                                                            }
+                                                        </script>
                                                     {% endif %}
 
                                                 </th>
@@ -332,13 +319,6 @@
 
 
                                                 </td>
-                                                {#Подзадача#}
-                                                <th>
-
-                                                    <button id="subtask_{{ get_UserTask_for.id }}">Подзадача
-                                                    </button>
-                                                </th>
-
 
                                                 <div id="overlay"></div>
                                                 <div class="container">
@@ -413,7 +393,7 @@
 
                                     </table>
                                 </div>
-
+                                {# start    блок с формированием задачи#}
                                 <H4 id="Type_label">Сформировать новую задач на сотрудников (по ФИО, Отделу,
                                     Роли)</H4>
 
@@ -458,22 +438,22 @@
                                             user = []
                                             user.push(document.getElementById('Otpravka_roles').value)
                                             if (document.getElementById('Type').value == "username") {
-                                                connection=document.getElementById("connection").value
+                                                connection = document.getElementById("connection").value
                                                 console.log(connection)
                                                 console.log(JSON.stringify({connection}))
                                                 URL = `/userprofile/createUserTask?name=${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}&connection=${connection}`
                                             } else {
-                                                URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=&priority=${document.getElementById('priority').value}`
+                                                URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=&priority=${document.getElementById('priority').value}&connection=${connection}`
                                             }
 
 
-                                        {#     if (document.getElementById('Type').value=="username"){#}
-                                        {#   URL= `/userprofile/createUserTask?name=<a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`#}
-                                        {#//}#}
-                                        {#     else{#}
-                                        {##}
-                                        {#   URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`#}
-                                        {#//}#}
+                                            {#     if (document.getElementById('Type').value=="username"){#}
+                                            {#   URL= `/userprofile/createUserTask?name=<a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`#}
+                                            {#//}#}
+                                            {#     else{#}
+                                            {##}
+                                            {#   URL= `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Otpravka_roles_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask":{{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`#}
+                                            {#//}#}
 
 
                                             res = await fetch(URL, {
@@ -766,17 +746,163 @@
                                 </tbody>
                                 </table>
 
+                                {# end    блок с формированием задачи#}
 
+                                <div class="text-center pt-3 pb-2">
+                                    <img src="{{ url_for('static', path='auth/images/check1.webp') }}"
+                                         alt="Check" width="60">
+                                    <h3 class="my-4">ЗАДАЧИ НА КОНТРОЛЕ</h3>
+
+                                </div>
+
+                                <table class="table text-white mb-0 user-task-table" id="all_user_task">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Номер задачи</th>
+                                        <th scope="col">Связь</th>
+                                        <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
+                                        <th scope="col">АВТОР</th>
+                                        <th scope="col">ИСПОЛНИТЕЛИ</th>
+                                        <th scope="col">отдел</th>
+                                        <th scope="col">ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК</th>
+                                        <th scope="col">ПРИОРИТЕТ</th>
+                                        <th scope="col">СТАТУС</th>
+                                        <th scope="col">РЕШЕНИЕ</th>
+                                        <th scope="col">СНЯТЬ С КОНТРОЛЯ</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for get_UserTask_for in UserTask_Control %}
+
+                                        <tr class="mark" id={{ get_UserTask_for.id }}>
+
+                                            {#НОМЕР ЗАДАЧИ#}
+                                            <th>
+                                                    <span style="font-weight:normal"
+                                                          id="number_tasc_{{ get_UserTask_for.id }}"
+                                                          class="ms-2">{{ get_UserTask_for.id|safe }}</span>
+                                            </th>
+
+
+                                            {#связь#}
+                                            <th>
+                                                {% if get_UserTask_for.connection|safe  == "None" or  get_UserTask_for.connection|safe  == "" %}
+
+                                                    <span style="font-weight:normal"
+                                                          id="connection_tasc_{{ get_UserTask_for.id }}"
+                                                          class="ms-2">корневое</span>
+
+                                                {% else %}
+
+                                                    <span style="font-weight:normal"
+                                                          id="connection_tasc_{{ get_UserTask_for.id }}"
+                                                          class="ms-2"></span>
+                                                    <script>
+                                                        if (JSON.parse({{ get_UserTask_for.connection|tojson }})["UserTasck"] != undefined) {
+                                                            document.getElementById("connection_tasc_{{ get_UserTask_for.id }}").innerText = "связь с задачей №" + JSON.parse({{ get_UserTask_for.connection|tojson }}).UserTasck
+
+                                                        }
+                                                        if (JSON.parse({{ get_UserTask_for.connection|tojson }})["TechTask"] != undefined) {
+                                                            document.getElementById("connection_tasc_{{ get_UserTask_for.id }}").innerText = "связь ТЗ"
+
+                                                        }
+                                                    </script>
+                                                {% endif %}
+
+                                            </th>
+
+
+                                            {#НАЗВАНИЕ ЗАДАЧИ#}
+                                            <th>
+                                                    <span style="font-weight:normal"
+                                                          id="name_tasc_{{ get_UserTask_for.id }}"
+                                                          class="ms-2">{{ get_UserTask_for.name|safe }}</span>
+                                            </th>
+
+                                            {#АВТОР#}
+                                            <td class="align-middle">
+                                                <span>{{ get_UserTask_for.UserPfofile_create.first_name }} {{ get_UserTask_for.UserPfofile_create.last_name }}</span>
+                                            </td>
+
+
+                                            {#ИСПОЛНИТЕЛИ#}
+                                            <td class="align-middle">
+                                                {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+                                                {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+
+                                                {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                    <span>{{ UserPfofile_executor_for.first_name }} {{ UserPfofile_executor_for.last_name }},</span>
+
+                                                {% endfor %}
+
+                                            </td>
+
+
+                                            {#отдел исполнителей#}
+                                            <td class="align-middle">
+                                                {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor }}</span>#}
+                                                {#                                                    <span>{{ get_UserTask_for.UserPfofile_executor  }}</span>#}
+
+                                                {% for UserPfofile_executor_for in get_UserTask_for.UserPfofile_executor %}
+                                                    <span>{{ UserPfofile_executor_for.department }},</span>
+
+                                                {% endfor %}
+
+                                            </td>
+
+                                            {#ДАТА НАЗНАЧЕНИЯ#}
+                                            <td class="align-middle">
+                                                <span>{{ get_UserTask_for.create_at }}/{{ get_UserTask_for.target_date }}</span>
+
+                                            </td>
+
+
+                                            {#ПРИОРИТЕТ#}
+                                            <td class="align-middle">
+                                                <h6 class="mb-0">
+
+                                                    {% if get_UserTask_for.priority|lower == "Важно"|lower %}
+                                                        <span class="badge bg-danger">{{ get_UserTask_for.priority }}</span>
+                                                    {% elif get_UserTask_for.priority|lower == "Нормально"|lower %}
+                                                        <span class="badge bg-warning">{{ get_UserTask_for.priority }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-success">{{ get_UserTask_for.priority }}</span>
+                                                    {% endif %}
+                                                </h6>
+                                            </td>
+
+                                            {#CТАТУС#}
+                                            <td class="align-middle">
+                                                <span id="status_{{ get_UserTask_for.id }}">{{ get_UserTask_for.status }}</span>
+
+                                            </td>
+
+                                            {#РЕШЕНИЕ#}
+                                            <td class="align-middle">
+                                                <span id="result_value_{{ get_UserTask_for.id }}">{{ get_UserTask_for.result }}</span>
+
+                                            </td>
+                                            {#СНЯТЬ С КОНТРОЛЯ#}
+                                            <td class="align-middle">
+
+                                            </td>
+
+                                        </tr>
+
+
+
+                                    {% endfor %}
+
+                                </table>
                             </div>
                         </div>
 
                     </div>
-            </div>
+            </section>
         </div>
-        </section>
     </div>
-</div>
-<!-- /. PAGE INNER  -->
+    <!-- /. PAGE INNER  -->
 </div>
 <!-- /. PAGE WRAPPER  -->
 </div>
