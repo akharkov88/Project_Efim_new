@@ -10,15 +10,126 @@
 
 <div id="wrapper">
     {% include "indexShablon.html" %}
+
+
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
 
                 <section class="vh-100 gradient-custom-2">
+
                     <div class="py-5 h-100">
                         <div class="row d-flex justify-content-center align-items-center h-100">
                             <div class="col-md-12 col-xl-10">
+                                {#                            start раздел с поиском#}
+                                <div class="form-group panel panel-default">
 
+                                    <div class="row">
+                                        <div id="page-header">
+
+                                            <div class="search_block">
+                                                <form>
+                                                    <input type="number" name=text" class="search"
+                                                           placeholder="Поиск обращения по номеру">
+                                                    <input type="submit" onsubmit="event.preventDefault(); return false"
+                                                           id="Search" class="submit" value="">
+                                                </form>
+
+                                                <table class="table text-white mb-0 user-task-table" id="search_table"
+                                                       style="display: none">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Номер задачи</th>
+                                                        <th scope="col">Связь</th>
+                                                        <th scope="col">НАЗВАНИЕ ЗАДАЧИ</th>
+                                                        <th scope="col">АВТОР</th>
+                                                        <th scope="col">ИСПОЛНИТЕЛИ</th>
+                                                        <th scope="col">отдел</th>
+                                                        <th scope="col">ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК</th>
+                                                        <th scope="col">ПРИОРИТЕТ</th>
+                                                        <th scope="col">СТАТУС</th>
+                                                        <th scope="col">РЕШЕНИЕ</th>
+                                                        <th scope="col">КОНТРОЛЬ</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+
+                                                    <tr>
+
+                                                        {#НОМЕР ЗАДАЧИ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#Связь#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#НАЗВАНИЕ ЗАДАЧИ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#АВТОР#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#ИСПОЛНИТЕЛИ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#отдел#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#ПРИОРИТЕТ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#СТАТУС#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#РЕШЕНИЕ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                        {#КОНТРОЛЬ#}
+                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        </th>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    console.log(document.getElementsByName("Search"))
+
+                                    document.getElementById("Search").onclick = async function (event) {
+                                        event.preventDefault();
+
+                                        console.log("event", event)
+                                        res = await fetch("/userprofile/UserTask_Search_id?id=1", {
+                                            method: "GET",
+                                            headers: {
+                                                Accept: 'application/json',
+                                                'Content-Type': 'application/json',
+                                                "Authorization": getCookieValue("Authorization")
+                                            },
+                                            {#body: JSON.stringify({})#}
+                                        });
+                                        let responseText = await res.text();
+                                        if (res.status == 200) {
+                                            console.log(responseText)
+                                            document.getElementById("search_table").style.display = "table-row"
+
+                                            {#window.location.reload();#}
+                                        } else {
+                                            showToast("Ошибка", "error", 5000);
+
+                                        }
+                                    }
+
+
+                                </script>
+                                {#                            end раздел с поиском#}
 
                                 <div class="card mask-custom">
                                     {#                                    <ta class="card-body p-4 text-white">#}
@@ -109,7 +220,7 @@
                                                                 rows[row].style.display = "table-row";
                                                             }
                                                         } else {
-                                                        rows[row].style.display = "table-row";
+                                                            rows[row].style.display = "table-row";
                                                         }
 
 
@@ -141,7 +252,7 @@
                                                                 rows[row].style.display = "table-row";
                                                             }
                                                         } else {
-                                                        rows[row].style.display = "table-row";
+                                                            rows[row].style.display = "table-row";
                                                         }
                                                     }
                                                 }
@@ -171,7 +282,7 @@
                                                                 rows[row].style.display = "table-row";
                                                             }
                                                         } else {
-                                                        rows[row].style.display = "table-row";
+                                                            rows[row].style.display = "table-row";
                                                         }
                                                     }
                                                 }
@@ -310,9 +421,9 @@
 
                                                 </td>
                                                 <script>
-                                                        if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {
-                                                            document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'
-                                                        }
+                                                    if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {
+                                                        document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'
+                                                    }
                                                 </script>
                                                 {#РЕШЕНИЕ#}
                                                 <td class="align-middle">
@@ -324,22 +435,26 @@
                                                         {% if get_UserTask_for.status|lower != "Назначена"|lower %}
                                                             {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
-                                                                <button id="process_{{ get_UserTask_for.id }}">Выполнить
+                                                                <button id="process_{{ get_UserTask_for.id }}">
+                                                                    Выполнить
                                                                     задачу
                                                                 </button>
                                                             {% else %}
-                                                                <label id="process_{{ get_UserTask_for.id }}">В работе
+                                                                <label id="process_{{ get_UserTask_for.id }}">В
+                                                                    работе
                                                                 </label>
                                                             {% endif %}
 
                                                         {% else %}
                                                             {% if get_my_UserPfofile.username|lower != get_UserTask_for.user_create|lower %}
 
-                                                                <button id="process_{{ get_UserTask_for.id }}">Взять в
+                                                                <button id="process_{{ get_UserTask_for.id }}">Взять
+                                                                    в
                                                                     работу
                                                                 </button>
                                                             {% else %}
-                                                                <label id="process_{{ get_UserTask_for.id }}">Не взято в
+                                                                <label id="process_{{ get_UserTask_for.id }}">Не
+                                                                    взято в
                                                                     работу
                                                                 </label>
                                                             {% endif %}
@@ -431,7 +546,8 @@
                                     Роли)</H4>
 
                                 <div class="form-group">
-                                    <label id="Type_label">Создать связанную подзадачу для задачи, необходимо выбрать
+                                    <label id="Type_label">Создать связанную подзадачу для задачи, необходимо
+                                        выбрать
                                         номер задачи для связки из списка</label>
                                     <select id="connection" class="form-control">
                                         <option value=None>Корневая</option>
@@ -947,12 +1063,12 @@
                         </div>
 
                     </div>
-            </section>
+                </section>
+            </div>
         </div>
+        <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE INNER  -->
-</div>
-<!-- /. PAGE WRAPPER  -->
+    <!-- /. PAGE WRAPPER  -->
 </div>
 
 
