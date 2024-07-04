@@ -446,6 +446,20 @@
 
                                 <script>
 
+                                    // ?id=1254&age=24
+                                    let paramsString = document.location.search;
+                                    if (paramsString!=''){
+                                        console.log("paramsString",paramsString)
+                                        if (paramsString=='?id=in%20work'){
+                                            for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                    console.log(document.getElementById('all_user_task').rows[i].cells[9])
+                                                    if (row.cells[9].innerText.trim() != "В работе") {
+                                                        row.style.display = 'none';
+                                                    }
+                                                }
+                                        }
+                                    }
+
 
                                     document.getElementById("Opisanie_text").onkeypress = function (e) {
                                         var chr = String.fromCharCode(e.which);
