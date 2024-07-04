@@ -29,7 +29,7 @@
 
                                             <div class="search_block">
                                                 <form>
-                                                    <input type="number" name=text" class="search"
+                                                    <input type="number" id="number_search" class="search"
                                                            placeholder="Поиск обращения по номеру">
                                                     <input type="submit" onsubmit="event.preventDefault(); return false"
                                                            id="Search" class="submit" value="">
@@ -55,40 +55,57 @@
                                                     <tbody>
 
 
-                                                    <tr>
+                                                    <th  id="unsuccess">
+                                                        {#нет такой задачи#}
+                                                        <th colspan="11"><span >нет такой задачи</span>
+                                                        </th>
+                                                    </th>
+
+                                                    <tr id="success">
 
                                                         {#НОМЕР ЗАДАЧИ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="id" style="font-weight:normal"
+                                                                  class="ms-2">123</span>
                                                         </th>
                                                         {#Связь#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="connection" style="font-weight:normal"
+                                                                  class="ms-2">123</span>
                                                         </th>
                                                         {#НАЗВАНИЕ ЗАДАЧИ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="name" style="font-weight:normal"
+                                                                  class="ms-2">123</span>
                                                         </th>
                                                         {#АВТОР#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="UserPfofile_create" style="font-weight:normal"
+                                                                  class="ms-2">123</span>
                                                         </th>
                                                         {#ИСПОЛНИТЕЛИ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="UserPfofile_executor" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#отдел#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="id" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="control_date" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#ПРИОРИТЕТ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="priority" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#СТАТУС#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="status" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#РЕШЕНИЕ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="result" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#КОНТРОЛЬ#}
-                                                        <th><span style="font-weight:normal" class="ms-2">123</span>
+                                                        <th><span id="id" style="font-weight:normal"
+                                                                  class="ms-2"></span>
                                                         </th>
                                                     </tr>
                                                     </tbody>
@@ -100,13 +117,17 @@
                                 </div>
 
                                 <script>
-                                    console.log(document.getElementsByName("Search"))
+                                    console.log(document.getElementsByName("number_search"))
 
                                     document.getElementById("Search").onclick = async function (event) {
+                                        document.getElementById("search_table").style.display = "table-row"
+                                        document.getElementById("success").style.display = "none"
+                                        document.getElementById("unsuccess").style.display = "none"
+
                                         event.preventDefault();
 
                                         console.log("event", event)
-                                        res = await fetch("/userprofile/UserTask_Search_id?id=1", {
+                                        res = await fetch("/userprofile/UserTask_Search_id?id=" + document.getElementById("number_search").value, {
                                             method: "GET",
                                             headers: {
                                                 Accept: 'application/json',
@@ -115,12 +136,49 @@
                                             },
                                             {#body: JSON.stringify({})#}
                                         });
-                                        let responseText = await res.text();
-                                        if (res.status == 200) {
-                                            console.log(responseText)
-                                            document.getElementById("search_table").style.display = "table-row"
 
-                                            {#window.location.reload();#}
+                                        let responseText = JSON.parse(await res.text());
+                                        if (res.status == 200) {
+                                            console.log(responseText.length )
+                                            if (responseText.length == 0) {
+                                                document.getElementById("unsuccess").style.display = "block"
+                                                document.getElementById("success").style.display = "none"
+
+
+                                            } else {
+                                            console.log("----------------" )
+
+                                                document.getElementById("unsuccess").style.display = "none"
+                                                document.getElementById("success").style.display = "table-row"
+                                                document.getElementById("priority").innerText = responseText[0].priority
+                                                document.getElementById("result").innerText = responseText[0].result
+                                                document.getElementById("name").innerText = responseText[0].name
+                                                document.getElementById("status").innerText = responseText[0].status
+                                                document.getElementById("id").innerText = responseText[0].id
+                                                document.getElementById("UserPfofile_create").innerText = responseText[0].UserPfofile_create.first_name + " " + responseText[0].UserPfofile_create.last_name
+                                                document.getElementById("control_date").innerText = responseText[0].create_at + "/" + responseText[0].target_date
+                                                {#window.location.reload();#}
+                                                if (responseText[0].connection == null) {
+                                                    document.getElementById("connection").innerText = "корневая"
+                                                } else {
+                                                    if (responseText[0].UserTasck != undefined) {
+                                                        document.getElementById("connection").innerText = "связь с задачей №" + JSON.parse(responseText[0].UserTasck).UserTasck
+                                                    }
+
+                                                    if (responseText[0].TechTask != undefined) {
+                                                        document.getElementById("connection").innerText = "связь с ТЗ"
+                                                    }
+
+
+                                                }
+
+                                                for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
+                                                    document.getElementById("UserPfofile_executor").innerText = document.getElementById("UserPfofile_executor").innerText + UserPfofile_executor.first_name + " " + UserPfofile_executor.last_name + ", "
+                                                }
+                                                document.getElementById("UserPfofile_executor").innerText = String(document.getElementById("UserPfofile_executor").innerText).trim(", ")
+
+
+                                            }
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
@@ -564,15 +622,15 @@
 
                                     // ?id=1254&age=24
                                     let paramsString = document.location.search;
-                                    if (paramsString!=''){
-                                        console.log("paramsString",paramsString)
-                                        if (paramsString=='?id=in%20work'){
+                                    if (paramsString != '') {
+                                        console.log("paramsString", paramsString)
+                                        if (paramsString == '?id=in%20work') {
                                             for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                    console.log(document.getElementById('all_user_task').rows[i].cells[9])
-                                                    if (row.cells[9].innerText.trim() != "В работе") {
-                                                        row.style.display = 'none';
-                                                    }
+                                                console.log(document.getElementById('all_user_task').rows[i].cells[9])
+                                                if (row.cells[9].innerText.trim() != "В работе") {
+                                                    row.style.display = 'none';
                                                 }
+                                            }
                                         }
                                     }
 
