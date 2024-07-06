@@ -30,7 +30,7 @@ class TaskServices:
                 NameTechTask=TechTaskDATA.NameTechTask,
                 TechTaskClient=TechTaskDATA.TechTaskClient,
                 TechTaskProject=TechTaskDATA.TechTaskProject,
-                TechTaskPPR=TechTaskDATA.TechTaskPPR,
+                # TechTaskPPR=TechTaskDATA.TechTaskPPR,
                 TechTaskOverhead=TechTaskDATA.TechTaskOverhead,
                 TechTaskDateKP=TechTaskDATA.TechTaskDateKP,
                 TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,

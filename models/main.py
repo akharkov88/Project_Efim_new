@@ -6,7 +6,7 @@ class UserTask(BaseModel):
     NameTechTask: str  # Наименование обекта
     TechTaskClient: str  # Наименование заказчика
     TechTaskProject: str # Проект/чертеж
-    TechTaskPPR: str  # Проект/чертеж
+    # TechTaskPPR: str  # Проект/чертеж
     TechTaskOverhead: str  # Накладные расходы
     TechTaskDateKP: str # Срок подготовки КП
     TechTaskDateEndWork: str # Срок выполнение работ
