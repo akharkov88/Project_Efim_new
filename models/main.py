@@ -5,6 +5,7 @@ from pydantic import BaseModel
 class UserTask(BaseModel):
     NameTechTask: str  # Наименование обекта
     TechTaskClient: str  # Наименование заказчика
+    NameTechAdres: str  # Местонахождение объекта
     TechTaskProject: str # Проект/чертеж
     # TechTaskPPR: str  # Проект/чертеж
     TechTaskOverhead: str  # Накладные расходы

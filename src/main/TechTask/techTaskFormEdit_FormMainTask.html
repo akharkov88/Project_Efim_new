@@ -20,6 +20,14 @@
                            disabled>
                 </div>
 
+                <div class="form-group">
+                    <label>Местонахождение объекта</label>
+                    <input class="form-control"
+                           name="NameTechAdres"
+                           value="{{ getTechTaskName.NameTechAdres }}"
+                           placeholder="Введите описание">
+                </div>
+
                 <div name="TechTaskProject_form" class="form-group ">
                     <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
                     <!-- hidden="true"-->
@@ -452,13 +460,13 @@
                          // xhr.send(formData);
                      }#}
                 </script>
-                <div class="form-group">
-                    <label>ППР (проект производства работ)</label>
-                    <textarea name="TechTaskPPR" class="form-control"
-                              rows="3"
-                              placeholder="Введите описание"
-                              disabled>{{ getTechTaskName.TechTaskPPR }}</textarea>
-                </div>
+                {#                <div class="form-group">#}
+                {#                    <label>ППР (проект производства работ)</label>#}
+                {#                    <textarea name="TechTaskPPR" class="form-control"#}
+                {#                              rows="3"#}
+                {#                              placeholder="Введите описание"#}
+                {#                              disabled>{{ getTechTaskName.TechTaskPPR }}</textarea>#}
+                {#                </div>#}
 
                 <div class="form-group">
                     <label>Накладные расходы на объекте</label>
@@ -499,11 +507,29 @@
 
                 <div class="form-group">
                     <label>Условия оплаты</label>
-                    <textarea name="TechTaskPrice" class="form-control"
-                              rows="3"
-                              placeholder="Введите описание"
-                              disabled>{{ getTechTaskName.TechTaskPrice }}</textarea>
+                    <select id="select" name='TechTaskPrice' class="form-control">
+                        <option value="noncash">Безналичный</option>
+                        <option value="cash">Наличный</option>
+                    </select>
+                    {#                    <textarea name="TechTaskPrice" class="form-control"#}
+                    {#                              rows="3"#}
+                    {#                              placeholder="Введите описание"#}
+                    {#                              disabled>{{ getTechTaskName.TechTaskPrice }}</textarea>#}
                 </div>
+                <script>
+                    console.log('!@#$%^!!!')
+                    let defaultValue = {{ getTechTaskName.TechTaskPrice|tojson|safe }};
+
+                    let yourSelect = document.getElementById('select');
+
+
+                    for (let i, j = 0; i = yourSelect.options[j]; j++) {
+                        if (i.value == defaultValue) {
+                            yourSelect.selectedIndex = j;
+                            break;
+                        }
+                    }
+                </script>
 
                 <div class="form-group">
                     <label>Ответственный за КП</label>

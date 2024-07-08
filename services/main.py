@@ -29,6 +29,7 @@ class TaskServices:
             operation = tables.TaskForm(
                 NameTechTask=TechTaskDATA.NameTechTask,
                 TechTaskClient=TechTaskDATA.TechTaskClient,
+                NameTechAdres=TechTaskDATA.NameTechAdres,
                 TechTaskProject=TechTaskDATA.TechTaskProject,
                 # TechTaskPPR=TechTaskDATA.TechTaskPPR,
                 TechTaskOverhead=TechTaskDATA.TechTaskOverhead,

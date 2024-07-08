@@ -53,6 +53,7 @@ class TaskForm(Base):
     id = Column(Integer, primary_key=True)
     NameTechTask = Column(String, unique=True) # Наименование обекта
     TechTaskClient = Column(String) # Наименование заказчика
+    NameTechAdres = Column(String) # Местонахождение объекта
     TechTaskProject = Column(String) # Проект/чертеж
     # TechTaskPPR = Column(String) # Проект/чертеж
     TechTaskOverhead = Column(String) # Накладные расходы
