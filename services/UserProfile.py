@@ -193,6 +193,7 @@ class UserProfileServices:
                 save_executor = []
 
                 # print(hh["user_executor"])
+
                 for user_executor_val in ast.literal_eval(hh["user_executor"]):
 
                     if save_val.get(user_executor_val, False):
@@ -202,6 +203,18 @@ class UserProfileServices:
                         save_executor.append(save_val[user_executor_val])
 
                 hh["UserPfofile_executor"] = save_executor
+
+                save_control = []
+
+                for control in hh["control"]:
+
+                    if save_val.get(control, False):
+                        save_control.append(save_val[control])
+                    else:
+                        save_val[control] = self.get_UserProfile(control)
+                        save_control.append(save_val[control])
+
+                hh["UserPfofile_control"] = save_control
 
                 val_mas.append(hh)
 
@@ -260,6 +273,17 @@ class UserProfileServices:
                         save_executor.append(save_val[user_executor_val])
 
                 hh["UserPfofile_executor"] = save_executor
+                save_control = []
+
+                for control in hh["control"]:
+
+                    if save_val.get(control, False):
+                        save_control.append(save_val[control])
+                    else:
+                        save_val[control] = self.get_UserProfile(control)
+                        save_control.append(save_val[control])
+
+                hh["UserPfofile_control"] = save_control
 
                 val_mas.append(hh)
 
@@ -317,6 +341,18 @@ class UserProfileServices:
                         save_executor.append(save_val[user_executor_val])
 
                 hh["UserPfofile_executor"] = save_executor
+
+                save_control = []
+
+                for control in hh["control"]:
+
+                    if save_val.get(control, False):
+                        save_control.append(save_val[control])
+                    else:
+                        save_val[control] = self.get_UserProfile(control)
+                        save_control.append(save_val[control])
+
+                hh["UserPfofile_control"] = save_control
 
                 val_mas.append(hh)
 

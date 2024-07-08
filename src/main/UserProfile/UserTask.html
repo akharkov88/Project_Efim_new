@@ -55,11 +55,12 @@
                                                     <tbody>
 
 
-                                                    <th  id="unsuccess">
+                                                    <tr id="unsuccess" colspan="11">
                                                         {#нет такой задачи#}
-                                                        <th colspan="11"><span >нет такой задачи</span>
+                                                        <th>
+                                                            <span>нет такой задачи</span>
                                                         </th>
-                                                    </th>
+                                                    </tr>
 
                                                     <tr id="success">
 
@@ -73,18 +74,18 @@
                                                         </th>
                                                         {#НАЗВАНИЕ ЗАДАЧИ#}
                                                         <th><span id="name" style="font-weight:normal"
-                                                                  class="ms-2">123</span>
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#АВТОР#}
                                                         <th><span id="UserPfofile_create" style="font-weight:normal"
-                                                                  class="ms-2">123</span>
+                                                                  class="ms-2"></span>
                                                         </th>
                                                         {#ИСПОЛНИТЕЛИ#}
                                                         <th><span id="UserPfofile_executor" style="font-weight:normal"
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#отдел#}
-                                                        <th><span id="id" style="font-weight:normal"
+                                                        <th><span id="department" style="font-weight:normal"
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#ДАТА НАЗНАЧЕНИЯ/КОНТРОЛЬНЫЙ СРОК#}
@@ -92,7 +93,7 @@
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#ПРИОРИТЕТ#}
-                                                        <th><span id="priority" style="font-weight:normal"
+                                                        <th><span id="priority_search" style="font-weight:normal"
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#СТАТУС#}
@@ -104,9 +105,13 @@
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#КОНТРОЛЬ#}
-                                                        <th><span id="id" style="font-weight:normal"
+                                                        <th><span id="control_search" style="font-weight:normal"
                                                                   class="ms-2"></span>
+                                                            <button id="control_process">
+
+                                                            </button>
                                                         </th>
+
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -139,19 +144,25 @@
 
                                         let responseText = JSON.parse(await res.text());
                                         if (res.status == 200) {
-                                            console.log(responseText.length )
+                                            console.log(responseText.length)
                                             if (responseText.length == 0) {
                                                 document.getElementById("unsuccess").style.display = "block"
                                                 document.getElementById("success").style.display = "none"
 
 
                                             } else {
-                                            console.log("----------------" )
+                                                console.log("----------------")
 
                                                 document.getElementById("unsuccess").style.display = "none"
                                                 document.getElementById("success").style.display = "table-row"
-                                                document.getElementById("priority").innerText = responseText[0].priority
-                                                document.getElementById("result").innerText = responseText[0].result
+                                                document.getElementById("priority_search").innerText = responseText[0].priority
+                                                if (responseText[0].result == "") {
+                                                    document.getElementById("result").innerText = "отсутствует значение"
+
+                                                } else {
+                                                    document.getElementById("result").innerText = responseText[0].result
+
+                                                }
                                                 document.getElementById("name").innerText = responseText[0].name
                                                 document.getElementById("status").innerText = responseText[0].status
                                                 document.getElementById("id").innerText = responseText[0].id
@@ -171,12 +182,37 @@
 
 
                                                 }
-
+                                                UserPfofile_executor_m = []
                                                 for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
-                                                    document.getElementById("UserPfofile_executor").innerText = document.getElementById("UserPfofile_executor").innerText + UserPfofile_executor.first_name + " " + UserPfofile_executor.last_name + ", "
+                                                    if (UserPfofile_executor_m.indexOf(UserPfofile_executor) == -1) {
+                                                        UserPfofile_executor_m.push(UserPfofile_executor.first_name + " " + UserPfofile_executor.last_name)
+                                                    }
                                                 }
-                                                document.getElementById("UserPfofile_executor").innerText = String(document.getElementById("UserPfofile_executor").innerText).trim(", ")
+                                                document.getElementById("UserPfofile_executor").innerText = UserPfofile_executor_m.join(", ")
 
+                                                department = []
+                                                for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
+                                                    if (department.indexOf(UserPfofile_executor) == -1) {
+                                                        department.push(UserPfofile_executor.department)
+                                                    }
+                                                }
+                                                document.getElementById("department").innerText = department.join(", ")
+
+
+                                                control_m = []
+                                                for (control of responseText[0].UserPfofile_control) {
+                                                    if (control_m.indexOf(control) == -1) {
+                                                        control_m.push(control.first_name + " " + control.last_name)
+                                                    }
+                                                }
+                                                document.getElementById("control_search").innerText = control_m.join(", ")
+                                                if (responseText[0].control.indexOf(window.my_UserPfofile.my_username)==-1){
+                                                    control_search
+                                                    document.getElementById("control_process").innerText="Взять задачу на котроль"
+                                                }else {
+                                                    document.getElementById("control_process").innerText="Снять задачу с котроль"
+
+                                                }
 
                                             }
                                         } else {
