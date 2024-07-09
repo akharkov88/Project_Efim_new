@@ -393,6 +393,99 @@ class UserProfileServices:
         except:
             print(traceback.format_exc())
             return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+    def set_control_UserTask(self, user: str, user_data: models.ModelUserTaskEventControl) -> tables.ListUserTask:
+        try:
+
+            operation = (
+                self.session
+                .query(tables.ListUserTask)
+                .filter(
+                        tables.ListUserTask.id == user_data.id,
+                )
+                .first()
+            )
+            value=jsonable_encoder(operation)
+            if user_data.event == "add":
+                if user not in value["control"]:
+
+                    value["control"].append(user)
+                    User_value = {"control": value["control"]}
+                    self.session.query(tables.ListUserTask).filter(tables.ListUserTask.id == user_data.id).update(dict(User_value))
+                    self.session.commit()
+            if user_data.event == "del":
+                if user in value["control"]:
+                    value["control"].pop(value["control"].index(user))
+                    User_value = {"control": value["control"]}
+                    self.session.query(tables.ListUserTask).filter(tables.ListUserTask.id == user_data.id).update(dict(User_value))
+                    self.session.commit()
+
+
+
+
+            operation = (
+                self.session
+                .query(tables.ListUserTask)
+                .filter(
+                    tables.ListUserTask.id == user_data.id
+                )
+                .first()
+            )
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # print(jsonable_encoder(operation))
+
+            val_mas = []
+            # print(hh["user_create"])
+            # print(self.get_UserProfile(hh["user_create"]))
+            hh=jsonable_encoder(operation)
+            save_val = {}
+
+            if save_val.get(hh["user_create"], False):
+                hh["UserPfofile_create"] = hh["user_create"]
+            else:
+                save_val[hh["user_create"]] = self.get_UserProfile(hh["user_create"])
+                hh["UserPfofile_create"] = save_val[hh["user_create"]]
+
+            save_executor = []
+
+            # print(hh["user_executor"])
+
+            for user_executor_val in ast.literal_eval(hh["user_executor"]):
+
+                if save_val.get(user_executor_val, False):
+                    save_executor.append(save_val[user_executor_val])
+                else:
+                    save_val[user_executor_val] = self.get_UserProfile(user_executor_val)
+                    save_executor.append(save_val[user_executor_val])
+
+            hh["UserPfofile_executor"] = save_executor
+
+            save_control = []
+
+            for control in hh["control"]:
+
+                if save_val.get(control, False):
+                    save_control.append(save_val[control])
+                else:
+                    save_val[control] = self.get_UserProfile(control)
+                    save_control.append(save_val[control])
+
+            hh["UserPfofile_control"] = save_control
+
+            val_mas.append(hh)
+
+            # for val in val_mas:
+            #     val["create_at"] = dateutil.parser.isoparse(val["create_at"]).strftime("%Y-%m-%d")
+            #     if val["user_create"] == user:
+            #         val["notification_executor"] = False
+            # if not operation:
+            #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            # return jsonable_encoder(operation)
+            return val_mas
+
+        except:
+            print(traceback.format_exc())
+            return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
 
     def get_UserProfile(self, user: str) -> tables.UserPfofile:
         try:

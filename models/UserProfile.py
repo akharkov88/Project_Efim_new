@@ -13,8 +13,13 @@ class priorityEnum(str, Enum):
     low = 'Не важно'
     normal = 'Нормально'
     danger = 'Важно'
+class event(str, Enum):
+    add = 'add'
+    delete = 'del'
 class ModelUserTaskID(BaseModel):
     id: int
+class ModelUserTaskEventControl(ModelUserTaskID):
+    event: event
 class ModelUserTaskUpdate(BaseModel):
     status: statusEnum
     result : str

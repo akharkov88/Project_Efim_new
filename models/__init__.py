@@ -45,6 +45,7 @@ from .UserProfile import (
     ModelUserTaskUpdate,
     ModelUserPfofile_my_username,
     ModelgetDepartment,
+    ModelUserTaskEventControl
 )
 
 from .Telegram import (

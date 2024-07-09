@@ -144,83 +144,118 @@
 
                                         let responseText = JSON.parse(await res.text());
                                         if (res.status == 200) {
-                                            console.log(responseText.length)
-                                            if (responseText.length == 0) {
-                                                document.getElementById("unsuccess").style.display = "block"
-                                                document.getElementById("success").style.display = "none"
+                                            window.update_value_user_id_search_value = responseText
+                                            update_value_user_id_search(responseText)
 
-
-                                            } else {
-                                                console.log("----------------")
-
-                                                document.getElementById("unsuccess").style.display = "none"
-                                                document.getElementById("success").style.display = "table-row"
-                                                document.getElementById("priority_search").innerText = responseText[0].priority
-                                                if (responseText[0].result == "") {
-                                                    document.getElementById("result").innerText = "отсутствует значение"
-
-                                                } else {
-                                                    document.getElementById("result").innerText = responseText[0].result
-
-                                                }
-                                                document.getElementById("name").innerText = responseText[0].name
-                                                document.getElementById("status").innerText = responseText[0].status
-                                                document.getElementById("id").innerText = responseText[0].id
-                                                document.getElementById("UserPfofile_create").innerText = responseText[0].UserPfofile_create.first_name + " " + responseText[0].UserPfofile_create.last_name
-                                                document.getElementById("control_date").innerText = responseText[0].create_at + "/" + responseText[0].target_date
-                                                {#window.location.reload();#}
-                                                if (responseText[0].connection == null) {
-                                                    document.getElementById("connection").innerText = "корневая"
-                                                } else {
-                                                    if (responseText[0].UserTasck != undefined) {
-                                                        document.getElementById("connection").innerText = "связь с задачей №" + JSON.parse(responseText[0].UserTasck).UserTasck
-                                                    }
-
-                                                    if (responseText[0].TechTask != undefined) {
-                                                        document.getElementById("connection").innerText = "связь с ТЗ"
-                                                    }
-
-
-                                                }
-                                                UserPfofile_executor_m = []
-                                                for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
-                                                    if (UserPfofile_executor_m.indexOf(UserPfofile_executor) == -1) {
-                                                        UserPfofile_executor_m.push(UserPfofile_executor.first_name + " " + UserPfofile_executor.last_name)
-                                                    }
-                                                }
-                                                document.getElementById("UserPfofile_executor").innerText = UserPfofile_executor_m.join(", ")
-
-                                                department = []
-                                                for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
-                                                    if (department.indexOf(UserPfofile_executor) == -1) {
-                                                        department.push(UserPfofile_executor.department)
-                                                    }
-                                                }
-                                                document.getElementById("department").innerText = department.join(", ")
-
-
-                                                control_m = []
-                                                for (control of responseText[0].UserPfofile_control) {
-                                                    if (control_m.indexOf(control) == -1) {
-                                                        control_m.push(control.first_name + " " + control.last_name)
-                                                    }
-                                                }
-                                                document.getElementById("control_search").innerText = control_m.join(", ")
-                                                if (responseText[0].control.indexOf(window.my_UserPfofile.my_username)==-1){
-                                                    control_search
-                                                    document.getElementById("control_process").innerText="Взять задачу на котроль"
-                                                }else {
-                                                    document.getElementById("control_process").innerText="Снять задачу с котроль"
-
-                                                }
-
-                                            }
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
                                         }
                                     }
 
+                                    function update_value_user_id_search(responseText) {
+                                        if (responseText.length == 0) {
+                                            document.getElementById("unsuccess").style.display = "block"
+                                            document.getElementById("success").style.display = "none"
+
+
+                                        } else {
+                                            console.log("----------------")
+
+                                            document.getElementById("unsuccess").style.display = "none"
+                                            document.getElementById("success").style.display = "table-row"
+                                            document.getElementById("priority_search").innerText = responseText[0].priority
+                                            if (responseText[0].result == "") {
+                                                document.getElementById("result").innerText = "отсутствует значение"
+
+                                            } else {
+                                                document.getElementById("result").innerText = responseText[0].result
+
+                                            }
+                                            document.getElementById("name").innerText = responseText[0].name
+                                            document.getElementById("status").innerText = responseText[0].status
+                                            document.getElementById("id").innerText = responseText[0].id
+                                            document.getElementById("UserPfofile_create").innerText = responseText[0].UserPfofile_create.first_name + " " + responseText[0].UserPfofile_create.last_name
+                                            document.getElementById("control_date").innerText = responseText[0].create_at + "/" + responseText[0].target_date
+                                            {#window.location.reload();#}
+                                            if (responseText[0].connection == null) {
+                                                document.getElementById("connection").innerText = "корневая"
+                                            } else {
+                                                if (responseText[0].UserTasck != undefined) {
+                                                    document.getElementById("connection").innerText = "связь с задачей №" + JSON.parse(responseText[0].UserTasck).UserTasck
+                                                }
+
+                                                if (responseText[0].TechTask != undefined) {
+                                                    document.getElementById("connection").innerText = "связь с ТЗ"
+                                                }
+
+
+                                            }
+                                            UserPfofile_executor_m = []
+                                            for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
+                                                if (UserPfofile_executor_m.indexOf(UserPfofile_executor) == -1) {
+                                                    UserPfofile_executor_m.push(UserPfofile_executor.first_name + " " + UserPfofile_executor.last_name)
+                                                }
+                                            }
+                                            document.getElementById("UserPfofile_executor").innerText = UserPfofile_executor_m.join(", ")
+
+                                            department = []
+                                            for (UserPfofile_executor of responseText[0].UserPfofile_executor) {
+                                                if (department.indexOf(UserPfofile_executor) == -1) {
+                                                    department.push(UserPfofile_executor.department)
+                                                }
+                                            }
+                                            document.getElementById("department").innerText = department.join(", ")
+
+
+                                            control_m = []
+                                            for (control of responseText[0].UserPfofile_control) {
+                                                if (control_m.indexOf(control) == -1) {
+                                                    control_m.push(control.first_name + " " + control.last_name)
+                                                }
+                                            }
+                                            document.getElementById("control_search").innerText = control_m.join(", ")
+                                            if (responseText[0].control.indexOf(window.my_UserPfofile.my_username) == -1) {
+                                                control_search
+                                                document.getElementById("control_process").innerText = "Взять задачу на котроль"
+                                            } else {
+                                                document.getElementById("control_process").innerText = "Снять задачу с котроль"
+
+                                            }
+
+                                        }
+                                    }
+
+                                    document.getElementById("control_process").onclick = async function (event) {
+
+                                        event.preventDefault();
+                                        event_control_process=""
+                                        if (window.update_value_user_id_search_value[0].control.indexOf(window.my_UserPfofile.my_username)==-1){
+
+                                            event_control_process="add"
+                                        }else{
+                                            event_control_process="del"
+
+
+                                        }
+                                        res = await fetch(`http://127.0.0.1:8000/userprofile/set_Control_Task?id=1&event=${event_control_process}`, {
+                                            method: "GET",
+                                            headers: {
+                                                Accept: 'application/json',
+                                                'Content-Type': 'application/json',
+                                                "Authorization": getCookieValue("Authorization")
+                                            },
+                                            {#body: JSON.stringify({})#}
+                                        });
+
+                                        let responseText = JSON.parse(await res.text());
+                                        if (res.status == 200) {
+                                            window.update_value_user_id_search_value = responseText
+
+                                                update_value_user_id_search(responseText)
+
+                                        }
+                                    }
 
                                 </script>
                                 {#                            end раздел с поиском#}

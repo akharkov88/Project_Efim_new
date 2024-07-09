@@ -12,6 +12,8 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 import models
+from models import ModelUserTaskID
+from models.UserProfile import ModelUserTaskEventControl
 
 from services.UserProfile import (
     UserProfileServices,
@@ -95,6 +97,17 @@ async def get_operation(request: Request,
     return User_ProfileServices.services_UserTask_Search_id(id_tasck)
 
 
+@router.get('/get_UserTask', )
+def get_operation(request: Request,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  Auth_Service: AuthService = Depends(), ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return User_ProfileServices.get_UserTask(
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
+
 @router.get('/UserTask_Control', )  # , response_model=List[models.Operation]
 async def get_operation(request: Request,
                         User_ProfileServices: UserProfileServices = Depends(),
@@ -109,16 +122,29 @@ async def get_operation(request: Request,
     return User_ProfileServices.get_UserTask_Control(user.username)
 
 
-@router.get('/get_UserTask', )
+@router.get('/UserTask_Control', )  # , response_model=List[models.Operation]
+async def get_operation(request: Request,
+                        User_ProfileServices: UserProfileServices = Depends(),
+                        Auth_Service: AuthService = Depends(),
+                        ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+
+    user = Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    return User_ProfileServices.get_UserTask_Control(user.username)
+
+@router.get('/set_Control_Task', )
 def get_operation(request: Request,
+                  id_task: ModelUserTaskEventControl = Depends(),
                   User_ProfileServices: UserProfileServices = Depends(),
                   Auth_Service: AuthService = Depends(), ):
     try:
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return User_ProfileServices.get_UserTask(
-        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)
+    return User_ProfileServices.set_control_UserTask(Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username,id_task)
 
 
 @router.get(
