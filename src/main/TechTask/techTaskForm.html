@@ -499,36 +499,54 @@
                                             console.log('client0', elem_obj)
 
                                             function validForm(obj) {
+                                                delete elem_obj['TechTask_sketch']
+                                                delete elem_obj['TechTask_plan']
+                                                elem_obj['TechTask_sketch']={}
+                                                elem_obj['TechTask_plan']={}
+                                                elem_obj['TechTask_analysis']={}
+                                                elem_obj['TechTask_plan']={}
+                                                elem_obj['TechTask_plan']={}
                                                 valid=true
                                                 console.log('validForm', obj)
                                                 let elements = $('form').serializeArray();
                                                 console.log('client1', elements)
                                                 for (let key of elements) {
-                                                    console.log("name",key.name)
-                                                    if ($("#checkbox_sketch").is(":checked")!=true){
-                                                        if (key.name.indexOf("_sketch")!=-1){
-                                                            elem_obj["TechTask_sketch"]["checked"]=false
+                                                    console.log("name ", key.name)
 
+                                                    if (key.name.indexOf("_sketch") != -1) {
+                                                        if (checkbox_sketch.checked) {
+                                                            elem_obj["TechTask_sketch"][key.name] = key.value
+                                                            elem_obj["TechTask_sketch"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_sketch"])
+                                                        } else {
+                                                            elem_obj["TechTask_sketch"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_sketch"])
                                                             continue
                                                         }
-                                                    }else{
-                                                        if (key.name.indexOf("_sketch")!=-1) {
-                                                            elem_obj["TechTask_sketch"][key.name]=key.value
-                                                            elem_obj["TechTask_sketch"]["checked"]=true
-
-                                                        }
                                                     }
+                                                    {#if ($("#checkbox_sketch").is(":checked")!=true){#}
+                                                    {#    if (key.name.indexOf("_sketch")!=-1){#}
+                                                    {#        elem_obj["TechTask_sketch"]["checked"]=false#}
+                                                    {#        continue#}
+                                                    {#    }#}
+                                                    {#//}else{#}
+                                                    {#    if (key.name.indexOf("_sketch")!=-1) {#}
+                                                    {#        elem_obj["TechTask_sketch"][key.name]=key.value#}
+                                                    {#        elem_obj["TechTask_sketch"]["checked"]=true#}
+                                                    {##}
+                                                    {#    }#}
+                                                    {#//}#}
 
                                                     if ($("#checkbox_plan").is(":checked")!=true){
                                                         if (key.name.indexOf("_plan")!=-1){
                                                             elem_obj["TechTask_plan"]["checked"]=false
-
                                                             continue
                                                         }
                                                     }else {
                                                         if (key.name.indexOf("_plan")!=-1) {
                                                             elem_obj["TechTask_plan"][key.name]=key.value
                                                             elem_obj["TechTask_plan"]["checked"]=true
+                                                            //{"TechTaskDate_plan":"2024-05-29","checked":true,"TechTaskPPR_plan":"нужен чертеж"}
 
                                                         }
                                                     }
@@ -538,14 +556,20 @@
                                                         valid = false
                                                         console.warn(key, key.name, key.value)
                                                         document.getElementsByName(key.name)[0].setAttribute("required", true)
+
                                                     } else {
                                                         document.getElementsByName(key.name)[0].removeAttribute("required")
+
                                                     }
                                                 }
 
+                                                {##}
+                                                console.log('typeof')
 
+                                                {#console.log(typeof elem_obj["TechTask_plan"])#}
                                                 elem_obj["TechTask_plan"]=JSON.stringify(elem_obj["TechTask_plan"])
                                                 elem_obj["TechTask_sketch"]=JSON.stringify(elem_obj["TechTask_sketch"])
+                                                console.log('elem_obj!!!', elem_obj)
                                                 if (window.vlozheniya.length == 0) {
 
                                                     console.warn('TechTaskProject', window.vlozheniya)
@@ -616,7 +640,8 @@
 
                                                     response_postData=await postData('/main/creatTask', elem_obj)
                                                         if (response_postData.status==200){
-                                                            window.location.href = '/main/techTask.html';
+                                                            {#ppr();#}
+                                                            {#window.location.href = '/main/techTask.html';#}
                                                         }
 
 
@@ -624,6 +649,7 @@
                                                     event.preventDefault()
                                                 }
                                             }
+
                                         </script>
                                     </form>
 

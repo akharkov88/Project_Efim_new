@@ -17,6 +17,7 @@
                 <input  type="date"
                        class="form-control"
                        id = "TechTaskDate_sketch"
+                        name="TechTaskDate_sketch"
                        placeholder="dd.mm.yyyy">
 {#                       name="TechTaskDate_sketch"#}
             </div>
@@ -27,22 +28,35 @@
             <label>Комментарий к эскизу</label>
             <textarea  class="form-control" rows="3"
                       placeholder="Введите описание"
-                      id="TechTaskPPR_sketch"></textarea>
+                       id="TechTaskPPR_sketch"
+                       name="TechTaskPPR_sketch"></textarea>
 {#                      name="TechTaskPPR_sketch"#}
 
-
-            <div class="checkbox">
-
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
-
         </div>
+
+
+
+            <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow" id="content0" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
+
+
+
+            {#            <div class="checkbox">#}
+            {##}
+            {#                <input type="checkbox" id="" class="">#}
+            {#                <label for="">Согласован Главным Инженером</label>#}
+            {#            </div>#}
+            {##}
+            {#            <div class="checkbox">#}
+            {#                <input type="checkbox" id="" class="">#}
+            {#                <label for="">Согласован Директором</label>#}
+            {#            </div>#}
+
+
     </div>
 
 
@@ -63,7 +77,8 @@
                 <input  type="date"
                        class="form-control"
                        placeholder="dd.mm.yyyy"
-                       id="TechTaskDate_plan">
+                        id="TechTaskDate_plan"
+                        name="TechTaskDate_plan">
 {#                       name="TechTaskDate_plan"#}
             </div>
 
@@ -73,23 +88,18 @@
             <label>Комментарий к чертежу</label>
             <textarea  class="form-control" rows="3"
                       placeholder="Введите описание"
-                      id="TechTaskPPR_plan"></textarea>
+                       id="TechTaskPPR_plan"
+                       name="TechTaskPPR_plan"></textarea>
 {#                      name="TechTaskPPR_plan"#}
 
-
-            <div class="checkbox">
-
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
-
         </div>
-    </div>
+            <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow"  id="content1" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
+        </div>
 
 
     <div class="checkbox">
@@ -126,18 +136,15 @@
 {#                      name="TechTaskPPR_analysis"#}
 
 
-            <div class="checkbox">
 
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
 
         </div>
+        <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow"  id="content2" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
     </div>
 
 
@@ -174,18 +181,13 @@
 {#                      name="TechTaskPPR_counting"#}
 
 
-            <div class="checkbox">
-
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
-
         </div>
+        <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow"  id="content3" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
     </div>
 
 
@@ -219,18 +221,13 @@
 {#                      name="TechTaskPPR_calcylator"#}
 
 
-            <div class="checkbox">
-
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
-
         </div>
+        <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow"  id="content4" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
     </div>
 
 
@@ -261,17 +258,75 @@
 {#                      name="TechTaskPPR_KP"#}
 
 
-            <div class="checkbox">
-
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Главным Инженером</label>
-            </div>
-
-            <div class="checkbox">
-                <input type="checkbox" id="" class="">
-                <label for="">Согласован Директором</label>
-            </div>
-
         </div>
+        <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            </div>
+            <div class="form-group slow"  id="content5" hidden>
+                {% include "Form_User_Tasck.html" %}
+            </div>
 </div>
 </div>
+
+<script>
+             {#= document.getElementById('0')#}
+            let tabs =  document.querySelectorAll(".butShowHide");
+            console.log("tabs!@#",tabs)
+            console.log("texts III",$( '.content' ))
+
+            for (let i=0;i<tabs.length;i++){
+            console.log(tabs[i])
+                let texts = tabs[i].parentElement.childNodes[2]
+                console.log("texts",texts)
+                console.log(i,"texts III",$( `#content${i}` ))
+                tabs[i].onclick = function expand () {
+                if (texts.className == "form-group show") {
+                    $( `#content${i}` ).hide( "slow" )
+                    texts.className = "form-group";
+                    tabs[i].value='Показать задачи'
+                } else {
+                    $( `#content${i}` ).show( "slow" )
+                    tabs[i].value='Скрыть задачи'
+                    texts.className = "form-group show";
+                }
+            };
+            }
+
+document.getElementById('Type').onchange = async function (event) {
+                                        event.preventDefault();
+
+                                        removeOptions(document.getElementById('Otpravka_roles'));
+                                        var opt = document.createElement('option');
+                                        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+                                        document.getElementById('Otpravka_roles').appendChild(opt);
+                                        if ($(this).val() == "roles") {
+                                            document.getElementById("Opisanie_forms").style.display = "none";
+                                            document.getElementById("button_forms").style.display = "none";
+                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+
+                                            {#values = {{ all_roles|tojson|safe }}#}
+                                            for (value of Object.keys(values)) {
+                                                var opt = document.createElement('option');
+                                                opt.value = value
+                                                opt.innerHTML = values[value]
+                                                document.getElementById('Otpravka_roles').appendChild(opt);
+                                            }
+                                        }
+
+                                        if ($(this).val() == "username") {
+                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+                                            {#values = {{ all_user|tojson|safe }}#}
+                                            for (value of Object.keys(values)) {
+                                                if (window.my_UserPfofile.my_username != value) {
+                                                    var opt = document.createElement('option');
+                                                    opt.value = value
+                                                    opt.innerHTML = values[value]
+                                                    document.getElementById('Otpravka_roles').appendChild(opt);
+
+                                                }
+                                            }
+                                        }
+                                    }
+            </script>
