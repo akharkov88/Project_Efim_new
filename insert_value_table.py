@@ -356,7 +356,7 @@ vv = {
     "NameTechTask": "Благостроиство парка",
     "TechTaskClient": "ООО ЖилСтройБыт",
     "TechTaskProject": '[{"name":"github (1) (1).txt","id":"cc70a1ce-f190-4259-87c8-8527df5df082","value_user":"test_file"}]',
-    "TechTaskPPR": "string",
+    # "TechTaskPPR": "string",
     "NameTechAdres": "Проспект Гагарина",
     "TechTaskOverhead": "string",
     "TechTaskDateKP": "2024-02-07",
