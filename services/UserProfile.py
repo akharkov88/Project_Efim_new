@@ -43,7 +43,7 @@ class UserProfileServices:
         try:
             val = dict(UserDATA)
             val["user_create"] = user.username
-            if val["connection"] != None:
+            if ast.literal_eval(val["connection"]) != None:
                 if json.loads(val["connection"]).get("UserTasck", False):
                     find_User_tasck = (
                         self.session
