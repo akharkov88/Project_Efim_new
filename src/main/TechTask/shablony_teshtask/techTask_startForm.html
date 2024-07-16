@@ -28,7 +28,7 @@
             <label>Комментарий к эскизу</label>
             <textarea  class="form-control" rows="3"
                       placeholder="Введите описание"
-                       id="TechTaskPPR_sketch"
+{#                       id="TechTaskPPR_sketch"#}
                        name="TechTaskPPR_sketch"></textarea>
 {#                      name="TechTaskPPR_sketch"#}
 
@@ -40,7 +40,8 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow" id="content0" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
+{#                {% include "For_TechTaskForm.html" %}#}
             </div>
 
 
@@ -88,7 +89,7 @@
             <label>Комментарий к чертежу</label>
             <textarea  class="form-control" rows="3"
                       placeholder="Введите описание"
-                       id="TechTaskPPR_plan"
+{#                       id="TechTaskPPR_plan"#}
                        name="TechTaskPPR_plan"></textarea>
 {#                      name="TechTaskPPR_plan"#}
 
@@ -97,7 +98,7 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow"  id="content1" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
             </div>
         </div>
 
@@ -124,6 +125,8 @@
 {#                name="TechTaskDate_analysis"#}
                 <input  type="date"
                        class="form-control"
+                       name="TechTaskDate_analysis"
+                       id="TechTaskDate_analysis"
                        placeholder="dd.mm.yyyy">
             </div>
 
@@ -132,7 +135,11 @@
         <div class="form-group">
             <label>Комментарий к анализу проектной документации</label>
             <textarea  class="form-control" rows="3"
-                      placeholder="Введите описание"></textarea>
+                      placeholder="Введите описание"
+                      name="TechTaskPPR_analysis"
+{#                      id="TechTaskPPR_analysis"#}
+                      >
+            </textarea>
 {#                      name="TechTaskPPR_analysis"#}
 
 
@@ -143,7 +150,7 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow"  id="content2" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
             </div>
     </div>
 
@@ -167,7 +174,9 @@
                 <label>Установленный срок выполнения работ</label>
                 <input  type="date"
                        class="form-control"
-                       placeholder="dd.mm.yyyy">
+                       placeholder="dd.mm.yyyy"
+                       name="TechTaskDate_counting"
+                       id="TechTaskDate_counting">
 {#                       name="TechTaskDate_counting"#}
 
             </div>
@@ -177,7 +186,11 @@
         <div class="form-group">
             <label>Комментарий к подсчету объемов работ</label>
             <textarea  class="form-control" rows="3"
-                      placeholder="Введите описание"></textarea>
+                      placeholder="Введите описание"
+                      name="TechTaskPPR_counting"
+{#                      id="TechTaskPPR_counting"#}
+                      >
+                        </textarea>
 {#                      name="TechTaskPPR_counting"#}
 
 
@@ -186,7 +199,7 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow"  id="content3" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
             </div>
     </div>
 
@@ -205,7 +218,9 @@
                 <label>Установленный срок выполнения работ</label>
                 <input  type="date"
                        class="form-control"
-                       placeholder="dd.mm.yyyy">
+                       placeholder="dd.mm.yyyy"
+                       name="TechTaskDate_checkbox_calcylator"
+                       id="TechTaskDate_checkbox_calcylator">
 {#                       name="TechTaskDate_checkbox_calcylator"#}
 
 
@@ -217,8 +232,11 @@
             <label>Комментарий</label>
             <textarea  class="form-control"
                       rows="3"
-                      placeholder="Введите описание"></textarea>
-{#                      name="TechTaskPPR_calcylator"#}
+                      placeholder="Введите описание"
+                      name="TechTaskPPR_calcylator"
+                      >
+</textarea>
+{#                      name="TechTaskPPR_calcylator" id="TechTaskPPR_calcylator"#}
 
 
         </div>
@@ -226,7 +244,7 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow"  id="content4" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
             </div>
     </div>
 
@@ -244,7 +262,9 @@
                 <label>Установленный срок выполнения работ</label>
                 <input  type="date"
                        class="form-control"
-                       placeholder="dd.mm.yyyy">
+                       placeholder="dd.mm.yyyy"
+                       name="TechTaskDate_checkbox_KP"
+                       id="TechTaskDate_checkbox_KP">
 {#                       name="TechTaskDate_checkbox_KP"#}
 
             </div>
@@ -254,7 +274,10 @@
         <div class="form-group">
             <label>Комментарий</label>
             <textarea  class="form-control" rows="3"
-                      placeholder="Введите описание"></textarea>
+                      placeholder="Введите описание"
+                      name="TechTaskPPR_KP"
+{#                      id="TechTaskPPR_KP"#}
+                      ></textarea>
 {#                      name="TechTaskPPR_KP"#}
 
 
@@ -263,7 +286,7 @@
             <input type="button" value="Просмотреть задачи" class="butShowHide">
             </div>
             <div class="form-group slow"  id="content5" hidden>
-                {% include "Form_User_Tasck.html" %}
+                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
             </div>
 </div>
 </div>
@@ -291,42 +314,193 @@
                 }
             };
             }
+//UserSelection
+let elms = document.getElementsByClassName('UserSelection')
+let Otpravka_roles = document.getElementsByClassName('Otpravka_roles')
+let Opisanie_text = document.getElementsByClassName('Opisanie_text')
+let Opisanie_forms = document.getElementsByClassName('Opisanie_forms')
+let button_forms = document.getElementsByClassName('button_forms')
+let priority = document.getElementsByClassName('priority')
+let dateWork = document.getElementsByClassName('dateWork')
+let Otpravka_roles_forms = document.getElementsByClassName('Otpravka_roles_forms')
+{#let Otpravka_roles_button = document.getElementsByClassName('Otpravka_roles_button')#}
 
-document.getElementById('Type').onchange = async function (event) {
+console.log('а шо')
+for(let i = 0; i < elms.length; i++){
+    console.log(i,elms[i])
+    elms[i].onchange = async function (event) {
                                         event.preventDefault();
-
-                                        removeOptions(document.getElementById('Otpravka_roles'));
+                                        removeOptions(Otpravka_roles[i])
                                         var opt = document.createElement('option');
                                         opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
-                                        document.getElementById('Otpravka_roles').appendChild(opt);
-                                        if ($(this).val() == "roles") {
-                                            document.getElementById("Opisanie_forms").style.display = "none";
-                                            document.getElementById("button_forms").style.display = "none";
-                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
+                                        Otpravka_roles[i].appendChild(opt);
 
+                                        if ($(this).val() == "roles") {
+                                            Opisanie_forms[i].style.display = "none";
+                                            button_forms[i].style.display = "none";
+                                            Otpravka_roles_forms[i].style.display = "block";
+                                            //get_all_roles
+                                            check_user = await fetch('/auth/get_all_user/', {
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    "Authorization": getCookieValue("Authorization")
+                                                },
+                                            });
+                                            let responseText = await check_user.text();
+                                            console.log('response',responseText)
+                                            console.log(JSON.parse(responseText))
+                                            values = JSON.parse(responseText)
 
                                             {#values = {{ all_roles|tojson|safe }}#}
                                             for (value of Object.keys(values)) {
                                                 var opt = document.createElement('option');
                                                 opt.value = value
                                                 opt.innerHTML = values[value]
-                                                document.getElementById('Otpravka_roles').appendChild(opt);
+                                                Otpravka_roles[i].appendChild(opt);
                                             }
+
                                         }
-
                                         if ($(this).val() == "username") {
-                                            document.getElementById("Otpravka_roles_forms").style.display = "block";
-
+                                            Otpravka_roles_forms[i].style.display = "block";
+                                            check_user = await fetch('/auth/get_all_username/', {
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    "Authorization": getCookieValue("Authorization")
+                                                },
+                                            });
+                                            let responseText = await check_user.text();
+                                            values = JSON.parse(responseText)
                                             {#values = {{ all_user|tojson|safe }}#}
                                             for (value of Object.keys(values)) {
                                                 if (window.my_UserPfofile.my_username != value) {
                                                     var opt = document.createElement('option');
                                                     opt.value = value
                                                     opt.innerHTML = values[value]
-                                                    document.getElementById('Otpravka_roles').appendChild(opt);
+                                                    Otpravka_roles[i].appendChild(opt);
 
                                                 }
                                             }
                                         }
-                                    }
+                                        }
+                                        Otpravka_roles[i].onchange = async function (event) {
+                                            Opisanie_forms[i].style.display = "block";
+                                            button_forms[i].style.display = "block";
+
+                                        }
+                                        {#Otpravka_roles_button[i].onclick = async function () {#}
+                                        {#    console.log('press')#}
+                                        {#    event.preventDefault();#}
+                                        //}
+}
+
+                                    {#document.getElementById('Otpravka_roles_button').onclick = async function () {#}
+                                    {#console.log('press')#}
+                                    {#    event.preventDefault();#}
+                                    {#    valid = true#}
+                                    {#    if (document.getElementById('Opisanie_text').value == "") {#}
+                                    {#    console.log('press112')#}
+                                    {#        valid = false#}
+                                    {#        document.getElementById('Opisanie_text').setAttribute("required", true)#}
+                                    {#    }#}
+                                    {#    if (document.getElementById('DateEndWork').value == "") {#}
+                                    {#    console.log('press222')#}
+                                    {#        valid = false#}
+                                    {#        document.getElementById('DateEndWork').setAttribute("required", true)#}
+                                    {##}
+                                    {#    }#}
+                                    {#    if (valid == false) {#}
+                                    {#        console.log('press2')#}
+                                    {##}
+                                    {#        return#}
+                                    {#    } else {#}
+                                    {#        console.log(document.getElementById('Opisanie_text').value)#}
+                                    {#        user = []#}
+                                    {#        user.push(document.getElementById('Otpravka_roles').value)#}
+                                    {#        if (document.getElementById('Type').value == "username") {#}
+                                                {#if document.getElementById("connection").value#}
+                                                {#let connection = document.getElementById("connection").value#}
+                                                {#console.log(connection)#}
+                                                {#console.log(JSON.stringify({connection}))#}
+                                    {#            URL = `/userprofile/createUserTask?name=${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}&connection`#}
+                                    {#        } else {#}
+                                                {#connection = document.getElementById("connection").value#}
+                                    {#            URL = `/userprofile/createUserTaskRoles?name=${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&priority=${document.getElementById('priority').value}&connection`#}
+                                    {#        }#}
+                                    {##}
+                                    {##}
+                                    {#        res = await fetch(URL, {#}
+                                    {#            method: "GET",#}
+                                    {#            headers: {#}
+                                    {#                Accept: 'application/json',#}
+                                    {#                'Content-Type': 'application/json',#}
+                                    {#                "Authorization": getCookieValue("Authorization")#}
+                                    {#            },#}
+                                                {#body: JSON.stringify({})#}
+                                    {#        });#}
+                                    {#        console.log("res.status", res.status)#}
+                                    {#        if (res.status == 200) {#}
+                                    {#            console.log(res.status)#}
+                                                {#window.location.reload();#}
+                                    {#        } else {#}
+                                    {#            showToast("Ошибка", "error", 5000);#}
+                                    {##}
+                                    {#        }#}
+                                    {#    }#}
+                                    //}
+{#document.getElementById('Type').onchange = async function (event) {#}
+{#                                        event.preventDefault();#}
+{##}
+{#                                        removeOptions(document.getElementById('Otpravka_roles'));#}
+{#                                        var opt = document.createElement('option');#}
+{#                                        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"#}
+{#                                        document.getElementById('Otpravka_roles').appendChild(opt);#}
+{#                                        if ($(this).val() == "roles") {#}
+{#                                            document.getElementById("Opisanie_forms").style.display = "none";#}
+{#                                            document.getElementById("button_forms").style.display = "none";#}
+{#                                            document.getElementById("Otpravka_roles_forms").style.display = "block";#}
+{##}
+{#                                            //get_all_roles#}
+{#                                            check_user = await fetch('/auth/get_all_user/', {#}
+{#                                                headers: {#}
+{#                                                    Accept: 'application/json',#}
+{#                                                    "Authorization": getCookieValue("Authorization")#}
+{#                                                },#}
+{#                                            });#}
+{#                                            let responseText = await check_user.text();#}
+{#                                            console.log('response',responseText)#}
+{#                                            console.log(JSON.parse(responseText))#}
+{#                                            values = JSON.parse(responseText)#}
+{##}
+                                            {#values = {{ all_roles|tojson|safe }}#}
+{#                                            for (value of Object.keys(values)) {#}
+{#                                                var opt = document.createElement('option');#}
+{#                                                opt.value = value#}
+{#                                                opt.innerHTML = values[value]#}
+{#                                                document.getElementById('Otpravka_roles').appendChild(opt);#}
+{#                                            }#}
+{#                                        }#}
+{##}
+{#                                        if ($(this).val() == "username") {#}
+{#                                            document.getElementById("Otpravka_roles_forms").style.display = "block";#}
+{#                                            check_user = await fetch('/auth/get_all_username/', {#}
+{#                                                headers: {#}
+{#                                                    Accept: 'application/json',#}
+{#                                                    "Authorization": getCookieValue("Authorization")#}
+{#                                                },#}
+{#                                            });#}
+{#                                            let responseText = await check_user.text();#}
+{#                                            values = JSON.parse(responseText)#}
+                                            {#values = {{ all_user|tojson|safe }}#}
+{#                                            for (value of Object.keys(values)) {#}
+{#                                                if (window.my_UserPfofile.my_username != value) {#}
+{#                                                    var opt = document.createElement('option');#}
+{#                                                    opt.value = value#}
+{#                                                    opt.innerHTML = values[value]#}
+{#                                                    document.getElementById('Otpravka_roles').appendChild(opt);#}
+{##}
+{#                                                }#}
+{#                                            }#}
+{#                                        }#}
+{#                                    }#}
+
             </script>

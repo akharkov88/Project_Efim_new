@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+
+<div class="form-group">
+    <label id="Type_label">Выбор пользователей</label>
+    <select class="form-control UserSelection">
+        <option value="">--Выберите значение--</option>
+        <option value="username">По имени</option>
+        <option value="roles">По роли</option>
+
+    </select>
+</div>
+<div class="form-group Otpravka_roles_forms" id="Otpravka_roles_forms" style="display:none;">
+    <label id="Otpravka_roles_label">На кого будет назначено. Все
+        пользователи/роли </label>
+    <select id="Otpravka_roles" class="form-control Otpravka_roles">
+
+    </select>
+</div>
+
+<div class="form-group Opisanie_forms"  style="display:none;">
+{#id="Opisanie_forms"#}
+    <label id="Opisanie_label">Описание выполненых работ</label>
+    <textarea id="Opisanie_text" class="form-control Opisanie_text" rows="3"
+              placeholder="Введите описание"></textarea>
+
+    <label id="Type_label">Приоритет</label>
+    <select id="priority" class="form-control priority">
+        <option value="Не важно">Не важно</option>
+        <option value="Нормально">Нормально</option>
+        <option value="Важно">Важно</option>
+    </select>
+    <label>Срок выполнения работ</label>
+    <input type="date"
+           class="form-control dateWork"
+           placeholder="dd.mm.yyyy">
+</div>
+<div class="form-group button_forms"  style="display:none;">
+{#id="button_forms"#}
+
+{#    <button id="Otpravka_roles_button" class="btn btn-primary Otpravka_roles_button">Подтвердить отправку#}
+    </button>
+
+</div>
+</body>
+
+
+</html>

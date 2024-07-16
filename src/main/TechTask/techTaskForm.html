@@ -511,6 +511,7 @@
                                                 console.log('validForm', obj)
                                                 let elements = $('form').serializeArray();
                                                 console.log('client1', elements)
+                                                let arr_checked = []
                                                 for (let key of elements) {
                                                     console.log("name ", key.name)
 
@@ -525,6 +526,59 @@
                                                             continue
                                                         }
                                                     }
+
+                                                    //div_checkbox_analysis
+                                                    if (key.name.indexOf("_analysis") != -1) {
+                                                        if (checkbox_analysis.checked) {
+                                                            elem_obj["TechTask_analysis"][key.name] = key.value
+                                                            elem_obj["TechTask_analysis"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_analysis"])
+                                                        } else {
+                                                            elem_obj["TechTask_analysis"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_analysis"])
+                                                            continue
+                                                        }
+                                                    }
+                                                    //_counting
+                                                    if (key.name.indexOf("_counting") != -1) {
+                                                        if (checkbox_counting.checked) {
+                                                            elem_obj["TechTask_counting"][key.name] = key.value
+                                                            elem_obj["TechTask_counting"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_counting"])
+                                                        } else {
+                                                            elem_obj["TechTask_counting"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_counting"])
+                                                            continue
+                                                        }
+                                                    }
+
+                                                    //_calcylator
+                                                    if (key.name.indexOf("_calcylator") != -1) {
+                                                        if (checkbox_calcylator.checked) {
+                                                            elem_obj["TechTask_calcylator"][key.name] = key.value
+                                                            elem_obj["TechTask_calcylator"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_calcylator"])
+                                                        } else {
+                                                            elem_obj["TechTask_calcylator"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_calcylator"])
+                                                            continue
+                                                        }
+                                                    }
+
+                                                    //_KP
+                                                    if (key.name.indexOf("_KP") != -1) {
+                                                        if (checkbox_KP.checked) {
+                                                            elem_obj["TechTask_KP"][key.name] = key.value
+                                                            elem_obj["TechTask_KP"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_KP"])
+                                                        } else {
+                                                            elem_obj["TechTask_KP"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_KP"])
+                                                            continue
+                                                        }
+                                                    }
+
+
                                                     {#if ($("#checkbox_sketch").is(":checked")!=true){#}
                                                     {#    if (key.name.indexOf("_sketch")!=-1){#}
                                                     {#        elem_obj["TechTask_sketch"]["checked"]=false#}
@@ -570,6 +624,10 @@
                                                 {#console.log(typeof elem_obj["TechTask_plan"])#}
                                                 elem_obj["TechTask_plan"]=JSON.stringify(elem_obj["TechTask_plan"])
                                                 elem_obj["TechTask_sketch"]=JSON.stringify(elem_obj["TechTask_sketch"])
+                                                elem_obj["TechTask_analysis"]=JSON.stringify(elem_obj["TechTask_analysis"])
+                                                elem_obj["TechTask_counting"]=JSON.stringify(elem_obj["TechTask_counting"])
+                                                elem_obj["TechTask_calcylator"]=JSON.stringify(elem_obj["TechTask_calcylator"])
+                                                elem_obj["TechTask_KP"]=JSON.stringify(elem_obj["TechTask_KP"])
                                                 console.log('elem_obj!!!', elem_obj)
                                                 if (window.vlozheniya.length == 0) {
 
@@ -596,8 +654,45 @@
 
                                                 return valid
                                             }
+                                            {#let elms = document.getElementsByClassName('UserSelection')#}
+                                            {#let Otpravka_roles = document.getElementsByClassName('Otpravka_roles')#}
+                                            {#let Opisanie_forms = document.getElementsByClassName('Opisanie_forms')#}
+                                            {#let button_forms = document.getElementsByClassName('button_forms')#}
+                                            {#let Otpravka_roles_forms = document.getElementsByClassName('Otpravka_roles_forms')#}
+                                            let objTaskForm = {}
+                                            let vals = ['Эскиз','Чертеж','Анализ проектной документации','Подсчет объемов работ','Расчет стоимости','Подготовка КП']
+                                            setTask = () =>{
+                                                console.log("elms,Otpravka_roles")
+                                                console.log(elms,Otpravka_roles)
+                                                for(let i = 0; i < elms.length; i++){
+                                                    if(elms[i].value!=''){
+                                                        objTaskForm[vals[i]]={}
+                                                        objTaskForm[vals[i]]={
+                                                        'UserSelection':elms[i].value,
+                                                        'Otpravka_roles':Otpravka_roles[i].value,
+                                                        'Opisanie_text':Opisanie_text[i].value,
+                                                        'priority':priority[i].value,
+                                                        'dateWork':dateWork[i].value,
+                                                        }
+
+
+                                                }
+                                                }
+                                                console.log("objTaskForm")
+                                                console.log(objTaskForm)
+
+                                                for (let i in Object.keys(objTaskForm)){
+                                                console.log(Object.keys(objTaskForm)[i])
+                                                    objTaskForm[Object.keys(objTaskForm)[i]] = JSON.stringify(objTaskForm[Object.keys(objTaskForm)[i]])
+                                                }
+                                                console.log(objTaskForm)
+
+                                            }
 
                                             document.getElementById('createTicket').onclick =async function (event) {
+
+                                            setTask()
+
                                                     event.preventDefault()
 
                                                 if (validForm(document.getElementById('formFrame'))) {
