@@ -97,11 +97,11 @@
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#СТАТУС#}
-                                                        <th><span id="status" style="font-weight:normal"
+                                                        <th><span id="status_search" style="font-weight:normal"
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#РЕШЕНИЕ#}
-                                                        <th><span id="result" style="font-weight:normal"
+                                                        <th><span id="result_search" style="font-weight:normal"
                                                                   class="ms-2"></span>
                                                         </th>
                                                         {#КОНТРОЛЬ#}
@@ -166,14 +166,14 @@
                                             document.getElementById("success").style.display = "table-row"
                                             document.getElementById("priority_search").innerText = responseText[0].priority
                                             if (responseText[0].result == "") {
-                                                document.getElementById("result").innerText = "отсутствует значение"
+                                                document.getElementById("result_search").innerText = "отсутствует значение"
 
                                             } else {
-                                                document.getElementById("result").innerText = responseText[0].result
+                                                document.getElementById("result_search").innerText = responseText[0].result
 
                                             }
                                             document.getElementById("name").innerText = responseText[0].name
-                                            document.getElementById("status").innerText = responseText[0].status
+                                            document.getElementById("status_search").innerText = responseText[0].status
                                             document.getElementById("id").innerText = responseText[0].id
                                             document.getElementById("UserPfofile_create").innerText = responseText[0].UserPfofile_create.first_name + " " + responseText[0].UserPfofile_create.last_name
                                             document.getElementById("control_date").innerText = responseText[0].create_at + "/" + responseText[0].target_date
@@ -880,6 +880,8 @@
 
                                         if ({{ get_my_UserPfofile.username|tojson|safe }} != v.user_create) {
 
+                                                console.log("v.id", v)
+                                                console.log("v.id", v.id)
 
                                             document.getElementById("process_" + v.id).addEventListener("click", (e) => {
                                                 console.log("get_UserTask_for.id", e)
