@@ -550,9 +550,9 @@
 
                                                 </td>
                                                 <script>
-                                                    if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {
-                                                        document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'
-                                                    }
+                                                    {#if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {#}
+                                                    {#    document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'#}
+                                                    //}
                                                 </script>
                                                 {#РЕШЕНИЕ#}
                                                 <td class="align-middle">
@@ -860,7 +860,8 @@
 
                                                 document.getElementById("success").style.display = "block";
                                                 document.getElementById("popup").style.display = "none";
-                                                document.getElementById("overlay").classList.add("show");
+                                                {#document.getElementById("overlay").classList.add("show");#}
+                                                document.getElementById("overlay").classList.remove("show");
 
 
                                             }
@@ -875,10 +876,13 @@
                                     window.get_UserTask = {{ get_UserTask|tojson|safe}}
                                     for (v of {{ get_UserTask|tojson|safe}}) {
 
+                                        console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} )
+                                        console.log("username",  v.user_create)
                                         console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} != v.user_create)
-                                        console.log("username", {{ get_my_UserPfofile.username|tojson|safe }} != v.user_create)
+                                        console.log("username",  v.status)
+                                        console.log("username",  v.user_executor.split("'").join('"'))
 
-                                        if ({{ get_my_UserPfofile.username|tojson|safe }} != v.user_create) {
+                                        if (v.status!="Выполнено" ) {//&& {{ get_my_UserPfofile|tojson|safe }} != v.user_create && JSON.parse(v.user_executor.split("'").join('"')).indexOf({{ get_my_UserPfofile.username|tojson|safe }})!=-1
 
                                                 console.log("v.id", v)
                                                 console.log("v.id", v.id)

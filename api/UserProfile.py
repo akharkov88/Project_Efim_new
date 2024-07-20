@@ -173,7 +173,7 @@ def create_operation(request: Request,
     return UserProfile_Services.create_UserTaskRoles(user_data, user)
 
 
-@router.post('/updateUserTasck', response_model=models.ModelUserTask, )
+@router.post('/updateUserTasck', )#, response_model=models.ModelUserTask
 def update_UserTasck(
         user_data: models.ModelUserTaskUpdate,
         id: models.ModelUserTaskID,
