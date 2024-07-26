@@ -1,64 +1,95 @@
 <div class="form-group col-lg-12">
 
-    <div class="checkbox">
-        <input type="checkbox" id="checkbox_sketch" class="">
-        <label for="checkbox_sketch" style="font-weight:bold;">Эскиз</label>
-    </div>
-    <div id="div_checkbox_sketch" style="display: none;padding: 10px;" class="panel panel-default">
-        <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
-            <div class="form-group">
-                <label>Вложенный файл эскиза</label>
-
-                <input type="file" id="">
-            </div>
-
-            <div class="form-group">
-                <label>Установленный срок выполнения работ</label>
-                <input  type="date"
-                       class="form-control"
-                       id = "TechTaskDate_sketch"
-                        name="TechTaskDate_sketch"
-                       placeholder="dd.mm.yyyy">
-{#                       name="TechTaskDate_sketch"#}
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <label>Комментарий к эскизу</label>
-            <textarea  class="form-control" rows="3"
-                      placeholder="Введите описание"
-{#                       id="TechTaskPPR_sketch"#}
-                       name="TechTaskPPR_sketch"></textarea>
-{#                      name="TechTaskPPR_sketch"#}
-
-        </div>
 
 
+                {% include "/TechTask/shablony_teshtask/user_tasc_eskiz.html" %}
 
-            <div class="form-group">
-            <input type="button" value="Просмотреть задачи" class="butShowHide">
-            </div>
-            <div class="form-group slow" id="content0" hidden>
-                {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
-{#                {% include "For_TechTaskForm.html" %}#}
-            </div>
+<script>
+document.getElementsByClassName("eskiz").onclick= function () {
 
+    //UserSelection
+let elms = document.getElementsByClassName('UserSelection')
+let Otpravka_roles = document.getElementsByClassName('Otpravka_roles')
+let Opisanie_text = document.getElementsByClassName('Opisanie_text')
+let Opisanie_forms = document.getElementsByClassName('Opisanie_forms')
+let button_forms = document.getElementsByClassName('button_forms')
+let priority = document.getElementsByClassName('priority')
+let dateWork = document.getElementsByClassName('dateWork')
+let Otpravka_roles_forms = document.getElementsByClassName('Otpravka_roles_forms')
+{#let Otpravka_roles_button = document.getElementsByClassName('Otpravka_roles_button')#}
 
+console.log('а шо')
+for(let i = 0; i < elms.length; i++){
+    console.log(i,elms[i])
+    elms[i].onchange = async function (event) {
+                                        event.preventDefault();
+                                        removeOptions(Otpravka_roles[i])
+                                        var opt = document.createElement('option');
+                                        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+                                        Otpravka_roles[i].appendChild(opt);
 
-            {#            <div class="checkbox">#}
-            {##}
-            {#                <input type="checkbox" id="" class="">#}
-            {#                <label for="">Согласован Главным Инженером</label>#}
-            {#            </div>#}
-            {##}
-            {#            <div class="checkbox">#}
-            {#                <input type="checkbox" id="" class="">#}
-            {#                <label for="">Согласован Директором</label>#}
-            {#            </div>#}
+                                        if ($(this).val() == "roles") {
+                                            Opisanie_forms[i].style.display = "none";
+                                            button_forms[i].style.display = "none";
+                                            Otpravka_roles_forms[i].style.display = "block";
+                                            //get_all_roles
+                                            check_user = await fetch('/auth/get_all_user/', {
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    "Authorization": getCookieValue("Authorization")
+                                                },
+                                            });
+                                            let responseText = await check_user.text();
+                                            console.log('response',responseText)
+                                            console.log(JSON.parse(responseText))
+                                            values = JSON.parse(responseText)
 
+                                            {#values = {{ all_roles|tojson|safe }}#}
+                                            for (value of Object.keys(values)) {
+                                                var opt = document.createElement('option');
+                                                opt.value = value
+                                                opt.innerHTML = values[value]
+                                                Otpravka_roles[i].appendChild(opt);
+                                            }
 
-    </div>
+                                        }
+                                        if ($(this).val() == "username") {
+                                            Otpravka_roles_forms[i].style.display = "block";
+                                            check_user = await fetch('/auth/get_all_username/', {
+                                                headers: {
+                                                    Accept: 'application/json',
+                                                    "Authorization": getCookieValue("Authorization")
+                                                },
+                                            });
+                                            let responseText = await check_user.text();
+                                            values = JSON.parse(responseText)
+                                            {#values = {{ all_user|tojson|safe }}#}
+                                            for (value of Object.keys(values)) {
+                                                if (window.my_UserPfofile.my_username != value) {
+                                                    var opt = document.createElement('option');
+                                                    opt.value = value
+                                                    opt.innerHTML = values[value]
+                                                    Otpravka_roles[i].appendChild(opt);
+
+                                                }
+                                            }
+                                        }
+                                        }
+                                        Otpravka_roles[i].onchange = async function (event) {
+                                            Opisanie_forms[i].style.display = "block";
+                                            button_forms[i].style.display = "block";
+
+                                        }
+                                        {#Otpravka_roles_button[i].onclick = async function () {#}
+                                        {#    console.log('press')#}
+                                        {#    event.preventDefault();#}
+                                        //}
+}
+
+}
+
+</script>
+
 
 
     <div class="checkbox">

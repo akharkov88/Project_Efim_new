@@ -426,30 +426,30 @@
                                         <button id="createTicket">Создать задание</button>
                                         <script>
 
-                                        checkbox_sketch.onclick = function(){
-                                        console.log('press')
-                                        if (checkbox_sketch.checked){
-                                            document.getElementById('div_checkbox_sketch').style.display = 'block'
-                                        }else{
-                                            document.getElementById('div_checkbox_sketch').style.display = 'none'
-                                        }
-                                        }
-                                        checkbox_plan.onclick = function(){
-                                        console.log('press')
-                                        if (checkbox_plan.checked){
-                                            document.getElementById('div_checkbox_plan').style.display = 'block'
-                                        }else{
-                                            document.getElementById('div_checkbox_plan').style.display = 'none'
-                                        }
-                                        }
-                                        checkbox_analysis.onclick = function () {
-                                            console.log('press')
-                                            if (checkbox_analysis.checked) {
-                                                document.getElementById('div_checkbox_analysis').style.display = 'block'
-                                            } else {
-                                                document.getElementById('div_checkbox_analysis').style.display = 'none'
-                                            }
-                                        }
+                                        {#checkbox_sketch.onclick = function(){#}
+                                        {#console.log('press')#}
+                                        {#if (checkbox_sketch.checked){#}
+                                        {#    document.getElementById('div_checkbox_sketch').style.display = 'block'#}
+                                        {#//}else{#}
+                                        {#    document.getElementById('div_checkbox_sketch').style.display = 'none'#}
+                                        //}
+                                        //}
+                                        {#checkbox_plan.onclick = function(){#}
+                                        {#console.log('press')#}
+                                        {#if (checkbox_plan.checked){#}
+                                        {#    document.getElementById('div_checkbox_plan').style.display = 'block'#}
+                                        {#//}else{#}
+                                        {#    document.getElementById('div_checkbox_plan').style.display = 'none'#}
+                                        //}
+                                        //}
+                                        {#checkbox_analysis.onclick = function () {#}
+                                        {#    console.log('press')#}
+                                        {#    if (checkbox_analysis.checked) {#}
+                                        {#        document.getElementById('div_checkbox_analysis').style.display = 'block'#}
+                                        {#    } else {#}
+                                        {#        document.getElementById('div_checkbox_analysis').style.display = 'none'#}
+                                        {#    }#}
+                                        //{#}#}
 
                                         checkbox_counting.onclick = function () {
                                             console.log('press')
@@ -515,17 +515,17 @@
                                                 for (let key of elements) {
                                                     console.log("name ", key.name)
 
-                                                    if (key.name.indexOf("_sketch") != -1) {
-                                                        if (checkbox_sketch.checked) {
-                                                            elem_obj["TechTask_sketch"][key.name] = key.value
-                                                            elem_obj["TechTask_sketch"]["checked"] = true
-                                                            console.log(elem_obj["TechTask_sketch"])
-                                                        } else {
-                                                            elem_obj["TechTask_sketch"]["checked"]=false
-                                                            console.log(elem_obj["TechTask_sketch"])
-                                                            continue
-                                                        }
-                                                    }
+                                                    {#if (key.name.indexOf("_sketch") != -1) {#}
+                                                    {#    if (checkbox_sketch.checked) {#}
+                                                    {#        elem_obj["TechTask_sketch"][key.name] = key.value#}
+                                                    {#        elem_obj["TechTask_sketch"]["checked"] = true#}
+                                                    {#        console.log(elem_obj["TechTask_sketch"])#}
+                                                    {#    } else {#}
+                                                    {#        elem_obj["TechTask_sketch"]["checked"]=false#}
+                                                    {#        console.log(elem_obj["TechTask_sketch"])#}
+                                                    {#        continue#}
+                                                    {#    }#}
+                                                    //}
 
                                                     //div_checkbox_analysis
                                                     if (key.name.indexOf("_analysis") != -1) {

@@ -8,6 +8,7 @@ class statusEnum(str, Enum):
     IN_PROGRESS = 'В Работе'
     completed = 'Выполнено'
     fault = 'Отказ выполнять'
+    reversed = 'Возврат в работу'
 
 class priorityEnum(str, Enum):
     low = 'Не важно'

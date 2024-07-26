@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+{#блок с формированием задачи#}
+<div id="eskiz_user_task" style="display:block;" class="panel panel-default">
+
+    <H3 id="Type_label">Эскиз</H3>
+    <H5 id="Type_label">Сформировать задачи по данному ТЗ на сотрудников (по ФИО, Отделу, Роли) для формирования
+        эскиза</H5>
+
+    <div class="form-group">
+        <label id="eskiz_Type_label">Выбор пользователей</label>
+        <select id="eskiz_Type" class="form-control">
+            <option value="">--Выберите значение--</option>
+            <option value="username">По имени</option>
+            <option value="roles">По роли</option>
+
+        </select>
+    </div>
+
+    <div class="form-group" id="eskiz_Otpravka_roles_forms" style="display:none;">
+        <label id="eskiz_Otpravka_roles_label">На кого будет назначено. Все
+            пользователи/роли </label>
+        <select id="eskiz_Otpravka_roles" class="form-control">
+
+        </select>
+    </div>
+
+    <div class="form-group" id="eskiz_Opisanie_forms" style="display:none;">
+        <label id="eskiz_Opisanie_label">Описание выполненых работ</label>
+        <textarea id="eskiz_Opisanie_text" class="form-control" rows="3"
+                  placeholder="Введите описание"></textarea>
+
+        <label id="eskiz_Type_label">Приоритет</label>
+        <select id="eskiz_priority" class="form-control">
+            <option value="Не важно">Не важно</option>
+            <option value="Нормально">Нормально</option>
+            <option value="Важно">Важно</option>
+        </select>
+        <label>Срок выполнения работ</label>
+        <input id="eskiz_DateEndWork" type="date"
+               class="form-control"
+               placeholder="dd.mm.yyyy">
+    </div>
+    <div class="form-group" id="eskiz_button_forms" style="display:none;">
+
+        <button id="eskiz_Otpravka_roles_button" class="btn btn-primary">Сформировать задачу на создание эскиза
+        </button>
+
+    </div>
+</div>
+
+{#//блок с чекбоксом#}
+<div id="eskiz_checkbox" style="display:none;" class="form-group">
+    <div class="checkbox" onclick="return false" disabled="disabled">
+        <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
+        <label for="checkbox_sketch" style="font-weight:bold;">Эскиз</label>
+    </div>
+    <div id="div_checkbox_sketch" class="panel panel-default">
+        <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
+            <div class="form-group">
+                <label>Вложенный файл эскиза</label>
+
+                <input type="file" id="">
+            </div>
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input type="date"
+                       class="form-control"
+                       id="TechTaskDate_sketch"
+                       name="TechTaskDate_sketch"
+                       placeholder="dd.mm.yyyy">
+                {#                       name="TechTaskDate_sketch"#}
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий к эскизу</label>
+            <textarea class="form-control" rows="3"
+                      placeholder="Введите описание"
+                    {#                       id="TechTaskPPR_sketch"#}
+                      name="TechTaskPPR_sketch"></textarea>
+            {#                      name="TechTaskPPR_sketch"#}
+
+        </div>
+
+
+        <div class="form-group">
+            <input type="button" value="Просмотреть задачи" class="butShowHide">
+        </div>
+        <div class="form-group slow" id="content0" hidden>
+            {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
+            {#                {% include "For_TechTaskForm.html" %}#}
+        </div>
+
+
+        {#            <div class="checkbox">#}
+        {##}
+        {#                <input type="checkbox" id="" class="">#}
+        {#                <label for="">Согласован Главным Инженером</label>#}
+        {#            </div>#}
+        {##}
+        {#            <div class="checkbox">#}
+        {#                <input type="checkbox" id="" class="">#}
+        {#                <label for="">Согласован Директором</label>#}
+        {#            </div>#}
+
+
+    </div>
+</div>
+</body>
+<script>
+
+    eskiz_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
+
+    for (eskiz_list_user_task of eskiz_valid_getTechTaskName) {
+
+        if (JSON.parse(eskiz_list_user_task.connection).Esckiz != undefined) {
+
+            document.getElementById('eskiz_checkbox').style.display = 'block'
+            document.getElementById('eskiz_user_task').style.display = 'none'
+        } else {
+            document.getElementById('eskiz_checkbox').style.display = 'none'
+            document.getElementById('eskiz_user_task').style.display = 'block'
+
+        }
+
+    }
+
+</script>
+<script>
+
+    document.getElementById("eskiz_Opisanie_text").onkeypress = function (e) {
+        var chr = String.fromCharCode(e.which);
+        if ("&".indexOf(chr) != -1)
+            return false;
+    };
+    document.getElementById('eskiz_Otpravka_roles_button').onclick = async function () {
+        event.preventDefault();
+        valid = true
+        if (document.getElementById('eskiz_Opisanie_text').value == "") {
+            document.getElementById('eskiz_Opisanie_text').setAttribute("required", true)
+
+            valid = false
+        }
+        if (document.getElementById('eskiz_DateEndWork').value == "") {
+            document.getElementById('eskiz_DateEndWork').setAttribute("required", true)
+
+
+        }
+        if (valid == false) {
+            return
+        }
+
+        console.log(document.getElementById('eskiz_Opisanie_text').value)
+        user = []
+        user.push(document.getElementById('eskiz_Otpravka_roles').value)
+        if (document.getElementById('eskiz_Type').value == "username") {
+
+
+            URL = `/userprofile/createUserTask?name=Необходимо сформировать эскиз! Результат эскиза необходимо вложить в техническое задание! Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('eskiz_Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('eskiz_DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({
+                "TechTask": {{getTechTaskName.id|tojson|safe}},
+                "Esckiz": ""
+            })}&priority=${document.getElementById('eskiz_priority').value}`
+        } else {
+
+            URL = `/userprofile/createUserTaskRoles?name=Необходимо сформировать эскиз! Результат эскиза необходимо вложить в техническое задание! Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('eskiz_Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('eskiz_DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({
+                "TechTask": {{getTechTaskName.id|tojson|safe}},
+                "Esckiz": ""
+            })}&priority=${document.getElementById('eskiz_priority').value}`
+        }
+        res = await fetch(URL, {
+            method: "GET",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+
+        })
+        ;
+        console.log("res.status", res.status)
+        if (res.status == 200) {
+            console.log(res.status)
+            showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу', 'info', 5000)
+
+            document.getElementById("eskiz_Otpravka_roles_forms").style.display = "none";
+            document.getElementById("eskiz_Opisanie_forms").style.display = "none";
+            document.getElementById("eskiz_Opisanie_forms").style.display = "none";
+            document.getElementById("eskiz_button_forms").style.display = "none";
+            document.getElementById('eskiz_Type').getElementsByTagName('option')[0].selected = 'selected'
+            document.getElementById('eskiz_checkbox').style.display = 'block'
+
+
+
+        } else {
+            showToast("Ошибка", "error", 5000);
+
+        }
+    }
+
+    document.getElementById('eskiz_Otpravka_roles').onchange = async function (event) {
+        document.getElementById("eskiz_Opisanie_forms").style.display = "block";
+        document.getElementById("eskiz_button_forms").style.display = "block";
+
+    }
+    document.getElementById('eskiz_Type').onchange = async function (event) {
+        event.preventDefault();
+        if (!etalon_table) {
+            //($('#first_table')[0].innerHTML.replaceAll('display:none','display:table-cell') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
+            showToast('Необходимо сохранить изменения в таблице', 'danger', 5000)
+        }
+
+        removeOptions(document.getElementById('eskiz_Otpravka_roles'));
+        var opt = document.createElement('option');
+        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+        document.getElementById('eskiz_Otpravka_roles').appendChild(opt);
+        if ($(this).val() == "roles") {
+            document.getElementById("eskiz_Opisanie_forms").style.display = "none";
+            document.getElementById("eskiz_button_forms").style.display = "none";
+            document.getElementById("eskiz_Otpravka_roles_forms").style.display = "block";
+
+
+            values = {{all_roles | tojson | safe}}
+            for (value of Object.keys(values)) {
+                console.log("value", value)
+
+                var opt = document.createElement('option');
+                opt.value = value
+                opt.innerHTML = values[value]
+                document.getElementById('eskiz_Otpravka_roles').appendChild(opt);
+
+
+            }
+        }
+
+        if ($(this).val() == "username") {
+            document.getElementById("eskiz_Otpravka_roles_forms").style.display = "block";
+
+
+            values = {{all_user | tojson | safe}}
+            for (value of Object.keys(values)) {
+                console.log("value", value)
+                if (window.my_UserPfofile.my_username != value) {
+
+                    var opt = document.createElement('option');
+                    opt.value = value
+                    opt.innerHTML = values[value]
+                    document.getElementById('eskiz_Otpravka_roles').appendChild(opt);
+
+
+                }
+            }
+        }
+    }
+
+</script>
+</html>

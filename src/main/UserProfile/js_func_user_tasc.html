@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+<div class="form-group">
+    <label id="Type_label">Выбор пользователей</label>
+    <select id="Type" class="form-control">
+        <option value="">--Выберите значение--</option>
+        <option value="username">По имени</option>
+        <option value="roles">По роли</option>
+
+    </select>
+</div>
+
+<div class="form-group" id="Otpravka_roles_forms" style="display:none;">
+    <label id="Otpravka_roles_label">На кого будет назначено. Все
+        пользователи/роли </label>
+    <select id="Otpravka_roles" class="form-control">
+
+    </select>
+</div>
+
+<div class="form-group" id="Opisanie_forms" style="display:none;">
+    <label id="Opisanie_label">Описание выполненых работ</label>
+    <textarea id="Opisanie_text" class="form-control" rows="3"
+              placeholder="Введите описание"></textarea>
+
+    <label id="Type_label">Приоритет</label>
+    <select id="priority" class="form-control">
+        <option value="Не важно">Не важно</option>
+        <option value="Нормально">Нормально</option>
+        <option value="Важно">Важно</option>
+    </select>
+    <label>Срок выполнения работ</label>
+    <input id="DateEndWork" type="date"
+           class="form-control"
+           placeholder="dd.mm.yyyy">
+</div>
+<div class="form-group" id="button_forms" style="display:none;">
+
+    <button id="Otpravka_roles_button" class="btn btn-primary">Подтвердить отправку
+    </button>
+
+</div>
+</body>
+<script>
+
+document.getElementById("Opisanie_text").onkeypress = function (e) {
+    var chr = String.fromCharCode(e.which);
+    if ("&".indexOf(chr) != -1)
+        return false;
+};
+document.getElementById('Otpravka_roles_button').onclick = async function () {
+    event.preventDefault();
+    valid = true
+    if (document.getElementById('Opisanie_text').value == "") {
+        document.getElementById('Opisanie_text').setAttribute("required", true)
+
+        valid = false
+    }
+    if (document.getElementById('DateEndWork').value == "") {
+        document.getElementById('DateEndWork').setAttribute("required", true)
+
+
+    }
+    if (valid == false) {
+        return
+    }
+
+    console.log(document.getElementById('Opisanie_text').value)
+    user = []
+    user.push(document.getElementById('Otpravka_roles').value)
+    if (document.getElementById('Type').value == "username") {
+
+
+        URL = `/userprofile/createUserTask?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask": {{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+    } else {
+
+        URL = `/userprofile/createUserTaskRoles?name=Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({"TechTask": {{getTechTaskName.id|tojson|safe}}})}&priority=${document.getElementById('priority').value}`
+    }
+    res = await fetch(URL, {
+        method: "GET",
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": getCookieValue("Authorization")
+        },
+
+    })
+    ;
+    console.log("res.status", res.status)
+    if (res.status == 200) {
+        console.log(res.status)
+        showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу', 'info', 5000)
+
+        document.getElementById("Otpravka_roles_forms").style.display = "none";
+        document.getElementById("Opisanie_forms").style.display = "none";
+        document.getElementById("Opisanie_forms").style.display = "none";
+        document.getElementById("button_forms").style.display = "none";
+        document.getElementById('Type').getElementsByTagName('option')[0].selected = 'selected'
+
+    } else {
+        showToast("Ошибка", "error", 5000);
+
+    }
+}
+
+document.getElementById('Otpravka_roles').onchange = async function (event) {
+    document.getElementById("Opisanie_forms").style.display = "block";
+    document.getElementById("button_forms").style.display = "block";
+
+}
+document.getElementById('Type').onchange = async function (event) {
+    event.preventDefault();
+    if (!etalon_table) {
+        //($('#first_table')[0].innerHTML.replaceAll('display:none','display:table-cell') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
+        showToast('Необходимо сохранить изменения в таблице', 'danger', 5000)
+    }
+
+    removeOptions(document.getElementById('Otpravka_roles'));
+    var opt = document.createElement('option');
+    opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+    document.getElementById('Otpravka_roles').appendChild(opt);
+    if ($(this).val() == "roles") {
+        document.getElementById("Opisanie_forms").style.display = "none";
+        document.getElementById("button_forms").style.display = "none";
+        document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+
+        values = {{all_roles | tojson | safe}}
+        for (value of Object.keys(values)) {
+            console.log("value", value)
+
+            var opt = document.createElement('option');
+            opt.value = value
+            opt.innerHTML = values[value]
+            document.getElementById('Otpravka_roles').appendChild(opt);
+
+
+        }
+    }
+
+    if ($(this).val() == "username") {
+        document.getElementById("Otpravka_roles_forms").style.display = "block";
+
+
+        values = {{all_user | tojson | safe}}
+        for (value of Object.keys(values)) {
+            console.log("value", value)
+            if (window.my_UserPfofile.my_username != value) {
+
+                var opt = document.createElement('option');
+                opt.value = value
+                opt.innerHTML = values[value]
+                document.getElementById('Otpravka_roles').appendChild(opt);
+
+
+            }
+        }
+    }
+}
+
+</script>
+</html>

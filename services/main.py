@@ -172,8 +172,9 @@ class TaskServices:
                 self.session
                 .query(tables.ListUserTask)
                 .filter(
-                    tables.ListUserTask.connection == '{"TechTask":' + str(lisr_tech_tasks["id"]) + '}'
-                )
+                tables.ListUserTask.connection.ilike('%"TechTask":' + str(lisr_tech_tasks["id"]) + '%')
+
+            )
                 .all()
             )
             lisr_tech_tasks["ListUserTask"] = jsonable_encoder(operation)

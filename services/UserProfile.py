@@ -69,11 +69,17 @@ class UserProfileServices:
                     for user_data in ast.literal_eval(UserDATA.user_executor):
                         if user_data not in val["control"]:
                             val["control"].append(user_data)
+                else:
+                    val["control"] = [user.username]
+                    for user_data in ast.literal_eval(UserDATA.user_executor):
+                        if user_data not in val["control"]:
+                            val["control"].append(user_data)
+
             else:
-                val["control"] = [user.username]
-                for user_data in ast.literal_eval(UserDATA.user_executor):
-                    if user_data not in val["control"]:
-                        val["control"].append(user_data)
+                    val["control"] = [user.username]
+                    for user_data in ast.literal_eval(UserDATA.user_executor):
+                        if user_data not in val["control"]:
+                            val["control"].append(user_data)
 
 
             operation = tables.ListUserTask(**val
@@ -280,6 +286,7 @@ class UserProfileServices:
 
                 hh["UserPfofile_executor"] = save_executor
                 save_control = []
+                print(hh["control"])
 
                 for control in hh["control"]:
 
@@ -319,7 +326,8 @@ class UserProfileServices:
                 .filter(
                     and_(
                         tables.ListUserTask.user_create != user,
-                        tables.ListUserTask.user_executor.notlike("%'" + user + "'%")
+                        tables.ListUserTask.user_executor.notlike("%'" + user + "'%"),
+                        tables.ListUserTask.user_executor.notlike('%"' + user + '"%')
                     )
                 )
                 .all()
