@@ -58,12 +58,14 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Эскиз</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default">
+    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл эскиза</label>
 
-                <input type="file" id="">
+                {#                <input type="file" id="">#}
+                <div id="containerPPR" class="testText" style="margin-bottom: 10px;"></div>
+                <input id="addPPR" type="button" value="Добавить вложение">
             </div>
 
             <div class="form-group">
@@ -114,6 +116,76 @@
 </div>
 </body>
 <script>
+    let counter_id = 1;
+    let arrCounter_id = [1];
+
+    addPPR.onclick = function () {
+        counter_id = arrCounter_id[arrCounter_id.length - 1];
+
+        let button = document.createElement("input");
+        let container = document.getElementById("containerPPR")
+        let poddiv = document.createElement("div");
+        let infile = document.createElement("input");
+
+        infile.type = "file";
+        infile.setAttribute("id", "file" + counter_id);
+
+        button.type = "button";
+        button.value = "Удалить файл";
+        button.setAttribute("id", "idButtonPPR" + counter_id);
+        poddiv.setAttribute("id", "podContainer" + counter_id);
+        container.appendChild(poddiv);
+        poddiv.appendChild(infile);
+        poddiv.appendChild(button);
+
+        button.onclick = function () {
+            poddiv.remove()
+        }
+
+        $(`#file${counter_id}`).change(function(){
+         uploadfile_func_forPPR(infile)
+        });
+
+        counter_id++;
+        arrCounter_id.push(counter_id);
+        arrCounter_id.sort()
+
+    }
+
+    function uploadfile_func_forPPR(item) {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData(); // создаем объект FormData для передачи файла
+        const file = item.files[0];
+        console.log(item)
+
+        formData.append('file', file);
+        xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+        xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
+        xhr.send(formData);
+        let file_name = item.value.replace(/.*[\/\\]/, '');
+
+        let str = '1'
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                let div = document.createElement('div')
+                let a = document.createElement('a')
+                a.href = 'javascript:void(0);'
+                a.target = "_blank"
+                a.onclick = function () {
+                    event.preventDefault();
+                    downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
+                }
+                a.innerText = file_name
+
+                div.append(a);
+
+                console.log(div)
+                item.parentElement.appendChild(div);
+                item.disabled = true;
+            }
+        }
+
+    }
 
     eskiz_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
 
