@@ -37,8 +37,8 @@ class TaskServices:
                 TechTaskDateEndWork=TechTaskDATA.TechTaskDateEndWork,
                 TechTaskPrice=TechTaskDATA.TechTaskPrice,
                 TechTaskLeaderKP=TechTaskDATA.TechTaskLeaderKP,
-                TechTask_plan=TechTaskDATA.TechTask_plan,
-                TechTask_sketch=TechTaskDATA.TechTask_sketch,
+                # TechTask_plan=TechTaskDATA.TechTask_plan,
+                # TechTask_sketch=TechTaskDATA.TechTask_sketch,
                 user_name=user.username,
             )
             self.session.add(operation)
