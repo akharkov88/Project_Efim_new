@@ -168,12 +168,109 @@ $(document).ready(function(){
                     elem_obj.TechTaskProject = JSON.stringify(window.vlozheniya)
 
                     function validForm(obj) {
+                        elem_obj['TechTask_sketch']={}
+                        elem_obj['TechTask_plan']={}
+                        elem_obj['TechTask_analysis']={}
+                        elem_obj['TechTask_counting']={}
+                        elem_obj['TechTask_calcylator']={}
+                        elem_obj['TechTask_KP']={}
                         valid = true
                         console.log('validForm', obj)
+                        console.log('elem_obj', elem_obj)
                         let elements = $('form').serializeArray();
                         console.log('client1', elements)
                         for (let key of elements) {
                             elem_obj[key.name] = key.value
+                            if (key.name.indexOf("_sketch") != -1) {
+                                                        if (checkbox_sketch.checked) {
+                                                            elem_obj["TechTask_sketch"][key.name] = key.value
+                                                            elem_obj["TechTask_sketch"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_sketch"])
+                                                        } else {
+                                                            elem_obj["TechTask_sketch"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_sketch"])
+                                                            continue
+                                                        }
+                                                    }
+
+                                                    //div_checkbox_analysis
+                                                    if (key.name.indexOf("_analysis") != -1) {
+                                                        if (checkbox_analysis.checked) {
+                                                            elem_obj["TechTask_analysis"][key.name] = key.value
+                                                            elem_obj["TechTask_analysis"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_analysis"])
+                                                        } else {
+                                                            elem_obj["TechTask_analysis"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_analysis"])
+                                                            continue
+                                                        }
+                                                    }
+                                                    //_counting
+                                                    if (key.name.indexOf("_counting") != -1) {
+                                                        if (checkbox_counting.checked) {
+                                                            elem_obj["TechTask_counting"][key.name] = key.value
+                                                            elem_obj["TechTask_counting"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_counting"])
+                                                        } else {
+                                                            elem_obj["TechTask_counting"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_counting"])
+                                                            continue
+                                                        }
+                                                    }
+
+                                                    //_calcylator
+                                                    if (key.name.indexOf("_calcylator") != -1) {
+                                                        if (checkbox_calcylator.checked) {
+                                                            elem_obj["TechTask_calcylator"][key.name] = key.value
+                                                            elem_obj["TechTask_calcylator"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_calcylator"])
+                                                        } else {
+                                                            elem_obj["TechTask_calcylator"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_calcylator"])
+                                                            continue
+                                                        }
+                                                    }
+
+                                                    //_KP
+                                                    if (key.name.indexOf("_KP") != -1) {
+                                                        if (checkbox_KP.checked) {
+                                                            elem_obj["TechTask_KP"][key.name] = key.value
+                                                            elem_obj["TechTask_KP"]["checked"] = true
+                                                            console.log(elem_obj["TechTask_KP"])
+                                                        } else {
+                                                            elem_obj["TechTask_KP"]["checked"]=false
+                                                            console.log(elem_obj["TechTask_KP"])
+                                                            continue
+                                                        }
+                                                    }
+
+
+                                                    if ($("#checkbox_sketch").is(":checked")!=true){
+                                                        if (key.name.indexOf("_sketch")!=-1){
+                                                            elem_obj["TechTask_sketch"]["checked"]=false
+                                                            continue
+                                                        }
+                                                    }else{
+                                                        if (key.name.indexOf("_sketch")!=-1) {
+                                                            elem_obj["TechTask_sketch"][key.name]=key.value
+                                                            elem_obj["TechTask_sketch"]["checked"]=true
+
+                                                        }
+                                                    }
+
+                                                    if ($("#checkbox_plan").is(":checked")!=true){
+                                                        if (key.name.indexOf("_plan")!=-1){
+                                                            elem_obj["TechTask_plan"]["checked"]=false
+                                                            continue
+                                                        }
+                                                    }
+                                                    else {
+                                                        if (key.name.indexOf("_plan")!=-1) {
+                                                            elem_obj["TechTask_plan"][key.name]=key.value
+                                                            elem_obj["TechTask_plan"]["checked"]=true
+                                                            //{"TechTaskDate_plan":"2024-05-29","checked":true,"TechTaskPPR_plan":"нужен чертеж"}
+                                                        }
+                                                    }
                             if (key.value == '' || key.value == '[]') {
                                 valid = false
                                 console.warn(key, key.name, key.value)
@@ -183,7 +280,14 @@ $(document).ready(function(){
                             }
                         }
 
-                        console.log("idButtonArridButtonArr",idButtonArr)
+
+                            elem_obj["TechTask_plan"]=JSON.stringify(elem_obj["TechTask_plan"])
+                            elem_obj["TechTask_sketch"]=JSON.stringify(elem_obj["TechTask_sketch"])
+                            elem_obj["TechTask_analysis"]=JSON.stringify(elem_obj["TechTask_analysis"])
+                            elem_obj["TechTask_counting"]=JSON.stringify(elem_obj["TechTask_counting"])
+                            elem_obj["TechTask_calcylator"]=JSON.stringify(elem_obj["TechTask_calcylator"])
+                            elem_obj["TechTask_KP"]=JSON.stringify(elem_obj["TechTask_KP"])
+                            console.log("idButtonArridButtonArr",idButtonArr)
                         if (window.vlozheniya.length == 0) {
 
 
@@ -251,7 +355,7 @@ $(document).ready(function(){
                             postData2('/main/update_value', elem_obj)
                                 .then((data) => {
                                     console.log('------успех-----', data);
-                                    window.location.href = '/main/techTask.html';
+                                    {#window.location.href = '/main/techTask.html';#}
                                 }).catch((err) => {
                                 console.log('------badly-----', err);
                             })
