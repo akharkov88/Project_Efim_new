@@ -318,11 +318,7 @@
                                                         rows[row].style.display = "table-row";
                                                     }
                                                 }
-                                                {#for (var row = 0; row < rows.length; row++) {#}
-                                                {#    if (row.cells[8].innerText.trim() == "Выполнено") {#}
-                                                {#        rows[row].style.display = "table-row";#}
-                                                {#    }#}
-                                                //}
+
                                             }
 
                                         }
@@ -549,11 +545,7 @@
 
 
                                                 </td>
-                                                <script>
-                                                    {#if (({{ get_UserTask_for.status|tojson }}) == 'Выполнено') {#}
-                                                    {#    document.getElementById("status_{{ get_UserTask_for.id }}").parentElement.parentElement.style.display = 'none'#}
-                                                    //}
-                                                </script>
+
                                                 {#РЕШЕНИЕ#}
                                                 <td class="align-middle">
                                                     <span id="result_value_{{ get_UserTask_for.id }}">{{ get_UserTask_for.result }}</span>
@@ -812,6 +804,14 @@
                                             if (res.status == 200) {
                                                 console.log(res.status)
                                                 {#window.location.reload();#}
+                                                showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу', 'info', 5000)
+
+                                                document.getElementById("Otpravka_roles_forms").style.display = "none";
+                                                document.getElementById("Opisanie_forms").style.display = "none";
+                                                document.getElementById("Opisanie_text").value = "";
+                                                document.getElementById("button_forms").style.display = "none";
+                                                document.getElementById('Type').getElementsByTagName('option')[0].selected = 'selected'
+
                                             } else {
                                                 showToast("Ошибка", "error", 5000);
 
@@ -904,14 +904,14 @@
 
                                             }
 
-                                            if (data["user_data"]["status"] == "Выполнено") {
+                                            if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
 
                                                 document.getElementById("process_" + data["id"]["id"]).style = "display: none;"
                                                 document.getElementById("result_value_" + data["id"]["id"]).innerText = data["user_data"]["result"]
                                                 send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
 
-                                                document.getElementById("success").style.display = "block";
+                                                {#document.getElementById("success").style.display = "block";#}
                                                 document.getElementById("popup").style.display = "none";
                                                 {#document.getElementById("overlay").classList.add("show");#}
                                                 document.getElementById("overlay").classList.remove("show");
@@ -927,7 +927,7 @@
                                                 document.getElementById("result_value_" + data["id"]["id"]).innerText = data["user_data"]["result"]
                                                 send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
 
-                                                document.getElementById("success").style.display = "block";
+                                                {#document.getElementById("success").style.display = "block";#}
                                                 document.getElementById("popup_get_back_to_work").style.display = "none";
                                                 {#document.getElementById("overlay").classList.add("show");#}
                                                 document.getElementById("overlay").classList.remove("show");
@@ -955,7 +955,7 @@
                                         console.log("v.id", v.id)
                                         console.log("get_my_UserPfofileget_my_UserPfofile", {{ get_my_UserPfofile.username|tojson|safe }})
 
-                                        if (v.status != "Выполнено") {//&& {{ get_my_UserPfofile|tojson|safe }} != v.user_create && JSON.parse(v.user_executor.split("'").join('"')).indexOf({{ get_my_UserPfofile.username|tojson|safe }})!=-1
+                                        if (v.status != "Выполнено" && v.status != "Отказ выполнять") {//&& {{ get_my_UserPfofile|tojson|safe }} != v.user_create && JSON.parse(v.user_executor.split("'").join('"')).indexOf({{ get_my_UserPfofile.username|tojson|safe }})!=-1
 
 
                                             document.getElementById("process_" + v.id).addEventListener("click", (e) => {
@@ -1003,7 +1003,7 @@
                                             console.log(v.status != "Возврат в работу")
                                             console.log(v.status == "Выполнено")
 
-                                            if ({{ get_my_UserPfofile.username|tojson|safe }} == v.user_create && (v.status == "Выполнено" || v.status != "Возврат в работу")) {
+                                            if ({{ get_my_UserPfofile.username|tojson|safe }} == v.user_create && (v.status == "Выполнено" || v.status != "Возврат в работу") && v.status != "Отказ выполнять") {
                                                 console.log("попал else Выполнено Возврат в работу", v.id)
 
                                                 document.getElementById("get_back_to_work_" + v.id).addEventListener("click", (e) => {
@@ -1034,19 +1034,26 @@
                                     });
 
                                     document.getElementById("yes-btn").addEventListener("click", (e) => {
-
+                                        console.log("yes-btn")
                                         if (document.getElementById("kod").value == "") {
                                             showToast("Необходимо заполнить поля", "error", 5000);
                                             document.getElementById("kod").setAttribute("required", true)
+                                            console.log("yes-btn", 1)
+
                                             return
                                         }
 
                                         if (document.getElementById("result").value == "") {
                                             showToast("Необходимо заполнить поля", "error", 5000);
                                             document.getElementById("result").setAttribute("required", true)
+                                            console.log("yes-btn", 2)
+
                                             return
                                         }
-                                        if (document.getElementById("result").value == "" && document.getElementById("kod").value == "") {
+                                        console.log("result", document.getElementById("result").value)
+                                        console.log("kod", document.getElementById("kod").value)
+
+                                        if (document.getElementById("result").value != "" && document.getElementById("kod").value != "") {
 
 
                                             console.log(document.getElementById("yes-btn").className.split(" ")[document.getElementById("yes-btn").className.split(" ").length - 1])
@@ -1087,7 +1094,7 @@
                                                 "notification_executor": true
                                             },
                                             "id": {
-                                                "id": document.getElementById("yes-btn").className.split(" ")[document.getElementById("yes-btn").className.split(" ").length - 1]
+                                                "id": document.getElementById("yes-btn_get_back_to_work").className.split(" ")[document.getElementById("yes-btn_get_back_to_work").className.split(" ").length - 1]
                                             }
                                         }
                                         updatde_UserTask(data, e, document.getElementById("name_tasc_" + data["id"]["id"]).innerText, document.getElementById("result").value)
@@ -1212,9 +1219,7 @@
 
                                     {% for get_UserTask_for in UserTask_Control %}
 
-<script>
-    console.log("UserTask_ControlUserTask_Control",{{ UserTask_Control|tojson}})
-</script>
+
                                         <tr class="mark" id={{ get_UserTask_for.id }}>
 
                                             {#НОМЕР ЗАДАЧИ#}
@@ -1325,53 +1330,95 @@
                                             </td>
                                             {#СНЯТЬ С КОНТРОЛЯ#}
                                             <td class="align-middle">
-                                                <span id="control_search_{{ get_UserTask_for.id }}" style="font-weight:normal"
-                                                                  class="ms-2"></span>
+                                                <span id="control_search_{{ get_UserTask_for.id }}"
+                                                      style="font-weight:normal"
+                                                      class="ms-2"></span>
                                                 <button id="control_process_{{ get_UserTask_for.id }}">
                                                     Снять задачу с котроль
                                                 </button>
                                             </td>
 
-                                          <script>
-                                            control_m = []
-                                            for (control of {{ get_UserTask_for.UserPfofile_control|tojson }} ){
-                                                if (control_m.indexOf(control) == -1) {
-                                                    control_m.push(control.first_name + " " + control.last_name)
+                                            <script>
+                                                control_m = []
+                                                for (control of {{ get_UserTask_for.UserPfofile_control|tojson }}) {
+                                                    if (control_m.indexOf(control) == -1) {
+                                                        control_m.push(control.first_name + " " + control.last_name)
+                                                    }
                                                 }
-                                            }
-                                            document.getElementById("control_search_"+{{ get_UserTask_for.id }}).innerText = control_m.join(", ")
+                                                document.getElementById("control_search_" + {{ get_UserTask_for.id }}).innerText = control_m.join(", ")
 
-                                        document.getElementById("control_process_{{ get_UserTask_for.id }}").onclick = async function (event) {
+                                                document.getElementById("control_process_{{ get_UserTask_for.id }}").onclick = async function (event) {
 
-                                            event.preventDefault();
-                                            event_control_process = ""
-                                            if (window.update_value_user_id_search_value[0].control.indexOf(window.my_UserPfofile.my_username) == -1) {
+                                                    event.preventDefault();
+                                                    console.log(event.target.id)
+                                                    console.log(event.target.id.replace("control_process_", ""))
+                                                    res = await fetch("/userprofile/UserTask_Search_id?id=" + event.target.id.replace("control_process_", ""), {
+                                                        method: "GET",
+                                                        headers: {
+                                                            Accept: 'application/json',
+                                                            'Content-Type': 'application/json',
+                                                            "Authorization": getCookieValue("Authorization")
+                                                        },
+                                                        {#body: JSON.stringify({})#}
+                                                    });
 
-                                                event_control_process = "add"
-                                            } else {
-                                                event_control_process = "del"
+                                                    let responseText2 = JSON.parse(await res.text());
+                                                    console.log("1", responseText2)
+
+                                                    if (res.status == 200) {
+
+                                                        console.log("2", responseText2)
+                                                        event_control_process = ""
+                                                        if (responseText2[0].control.indexOf(window.my_UserPfofile.my_username) == -1) {
+
+                                                            event_control_process = "add"
+
+                                                        } else {
+                                                            event_control_process = "del"
 
 
-                                            }
-                                            res = await fetch(`http://127.0.0.1:8000/userprofile/set_Control_Task?id=1&event=${event_control_process}`, {
-                                                method: "GET",
-                                                headers: {
-                                                    Accept: 'application/json',
-                                                    'Content-Type': 'application/json',
-                                                    "Authorization": getCookieValue("Authorization")
-                                                },
-                                                {#body: JSON.stringify({})#}
-                                            });
+                                                        }
+                                                        res = await fetch(`http://127.0.0.1:8000/userprofile/set_Control_Task?id=${event.target.id.replace("control_process_", "")}&event=${event_control_process}`, {
+                                                            method: "GET",
+                                                            headers: {
+                                                                Accept: 'application/json',
+                                                                'Content-Type': 'application/json',
+                                                                "Authorization": getCookieValue("Authorization")
+                                                            },
+                                                            {#body: JSON.stringify({})#}
+                                                        });
 
-                                            let responseText = JSON.parse(await res.text());
-                                            if (res.status == 200) {
-                                                window.update_value_user_id_search_value = responseText
+                                                        let responseText = JSON.parse(await res.text());
+                                                        if (res.status == 200) {
+                                                            showToast("Успех", "info", 5000);
+                                                            console.log("responseText",responseText)
+                                                            control_m = []
+                                                            for (control of responseText[0].UserPfofile_control) {
+                                                                if (control_m.indexOf(control) == -1) {
+                                                                    control_m.push(control.first_name + " " + control.last_name)
+                                                                }
+                                                            }
+                                                            document.getElementById("control_search_" + {{ get_UserTask_for.id }}).innerText = control_m.join(", ")
+                                                            if (event_control_process == "del") {
+                                                                document.getElementById(event.target.id).innerText = "Вернуть задачу на котроль"
 
-                                                update_value_user_id_search(responseText)
 
-                                            }
-                                        }
-                                    </script>
+                                                            }
+
+                                                            if (event_control_process == "add") {
+                                                                document.getElementById(event.target.id).innerText = "Снять задачу с котроль"
+
+                                                            }
+
+                                                        }
+                                                    } else {
+                                                        showToast("Ошибка", "error", 5000);
+
+                                                    }
+
+
+                                                }
+                                            </script>
                                         </tr>
 
 
