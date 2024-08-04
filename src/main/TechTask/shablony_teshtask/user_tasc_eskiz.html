@@ -90,14 +90,17 @@
 
         </div>
 
-
         <div class="form-group">
-            <input type="button" value="Просмотреть задачи" class="butShowHide">
+            <input type="button" value="Сохранить" >
         </div>
-        <div class="form-group slow" id="content0" hidden>
-            {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}
+{##}
+{#        <div class="form-group">#}
+{#            <input type="button" value="Просмотреть задачи" class="butShowHide">#}
+{#        </div>#}
+{#        <div class="form-group slow" id="content0" hidden>#}
+{#            {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}#}
             {#                {% include "For_TechTaskForm.html" %}#}
-        </div>
+{#        </div>#}
 
 
         {#            <div class="checkbox">#}
@@ -192,9 +195,11 @@
     for (eskiz_list_user_task of eskiz_valid_getTechTaskName) {
 
         if (JSON.parse(eskiz_list_user_task.connection).Esckiz != undefined) {
-
+            console.log("UserTasck",eskiz_list_user_task)
             document.getElementById('eskiz_checkbox').style.display = 'block'
             document.getElementById('eskiz_user_task').style.display = 'none'
+            document.getElementsByName('TechTaskPPR_sketch')[0].value=eskiz_list_user_task.result
+            document.getElementsByName('TechTaskDate_sketch')[0].value=eskiz_list_user_task.target_date
         } else {
             document.getElementById('eskiz_checkbox').style.display = 'none'
             document.getElementById('eskiz_user_task').style.display = 'block'

@@ -129,6 +129,7 @@ class ListUserTask(Base ):
     priority = Column(String)
     connection = Column(String)
     control = Column(ARRAY(String))
+    attachment = Column(ARRAY(String))
 
 
 class UserPfofile(Base):

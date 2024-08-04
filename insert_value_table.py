@@ -278,7 +278,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Не важно",
-        "control":['Naumov', 'Efimov']
+        "control":['Naumov', 'Efimov'],
+        "attachment":[]
     }, {
         "name": "Реализация создание задач",
         "user_create": "admin",
@@ -289,7 +290,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":['Naumov']
+        "control":['Naumov'],
+        "attachment":[]
     },{
         "name": "Реализация создание задач",
         "user_create": "Kharkov",
@@ -300,7 +302,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":["admin","Naumov"]
+        "control":["admin","Naumov"],
+        "attachment":[]
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "admin",
@@ -311,7 +314,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Важно",
-        "control":['Efimov']
+        "control":['Efimov'],
+        "attachment":[]
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "Efimov",
@@ -322,7 +326,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Важно",
-        "control":['admin']
+        "control":['admin'],
+        "attachment":[]
     }]
 
     with sync_engine.connect() as conn:

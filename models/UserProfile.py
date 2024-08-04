@@ -26,6 +26,7 @@ class ModelUserTaskUpdate(BaseModel):
     result : str
     notification_holder: bool
     notification_executor: bool
+    attachment: list
 
 class ModelUserTask(BaseModel):
     name: str

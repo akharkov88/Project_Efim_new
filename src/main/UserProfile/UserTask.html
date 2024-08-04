@@ -435,6 +435,7 @@
                                             <th scope="col">ПРИОРИТЕТ</th>
                                             <th scope="col">СТАТУС</th>
                                             <th scope="col">РЕШЕНИЕ</th>
+                                            <th scope="col">ВЛОЖЕНИЯ</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -598,6 +599,43 @@
 
                                                 </td>
 
+                                                <td class="align-middle">
+                                                    <span id="attachment_{{ get_UserTask_for.id }}">
+
+
+                                                    {% for UserPfofile_attachment_for in get_UserTask_for.attachment %}
+
+
+                                                        <script>
+                                                                console.log("SON.parse",JSON.parse({{UserPfofile_attachment_for|tojson}}))
+
+                                                           div = document.createElement('div')
+                                                            a = document.createElement('a')
+                                                            a.href = 'javascript:void(0);'
+                                                            a.target = "_blank"
+                                                            console.log("SON.parse",a)
+                                                            a.onclick = function () {
+                                                                    console.log("123")
+                                                                event.preventDefault();
+                                                                downloadFileFromURL('/BaseFile/download-file/' + JSON.parse({{UserPfofile_attachment_for|tojson}}).id.replaceAll('"', ""), JSON.parse({{UserPfofile_attachment_for|tojson}}).name)
+                                                            }
+                                                            a.innerText = JSON.parse({{UserPfofile_attachment_for|tojson}}).name
+
+                                                            div.append(a);
+
+                                                            console.log(div)
+                                                            document.getElementById("attachment_{{ get_UserTask_for.id }}").parentElement.appendChild(div);
+                                                        </script>
+{#                                        <a href="javascript:void(0);" target="_blank" name={{ UserPfofile_attachment_for|tojson.id }}>{{ UserPfofile_attachment_for|tojson.name }}</a>#}
+
+                                                    {% endfor %}
+
+
+                                                    </span>
+
+
+                                                </td>
+
                                                 <div id="overlay"></div>
                                                 <div class="container">
 
@@ -614,7 +652,95 @@
                                                                 <option>Выполнено</option>
                                                                 <option>Отказ выполнять</option>
                                                             </select>
+                                                            <div class="form-group">
+                                                                <div id="containerPPR" class="testText"
+                                                                     style="margin-bottom: 10px;"></div>
 
+                                                                <input id="addPPR" type="button"
+                                                                       value="Добавить вложение">
+                                                            </div>
+
+                                                            <script>
+                                                            ///?????????????????????
+                                                                 counter_id = 1;
+                                                                 arrCounter_id = [1];
+                                                                addPPR.onclick = function () {
+                                                                    counter_id = arrCounter_id[arrCounter_id.length - 1];
+
+                                                                    let button = document.createElement("input");
+                                                                    let container = document.getElementById("containerPPR")
+                                                                    let poddiv = document.createElement("div");
+                                                                    let infile = document.createElement("input");
+
+                                                                    infile.type = "file";
+                                                                    infile.setAttribute("id", "file" + counter_id);
+
+                                                                    button.type = "button";
+                                                                    button.value = "Удалить файл";
+                                                                    button.setAttribute("id", "idButtonPPR" + counter_id);
+                                                                    poddiv.setAttribute("id", "podContainer" + counter_id);
+                                                                    container.appendChild(poddiv);
+                                                                    poddiv.appendChild(infile);
+                                                                    poddiv.appendChild(button);
+
+                                                                    button.onclick = function () {
+                                                                        poddiv.remove()
+                                                                    }
+
+                                                                    $(`#file${counter_id}`).change(function(){
+                                                                     uploadfile_func_forPPR(infile)
+                                                                    });
+
+
+                                                                        counter_id++;
+                                                                        arrCounter_id.push(counter_id);
+                                                                        arrCounter_id.sort()
+
+                                                                    }
+
+                                                                    function uploadfile_func_forPPR(item) {
+                                                                        const xhr = new XMLHttpRequest();
+                                                                        const formData = new FormData(); // создаем объект FormData для передачи файла
+                                                                        const file = item.files[0];
+                                                                        console.log(item)
+
+                                                                        formData.append('file', file);
+                                                                        xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+                                                                        xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
+                                                                        xhr.send(formData);
+                                                                        let file_name = item.value.replace(/.*[\/\\]/, '');
+
+                                                                        let str = '1'
+                                                                        xhr.onload = function () {
+                                                                            if (xhr.status == 200) {
+                                                                                {#vlozheniya.push({#}
+                                                                                {#    name: file_name,#}
+                                                                                {#    id: xhr.response.replaceAll('"', "")#}
+                                                                                //})
+                                                                                console.log("xhr.response",xhr.response)
+                                                                                let div = document.createElement('div')
+                                                                                let a = document.createElement('a')
+                                                                                a.href = 'javascript:void(0);'
+                                                                                a.target = "_blank"
+                                                                                a.name = xhr.response.replaceAll('"', "")
+
+                                                                                a.onclick = function () {
+                                                                                    event.preventDefault();
+                                                                                    downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
+                                                                                }
+                                                                                a.innerText = file_name
+
+                                                                                div.append(a);
+
+                                                                                console.log(div)
+                                                                                item.parentElement.appendChild(div);
+                                                                                item.disabled = true;
+                                                                            }
+                                                                        }
+
+                                                                    }
+
+                                                            </script>
                                                             <label>Решение</label>
                                                             <textarea id="result" class="form-control" rows="3"
                                                                       placeholder="Введите резултаты работы"></textarea>
@@ -973,6 +1099,7 @@
                                                             "user_data": {
                                                                 "status": "В Работе",
                                                                 "result": "",
+                                                                "attachment":[],
                                                                 "notification_holder": false,
                                                                 "notification_executor": false
                                                             },
@@ -1057,11 +1184,17 @@
 
 
                                             console.log(document.getElementById("yes-btn").className.split(" ")[document.getElementById("yes-btn").className.split(" ").length - 1])
-
+                                            let attachment_userTask=[]
+                                                for (i=0;i<$(`#containerPPR a`).length;i++){
+                                                    attachment_userTask.push(
+                                                        JSON.stringify({"name":$(`#containerPPR a`)[i].innerText,"id":$(`#containerPPR a`)[i].name})
+                                                    )
+                                            }
                                             data = {
                                                 "user_data": {
                                                     "status": document.getElementById("kod").value,
                                                     "result": document.getElementById("result").value,
+                                                    "attachment":attachment_userTask,
                                                     "notification_holder": true,
                                                     "notification_executor": false
                                                 },
@@ -1391,7 +1524,7 @@
                                                         let responseText = JSON.parse(await res.text());
                                                         if (res.status == 200) {
                                                             showToast("Успех", "info", 5000);
-                                                            console.log("responseText",responseText)
+                                                            console.log("responseText", responseText)
                                                             control_m = []
                                                             for (control of responseText[0].UserPfofile_control) {
                                                                 if (control_m.indexOf(control) == -1) {
