@@ -305,6 +305,30 @@ async def insert_UserTask():
         "control":["admin","Naumov"],
         "attachment":[]
     }, {
+        "name": "test",
+        "user_create": "Kharkov",
+        "user_executor": "['admin']",
+        "status": "Назначена",
+        "result": "",
+        "target_date": "2024-01-21",
+        "notification_holder": False,
+        "notification_executor": True,
+        "priority": "Нормально",
+        "control":["admin","Naumov"],
+        "attachment":[]
+    },  {
+        "name": "test2",
+        "user_create": "Kharkov",
+        "user_executor": "['admin']",
+        "status": "Назначена",
+        "result": "",
+        "target_date": "2024-01-21",
+        "notification_holder": False,
+        "notification_executor": True,
+        "priority": "Нормально",
+        "control":["admin","Naumov"],
+        "attachment":[]
+    }, {
         "name": "Доделать права в таблицах",
         "user_create": "admin",
         "user_executor": "['Efimov']",

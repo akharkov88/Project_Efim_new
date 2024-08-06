@@ -601,6 +601,7 @@
 
                                                 <td class="align-middle">
                                                     <span id="attachment_{{ get_UserTask_for.id }}">
+                                                        {% if get_UserTask_for.attachment != None %}
 
 
                                                     {% for UserPfofile_attachment_for in get_UserTask_for.attachment %}
@@ -626,9 +627,9 @@
                                                             console.log(div)
                                                             document.getElementById("attachment_{{ get_UserTask_for.id }}").parentElement.appendChild(div);
                                                         </script>
-{#                                        <a href="javascript:void(0);" target="_blank" name={{ UserPfofile_attachment_for|tojson.id }}>{{ UserPfofile_attachment_for|tojson.name }}</a>#}
 
                                                     {% endfor %}
+                                                        {% endif %}
 
 
                                                     </span>
@@ -664,7 +665,7 @@
                                                             ///?????????????????????
                                                                  counter_id = 1;
                                                                  arrCounter_id = [1];
-                                                                addPPR.onclick = function () {
+                                                                addPPR_func=addPPR.onclick = function () {
                                                                     counter_id = arrCounter_id[arrCounter_id.length - 1];
 
                                                                     let button = document.createElement("input");
@@ -1082,8 +1083,9 @@
                                         console.log("get_my_UserPfofileget_my_UserPfofile", {{ get_my_UserPfofile.username|tojson|safe }})
 
                                         if (v.status != "Выполнено" && v.status != "Отказ выполнять") {//&& {{ get_my_UserPfofile|tojson|safe }} != v.user_create && JSON.parse(v.user_executor.split("'").join('"')).indexOf({{ get_my_UserPfofile.username|tojson|safe }})!=-1
+                                        console.log("v.attachment", v.attachment)
 
-
+document.getElementById("process_" + v.id).name=v.attachment
                                             document.getElementById("process_" + v.id).addEventListener("click", (e) => {
                                                 console.log("get_UserTask_for.id", e)
 
@@ -1095,11 +1097,20 @@
 
                                                     if (document.getElementById(e.target.id).innerText == "Взять в работу") {
 
+                                                        attachment_userTasck=[]
+                                                        gg=JSON.parse("["+document.getElementById(e.target.id).name+"]")
+                                                        console.log("gg",gg)
+
+                                                        for (i in gg){
+                                                        console.log(JSON.stringify(gg[i]))
+
+                                                        attachment_userTasck.push(JSON.stringify(gg[i]))
+                                                        }
                                                         data = {
                                                             "user_data": {
                                                                 "status": "В Работе",
                                                                 "result": "",
-                                                                "attachment":[],
+                                                                "attachment":attachment_userTasck,
                                                                 "notification_holder": false,
                                                                 "notification_executor": false
                                                             },
@@ -1111,6 +1122,8 @@
 
                                                         {#get_UserTask()#}
                                                     } else {
+                                                        gg=JSON.parse("["+document.getElementById(e.target.id).name+"]")
+
                                                         document.getElementById("popup").style.display = "block";
                                                         document.getElementById("overlay").classList.add("show");
                                                         document.getElementById("yes-btn").className += " " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
@@ -1134,7 +1147,7 @@
                                                 console.log("попал else Выполнено Возврат в работу", v.id)
 
                                                 document.getElementById("get_back_to_work_" + v.id).addEventListener("click", (e) => {
-
+document.getElementById("get_back_to_work_" + v.id).name=v.attachment
                                                         document.getElementById("popup_get_back_to_work").style.display = "block";
                                                         document.getElementById("overlay").classList.add("show");
                                                         document.getElementById("yes-btn_get_back_to_work").className = "popup__button " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
@@ -1217,12 +1230,22 @@
 
                                     document.getElementById("yes-btn_get_back_to_work").addEventListener("click", (e) => {
 
-                                        console.log(document.getElementById("yes-btn_get_back_to_work").className.split(" ")[1])
+                                        console.log(e.target)
+                                        attachment_userTasck=[]
+                                        gg=JSON.parse("["+document.getElementById("get_back_to_work_" + document.getElementById("yes-btn_get_back_to_work").className.split(" ")[document.getElementById("yes-btn_get_back_to_work").className.split(" ").length - 1]).name+"]")
+                                        console.log("gg",gg)
 
+                                        for (i in gg){
+                                        console.log(JSON.stringify(gg[i]))
+
+                                        attachment_userTasck.push(JSON.stringify(gg[i]))
+                                        }
+                                        console.log("attachment_userTasck",attachment_userTasck)
                                         data = {
                                             "user_data": {
                                                 "status": "Возврат в работу",
                                                 "result": document.getElementById("result_get_back_to_work").value,
+                                                "attachment":attachment_userTasck,
                                                 "notification_holder": false,
                                                 "notification_executor": true
                                             },
