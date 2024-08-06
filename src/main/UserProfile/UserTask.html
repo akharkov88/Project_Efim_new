@@ -602,6 +602,13 @@
                                                 <td class="align-middle">
                                                     <span id="attachment_{{ get_UserTask_for.id }}">
 
+                                                        {% if  get_UserTask_for.attachment|tojson != 'null' and get_UserTask_for.attachment|tojson !='[]' %}
+                                                        <script>
+                                                        console.log('get_UserTask_for.attachment',{{ get_UserTask_for.attachment |tojson}})
+                                                        </script>
+
+
+
 
                                                     {% for UserPfofile_attachment_for in get_UserTask_for.attachment %}
 
@@ -626,11 +633,10 @@
                                                             console.log(div)
                                                             document.getElementById("attachment_{{ get_UserTask_for.id }}").parentElement.appendChild(div);
                                                         </script>
-{#                                        <a href="javascript:void(0);" target="_blank" name={{ UserPfofile_attachment_for|tojson.id }}>{{ UserPfofile_attachment_for|tojson.name }}</a>#}
+                                        <a href="javascript:void(0);" target="_blank">{{ UserPfofile_attachment_for.name }}</a>
 
                                                     {% endfor %}
-
-
+{% endif %}
                                                     </span>
 
 

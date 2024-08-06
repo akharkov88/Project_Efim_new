@@ -471,7 +471,7 @@ $(document).ready(function(){
                             console.log("getTechTaskName", {{ getTechTaskName|tojson }})
                           console.log("getAllTask", {{ getTechTaskName.ListUserTask|tojson }})
                             list_user_tasks = {{ getTechTaskName.ListUserTask|tojson }}
-                            let info_status = "<table style='border-collapse:collapse'><td><b>№ Задачи</b></td><td><b>Создал задачу</b></td><td><b>Исполнитель:</b></td><td><b>Статус:</b></td><td><b>контрольный срок:</b></td><td><b> тех. задание</b></td>"
+                            let info_status = "<table style='border-collapse:collapse'><td><b>№ Задачи</b></td><td><b>Создал задачу</b></td><td><b>Исполнитель:</b></td><td><b>Статус:</b></td><td><b>контрольный срок:</b></td><td><b> тех. задание</b></td><td><b> решение </b></td>"
                             let info_status_activ = "<table style='border-collapse:collapse'><td><b>№ Задачи</b></td><td><b>Создал задачу</b></td><td><b>Исполнитель:</b></td><td><b>Статус:</b></td><td><b>контрольный срок:</b></td><td><b> тех. задание</b></td>"
                             for (list_user_task of list_user_tasks) {
                                 console.log("list_user_task",list_user_task)
@@ -485,17 +485,17 @@ $(document).ready(function(){
                                         info_status_activ += `<tr><td>${list_user_task.id}</td> <td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td>${info_Ispolnitel}; </td><td> ${list_user_task.status};</td> <td> <font color="red">${list_user_task.target_date} </font>; </td><td><b>${list_user_task.name} </b></td></tr>`
 
                                     }else{
-                                        info_status_activ += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td> ${info_Ispolnitel};</td> <td> ${list_user_task.status};</td> <td>  <font color="green">${list_user_task.target_date} </font>;</td><td> <b>${list_user_task.name} </b></p></td> </tr>`
+                                        info_status_activ += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td> ${info_Ispolnitel};</td> <td> ${list_user_task.status};</td> <td>  <font color="green">${list_user_task.target_date} </font>;</td><td> <b>${list_user_task.name} </b></p></td></tr>`
                                     }
 
 
                                 }
                                 if (list_user_task.status=="Отказ выполнять"){
-                                info_status += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ;</td> <td><b>${list_user_task.name} </b></p></font></td> </tr>`
+                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ;</td> <td><b>${list_user_task.name} </b></p></font></td> <td> <b>${list_user_task.result} </b></p></td> </tr>`
 
                                 }
                                 if (list_user_task.status=="Выполнено"){
-                                info_status += `<tr><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ; </td> <td><b>${list_user_task.name} </b></p></td> </tr>`
+                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ; </td> <td><b>${list_user_task.name} </b></p></td> <td> <b>${list_user_task.result} </b></p></td></tr>`
 
                                 }
                             }

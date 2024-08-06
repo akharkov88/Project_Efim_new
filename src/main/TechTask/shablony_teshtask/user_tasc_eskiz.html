@@ -91,7 +91,7 @@
         </div>
 
         <div class="form-group">
-            <input type="button" value="Сохранить" >
+            <input type="button" value="Сохранить" id="saveChangeTask">
         </div>
 {##}
 {#        <div class="form-group">#}
@@ -119,6 +119,10 @@
 </div>
 </body>
 <script>
+
+saveChangeTask.onclick=()=>{
+    console.log('press')
+}
     let counter_id = 1;
     let arrCounter_id = [1];
 
@@ -191,7 +195,7 @@
     }
 
     eskiz_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
-
+    let container = document.getElementById("containerPPR")
     for (eskiz_list_user_task of eskiz_valid_getTechTaskName) {
 
         if (JSON.parse(eskiz_list_user_task.connection).Esckiz != undefined) {
@@ -200,6 +204,51 @@
             document.getElementById('eskiz_user_task').style.display = 'none'
             document.getElementsByName('TechTaskPPR_sketch')[0].value=eskiz_list_user_task.result
             document.getElementsByName('TechTaskDate_sketch')[0].value=eskiz_list_user_task.target_date
+            if (eskiz_list_user_task.attachment.length!=0){
+                console.log('ДЛИНА',eskiz_list_user_task)
+                for (let i of eskiz_list_user_task.attachment){
+                    let button = document.createElement("input");
+                    let poddiv = document.createElement("div");
+                    let infile = document.createElement("input");
+                    button.type = "button";
+                    button.value = "Удалить файл";
+                    infile.type = "file";
+                    infile.readOnly = true;
+                    infile.onclick=(event)=> {
+                        event.preventDefault();
+                    }
+                    {#infile.disabled = 'true';#}
+                    console.log(JSON.parse(i))
+                    i = JSON.parse(i)
+                    console.log('i.name', typeof i.name)
+                    let div = document.createElement('div')
+                    let a = document.createElement('a')
+                    a.href = 'javascript:void(0);'
+                    a.target = "_blank"
+                    a.style = 'margin-right: 10px;'
+                    console.log("SON.parse",a)
+                    a.onclick = function () {
+                            console.log("123")
+                        event.preventDefault();
+                        downloadFileFromURL('/BaseFile/download-file/' + i.id, i.name)
+                    }
+                    a.innerText = i.name
+
+                    container.appendChild(poddiv);
+                    poddiv.appendChild(infile);
+                    div.append(a);
+
+                    poddiv.appendChild(button);
+                    poddiv.appendChild(div);
+                    button.onclick = function () {
+                        poddiv.remove()
+                    }
+
+                    {#document.getElementById("containerPPR").appendChild(div);#}
+
+                    console.log(i)
+                }
+            }
         } else {
             document.getElementById('eskiz_checkbox').style.display = 'none'
             document.getElementById('eskiz_user_task').style.display = 'block'
