@@ -120,9 +120,76 @@
 </body>
 <script>
 
-saveChangeTask.onclick=()=>{
+saveChangeTask.onclick=async ()=>{
     console.log('press')
+            console.log("UserTasck222",eskiz_list_user_task)
+    //data, e, name_task, rezult_task
+    let attachment_userTask=[]
+        for (i=0;i<$(`#containerPPR a`).length;i++){
+            attachment_userTask.push(
+                JSON.stringify({"name":$(`#containerPPR a`)[i].innerText,"id":$(`#containerPPR a`)[i].name})
+            )
+        }
+    let data = {
+        "user_data": {
+            "status": "Выполнено",
+            "result": document.getElementsByName('TechTaskPPR_sketch')[0].value,
+            "attachment":attachment_userTask,
+            "notification_holder": false,
+            "notification_executor": false
+        },
+        "id": {
+            "id":   eskiz_list_user_task.id
+        }
+    }
+    console.log(data)
+    updatde_UserTask(data, eskiz_list_user_task.name , document.getElementsByName('TechTaskPPR_sketch')[0].value)
 }
+
+window.get_UserTask = {{ get_UserTask|tojson|safe}}
+// Со страницы UserTask
+async function updatde_UserTask(data, name_task, rezult_task) {
+                                        console.log("datadata", data)
+
+                                        {#console.log("useruseruseruser", window.get_UserTask[data.id.id - 1].user_create)#}
+                                        let data_analiz = window.get_UserTask
+                                        console.log("useruseruseruser", data_analiz)
+                                        data_analiz.forEach(function (val, id) {
+                                            if (val.id == data.id.id) {
+                                                iskomiy_id = id
+                                                console.log("111", val.name)
+                                                console.log("111", val.user_create)
+                                                return
+                                            }
+                                        })
+                                        console.log("iskomiy_idiskomiy_id", iskomiy_id)
+                                        res = await fetch('/userprofile/updateUserTasck', {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: 'application/json',
+                                                'Content-Type': 'application/json',
+                                                "Authorization": getCookieValue("Authorization")
+                                            },
+                                            body: JSON.stringify(data)
+                                        });
+                                        console.log("res.status", res.status)
+                                        if (res.status == 200) {
+                                            if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
+                                                console.log("Выполнена")
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
+                                                showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            }
+
+
+
+
+                                        } else {
+                                            showToast("Ошибка", "error", 5000);
+
+                                        }
+                                    }
+
+
     let counter_id = 1;
     let arrCounter_id = [1];
 
@@ -178,6 +245,8 @@ saveChangeTask.onclick=()=>{
                 let a = document.createElement('a')
                 a.href = 'javascript:void(0);'
                 a.target = "_blank"
+                console.log('xhr.response',xhr.response)
+                a.name = xhr.response;
                 a.onclick = function () {
                     event.preventDefault();
                     downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
@@ -225,6 +294,8 @@ saveChangeTask.onclick=()=>{
                     let a = document.createElement('a')
                     a.href = 'javascript:void(0);'
                     a.target = "_blank"
+                    {#console.log('III222!!!',i)#}
+                    a.name = '123213'
                     a.style = 'margin-right: 10px;'
                     console.log("SON.parse",a)
                     a.onclick = function () {
