@@ -1093,7 +1093,8 @@ document.getElementById("process_" + v.id).name=v.attachment
 
                                                     console.log("get_UserTask_for.id", e)
                                                     console.log("get_UserTask_for.id", e.target.localName)
-                                                    console.log("get_UserTask_for.id", document.getElementById(e.target.id))
+                                                    console.log("get_UserTask_for.id", JSON.parse("["+document.getElementById(e.target.id).name+"]"))
+                                                    console.log("get_UserTask_for.id", JSON.parse("["+document.getElementById(e.target.id).name+"]"))
 
                                                     if (document.getElementById(e.target.id).innerText == "Взять в работу") {
 
@@ -1124,6 +1125,42 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                     } else {
                                                         gg=JSON.parse("["+document.getElementById(e.target.id).name+"]")
 
+                                                        for (val of JSON.parse("["+document.getElementById(e.target.id).name+"]")){
+        console.log()
+                                                           div = document.createElement('div')
+                                                            a = document.createElement('a')
+                                                            a.href = 'javascript:void(0);'
+                                                            a.target = "_blank"
+                                                            console.log("SON.parse",a)
+                                                            a.onclick = function () {
+                                                                    console.log("123")
+                                                                event.preventDefault();
+                                                                downloadFileFromURL('/BaseFile/download-file/' + val.id.replaceAll('"', ""), val.name)
+                                                            }
+                                                            a.innerText = val.name
+
+                                                            div.append(a);
+
+                                                            console.log(div)
+
+
+                                                            let button = document.createElement("input");
+
+                                                            button.type = "button";
+                                                            button.value = "Удалить файл";
+                                                            button.setAttribute("id", "Button_" + val.id);
+                                                            div.setAttribute("id", "div_" + val.id);
+
+                                                            div.appendChild(button);
+
+                                                            button.onclick = function (e) {
+                                                                console.log(e.target.id)
+                                                                document.getElementById("div_"+e.target.id.replace("Button_","")).remove()
+                                                            }
+                                                            {#document.getElementById("containerPPR").parentElement.appendChild(div);#}
+                                                            document.getElementById("containerPPR").appendChild(div);
+
+                                                        }
                                                         document.getElementById("popup").style.display = "block";
                                                         document.getElementById("overlay").classList.add("show");
                                                         document.getElementById("yes-btn").className += " " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
