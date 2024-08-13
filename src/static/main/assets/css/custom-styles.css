@@ -898,7 +898,7 @@ body {
 .popup__content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .popup__title {
@@ -935,7 +935,7 @@ body {
 .popup__content_get_back_to_work {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .popup__title_get_back_to_work {
