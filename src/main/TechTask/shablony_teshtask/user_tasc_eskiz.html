@@ -176,6 +176,11 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                                                 console.log("Выполнена")
                                                 send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            } if (data["user_data"]["status"] == "Возврат в работу") {
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
+                                                showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            } else {
+                                                showToast("Задача сохранена", "info", 5000);
                                             }
 
 
