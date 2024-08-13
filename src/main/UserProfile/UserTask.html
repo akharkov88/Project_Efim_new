@@ -927,6 +927,15 @@
                                                 }
                                             }
                                         }
+                                        if (paramsString == '?id=not_work') {
+                                            for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
+                                                if (row.cells[8].innerText.trim() != "Назначена" || row.cells[9].innerText.trim()!="Взять в работу") {
+
+                                                                                                            row.style.display = 'none';
+
+                                                }
+                                            }
+                                        }
                                     }
 
 
