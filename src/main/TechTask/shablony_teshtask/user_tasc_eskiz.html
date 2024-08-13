@@ -100,7 +100,7 @@
 </div>
 </body>
 <script>
-eskiz_comply.onclick=async ()=>{eskiz_processing("Выполнено");
+eskiz_comply.onclick=async (e)=>{eskiz_processing(e,status="Выполнено");
     $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
                         $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
                         document.getElementById('eskiz_saveChangeTask').style.display = 'none'
@@ -108,7 +108,7 @@ eskiz_comply.onclick=async ()=>{eskiz_processing("Выполнено");
                         document.getElementById('eskiz_Get_back_to_work').style.display = 'block'
 
 }
-eskiz_Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в работу")
+eskiz_Get_back_to_work.onclick=async (e)=>{eskiz_processing(e,status="Возврат в работу")
     $("#eskiz_checkbox *").attr("disabled", false).off('click');
 
                         document.getElementById('eskiz_saveChangeTask').style.display = ''
@@ -116,7 +116,8 @@ eskiz_Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в р
                         document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 }
 
-eskiz_processing=eskiz_saveChangeTask.onclick=async (e,status=window.eskiz_list_user_task.status)=>{
+eskiz_processing=eskiz_saveChangeTask.onclick=  async (e,status=window.eskiz_list_user_task.status)=>{
+    console.log('press',e)
     console.log('press',status)
     console.log('press')
             console.log("UserTasck222",eskiz_list_user_task)
