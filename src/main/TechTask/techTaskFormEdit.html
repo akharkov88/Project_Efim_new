@@ -480,7 +480,7 @@ $(document).ready(function(){
                                     info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
                                 }
                                 info_Ispolnitel.trim(",")
-                                if (list_user_task.status=="Назначена" || list_user_task.status=="В Работе"){
+                                if (list_user_task.status=="Назначена" || list_user_task.status=="В Работе" || list_user_task.status=="Возврат в работу"){
                                     if ("newnewnewnew",new Date(list_user_task.target_date)<=new Date()){
                                         info_status_activ += `<tr><td>${list_user_task.id}</td> <td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td>${info_Ispolnitel}; </td><td> ${list_user_task.status};</td> <td> <font color="red">${list_user_task.target_date} </font>; </td><td><b>${list_user_task.name} </b></td></tr>`
 

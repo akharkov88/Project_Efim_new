@@ -1184,11 +1184,25 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                 console.log("попал else Выполнено Возврат в работу", v.id)
 
                                                 document.getElementById("get_back_to_work_" + v.id).addEventListener("click", (e) => {
-document.getElementById("get_back_to_work_" + v.id).name=v.attachment
+
+                                    for (v_find of {{ get_UserTask|tojson|safe}}) {
+                                                    if (v_find.id== e.target.id.replace("get_back_to_work_" ,"")){
+                                                        console.log("v_find",v_find)
+                                                        find_usertask=v_find
+                                                    break
+}
+
+                                        }
+                                    if (find_usertask.attachment!=null){
+                                            document.getElementById("get_back_to_work_" + find_usertask.id).name=find_usertask.attachment
+
+                                    }else{
+                                            document.getElementById("get_back_to_work_" + find_usertask.id).name=[]
+                                    }
                                                         document.getElementById("popup_get_back_to_work").style.display = "block";
                                                         document.getElementById("overlay").classList.add("show");
                                                         document.getElementById("yes-btn_get_back_to_work").className = "popup__button " + String(e.target.id).slice(String(e.target.id).lastIndexOf("_") + 1)
-                                                        document.getElementById("result_get_back_to_work").innerText = document.getElementById("result_value_" + v.id).innerText
+                                                        document.getElementById("result_get_back_to_work").innerText = document.getElementById("result_value_" + find_usertask.id).innerText
 
                                                     }
                                                 )

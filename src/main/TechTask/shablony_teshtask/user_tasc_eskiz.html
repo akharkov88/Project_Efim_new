@@ -92,7 +92,10 @@
 
         <div class="form-group">
             <input type="button" value="Сохранить" id="saveChangeTask">
+            <input type="button" value="Выполнить" id="comply">
+            <input type="button" value="Вернуть в работу" id="Get_back_to_work">
         </div>
+
 {##}
 {#        <div class="form-group">#}
 {#            <input type="button" value="Просмотреть задачи" class="butShowHide">#}
@@ -120,7 +123,23 @@
 </body>
 <script>
 
-saveChangeTask.onclick=async ()=>{
+comply.onclick=async ()=>{eskiz_processing("Выполнено");
+    $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
+                        $("#Get_back_to_work").attr("disabled", false).off('click');
+                        document.getElementById('saveChangeTask').style.display = 'none'
+                        document.getElementById('comply').style.display = 'none'
+                        document.getElementById('Get_back_to_work').style.display = 'block'
+
+}
+Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в работу")
+    $("#eskiz_checkbox *").attr("disabled", false).off('click');
+
+                        document.getElementById('saveChangeTask').style.display = 'block'
+                        document.getElementById('comply').style.display = 'block'
+                        document.getElementById('Get_back_to_work').style.display = 'none'
+}
+
+eskiz_processing=saveChangeTask.onclick=async (status=window.eskiz_list_user_task.status)=>{
     console.log('press')
             console.log("UserTasck222",eskiz_list_user_task)
     //data, e, name_task, rezult_task
@@ -132,7 +151,7 @@ saveChangeTask.onclick=async ()=>{
         }
     let data = {
         "user_data": {
-            "status": "Выполнено",
+            "status": status,
             "result": document.getElementsByName('TechTaskPPR_sketch')[0].value,
             "attachment":attachment_userTask,
             "notification_holder": false,
@@ -265,10 +284,12 @@ async function updatde_UserTask(data, name_task, rezult_task) {
 
     eskiz_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
     let container = document.getElementById("containerPPR")
+    console.log("eskiz_valid_getTechTaskName",eskiz_valid_getTechTaskName)
     for (eskiz_list_user_task of eskiz_valid_getTechTaskName) {
 
         if (JSON.parse(eskiz_list_user_task.connection).Esckiz != undefined) {
             console.log("UserTasck",eskiz_list_user_task)
+            window.eskiz_list_user_task=eskiz_list_user_task
             document.getElementById('eskiz_checkbox').style.display = 'block'
             document.getElementById('eskiz_user_task').style.display = 'none'
             document.getElementsByName('TechTaskPPR_sketch')[0].value=eskiz_list_user_task.result
@@ -295,7 +316,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                     a.href = 'javascript:void(0);'
                     a.target = "_blank"
                     {#console.log('III222!!!',i)#}
-                    a.name = '123213'
+                    a.name = i.name
                     a.style = 'margin-right: 10px;'
                     console.log("SON.parse",a)
                     a.onclick = function () {
@@ -315,11 +336,33 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                         poddiv.remove()
                     }
 
-                    {#document.getElementById("containerPPR").appendChild(div);#}
+                   if (eskiz_list_user_task.status=="Выполнено"){
+                        document.getElementById('saveChangeTask').style.display = 'none'
+                        document.getElementById('comply').style.display = 'none'
+                                        console.log("ВыполненоВыполнено",$("#eskiz_checkbox *"))
+                        setTimeout(function (){
+                        $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
+                        $("#Get_back_to_work").attr("disabled", false).off('click');
 
-                    console.log(i)
-                }
+                        },10)
+                    }else {
+                        document.getElementById('Get_back_to_work').style.display = 'none'
+
+                   }
+                        }
+                    }
+                   if (eskiz_list_user_task.status=="Выполнено"){
+
+                    }
+
+            if (eskiz_list_user_task.status=="Выполнено"){
+            document.getElementById('saveChangeTask').style.display = 'none'
+            document.getElementById('comply').style.display = 'none'
+                            console.log("ВыполненоВыполнено")
+
+            $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
             }
+            break
         } else {
             document.getElementById('eskiz_checkbox').style.display = 'none'
             document.getElementById('eskiz_user_task').style.display = 'block'
