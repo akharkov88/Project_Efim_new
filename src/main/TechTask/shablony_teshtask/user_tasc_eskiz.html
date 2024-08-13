@@ -91,55 +91,34 @@
         </div>
 
         <div class="form-group">
-            <input type="button" value="Сохранить" id="saveChangeTask">
-            <input type="button" value="Выполнить" id="comply">
-            <input type="button" value="Вернуть в работу" id="Get_back_to_work">
+            <input type="button" value="Сохранить" id="eskiz_saveChangeTask">
+            <input type="button" value="Выполнить" id="eskiz_comply">
+            <input type="button" value="Вернуть в работу" id="eskiz_Get_back_to_work">
         </div>
-
-{##}
-{#        <div class="form-group">#}
-{#            <input type="button" value="Просмотреть задачи" class="butShowHide">#}
-{#        </div>#}
-{#        <div class="form-group slow" id="content0" hidden>#}
-{#            {% include "/TechTask/shablony_teshtask/For_TechTaskForm.html" %}#}
-            {#                {% include "For_TechTaskForm.html" %}#}
-{#        </div>#}
-
-
-        {#            <div class="checkbox">#}
-        {##}
-        {#                <input type="checkbox" id="" class="">#}
-        {#                <label for="">Согласован Главным Инженером</label>#}
-        {#            </div>#}
-        {##}
-        {#            <div class="checkbox">#}
-        {#                <input type="checkbox" id="" class="">#}
-        {#                <label for="">Согласован Директором</label>#}
-        {#            </div>#}
-
 
     </div>
 </div>
 </body>
 <script>
-
-comply.onclick=async ()=>{eskiz_processing("Выполнено");
+for (vallll of ["eskiz_"]){
+eskiz_comply.onclick=async ()=>{eskiz_processing("Выполнено");
     $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('saveChangeTask').style.display = 'none'
-                        document.getElementById('comply').style.display = 'none'
-                        document.getElementById('Get_back_to_work').style.display = 'block'
+                        $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
+                        document.getElementById('eskiz_saveChangeTask').style.display = 'none'
+                        document.getElementById('eskiz_comply').style.display = 'none'
+                        document.getElementById('eskiz_Get_back_to_work').style.display = 'block'
 
 }
-Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в работу")
+eskiz_Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в работу")
     $("#eskiz_checkbox *").attr("disabled", false).off('click');
 
-                        document.getElementById('saveChangeTask').style.display = 'block'
-                        document.getElementById('comply').style.display = 'block'
-                        document.getElementById('Get_back_to_work').style.display = 'none'
+                        document.getElementById('eskiz_saveChangeTask').style.display = ''
+                        document.getElementById('eskiz_comply').style.display = ''
+                        document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 }
 
-eskiz_processing=saveChangeTask.onclick=async (status=window.eskiz_list_user_task.status)=>{
+eskiz_processing=eskiz_saveChangeTask.onclick=async (e,status=window.eskiz_list_user_task.status)=>{
+    console.log('press',status)
     console.log('press')
             console.log("UserTasck222",eskiz_list_user_task)
     //data, e, name_task, rezult_task
@@ -282,6 +261,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
 
     }
 
+
     eskiz_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
     let container = document.getElementById("containerPPR")
     console.log("eskiz_valid_getTechTaskName",eskiz_valid_getTechTaskName)
@@ -322,7 +302,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                     a.onclick = function () {
                             console.log("123")
                         event.preventDefault();
-                        downloadFileFromURL('/BaseFile/download-file/' + i.id, i.name)
+                        downloadFileFromURL('/BaseFile/download-file/' + i.id.replaceAll('"', ""), i.name)
                     }
                     a.innerText = i.name
 
@@ -337,16 +317,16 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                     }
 
                    if (eskiz_list_user_task.status=="Выполнено"){
-                        document.getElementById('saveChangeTask').style.display = 'none'
-                        document.getElementById('comply').style.display = 'none'
+                        document.getElementById('eskiz_saveChangeTask').style.display = 'none'
+                        document.getElementById('eskiz_comply').style.display = 'none'
                                         console.log("ВыполненоВыполнено",$("#eskiz_checkbox *"))
                         setTimeout(function (){
                         $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#Get_back_to_work").attr("disabled", false).off('click');
+                        $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
                     }else {
-                        document.getElementById('Get_back_to_work').style.display = 'none'
+                        document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 
                    }
                         }
@@ -356,8 +336,8 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                     }
 
             if (eskiz_list_user_task.status=="Выполнено"){
-            document.getElementById('saveChangeTask').style.display = 'none'
-            document.getElementById('comply').style.display = 'none'
+            document.getElementById('eskiz_saveChangeTask').style.display = 'none'
+            document.getElementById('eskiz_comply').style.display = 'none'
                             console.log("ВыполненоВыполнено")
 
             $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
@@ -371,8 +351,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
 
     }
 
-</script>
-<script>
+
 
     document.getElementById("eskiz_Opisanie_text").onkeypress = function (e) {
         var chr = String.fromCharCode(e.which);
@@ -497,6 +476,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
             }
         }
     }
+}
 
 </script>
 </html>
