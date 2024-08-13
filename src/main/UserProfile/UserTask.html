@@ -50,6 +50,7 @@
                                                         <th scope="col">СТАТУС</th>
                                                         <th scope="col">РЕШЕНИЕ</th>
                                                         <th scope="col">КОНТРОЛЬ</th>
+                                                        <th scope="col">ВЛОЖЕНИЯ</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -111,6 +112,10 @@
 
                                                             </button>
                                                         </th>
+                                                        {#ВЛОЖЕНИЯ#}
+                                                        <th><span id="attachment_search" style="font-weight:normal"
+                                                                  class="ms-2"></span>
+                                                        </th>
 
                                                     </tr>
                                                     </tbody>
@@ -146,7 +151,7 @@
                                         if (res.status == 200) {
                                             window.update_value_user_id_search_value = responseText
                                             update_value_user_id_search(responseText)
-
+                                            attachment(responseText)
                                         } else {
                                             showToast("Ошибка", "error", 5000);
 
@@ -256,6 +261,30 @@
 
                                         }
                                     }
+
+                                    async function attachment(val){
+
+                                                    for (UserPfofile_attachment_for of val[0].attachment){
+
+                                                           div = document.createElement('div')
+                                                            a = document.createElement('a')
+                                                            a.href = 'javascript:void(0);'
+                                                            a.target = "_blank"
+
+                                                            a.onclick = function () {
+
+                                                                event.preventDefault();
+                                                                downloadFileFromURL('/BaseFile/download-file/' + JSON.parse(UserPfofile_attachment_for).id.replaceAll('"', ""), JSON.parse(UserPfofile_attachment_for).name)
+                                                            }
+                                                            a.innerText = JSON.parse(UserPfofile_attachment_for).name
+
+                                                            div.append(a);
+
+                                                            console.log(div)
+                                                            document.getElementById("attachment_search").parentElement.appendChild(div);
+                                    }
+                                    }
+
 
                                 </script>
                                 {#                            end раздел с поиском#}
@@ -598,7 +627,7 @@
 
 
                                                 </td>
-
+                                                {#ВЛОЖЕНИЯ#}
                                                 <td class="align-middle">
                                                     <span id="attachment_{{ get_UserTask_for.id }}">
                                                         {% if get_UserTask_for.attachment != None %}
@@ -1099,7 +1128,12 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                     console.log("get_UserTask_for.id", e.target.localName)
                                                     console.log("get_UserTask_for.id", JSON.parse("["+document.getElementById(e.target.id).name+"]"))
                                                     console.log("get_UserTask_for.id", JSON.parse("["+document.getElementById(e.target.id).name+"]"))
-
+                                                        for (v of document.querySelectorAll("[id^='podContainer']")){
+                                                            v.remove()
+                                                        }
+                                                        for (v of document.querySelectorAll("[id^='div_']")){
+                                                            v.remove()
+                                                        }
                                                     if (document.getElementById(e.target.id).innerText == "Взять в работу") {
 
                                                         attachment_userTasck=[]
@@ -1127,10 +1161,12 @@ document.getElementById("process_" + v.id).name=v.attachment
 
                                                         {#get_UserTask()#}
                                                     } else {
+
                                                         gg=JSON.parse("["+document.getElementById(e.target.id).name+"]")
 
                                                         for (val of JSON.parse("["+document.getElementById(e.target.id).name+"]")){
-        console.log()
+                                                            console.log("val",val)
+                                                            if (val!=null){
                                                            div = document.createElement('div')
                                                             a = document.createElement('a')
                                                             a.href = 'javascript:void(0);'
@@ -1142,6 +1178,7 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                                 downloadFileFromURL('/BaseFile/download-file/' + val.id.replaceAll('"', ""), val.name)
                                                             }
                                                             a.innerText = val.name
+                                                            a.name = val.id.replaceAll('"', "")
 
                                                             div.append(a);
 
@@ -1164,6 +1201,7 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                             {#document.getElementById("containerPPR").parentElement.appendChild(div);#}
                                                             document.getElementById("containerPPR").appendChild(div);
 
+                                                        }
                                                         }
                                                         document.getElementById("popup").style.display = "block";
                                                         document.getElementById("overlay").classList.add("show");
@@ -1424,6 +1462,7 @@ document.getElementById("process_" + v.id).name=v.attachment
                                         <th scope="col">СТАТУС</th>
                                         <th scope="col">РЕШЕНИЕ</th>
                                         <th scope="col">СНЯТЬ С КОНТРОЛЯ</th>
+                                        <th scope="col">ВЛОЖЕНИЯ</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -1548,6 +1587,44 @@ document.getElementById("process_" + v.id).name=v.attachment
                                                     Снять задачу с котроль
                                                 </button>
                                             </td>
+                                             {#ВЛОЖЕНИЯ#}
+                                                <td class="align-middle">
+                                                    <span id="attachment_{{ get_UserTask_for.id }}">
+                                                        {% if get_UserTask_for.attachment != None %}
+
+
+                                                    {% for UserPfofile_attachment_for in get_UserTask_for.attachment %}
+
+
+                                                        <script>
+                                                                console.log("SON.parse",JSON.parse({{UserPfofile_attachment_for|tojson}}))
+
+                                                           div = document.createElement('div')
+                                                            a = document.createElement('a')
+                                                            a.href = 'javascript:void(0);'
+                                                            a.target = "_blank"
+                                                            console.log("SON.parse",a)
+                                                            a.onclick = function () {
+                                                                    console.log("123")
+                                                                event.preventDefault();
+                                                                downloadFileFromURL('/BaseFile/download-file/' + JSON.parse({{UserPfofile_attachment_for|tojson}}).id.replaceAll('"', ""), JSON.parse({{UserPfofile_attachment_for|tojson}}).name)
+                                                            }
+                                                            a.innerText = JSON.parse({{UserPfofile_attachment_for|tojson}}).name
+
+                                                            div.append(a);
+
+                                                            console.log(div)
+                                                            document.getElementById("attachment_{{ get_UserTask_for.id }}").parentElement.appendChild(div);
+                                                        </script>
+
+                                                    {% endfor %}
+                                                        {% endif %}
+
+
+                                                    </span>
+
+
+                                                </td>
 
                                             <script>
                                                 control_m = []
