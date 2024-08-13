@@ -129,6 +129,8 @@ comply.onclick=async ()=>{eskiz_processing("Выполнено");
                         document.getElementById('saveChangeTask').style.display = 'none'
                         document.getElementById('comply').style.display = 'none'
                         document.getElementById('Get_back_to_work').style.display = 'block'
+                        {#showToast('Задача сохранена', 'info', 5000)#}
+
 
 }
 Get_back_to_work.onclick=async ()=>{eskiz_processing("Возврат в работу")
@@ -196,6 +198,10 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
                                                 send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
+                                                showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            }
+                                            if (data["user_data"]["status"] == "Возврат в работу") {
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
                                             }
 
@@ -430,10 +436,12 @@ async function updatde_UserTask(data, name_task, rezult_task) {
 
             document.getElementById("eskiz_Otpravka_roles_forms").style.display = "none";
             document.getElementById("eskiz_Opisanie_forms").style.display = "none";
+            document.getElementById("eskiz_user_task").style.display = "none";
             document.getElementById("eskiz_Opisanie_forms").style.display = "none";
             document.getElementById("eskiz_button_forms").style.display = "none";
             document.getElementById('eskiz_Type').getElementsByTagName('option')[0].selected = 'selected'
             document.getElementById('eskiz_checkbox').style.display = 'block'
+            //eskiz_user_task
 
 
 
