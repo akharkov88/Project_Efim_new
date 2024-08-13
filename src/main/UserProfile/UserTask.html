@@ -303,8 +303,8 @@
 
                                         <div>
                                             <input type="checkbox" id="visible_completed" name="visible_completed"
-                                                   checked/>
-                                            <label for="visible_completed">Скрыть выполненые</label>
+                                                   />
+                                            <label for="visible_completed">Показать выполненые</label>
 
                                         </div>
                                         <div>
@@ -325,8 +325,9 @@
                                     </fieldset>
 
                                     <script>
-                                        document.getElementById('visible_completed').onchange = async function (event) {
-                                            if (event.target.checked) {
+                                    console.log("visible_completed_func")
+                                        visible_completed_func=document.getElementById('visible_completed').onchange = async function (event) {
+                                            if (!document.getElementById('visible_completed').checked) {
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
                                                     console.log(row.cells[8].innerText)
                                                     if (row.cells[8].innerText.trim() == "Выполнено") {
@@ -335,41 +336,48 @@
                                                 }
 
                                             } else {
-
-                                                rows = document.getElementById('all_user_task').getElementsByTagName('tr');
+                                                     rows = document.getElementById('all_user_task').getElementsByTagName('tr');
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
                                                     console.log(rows[row].cells[8])
-                                                    console.log(rows[row].cells[8].innerText.trim())
+                                                    console.log("trimtrim",rows[row].cells[8].innerText.trim())
                                                     if (rows[row].cells[8].innerText.trim() == "Выполнено") {
+                                                    console.log("trimtrim",rows[row].cells[8].innerText.trim())
 
                                                         rows[row].style.display = "table-row";
                                                     }
                                                 }
+
+
 
                                             }
 
                                         }
                                         document.getElementById('priority_low').onchange = async function (event) {
                                             if (event.target.checked) {
+                                        document.getElementById('priority_normal').disabled=true
+                                        document.getElementById('priority_high').disabled=true
+
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
                                                     console.log(row.cells[7].innerText.trim())
-                                                    if (row.cells[7].innerText.trim() == "Не важно") {
+                                                    if (row.cells[7].innerText.trim() != "Не важно" ||( !document.getElementById('visible_completed').checked && row.cells[8].innerText.trim() == "Выполнено")) {
+
                                                         row.style.display = 'none';
                                                     }
                                                 }
 
                                             } else {
-
+                                        document.getElementById('priority_normal').disabled=false
+                                        document.getElementById('priority_high').disabled=false
                                                 rows = document.getElementById('all_user_task').getElementsByTagName('tr');
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
                                                     console.log(rows[row].cells[7])
                                                     console.log(rows[row].cells[7].innerText.trim())
-                                                    if (rows[row].cells[7].innerText.trim() == "Не важно") {
-                                                        if (document.getElementById('visible_completed').checked) {
+                                                    {#if (rows[row].cells[7].innerText.trim() == "Не важно") {#}
+                                                        if (!document.getElementById('visible_completed').checked) {
                                                             if (rows[row].cells[8].innerText.trim() != "Выполнено") {
                                                                 rows[row].style.display = "table-row";
                                                             }
@@ -378,71 +386,83 @@
                                                         }
 
 
-                                                    }
+                                                    //}
                                                 }
                                             }
                                         }
                                         document.getElementById('priority_normal').onchange = async function (event) {
 
                                             if (event.target.checked) {
+                                                document.getElementById('priority_low').disabled=true
+                                                document.getElementById('priority_high').disabled=true
+
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
                                                     console.log(row.cells[7].innerText.trim())
-                                                    if (row.cells[7].innerText.trim() == "Нормально") {
+                                                    if (row.cells[7].innerText.trim() != "Нормально" ||( !document.getElementById('visible_completed').checked && row.cells[8].innerText.trim() == "Выполнено")) {
+
                                                         row.style.display = 'none';
                                                     }
                                                 }
 
                                             } else {
-
+                                                document.getElementById('priority_low').disabled=false
+                                                document.getElementById('priority_high').disabled=false
                                                 rows = document.getElementById('all_user_task').getElementsByTagName('tr');
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
                                                     console.log(rows[row].cells[7])
                                                     console.log(rows[row].cells[7].innerText.trim())
-                                                    if (rows[row].cells[7].innerText.trim() == "Нормально") {
-                                                        if (document.getElementById('visible_completed').checked) {
+                                                    {#if (rows[row].cells[7].innerText.trim() == "Нормально") {#}
+                                                        if (!document.getElementById('visible_completed').checked) {
                                                             if (rows[row].cells[8].innerText.trim() != "Выполнено") {
                                                                 rows[row].style.display = "table-row";
                                                             }
                                                         } else {
                                                             rows[row].style.display = "table-row";
                                                         }
-                                                    }
+                                                    //}
                                                 }
                                             }
                                         }
                                         document.getElementById('priority_high').onchange = async function (event) {
 
                                             if (event.target.checked) {
+                                                document.getElementById('priority_low').disabled=true
+                                                document.getElementById('priority_normal').disabled=true
                                                 for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
                                                     console.log(row.cells[7].innerText.trim())
-                                                    if (row.cells[7].innerText.trim() == "Важно") {
+                                                    console.log("checkedchecked",document.getElementById('visible_completed').checked)
+                                                    if (row.cells[7].innerText.trim() != "Важно" ||( !document.getElementById('visible_completed').checked && row.cells[8].innerText.trim() == "Выполнено")) {
+                                                console.log("!!!Важно")
+
                                                         row.style.display = 'none';
                                                     }
                                                 }
 
                                             } else {
-
+                                                document.getElementById('priority_low').disabled=false
+                                                document.getElementById('priority_normal').disabled=false
                                                 rows = document.getElementById('all_user_task').getElementsByTagName('tr');
                                                 for (var row = 0; row < rows.length; row++) {
 
                                                     console.log(rows[row])
                                                     console.log(rows[row].cells[7])
                                                     console.log(rows[row].cells[7].innerText.trim())
-                                                    if (rows[row].cells[7].innerText.trim() == "Важно") {
-                                                        if (document.getElementById('visible_completed').checked) {
+                                                    {#if (rows[row].cells[7].innerText.trim() == "Важно") {#}
+                                                        if (!document.getElementById('visible_completed').checked) {
                                                             if (rows[row].cells[8].innerText.trim() != "Выполнено") {
                                                                 rows[row].style.display = "table-row";
                                                             }
                                                         } else {
                                                             rows[row].style.display = "table-row";
                                                         }
-                                                    }
+                                                    //}
                                                 }
                                             }
                                         }
 
+                                    setTimeout(visible_completed_func,1)
 
                                     </script>
 
@@ -637,6 +657,7 @@
 
 
                                                         <script>
+                                                        if ({{UserPfofile_attachment_for|tojson}}!="null"){
                                                                 console.log("SON.parse",JSON.parse({{UserPfofile_attachment_for|tojson}}))
 
                                                            div = document.createElement('div')
@@ -655,6 +676,7 @@
 
                                                             console.log(div)
                                                             document.getElementById("attachment_{{ get_UserTask_for.id }}").parentElement.appendChild(div);
+                                                            }
                                                         </script>
 
                                                     {% endfor %}
@@ -898,9 +920,10 @@
                                         console.log("paramsString", paramsString)
                                         if (paramsString == '?id=in%20work') {
                                             for (var i = 1, row; row = document.getElementById('all_user_task').rows[i]; i++) {
-                                                console.log(document.getElementById('all_user_task').rows[i].cells[9])
-                                                if (row.cells[9].innerText.trim() != "В работе") {
-                                                    row.style.display = 'none';
+                                                if (row.cells[8].innerText.trim() != "В Работе" || row.cells[9].innerText.trim()!="Выполнить задачу") {
+
+                                                                                                            row.style.display = 'none';
+
                                                 }
                                             }
                                         }
