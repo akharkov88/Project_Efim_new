@@ -479,25 +479,29 @@ $(document).ready(function(){
                                 for (executor of list_user_task.UserPfofile_executor) {
                                     info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
                                 }
+
+
                                 info_Ispolnitel.trim(",")
                                 if (list_user_task.status=="Назначена" || list_user_task.status=="В Работе" || list_user_task.status=="Возврат в работу"){
                                     if ("newnewnewnew",new Date(list_user_task.target_date)<=new Date()){
-                                        info_status_activ += `<tr><td>${list_user_task.id}</td> <td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td>${info_Ispolnitel}; </td><td> ${list_user_task.status};</td> <td> <font color="red">${list_user_task.target_date} </font>; </td><td><b>${list_user_task.name} </b></td><td> <b>${list_user_task.result} </b></p></td></tr>`
+                                        info_status_activ += `<tr><td>${list_user_task.id}</td> <td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td>${info_Ispolnitel}; </td><td> ${list_user_task.status};</td> <td> <font color="red">${list_user_task.target_date} </font>; </td><td><b>${list_user_task.name} </b></td><td> <b>${list_user_task.result} </b></p></td><td><span id="attachment_search_${list_user_task.id}"></span></td></tr>`
 
                                     }else{
-                                        info_status_activ += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td> ${info_Ispolnitel};</td> <td> ${list_user_task.status};</td> <td>  <font color="green">${list_user_task.target_date} </font>;</td><td> <b>${list_user_task.name} </b></p></td><td> <b>${list_user_task.result} </b></p></td></tr>`
+                                        info_status_activ += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name};</td> <td> ${info_Ispolnitel};</td> <td> ${list_user_task.status};</td> <td>  <font color="green">${list_user_task.target_date} </font>;</td><td> <b>${list_user_task.name} </b></p></td><td> <b>${list_user_task.result} </b></p></td><td><span id="attachment_search_${list_user_task.id}"></span></td></tr>`
                                     }
 
 
                                 }
                                 if (list_user_task.status=="Отказ выполнять"){
-                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ;</td> <td><b>${list_user_task.name} </b></p></font></td> <td> <b>${list_user_task.result} </b></p></td> </tr>`
+                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ;</td> <td><b>${list_user_task.name} </b></p></font></td> <td> <b>${list_user_task.result} </b></p></td> <td><span id="attachment_search_${list_user_task.id}"></span></td></tr>`
 
                                 }
                                 if (list_user_task.status=="Выполнено"){
-                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ; </td> <td><b>${list_user_task.name} </b></p></td> <td> <b>${list_user_task.result} </b></p></td></tr>`
+                                info_status += `<tr><td>${list_user_task.id}</td><td>${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}; </td> <td>${info_Ispolnitel}; </td> <td>${list_user_task.status}; </td> <td> ${list_user_task.target_date} ; </td> <td><b>${list_user_task.name} </b></p></td> <td> <b>${list_user_task.result} </b></p></td><td><span id="attachment_search_${list_user_task.id}"></span></td></tr>`
 
                                 }
+
+
                             }
                             console.log(info_status)
 
@@ -514,7 +518,36 @@ $(document).ready(function(){
                             }
                             document.getElementById("history_techTask_activ").innerHTML = info_status_activ
 
+                            for (list_user_task of list_user_tasks) {
 
+                                if (list_user_task.attachment!= null){
+                                    for (val of list_user_task.attachment){
+                                        val=JSON.parse(val)
+                                        console.log("val",val)
+                                        if (val!=null){
+                                       div = document.createElement('div')
+                                        a = document.createElement('a')
+                                        a.href = 'javascript:void(0);'
+                                        a.target = "_blank"
+                                        console.log("SON.parse",val.id.replaceAll('"', ""))
+                                        console.log("SON.parse",val.name)
+                                        a.onclick = function () {
+                                            event.preventDefault();
+                                            downloadFileFromURL('/BaseFile/download-file/' + val.id.replaceAll('"', ""), val.name)
+                                        }
+                                        a.innerText = val.name
+
+                                        a.name = val.id.replaceAll('"', "")
+
+                                        div.append(a);
+
+
+                                        document.getElementById(`attachment_search_${list_user_task.id}`).appendChild(div);
+
+                                        }
+                                    }
+                                }
+                                }
                         </script>
 <script>
       console.log('!@#')

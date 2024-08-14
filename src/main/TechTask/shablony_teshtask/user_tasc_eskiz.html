@@ -127,6 +127,7 @@ eskiz_processing=eskiz_saveChangeTask.onclick=  async (e,status=window.eskiz_lis
                 JSON.stringify({"name":$(`#eskiz_containerPPR a`)[i].innerText,"id":$(`#eskiz_containerPPR a`)[i].name})
             )
         }
+        console.log("attachment_userTask",attachment_userTask)
     let data = {
         "user_data": {
             "status": status,
@@ -241,7 +242,7 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
         xhr.send(formData);
         let file_name = item.value.replace(/.*[\/\\]/, '');
 
-        let str = '1'
+
         xhr.onload = function () {
             if (xhr.status == 200) {
                 let div = document.createElement('div')
@@ -303,8 +304,7 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
                     let a = document.createElement('a')
                     a.href = 'javascript:void(0);'
                     a.target = "_blank"
-                    {#console.log('III222!!!',i)#}
-                    a.name = i.name
+                    a.name = i.id.replaceAll('"', "")
                     a.style = 'margin-right: 10px;'
                     console.log("SON.parse",a)
                     a.onclick = function () {
