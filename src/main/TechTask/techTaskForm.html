@@ -613,34 +613,34 @@
                                             {#let button_forms = document.getElementsByClassName('button_forms')#}
                                             {#let Otpravka_roles_forms = document.getElementsByClassName('Otpravka_roles_forms')#}
                                             let objTaskForm = {}
-                                            let vals = ['Эскиз','Чертеж','Анализ проектной документации','Подсчет объемов работ','Расчет стоимости','Подготовка КП']
-                                            setTask = () =>{
-                                                console.log("elms,Otpravka_roles")
-                                                console.log(elms,Otpravka_roles)
-                                                for(let i = 0; i < elms.length; i++){
-                                                    if(elms[i].value!=''){
-                                                        objTaskForm[vals[i]]={}
-                                                        objTaskForm[vals[i]]={
-                                                        'UserSelection':elms[i].value,
-                                                        'Otpravka_roles':Otpravka_roles[i].value,
-                                                        'Opisanie_text':Opisanie_text[i].value,
-                                                        'priority':priority[i].value,
-                                                        'dateWork':dateWork[i].value,
-                                                        }
-
-
-                                                }
-                                                }
-                                                console.log("objTaskForm")
-                                                console.log(objTaskForm)
-
-                                                for (let i in Object.keys(objTaskForm)){
-                                                console.log(Object.keys(objTaskForm)[i])
-                                                    objTaskForm[Object.keys(objTaskForm)[i]] = JSON.stringify(objTaskForm[Object.keys(objTaskForm)[i]])
-                                                }
-                                                console.log(objTaskForm)
-
-                                            }
+                                            {#let vals = ['Эскиз','Чертеж','Анализ проектной документации','Подсчет объемов работ','Расчет стоимости','Подготовка КП']#}
+                                            {#setTask = () =>{#}
+                                            {#    console.log("elms,Otpravka_roles")#}
+                                            {#    console.log(elms,Otpravka_roles)#}
+                                            {#    for(let i = 0; i < elms.length; i++){#}
+                                            {#        if(elms[i].value!=''){#}
+                                            {#            objTaskForm[vals[i]]={}#}
+                                            {#            objTaskForm[vals[i]]={#}
+                                            {#            'UserSelection':elms[i].value,#}
+                                            {#            'Otpravka_roles':Otpravka_roles[i].value,#}
+                                            {#            'Opisanie_text':Opisanie_text[i].value,#}
+                                            {#            'priority':priority[i].value,#}
+                                            {#            'dateWork':dateWork[i].value,#}
+                                            {#            }#}
+                                            {##}
+                                            {##}
+                                            {#    }#}
+                                            {#    }#}
+                                            {#    console.log("objTaskForm")#}
+                                            {#    console.log(objTaskForm)#}
+                                            {##}
+                                            {#    for (let i in Object.keys(objTaskForm)){#}
+                                            {#    console.log(Object.keys(objTaskForm)[i])#}
+                                            {#        objTaskForm[Object.keys(objTaskForm)[i]] = JSON.stringify(objTaskForm[Object.keys(objTaskForm)[i]])#}
+                                            {#    }#}
+                                            {#    console.log(objTaskForm)#}
+                                            {##}
+                                           // }
 
                                             document.getElementById('createTicket').onclick =async function (event) {
 

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+{#блок с формированием задачи#}
+<div id="podschet_obemov_rabot_user_task" style="display:block; padding: 10px;" class="panel panel-default">
+
+    <H3 id="Type_label">Подсчет объемов работ</H3>
+    <H5 id="Type_label">Сформировать задачи по данному ТЗ на сотрудников (по ФИО, Отделу, Роли) для формирования
+        Подсчета объемов работ</H5>
+
+    <div class="form-group">
+        <label id="podschet_obemov_rabot_Type_label">Выбор пользователей</label>
+        <select id="podschet_obemov_rabot_Type" class="form-control">
+            <option value="">--Выберите значение--</option>
+            <option value="username">По имени</option>
+            <option value="roles">По роли</option>
+
+        </select>
+    </div>
+
+    <div class="form-group" id="podschet_obemov_rabot_Otpravka_roles_forms" style="display:none;">
+        <label id="podschet_obemov_rabot_Otpravka_roles_label">На кого будет назначено. Все
+            пользователи/роли </label>
+        <select id="podschet_obemov_rabot_Otpravka_roles" class="form-control">
+
+        </select>
+    </div>
+
+    <div class="form-group" id="podschet_obemov_rabot_Opisanie_forms" style="display:none;">
+        <label id="podschet_obemov_rabot_Opisanie_label">Описание выполненых работ</label>
+        <textarea id="podschet_obemov_rabot_Opisanie_text" class="form-control" rows="3"
+                  placeholder="Введите описание"></textarea>
+
+        <label id="podschet_obemov_rabot_Type_label">Приоритет</label>
+        <select id="podschet_obemov_rabot_priority" class="form-control">
+            <option value="Не важно">Не важно</option>
+            <option value="Нормально">Нормально</option>
+            <option value="Важно">Важно</option>
+        </select>
+        <label>Срок выполнения работ</label>
+        <input id="podschet_obemov_rabot_DateEndWork" type="date"
+               class="form-control"
+               placeholder="dd.mm.yyyy">
+    </div>
+    <div class="form-group" id="podschet_obemov_rabot_button_forms" style="display:none;">
+
+        <button id="podschet_obemov_rabot_Otpravka_roles_button" class="btn btn-primary">Сформировать задачу на создание Подсчета объемов работ
+        </button>
+
+    </div>
+</div>
+
+{#//блок с чекбоксом#}
+<div id="podschet_obemov_rabot_checkbox" style="display:none;" class="form-group">
+    <div class="checkbox" onclick="return false" disabled="disabled">
+        <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
+        <label for="checkbox_sketch" style="font-weight:bold;">Подсчет объемов работ</label>
+    </div>
+    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+        <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
+            <div class="form-group">
+                <label>Вложенный файл с Подсчетом объемов работ</label>
+
+                {#                <input type="file" id="">#}
+                <div id="podschet_obemov_rabot_containerPPR" class="testText" style="margin-bottom: 10px;"></div>
+                <input id="podschet_obemov_rabot_addPPR" type="button" value="Добавить вложение">
+            </div>
+
+            <div class="form-group">
+                <label>Установленный срок выполнения работ</label>
+                <input type="date"
+                       class="form-control"
+                       id="podschet_obemov_rabot_TechTaskDate_sketch"
+                       name="podschet_obemov_rabot_TechTaskDate_sketch"
+                       placeholder="dd.mm.yyyy">
+                {#                       name="podschet_obemov_rabot_TechTaskDate_sketch"#}
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label>Комментарий к Подсчету объемов работ</label>
+            <textarea class="form-control" rows="3"
+                      placeholder="Введите описание"
+                    {#                       id="podschet_obemov_rabot_TechTaskPPR_sketch"#}
+                      name="podschet_obemov_rabot_TechTaskPPR_sketch"></textarea>
+            {#                      name="podschet_obemov_rabot_TechTaskPPR_sketch"#}
+
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="Сохранить" id="podschet_obemov_rabot_saveChangeTask">
+            <input type="button" value="Выполнить" id="podschet_obemov_rabot_comply">
+            <input type="button" value="Вернуть в работу" id="podschet_obemov_rabot_Get_back_to_work">
+        </div>
+
+    </div>
+</div>
+</body>
+<script>
+document.getElementById('podschet_obemov_rabot_comply').onclick=async (e)=>{podschet_obemov_rabot_processing(e,status="Выполнено");
+    $("#podschet_obemov_rabot_checkbox *").attr("disabled", "disabled").off('click');
+                        $("#podschet_obemov_rabot_Get_back_to_work").attr("disabled", false).off('click');
+                        document.getElementById('podschet_obemov_rabot_saveChangeTask').style.display = 'none'
+                        document.getElementById('podschet_obemov_rabot_comply').style.display = 'none'
+                        document.getElementById('podschet_obemov_rabot_Get_back_to_work').style.display = 'block'
+
+}
+podschet_obemov_rabot_Get_back_to_work.onclick=async (e)=>{podschet_obemov_rabot_processing(e,status="Возврат в работу")
+    $("#podschet_obemov_rabot_checkbox *").attr("disabled", false).off('click');
+
+                        document.getElementById('podschet_obemov_rabot_saveChangeTask').style.display = ''
+                        document.getElementById('podschet_obemov_rabot_comply').style.display = ''
+                        document.getElementById('podschet_obemov_rabot_Get_back_to_work').style.display = 'none'
+}
+
+podschet_obemov_rabot_processing=podschet_obemov_rabot_saveChangeTask.onclick=  async (e,status=window.podschet_obemov_rabot_list_user_task.status)=>{
+    console.log('press',e)
+    console.log('press',status)
+    console.log('press')
+            console.log("UserTasck222",podschet_obemov_rabot_list_user_task)
+    //data, e, name_task, rezult_task
+    let attachment_userTask=[]
+        for (i=0;i<$(`#podschet_obemov_rabot_containerPPR a`).length;i++){
+            attachment_userTask.push(
+                JSON.stringify({"name":$(`#podschet_obemov_rabot_containerPPR a`)[i].innerText,"id":$(`#podschet_obemov_rabot_containerPPR a`)[i].name})
+            )
+        }
+    let data = {
+        "user_data": {
+            "status": status,
+            "result": document.getElementsByName('podschet_obemov_rabot_TechTaskPPR_sketch')[0].value,
+            "attachment":attachment_userTask,
+            "notification_holder": false,
+            "notification_executor": false
+        },
+        "id": {
+            "id":   podschet_obemov_rabot_list_user_task.id
+        }
+    }
+    console.log(data)
+    updatde_UserTask(data, podschet_obemov_rabot_list_user_task.name , document.getElementsByName('podschet_obemov_rabot_TechTaskPPR_sketch')[0].value)
+}
+
+window.get_UserTask = {{ get_UserTask|tojson|safe}}
+// Со страницы UserTask
+async function updatde_UserTask(data, name_task, rezult_task) {
+                                        console.log("datadata", data)
+
+                                        {#console.log("useruseruseruser", window.get_UserTask[data.id.id - 1].user_create)#}
+                                        let data_analiz = window.get_UserTask
+                                        console.log("useruseruseruser", data_analiz)
+                                        data_analiz.forEach(function (val, id) {
+                                            if (val.id == data.id.id) {
+                                                iskomiy_id = id
+                                                console.log("111", val.name)
+                                                console.log("111", val.user_create)
+                                                return
+                                            }
+                                        })
+                                        console.log("iskomiy_idiskomiy_id", iskomiy_id)
+                                        res = await fetch('/userprofile/updateUserTasck', {
+                                            method: "POST",
+                                            headers: {
+                                                Accept: 'application/json',
+                                                'Content-Type': 'application/json',
+                                                "Authorization": getCookieValue("Authorization")
+                                            },
+                                            body: JSON.stringify(data)
+                                        });
+                                        console.log("res.status", res.status)
+                                        if (res.status == 200) {
+                                            if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
+                                                console.log("Выполнена")
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
+                                                showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            } if (data["user_data"]["status"] == "Возврат в работу") {
+                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
+                                                showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
+                                            } else {
+                                                showToast("Задача сохранена", "info", 5000);
+                                            }
+
+
+
+
+                                        } else {
+                                            showToast("Ошибка", "error", 5000);
+
+                                        }
+                                    }
+
+
+    let podschet_obemov_rabot_counter_id = 1;
+    let podschet_obemov_rabot_arrCounter_id = [1];
+
+    podschet_obemov_rabot_addPPR.onclick = function () {
+        podschet_obemov_rabot_counter_id = podschet_obemov_rabot_arrCounter_id[podschet_obemov_rabot_arrCounter_id.length - 1];
+
+        let button = document.createElement("input");
+        let podschet_obemov_rabot_container = document.getElementById("podschet_obemov_rabot_containerPPR")
+        let poddiv = document.createElement("div");
+        let infile = document.createElement("input");
+
+        infile.type = "file";
+        infile.setAttribute("id", "file" + podschet_obemov_rabot_counter_id);
+
+        button.type = "button";
+        button.value = "Удалить файл";
+        button.setAttribute("id", "idButtonPPR" + podschet_obemov_rabot_counter_id);
+        poddiv.setAttribute("id", "podschet_obemov_rabot_podContainer" + podschet_obemov_rabot_counter_id);
+        podschet_obemov_rabot_container.appendChild(poddiv);
+        poddiv.appendChild(infile);
+        poddiv.appendChild(button);
+
+        button.onclick = function () {
+            poddiv.remove()
+        }
+
+        $(`#file${podschet_obemov_rabot_counter_id}`).change(function(){
+         uploadfile_func_forPPR(infile)
+        });
+
+        podschet_obemov_rabot_counter_id++;
+        podschet_obemov_rabot_arrCounter_id.push(podschet_obemov_rabot_counter_id);
+        podschet_obemov_rabot_arrCounter_id.sort()
+
+    }
+
+    function uploadfile_func_forPPR(item) {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData(); // создаем объект FormData для передачи файла
+        const file = item.files[0];
+        console.log(item)
+
+        formData.append('file', file);
+        xhr.open('POST', '/BaseFile/uploadfile'); // указываем метод и URL сервера, куда будет отправлен файл
+        xhr.setRequestHeader("Authorization", getCookieValue("Authorization")); // указываем метод и URL сервера, куда будет отправлен файл
+        xhr.send(formData);
+        let file_name = item.value.replace(/.*[\/\\]/, '');
+
+        let str = '1'
+        xhr.onload = function () {
+            if (xhr.status == 200) {
+                let div = document.createElement('div')
+                let a = document.createElement('a')
+                a.href = 'javascript:void(0);'
+                a.target = "_blank"
+                console.log('xhr.response',xhr.response)
+                a.name = xhr.response;
+                a.onclick = function () {
+                    event.preventDefault();
+                    downloadFileFromURL('/BaseFile/download-file/' + xhr.response.replaceAll('"', ""), file_name)
+                }
+                a.innerText = file_name
+
+                div.append(a);
+
+                console.log(div)
+                item.parentElement.appendChild(div);
+                item.disabled = true;
+            }
+        }
+
+    }
+
+
+    podschet_obemov_rabot_valid_getTechTaskName = {{ getTechTaskName.ListUserTask|tojson }}
+    let podschet_obemov_rabot_container = document.getElementById("podschet_obemov_rabot_containerPPR")
+    console.log("podschet_obemov_rabot_valid_getTechTaskName",podschet_obemov_rabot_valid_getTechTaskName)
+    for (podschet_obemov_rabot_list_user_task of podschet_obemov_rabot_valid_getTechTaskName) {
+
+        if (JSON.parse(podschet_obemov_rabot_list_user_task.connection).podschet_obemov_rabot_ != undefined) {
+            console.log("UserTasck",podschet_obemov_rabot_list_user_task)
+            window.podschet_obemov_rabot_list_user_task=podschet_obemov_rabot_list_user_task
+            document.getElementById('podschet_obemov_rabot_checkbox').style.display = 'block'
+            document.getElementById('podschet_obemov_rabot_user_task').style.display = 'none'
+            document.getElementsByName('podschet_obemov_rabot_TechTaskPPR_sketch')[0].value=podschet_obemov_rabot_list_user_task.result
+            document.getElementsByName('podschet_obemov_rabot_TechTaskDate_sketch')[0].value=podschet_obemov_rabot_list_user_task.target_date
+            if (podschet_obemov_rabot_list_user_task.attachment.length!=0){
+                console.log('ДЛИНА',podschet_obemov_rabot_list_user_task)
+                for (let i of podschet_obemov_rabot_list_user_task.attachment){
+                    let button = document.createElement("input");
+                    let poddiv = document.createElement("div");
+                    let infile = document.createElement("input");
+                    button.type = "button";
+                    button.value = "Удалить файл";
+                    infile.type = "file";
+                    infile.readOnly = true;
+                    infile.onclick=(event)=> {
+                        event.preventDefault();
+                    }
+                    {#infile.disabled = 'true';#}
+                    console.log(JSON.parse(i))
+                    i = JSON.parse(i)
+                    console.log('i.name', typeof i.name)
+                    let div = document.createElement('div')
+                    let a = document.createElement('a')
+                    a.href = 'javascript:void(0);'
+                    a.target = "_blank"
+                    {#console.log('III222!!!',i)#}
+                    a.name = i.name
+                    a.style = 'margin-right: 10px;'
+                    console.log("SON.parse",a)
+                    a.onclick = function () {
+                            console.log("123")
+                        event.preventDefault();
+                        downloadFileFromURL('/BaseFile/download-file/' + i.id.replaceAll('"', ""), i.name)
+                    }
+                    a.innerText = i.name
+
+                    podschet_obemov_rabot_container.appendChild(poddiv);
+                    poddiv.appendChild(infile);
+                    div.append(a);
+
+                    poddiv.appendChild(button);
+                    poddiv.appendChild(div);
+                    button.onclick = function () {
+                        poddiv.remove()
+                    }
+
+                   if (podschet_obemov_rabot_list_user_task.status=="Выполнено"){
+                        document.getElementById('podschet_obemov_rabot_saveChangeTask').style.display = 'none'
+                        document.getElementById('podschet_obemov_rabot_comply').style.display = 'none'
+                                        console.log("ВыполненоВыполнено",$("#podschet_obemov_rabot_checkbox *"))
+                        setTimeout(function (){
+                        $("#podschet_obemov_rabot_checkbox *").attr("disabled", "disabled").off('click');
+                        $("#podschet_obemov_rabot_Get_back_to_work").attr("disabled", false).off('click');
+
+                        },10)
+                    }else {
+                        document.getElementById('podschet_obemov_rabot_Get_back_to_work').style.display = 'none'
+
+                   }
+                        }
+                    }
+                   if (podschet_obemov_rabot_list_user_task.status=="Выполнено"){
+
+                    }
+
+            if (podschet_obemov_rabot_list_user_task.status=="Выполнено"){
+            document.getElementById('podschet_obemov_rabot_saveChangeTask').style.display = 'none'
+            document.getElementById('podschet_obemov_rabot_comply').style.display = 'none'
+                            console.log("ВыполненоВыполнено")
+
+            $("#podschet_obemov_rabot_checkbox *").attr("disabled", "disabled").off('click');
+            }
+            break
+        } else {
+            document.getElementById('podschet_obemov_rabot_checkbox').style.display = 'none'
+            document.getElementById('podschet_obemov_rabot_user_task').style.display = 'block'
+
+        }
+
+    }
+
+
+
+    document.getElementById("podschet_obemov_rabot_Opisanie_text").onkeypress = function (e) {
+        var chr = String.fromCharCode(e.which);
+        if ("&".indexOf(chr) != -1)
+            return false;
+    };
+    document.getElementById('podschet_obemov_rabot_Otpravka_roles_button').onclick = async function () {
+        event.preventDefault();
+        valid = true
+        if (document.getElementById('podschet_obemov_rabot_Opisanie_text').value == "") {
+            document.getElementById('podschet_obemov_rabot_Opisanie_text').setAttribute("required", true)
+
+            valid = false
+        }
+        if (document.getElementById('podschet_obemov_rabot_DateEndWork').value == "") {
+            document.getElementById('podschet_obemov_rabot_DateEndWork').setAttribute("required", true)
+
+
+        }
+        if (valid == false) {
+            return
+        }
+
+        console.log(document.getElementById('podschet_obemov_rabot_Opisanie_text').value)
+        user = []
+        user.push(document.getElementById('podschet_obemov_rabot_Otpravka_roles').value)
+        if (document.getElementById('podschet_obemov_rabot_Type').value == "username") {
+
+
+            URL = `/userprofile/createUserTask?name=Необходимо сформировать Подсчет объемов работ! Результат Подсчета объемов работ необходимо вложить в техническое задание! Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('podschet_obemov_rabot_Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('podschet_obemov_rabot_DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({
+                "TechTask": {{getTechTaskName.id|tojson|safe}},
+                "Esckiz": ""
+            })}&priority=${document.getElementById('podschet_obemov_rabot_priority').value}`
+        } else {
+
+            URL = `/userprofile/createUserTaskRoles?name=Необходимо сформировать Подсчет объемов работ! Результат Подсчета объемов работ необходимо вложить в техническое задание! Ссылка на ТЗ <a href="${window.location.href}"> {{getTechTaskName.NameTechTask|tojson|safe}}</a> Комментарий к задаче: ${document.getElementById('podschet_obemov_rabot_Opisanie_text').value}&user_executor=${JSON.stringify(user)}&status=%D0%9D%D0%B0%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B0&result=&target_date=${document.getElementById('podschet_obemov_rabot_DateEndWork').value}&notification_holder=false&notification_executor=true&connection=${JSON.stringify({
+                "TechTask": {{getTechTaskName.id|tojson|safe}},
+                "Esckiz": ""
+            })}&priority=${document.getElementById('podschet_obemov_rabot_priority').value}`
+        }
+        res = await fetch(URL, {
+            method: "GET",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+
+        })
+        ;
+        console.log("res.status", res.status)
+        if (res.status == 200) {
+            console.log(res.status)
+            showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу', 'info', 5000)
+
+            document.getElementById("podschet_obemov_rabot_Otpravka_roles_forms").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_Opisanie_forms").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_user_task").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_Opisanie_forms").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_button_forms").style.display = "none";
+            document.getElementById('podschet_obemov_rabot_Type').getElementsByTagName('option')[0].selected = 'selected'
+            document.getElementById('podschet_obemov_rabot_checkbox').style.display = 'block'
+            document.getElementsByName('podschet_obemov_rabot_TechTaskDate_sketch')[0].value=document.getElementById('podschet_obemov_rabot_DateEndWork').value
+            document.getElementsByName('podschet_obemov_rabot_TechTaskPPR_sketch')[0].value=document.getElementById('podschet_obemov_rabot_Opisanie_text').value
+
+
+
+        } else {
+            showToast("Ошибка", "error", 5000);
+
+        }
+    }
+
+    document.getElementById('podschet_obemov_rabot_Otpravka_roles').onchange = async function (event) {
+        document.getElementById("podschet_obemov_rabot_Opisanie_forms").style.display = "block";
+        document.getElementById("podschet_obemov_rabot_button_forms").style.display = "block";
+
+    }
+    document.getElementById('podschet_obemov_rabot_Type').onchange = async function (event) {
+        event.preventDefault();
+        if (!etalon_table) {
+            //($('#first_table')[0].innerHTML.replaceAll('display:none','display:table-cell') != etalon_table && !($('#first_table')[0].innerHTML == '\n\n                        ' && etalon_table=='')){
+            showToast('Необходимо сохранить изменения в таблице', 'danger', 5000)
+        }
+
+        removeOptions(document.getElementById('podschet_obemov_rabot_Otpravka_roles'));
+        var opt = document.createElement('option');
+        opt.innerHTML = "<option disabled selected value> --Выберите-- </option>"
+        document.getElementById('podschet_obemov_rabot_Otpravka_roles').appendChild(opt);
+        if ($(this).val() == "roles") {
+            document.getElementById("podschet_obemov_rabot_Opisanie_forms").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_button_forms").style.display = "none";
+            document.getElementById("podschet_obemov_rabot_Otpravka_roles_forms").style.display = "block";
+
+
+            values = {{all_roles | tojson | safe}}
+            for (value of Object.keys(values)) {
+                console.log("value", value)
+
+                var opt = document.createElement('option');
+                opt.value = value
+                opt.innerHTML = values[value]
+                document.getElementById('podschet_obemov_rabot_Otpravka_roles').appendChild(opt);
+
+
+            }
+        }
+
+        if ($(this).val() == "username") {
+            document.getElementById("podschet_obemov_rabot_Otpravka_roles_forms").style.display = "block";
+
+
+            values = {{all_user | tojson | safe}}
+            for (value of Object.keys(values)) {
+                console.log("value", value)
+                if (window.my_UserPfofile.my_username != value) {
+
+                    var opt = document.createElement('option');
+                    opt.value = value
+                    opt.innerHTML = values[value]
+                    document.getElementById('podschet_obemov_rabot_Otpravka_roles').appendChild(opt);
+
+
+                }
+            }
+        }
+}
+
+</script>
+</html>
