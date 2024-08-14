@@ -46,7 +46,7 @@
     </div>
     <div class="form-group" id="raschet_stoimosti_button_forms" style="display:none;">
 
-        <button id="raschet_stoimosti_Otpravka_roles_button" class="btn btn-primary">Сформировать задачу на создание Расчета стоимости
+        <button id="raschet_stoimosti_Otpravka_roles_button" class="btn btn-primary">Сформировать задачу на создание Расчет стоимостиа
         </button>
 
     </div>
@@ -120,7 +120,6 @@ raschet_stoimosti_processing=raschet_stoimosti_saveChangeTask.onclick=  async (e
     console.log('press',e)
     console.log('press',status)
     console.log('press')
-            console.log("UserTasck222",raschet_stoimosti_list_user_task)
     //data, e, name_task, rezult_task
     let attachment_userTask=[]
         for (i=0;i<$(`#raschet_stoimosti_containerPPR a`).length;i++){
@@ -128,6 +127,7 @@ raschet_stoimosti_processing=raschet_stoimosti_saveChangeTask.onclick=  async (e
                 JSON.stringify({"name":$(`#raschet_stoimosti_containerPPR a`)[i].innerText,"id":$(`#raschet_stoimosti_containerPPR a`)[i].name})
             )
         }
+        console.log("attachment_userTask",attachment_userTask)
     let data = {
         "user_data": {
             "status": status,
@@ -137,30 +137,30 @@ raschet_stoimosti_processing=raschet_stoimosti_saveChangeTask.onclick=  async (e
             "notification_executor": false
         },
         "id": {
-            "id":   raschet_stoimosti_list_user_task.id
+            "id":   window.raschet_stoimosti_list_user_task.id
         }
     }
     console.log(data)
-    updatde_UserTask(data, raschet_stoimosti_list_user_task.name , document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].value)
+    raschet_stoimosti_updatde_UserTask(data, raschet_stoimosti_list_user_task.name , document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].value)
 }
 
 window.get_UserTask = {{ get_UserTask|tojson|safe}}
 // Со страницы UserTask
-async function updatde_UserTask(data, name_task, rezult_task) {
+async function raschet_stoimosti_updatde_UserTask(data, name_task, rezult_task) {
                                         console.log("datadata", data)
 
                                         {#console.log("useruseruseruser", window.get_UserTask[data.id.id - 1].user_create)#}
-                                        let data_analiz = window.get_UserTask
-                                        console.log("useruseruseruser", data_analiz)
-                                        data_analiz.forEach(function (val, id) {
-                                            if (val.id == data.id.id) {
-                                                iskomiy_id = id
-                                                console.log("111", val.name)
-                                                console.log("111", val.user_create)
-                                                return
-                                            }
-                                        })
-                                        console.log("iskomiy_idiskomiy_id", iskomiy_id)
+                                        {#let data_analiz = window.get_UserTask#}
+                                        {#console.log("useruseruseruser", data_analiz)#}
+                                        {#data_analiz.forEach(function (val, id) {#}
+                                        {#    if (val.id == data.id.id) {#}
+                                        {#        iskomiy_id = id#}
+                                        {#        console.log("111", val.name)#}
+                                        {#        console.log("111", val.user_create)#}
+                                        {#        return#}
+                                        {#    }#}
+                                        //})
+                                        {#console.log("iskomiy_idiskomiy_id", iskomiy_id)#}
                                         res = await fetch('/userprofile/updateUserTasck', {
                                             method: "POST",
                                             headers: {
@@ -171,13 +171,14 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                                             body: JSON.stringify(data)
                                         });
                                         console.log("res.status", res.status)
+                                        raschet_stoimosti_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
-                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
+                                                send_telegram(raschet_stoimosti_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
                                             } if (data["user_data"]["status"] == "Возврат в работу") {
-                                                send_telegram(data_analiz[iskomiy_id].user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
+                                                send_telegram(raschet_stoimosti_list_user_task.user_create, `Задача <${name_task}> вернули в работу с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
                                             } else {
                                                 showToast("Задача сохранена", "info", 5000);
@@ -241,7 +242,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
         xhr.send(formData);
         let file_name = item.value.replace(/.*[\/\\]/, '');
 
-        let str = '1'
+
         xhr.onload = function () {
             if (xhr.status == 200) {
                 let div = document.createElement('div')
@@ -279,6 +280,9 @@ async function updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('raschet_stoimosti_user_task').style.display = 'none'
             document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].value=raschet_stoimosti_list_user_task.result
             document.getElementsByName('raschet_stoimosti_TechTaskDate_sketch')[0].value=raschet_stoimosti_list_user_task.target_date
+            console.log("UserTasck222",raschet_stoimosti_list_user_task.attachment)
+            console.log("UserTasck222",raschet_stoimosti_list_user_task.attachment)
+
             if (raschet_stoimosti_list_user_task.attachment!= null && raschet_stoimosti_list_user_task.attachment.length!=0){
                 console.log('ДЛИНА',raschet_stoimosti_list_user_task)
                 for (let i of raschet_stoimosti_list_user_task.attachment){
@@ -300,8 +304,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
                     let a = document.createElement('a')
                     a.href = 'javascript:void(0);'
                     a.target = "_blank"
-                    {#console.log('III222!!!',i)#}
-                    a.name = i.name
+                    a.name = i.id.replaceAll('"', "")
                     a.style = 'margin-right: 10px;'
                     console.log("SON.parse",a)
                     a.onclick = function () {
@@ -345,7 +348,11 @@ async function updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('raschet_stoimosti_comply').style.display = 'none'
                             console.log("ВыполненоВыполнено")
 
-            $("#raschet_stoimosti_checkbox *").attr("disabled", "disabled").off('click');
+                                 setTimeout(function (){
+                        $("#raschet_stoimosti_checkbox *").attr("disabled", "disabled").off('click');
+                        $("#raschet_stoimosti_Get_back_to_work").attr("disabled", false).off('click');
+
+                        },10)
             }
             break
         } else {
@@ -408,6 +415,9 @@ async function updatde_UserTask(data, name_task, rezult_task) {
         })
         ;
         console.log("res.status", res.status)
+         raschet_stoimosti_list_user_task = JSON.parse(await res.text())[0] ;
+                     window.raschet_stoimosti_list_user_task=raschet_stoimosti_list_user_task
+
         if (res.status == 200) {
             console.log(res.status)
             showToast('Задача сформирована. Для отображения в списке дел, необходимо обновить страницу', 'info', 5000)
