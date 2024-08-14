@@ -82,9 +82,7 @@ class UserProfileServices:
                             val["control"].append(user_data)
 
 
-            operation = tables.ListUserTask(**val
-
-                                            )
+            operation = tables.ListUserTask(**val)
             self.session.add(operation)
             self.session.flush()
             self.session.commit()
@@ -110,7 +108,7 @@ class UserProfileServices:
                                         "Value": f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
 
                     ClassTelegram.telega_send_message(self, data)
-            return jsonable_encoder(operation)
+            return self.services_UserTask_Search_id(models.ModelUserTaskID(id=operation.id))
 
         except:
             print(traceback.format_exc())

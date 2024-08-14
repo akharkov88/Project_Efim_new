@@ -279,7 +279,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('podgotovka_kp_user_task').style.display = 'none'
             document.getElementsByName('podgotovka_kp_TechTaskPPR_sketch')[0].value=podgotovka_kp_list_user_task.result
             document.getElementsByName('podgotovka_kp_TechTaskDate_sketch')[0].value=podgotovka_kp_list_user_task.target_date
-            if (podgotovka_kp_list_user_task.attachment.length!=0){
+            if (podgotovka_kp_list_user_task.attachment!=0 && podgotovka_kp_list_user_task.attachment.length!=0){
                 console.log('ДЛИНА',podgotovka_kp_list_user_task)
                 for (let i of podgotovka_kp_list_user_task.attachment){
                     let button = document.createElement("input");

@@ -279,7 +279,7 @@ async function updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('analiz_documentov_user_task').style.display = 'none'
             document.getElementsByName('analiz_documentov_TechTaskPPR_sketch')[0].value=analiz_documentov_list_user_task.result
             document.getElementsByName('analiz_documentov_TechTaskDate_sketch')[0].value=analiz_documentov_list_user_task.target_date
-            if (analiz_documentov_list_user_task.attachment.length!=0){
+            if (analiz_documentov_list_user_task.attachment != null && analiz_documentov_list_user_task.attachment.length!=0){
                 console.log('ДЛИНА',analiz_documentov_list_user_task)
                 for (let i of analiz_documentov_list_user_task.attachment){
                     let button = document.createElement("input");
