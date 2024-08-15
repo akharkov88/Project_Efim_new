@@ -177,7 +177,7 @@ class UserProfileServices:
 
             else:
                     val["control"] = [user.username]
-                    for user_data in val["user_executor"]:
+                    for user_data in ast.literal_eval(val["user_executor"]):
                         if user_data not in val["control"]:
                             val["control"].append(user_data)
 
