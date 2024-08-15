@@ -142,6 +142,45 @@ class UserProfileServices:
             val = dict(UserDATA)
             val["user_executor"] = str(user_mas)
             val["user_create"] = user.username
+
+            if ast.literal_eval(val["connection"]) != None:
+                if json.loads(val["connection"]).get("UserTasck", False):
+                    find_User_tasck = (
+                        self.session
+                        .query(tables.ListUserTask)
+                        .filter(
+                            or_(
+                                tables.ListUserTask.id == int(json.loads(val["connection"])["UserTasck"]),
+                            )
+                        )
+                        .all()
+                    )
+                    if not find_User_tasck:
+                        return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+
+                    if jsonable_encoder(find_User_tasck)[0]["control"] == None:
+                        val["control"] = [user.username]
+                    else:
+                        val["control"] = [user.username]
+                        for user_data in jsonable_encoder(find_User_tasck)[0]["control"]:
+                            if user_data not in val["control"]:
+                                val["control"].append(user_data)
+
+                    for user_data in ast.literal_eval(UserDATA.user_executor):
+                        if user_data not in val["control"]:
+                            val["control"].append(user_data)
+                else:
+                    val["control"] = [user.username]
+                    for user_data in ast.literal_eval(UserDATA.user_executor):
+                        if user_data not in val["control"]:
+                            val["control"].append(user_data)
+
+            else:
+                    val["control"] = [user.username]
+                    for user_data in val["user_executor"]:
+                        if user_data not in val["control"]:
+                            val["control"].append(user_data)
+
             operation = tables.ListUserTask(**dict(val))
             self.session.add(operation)
             self.session.flush()
@@ -168,7 +207,7 @@ class UserProfileServices:
                                         "Value": f"На Вас назначения задача <{UserDATA.name}> приоритет <{UserDATA.priority.value}> срок выполнения <{UserDATA.target_date}> от <{operation2[0] + " " + operation2[1]}>"})
 
                     ClassTelegram.telega_send_message(self, data)
-            return jsonable_encoder(operation)
+            return self.services_UserTask_Search_id(models.ModelUserTaskID(id=operation.id))
 
         except:
             print(traceback.format_exc())
