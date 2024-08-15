@@ -58,7 +58,7 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Подготовка КП</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+    <div id="podgotovka_kp_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл Подготовка КП</label>
@@ -100,13 +100,36 @@
 </div>
 </body>
 <script>
-document.getElementById('podgotovka_kp_comply').onclick=async (e)=>{podgotovka_kp_processing(e,status="Выполнено");
-    $("#podgotovka_kp_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#podgotovka_kp_Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('podgotovka_kp_saveChangeTask').style.display = 'none'
-                        document.getElementById('podgotovka_kp_comply').style.display = 'none'
-                        document.getElementById('podgotovka_kp_Get_back_to_work').style.display = 'block'
+function podgotovka_kp_valid(){
+    let gg=true
+    if (document.getElementsByName('podgotovka_kp_TechTaskPPR_sketch')[0].value==""){
+        document.getElementsByName('podgotovka_kp_TechTaskPPR_sketch')[0].setAttribute("required", true)
+        gg= false
+    }
+    if ($(`#${document.getElementById('podgotovka_kp_comply').parentElement.parentElement.id}`).find('a').length==0){
+        document.getElementById('podgotovka_kp_addPPR').setAttribute("class", "valid_button")
+        gg= false
+    }
+    if (gg== false){
+        showToast("Необходимо заполнить обязательные поля", "error", 5000);
 
+        return false
+    }
+    document.getElementById('podgotovka_kp_addPPR').setAttribute("class", "")
+        return true
+
+}
+document.getElementById('podgotovka_kp_comply').onclick=async (e)=>{
+
+    if (podgotovka_kp_valid()){
+        podgotovka_kp_processing(e,status="Выполнено");
+        $("#podgotovka_kp_checkbox *").attr("disabled", "disabled").off('click');
+        $("#podgotovka_kp_Get_back_to_work").attr("disabled", false).off('click');
+        document.getElementById('podgotovka_kp_saveChangeTask').style.display = 'none'
+        document.getElementById('podgotovka_kp_comply').style.display = 'none'
+        document.getElementById('podgotovka_kp_Get_back_to_work').style.display = 'block'
+
+}
 }
 podgotovka_kp_Get_back_to_work.onclick=async (e)=>{podgotovka_kp_processing(e,status="Возврат в работу")
     $("#podgotovka_kp_checkbox *").attr("disabled", false).off('click');
@@ -198,6 +221,7 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
     let podgotovka_kp_arrCounter_id = [1];
 
     podgotovka_kp_addPPR.onclick = function () {
+        document.getElementById('podgotovka_kp_addPPR').setAttribute("class", "")
         podgotovka_kp_counter_id = podgotovka_kp_arrCounter_id[podgotovka_kp_arrCounter_id.length - 1];
 
         let button = document.createElement("input");
@@ -339,9 +363,7 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
                    }
                         }
                     }
-                   if (podgotovka_kp_list_user_task.status=="Выполнено"){
 
-                    }
 
             if (podgotovka_kp_list_user_task.status=="Выполнено"){
             document.getElementById('podgotovka_kp_saveChangeTask').style.display = 'none'
@@ -353,7 +375,10 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
                         $("#podgotovka_kp_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
-            }
+            }else {
+                        document.getElementById('podgotovka_kp_Get_back_to_work').style.display = 'none'
+
+                   }
             break
         } else {
             document.getElementById('podgotovka_kp_checkbox').style.display = 'none'
@@ -431,6 +456,7 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('podgotovka_kp_checkbox').style.display = 'block'
             document.getElementsByName('podgotovka_kp_TechTaskDate_sketch')[0].value=document.getElementById('podgotovka_kp_DateEndWork').value
             document.getElementsByName('podgotovka_kp_TechTaskPPR_sketch')[0].value=document.getElementById('podgotovka_kp_Opisanie_text').value
+            document.getElementById('podgotovka_Get_back_to_work').style.display = 'none'
 
 
 

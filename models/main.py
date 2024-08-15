@@ -13,8 +13,8 @@ class UserTask(BaseModel):
     TechTaskDateEndWork: str # Срок выполнение работ
     TechTaskPrice: str  # Условия оплаты
     TechTaskLeaderKP: str  # Отвественный
-    # TechTask_sketch: str  # Отвественный
-    # TechTask_plan: str  # Отвественный
+    TechTaskDateSrokStart: str
+    TechTaskDateSrokEnd: str
 class BaseTask(UserTask):
     id: int
     class Config:

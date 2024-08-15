@@ -58,7 +58,7 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Анализ проектной документации</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+    <div id="analiz_documentov_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл Анализа проектной документации</label>
@@ -100,13 +100,34 @@
 </div>
 </body>
 <script>
-document.getElementById('analiz_documentov_comply').onclick=async (e)=>{analiz_documentov_processing(e,status="Выполнено");
-    $("#analiz_documentov_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#analiz_documentov_Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('analiz_documentov_saveChangeTask').style.display = 'none'
-                        document.getElementById('analiz_documentov_comply').style.display = 'none'
-                        document.getElementById('analiz_documentov_Get_back_to_work').style.display = 'block'
+function analiz_documentov_valid(){
+    let gg=true
+    if (document.getElementsByName('analiz_documentov_TechTaskPPR_sketch')[0].value==""){
+        document.getElementsByName('analiz_documentov_TechTaskPPR_sketch')[0].setAttribute("required", true)
+        gg= false
+    }
+    if ($(`#${document.getElementById('analiz_documentov_comply').parentElement.parentElement.id}`).find('a').length==0){
+        document.getElementById('analiz_documentov_addPPR').setAttribute("class", "valid_button")
+        gg= false
+    }
+    if (gg== false){
+        showToast("Необходимо заполнить обязательные поля", "error", 5000);
 
+        return false
+    }
+    document.getElementById('analiz_documentov_addPPR').setAttribute("class", "")
+        return true
+
+}
+document.getElementById('analiz_documentov_comply').onclick=async (e)=>{
+    if (analiz_documentov_valid()){
+        analiz_documentov_processing(e,status="Выполнено");
+        $("#analiz_documentov_checkbox *").attr("disabled", "disabled").off('click');
+        $("#analiz_documentov_Get_back_to_work").attr("disabled", false).off('click');
+        document.getElementById('analiz_documentov_saveChangeTask').style.display = 'none'
+        document.getElementById('analiz_documentov_comply').style.display = 'none'
+        document.getElementById('analiz_documentov_Get_back_to_work').style.display = 'block'
+}
 }
 analiz_documentov_Get_back_to_work.onclick=async (e)=>{analiz_documentov_processing(e,status="Возврат в работу")
     $("#analiz_documentov_checkbox *").attr("disabled", false).off('click');
@@ -198,6 +219,7 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
     let analiz_documentov_arrCounter_id = [1];
 
     analiz_documentov_addPPR.onclick = function () {
+        document.getElementById('analiz_documentov_addPPR').setAttribute("class", "")
         analiz_documentov_counter_id = analiz_documentov_arrCounter_id[analiz_documentov_arrCounter_id.length - 1];
 
         let button = document.createElement("input");
@@ -339,9 +361,7 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
                    }
                         }
                     }
-                   if (analiz_documentov_list_user_task.status=="Выполнено"){
 
-                    }
 
             if (analiz_documentov_list_user_task.status=="Выполнено"){
             document.getElementById('analiz_documentov_saveChangeTask').style.display = 'none'
@@ -353,7 +373,10 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
                         $("#analiz_documentov_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
-            }
+            }else {
+                        document.getElementById('analiz_documentov_Get_back_to_work').style.display = 'none'
+
+                   }
             break
         } else {
             document.getElementById('analiz_documentov_checkbox').style.display = 'none'
@@ -431,6 +454,7 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
             document.getElementById('analiz_documentov_checkbox').style.display = 'block'
             document.getElementsByName('analiz_documentov_TechTaskDate_sketch')[0].value=document.getElementById('analiz_documentov_DateEndWork').value
             document.getElementsByName('analiz_documentov_TechTaskPPR_sketch')[0].value=document.getElementById('analiz_documentov_Opisanie_text').value
+            document.getElementById('analiz_documentov_Get_back_to_work').style.display = 'none'
 
 
 

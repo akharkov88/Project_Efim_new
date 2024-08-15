@@ -58,7 +58,7 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Расчет стоимости</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+    <div id="raschet_stoimosti_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл Расчета стоимости</label>
@@ -100,13 +100,36 @@
 </div>
 </body>
 <script>
-document.getElementById('raschet_stoimosti_comply').onclick=async (e)=>{raschet_stoimosti_processing(e,status="Выполнено");
-    $("#raschet_stoimosti_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#raschet_stoimosti_Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('raschet_stoimosti_saveChangeTask').style.display = 'none'
-                        document.getElementById('raschet_stoimosti_comply').style.display = 'none'
-                        document.getElementById('raschet_stoimosti_Get_back_to_work').style.display = 'block'
+function raschet_stoimosti_valid(){
+    let gg=true
+    if (document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].value==""){
+        document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].setAttribute("required", true)
+        gg= false
+    }
+    if ($(`#${document.getElementById('raschet_stoimosti_comply').parentElement.parentElement.id}`).find('a').length==0){
+        document.getElementById('raschet_stoimosti_addPPR').setAttribute("class", "valid_button")
+        gg= false
+    }
+    if (gg== false){
+        showToast("Необходимо заполнить обязательные поля", "error", 5000);
 
+        return false
+    }
+    document.getElementById('raschet_stoimosti_addPPR').setAttribute("class", "")
+        return true
+
+}
+document.getElementById('raschet_stoimosti_comply').onclick=async (e)=>{
+        if (raschet_stoimosti_valid()){
+            raschet_stoimosti_processing(e,status="Выполнено");
+
+            $("#raschet_stoimosti_checkbox *").attr("disabled", "disabled").off('click');
+            $("#raschet_stoimosti_Get_back_to_work").attr("disabled", false).off('click');
+            document.getElementById('raschet_stoimosti_saveChangeTask').style.display = 'none'
+            document.getElementById('raschet_stoimosti_comply').style.display = 'none'
+            document.getElementById('raschet_stoimosti_Get_back_to_work').style.display = 'block'
+
+}
 }
 raschet_stoimosti_Get_back_to_work.onclick=async (e)=>{raschet_stoimosti_processing(e,status="Возврат в работу")
     $("#raschet_stoimosti_checkbox *").attr("disabled", false).off('click');
@@ -198,6 +221,7 @@ async function raschet_stoimosti_updatde_UserTask(data, name_task, rezult_task) 
     let raschet_stoimosti_arrCounter_id = [1];
 
     raschet_stoimosti_addPPR.onclick = function () {
+        document.getElementById('raschet_stoimosti_addPPR').setAttribute("class", "")
         raschet_stoimosti_counter_id = raschet_stoimosti_arrCounter_id[raschet_stoimosti_arrCounter_id.length - 1];
 
         let button = document.createElement("input");
@@ -339,9 +363,7 @@ async function raschet_stoimosti_updatde_UserTask(data, name_task, rezult_task) 
                    }
                         }
                     }
-                   if (raschet_stoimosti_list_user_task.status=="Выполнено"){
 
-                    }
 
             if (raschet_stoimosti_list_user_task.status=="Выполнено"){
             document.getElementById('raschet_stoimosti_saveChangeTask').style.display = 'none'
@@ -353,7 +375,10 @@ async function raschet_stoimosti_updatde_UserTask(data, name_task, rezult_task) 
                         $("#raschet_stoimosti_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
-            }
+            }else {
+                        document.getElementById('raschet_Get_back_to_work').style.display = 'none'
+
+                   }
             break
         } else {
             document.getElementById('raschet_stoimosti_checkbox').style.display = 'none'
@@ -431,6 +456,7 @@ async function raschet_stoimosti_updatde_UserTask(data, name_task, rezult_task) 
             document.getElementById('raschet_stoimosti_checkbox').style.display = 'block'
             document.getElementsByName('raschet_stoimosti_TechTaskDate_sketch')[0].value=document.getElementById('raschet_stoimosti_DateEndWork').value
             document.getElementsByName('raschet_stoimosti_TechTaskPPR_sketch')[0].value=document.getElementById('raschet_stoimosti_Opisanie_text').value
+            document.getElementById('raschet_Get_back_to_work').style.display = 'none'
 
 
 

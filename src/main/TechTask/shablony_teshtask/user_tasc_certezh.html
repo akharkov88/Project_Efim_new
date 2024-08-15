@@ -58,7 +58,7 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Чертеж</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+    <div id="certezh_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл Чертежа</label>
@@ -100,13 +100,36 @@
 </div>
 </body>
 <script>
-document.getElementById('certezh_comply').onclick=async (e)=>{certezh_processing(e,status="Выполнено");
-    $("#certezh_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#certezh_Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('certezh_saveChangeTask').style.display = 'none'
-                        document.getElementById('certezh_comply').style.display = 'none'
-                        document.getElementById('certezh_Get_back_to_work').style.display = 'block'
+function certezh_valid(){
+    let gg=true
+    if (document.getElementsByName('certezh_TechTaskPPR_sketch')[0].value==""){
+        document.getElementsByName('certezh_TechTaskPPR_sketch')[0].setAttribute("required", true)
+        gg= false
+    }
+    if ($(`#${document.getElementById('certezh_comply').parentElement.parentElement.id}`).find('a').length==0){
+        document.getElementById('certezh_addPPR').setAttribute("class", "valid_button")
+        gg= false
+    }
+    if (gg== false){
+        showToast("Необходимо заполнить обязательные поля", "error", 5000);
 
+        return false
+    }
+    document.getElementById('certezh_addPPR').setAttribute("class", "")
+        return true
+
+}
+document.getElementById('certezh_comply').onclick=async (e)=>{
+
+    if (certezh_valid()){
+        certezh_processing(e,status="Выполнено");
+        $("#certezh_checkbox *").attr("disabled", "disabled").off('click');
+        $("#certezh_Get_back_to_work").attr("disabled", false).off('click');
+        document.getElementById('certezh_saveChangeTask').style.display = 'none'
+        document.getElementById('certezh_comply').style.display = 'none'
+        document.getElementById('certezh_Get_back_to_work').style.display = 'block'
+
+}
 }
 certezh_Get_back_to_work.onclick=async (e)=>{certezh_processing(e,status="Возврат в работу")
     $("#certezh_checkbox *").attr("disabled", false).off('click');
@@ -198,6 +221,7 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
     let certezh_arrCounter_id = [1];
 
     certezh_addPPR.onclick = function () {
+        document.getElementById('certezh_addPPR').setAttribute("class", "")
         certezh_counter_id = certezh_arrCounter_id[certezh_arrCounter_id.length - 1];
 
         let button = document.createElement("input");
@@ -339,9 +363,7 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
                    }
                         }
                     }
-                   if (certezh_list_user_task.status=="Выполнено"){
 
-                    }
 
             if (certezh_list_user_task.status=="Выполнено"){
             document.getElementById('certezh_saveChangeTask').style.display = 'none'
@@ -353,7 +375,10 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
                         $("#certezh_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
-            }
+            }else {
+                        document.getElementById('certezh_Get_back_to_work').style.display = 'none'
+
+                   }
             break
         } else {
             document.getElementById('certezh_checkbox').style.display = 'none'
@@ -431,6 +456,7 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('certezh_checkbox').style.display = 'block'
             document.getElementsByName('certezh_TechTaskDate_sketch')[0].value=document.getElementById('certezh_DateEndWork').value
             document.getElementsByName('certezh_TechTaskPPR_sketch')[0].value=document.getElementById('certezh_Opisanie_text').value
+            document.getElementById('certezh_Get_back_to_work').style.display = 'none'
 
 
 

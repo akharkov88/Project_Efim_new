@@ -62,6 +62,8 @@ class TaskForm(Base):
     TechTaskPrice = Column(String) #  Условия оплаты
     TechTaskLeaderKP = Column(String) #  Отвественный
     user_name = Column(String, ForeignKey('users.username'), index=True)
+    TechTaskDateSrokStart= Column(DateTime(timezone=True), server_default=func.now())#начало работ
+    TechTaskDateSrokEnd= Column(DateTime(timezone=True), server_default=func.now())#конец работ
     create_at = Column(DateTime, server_default=func.now())
     # TechTask_sketch = Column(String) #  эскиз
     # TechTask_plan = Column(String) #  чертеж

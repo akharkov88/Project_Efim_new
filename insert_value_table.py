@@ -31,9 +31,13 @@ async_engine = create_async_engine(url=Settings.database_url,
 #         print(f"{res.first()=}")
 # asyncio.run(get_123())
 
+print("Удаляю таблицы")
 Base.metadata.drop_all(engine)
+
+print("Создаю таблицы")
 Base.metadata.create_all(engine)
 
+print("Добавляю пользователей")
 def add_user():
     vv = [{"user": {
         "username": "admin",
@@ -204,6 +208,7 @@ token_user = add_user()
 # set_user_profile()
 
 
+print("Формируем значения для выпадающего списка")
 async def insert_Suggest():
     value = {"costWork": ["Грунтование м/к", "Изготовление м/к ферм с грунтованием",
                           "Устройство свай недостающих, с армированием и бетонированием", "Окраска м/к ", "Монтаж м/к"],
@@ -242,7 +247,7 @@ async def insert_Suggest():
 
 asyncio.run(insert_Suggest())
 
-
+print("Формируем таблицу ролей")
 async def addRoles():
     value = [
         {"ADMIN": "Администратор"},
@@ -266,7 +271,7 @@ async def addRoles():
 
 asyncio.run(addRoles())
 
-
+print("Формируем список задач на сотрудников")
 async def insert_UserTask():
     vv = [{
         "name": "Разработка таблицы",
@@ -390,6 +395,7 @@ asyncio.run(insert_UserTask())
 # print(json.loads(res.text))
 #
 # token_user=json.loads(res.text)['access_token']
+print("Формируем тестовое тех. задание")
 
 headers = {'Content-Type': 'application/json', 'Accept': 'application/json', "Authorization": "Bearer " + token_user}
 vv = {
@@ -401,6 +407,8 @@ vv = {
     "TechTaskOverhead": "string",
     "TechTaskDateKP": "2024-02-07",
     "TechTaskDateEndWork": "2024-02-08",
+    "TechTaskDateSrokStart": "2024-02-07",
+    "TechTaskDateSrokEnd": "2024-02-08",
     "TechTaskPrice": "string",
     "TechTaskLeaderKP": "string",
     "TechTask_plan": '{"TechTaskDate_plan":"2024-05-29","checked":true,"TechTaskPPR_plan":"нужен чертеж"}',
@@ -411,6 +419,8 @@ vv = {
 res = requests.post('http://127.0.0.1:8000/main/creatTask/', headers=headers, json=vv)
 print(res.status_code)
 # print(res.text)
+
+print("Формируем Telegram_set_message")
 
 vv = [
     {"name_user_telegram": "AlekseyKharkov88",
@@ -424,6 +434,10 @@ for v in vv:
     # vv='username=ad&roles=&password=ad'
     res = requests.post('http://127.0.0.1:8000/message/Telegram_set_message/', headers=headers, json=v)
     print(res.status_code)
+
+
+print("Создаю таблицу с отделами")
+
 
 user={
         "username": "admin",

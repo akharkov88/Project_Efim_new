@@ -58,7 +58,7 @@
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">эскиз</label>
     </div>
-    <div id="div_checkbox_sketch" class="panel panel-default" style="padding: 10px; ">
+    <div id="eskiz_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
             <div class="form-group">
                 <label>Вложенный файл эскиза</label>
@@ -100,12 +100,35 @@
 </div>
 </body>
 <script>
-document.getElementById('eskiz_comply').onclick=async (e)=>{eskiz_processing(e,status="Выполнено");
-    $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
-                        $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
-                        document.getElementById('eskiz_saveChangeTask').style.display = 'none'
-                        document.getElementById('eskiz_comply').style.display = 'none'
-                        document.getElementById('eskiz_Get_back_to_work').style.display = 'block'
+function eskiz_valid(){
+    let gg=true
+    if (document.getElementsByName('eskiz_TechTaskPPR_sketch')[0].value==""){
+        document.getElementsByName('eskiz_TechTaskPPR_sketch')[0].setAttribute("required", true)
+        gg= false
+    }
+    if ($(`#${document.getElementById('eskiz_comply').parentElement.parentElement.id}`).find('a').length==0){
+        document.getElementById('eskiz_addPPR').setAttribute("class", "valid_button")
+        gg= false
+    }
+    if (gg== false){
+        showToast("Необходимо заполнить обязательные поля", "error", 5000);
+
+        return false
+    }
+    document.getElementById('eskiz_addPPR').setAttribute("class", "")
+        return true
+
+}
+document.getElementById('eskiz_comply').onclick=async (e)=>{
+    if (eskiz_valid()){
+        eskiz_processing(e,status="Выполнено");
+        $("#eskiz_checkbox *").attr("disabled", "disabled").off('click');
+        $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
+        document.getElementById('eskiz_saveChangeTask').style.display = 'none'
+        document.getElementById('eskiz_comply').style.display = 'none'
+        document.getElementById('eskiz_Get_back_to_work').style.display = 'block'
+
+    }
 
 }
 eskiz_Get_back_to_work.onclick=async (e)=>{eskiz_processing(e,status="Возврат в работу")
@@ -198,6 +221,8 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
     let eskiz_arrCounter_id = [1];
 
     eskiz_addPPR.onclick = function () {
+        document.getElementById('eskiz_addPPR').setAttribute("class", "")
+
         eskiz_counter_id = eskiz_arrCounter_id[eskiz_arrCounter_id.length - 1];
 
         let button = document.createElement("input");
@@ -339,9 +364,7 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
                    }
                         }
                     }
-                   if (eskiz_list_user_task.status=="Выполнено"){
 
-                    }
 
             if (eskiz_list_user_task.status=="Выполнено"){
             document.getElementById('eskiz_saveChangeTask').style.display = 'none'
@@ -353,7 +376,10 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
                         $("#eskiz_Get_back_to_work").attr("disabled", false).off('click');
 
                         },10)
-            }
+            }else {
+                        document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
+
+                   }
             break
         } else {
             document.getElementById('eskiz_checkbox').style.display = 'none'
@@ -431,7 +457,7 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
             document.getElementById('eskiz_checkbox').style.display = 'block'
             document.getElementsByName('eskiz_TechTaskDate_sketch')[0].value=document.getElementById('eskiz_DateEndWork').value
             document.getElementsByName('eskiz_TechTaskPPR_sketch')[0].value=document.getElementById('eskiz_Opisanie_text').value
-
+            document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 
 
         } else {
