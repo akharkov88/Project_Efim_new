@@ -166,9 +166,9 @@ class UserProfileServices:
                             if user_data not in val["control"]:
                                 val["control"].append(user_data)
 
-                    for user_data in ast.literal_eval(UserDATA.user_executor):
-                        if user_data not in val["control"]:
-                            val["control"].append(user_data)
+                    # for user_data in ast.literal_eval(UserDATA.user_executor):
+                    #     if user_data not in val["control"]:
+                    #         val["control"].append(user_data)
                 else:
                     val["control"] = [user.username]
                     for user_data in ast.literal_eval(val["user_executor"]):
@@ -261,7 +261,8 @@ class UserProfileServices:
                         save_control.append(save_val[control])
                     else:
                         save_val[control] = self.get_UserProfile(control)
-                        save_control.append(save_val[control])
+                        if not jsonable_encoder(save_val[control]).get("status_code",False):
+                            save_control.append(save_val[control])
 
                 hh["UserPfofile_control"] = save_control
 

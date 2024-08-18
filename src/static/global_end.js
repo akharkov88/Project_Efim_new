@@ -10,8 +10,9 @@ document.getElementById('adminMenu').onclick = async function (event) {
     console.log("1responseText", responseText)
 
     console.log("2responseText", JSON.parse(responseText).roles)
-    console.log("3responseText", JSON.parse(JSON.parse(responseText).roles).toLowerCase().indexOf("admin"))
-    if (check_user.status == 200 && JSON.parse(JSON.parse(responseText).roles).toLowerCase().indexOf("admin") != -1) {
+    console.log("3responseText", JSON.parse(JSON.parse(responseText).roles))
+    console.log("3responseText", JSON.parse(responseText).roles.toLowerCase().indexOf("admin"))
+    if (check_user.status == 200 && JSON.parse(responseText).roles.toLowerCase().indexOf("admin") != -1) {
         console.log("check_user.status", check_user.status)
         document.location.href = '/main/adminMenu'
 
