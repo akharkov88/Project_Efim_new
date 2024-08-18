@@ -57,6 +57,8 @@
     <div class="checkbox" onclick="return false" disabled="disabled">
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Подготовка КП</label>
+    <H4 id="podgotovka_Type_label_status"></H4>
+
     </div>
     <div id="podgotovka_kp_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -196,7 +198,10 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
                                         console.log("res.status", res.status)
                                         podgotovka_kp_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
+                                                document.getElementById('podgotovka_Type_label_status').innerText=`Статус: ${podgotovka_list_user_task.status}`
+
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
+
                                                 console.log("Выполнена")
                                                 send_telegram(podgotovka_kp_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
@@ -299,6 +304,8 @@ async function podgotovka_kp_updatde_UserTask(data, name_task, rezult_task) {
 
         if (JSON.parse(podgotovka_kp_list_user_task.connection).podgotovka_kp_ != undefined) {
             console.log("UserTasck",podgotovka_kp_list_user_task)
+           document.getElementById('podgotovka_Type_label_status').innerText=`Статус: ${podgotovka_list_user_task.status}`
+
             window.podgotovka_kp_list_user_task=podgotovka_kp_list_user_task
             document.getElementById('podgotovka_kp_checkbox').style.display = 'block'
             document.getElementById('podgotovka_kp_user_task').style.display = 'none'

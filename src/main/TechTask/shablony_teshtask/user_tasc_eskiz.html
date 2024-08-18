@@ -57,6 +57,8 @@
     <div class="checkbox" onclick="return false" disabled="disabled">
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">эскиз</label>
+    <H4 id="eskiz_Type_label_status"></H4>
+
     </div>
     <div id="eskiz_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -196,8 +198,11 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
                                         console.log("res.status", res.status)
                                         eskiz_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
+                                                document.getElementById('eskiz_Type_label_status').innerText=`Статус: ${eskiz_list_user_task.status}`
+                                            
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
+
                                                 send_telegram(eskiz_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
                                                 showToast('Задача обновлена. Для отображения, необходимо обновить страницу', 'info', 5000)
                                             } if (data["user_data"]["status"] == "Возврат в работу") {
@@ -299,6 +304,8 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
     for (eskiz_list_user_task of eskiz_valid_getTechTaskName) {
 
         if (JSON.parse(eskiz_list_user_task.connection).eskiz_ != undefined) {
+           document.getElementById('eskiz_Type_label_status').innerText=`Статус: ${eskiz_list_user_task.status}`
+
             console.log("UserTasck",eskiz_list_user_task)
             window.eskiz_list_user_task=eskiz_list_user_task
             document.getElementById('eskiz_checkbox').style.display = 'block'
@@ -350,6 +357,8 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
                     }
 
                    if (eskiz_list_user_task.status=="Выполнено"){
+                       console.log("eskiz_list_user_task",eskiz_list_user_task)
+
                         document.getElementById('eskiz_saveChangeTask').style.display = 'none'
                         document.getElementById('eskiz_comply').style.display = 'none'
                                         console.log("ВыполненоВыполнено",$("#eskiz_checkbox *"))
@@ -359,6 +368,7 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
 
                         },10)
                     }else {
+                       console.log("eskiz_list_user_task",eskiz_list_user_task)
                         document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 
                    }
@@ -367,6 +377,8 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
 
 
             if (eskiz_list_user_task.status=="Выполнено"){
+                       console.log("eskiz_list_user_task",eskiz_list_user_task)
+
             document.getElementById('eskiz_saveChangeTask').style.display = 'none'
             document.getElementById('eskiz_comply').style.display = 'none'
                             console.log("ВыполненоВыполнено")
@@ -377,9 +389,12 @@ async function eskiz_updatde_UserTask(data, name_task, rezult_task) {
 
                         },10)
             }else {
+                       console.log("eskiz_list_user_task",eskiz_list_user_task)
+
                         document.getElementById('eskiz_Get_back_to_work').style.display = 'none'
 
                    }
+
             break
         } else {
             document.getElementById('eskiz_checkbox').style.display = 'none'

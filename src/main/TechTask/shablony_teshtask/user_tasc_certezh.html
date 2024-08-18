@@ -57,6 +57,8 @@
     <div class="checkbox" onclick="return false" disabled="disabled">
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Чертеж</label>
+    <H4 id="certezh_Type_label_status"></H4>
+
     </div>
     <div id="certezh_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -196,6 +198,8 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
                                         console.log("res.status", res.status)
                                         certezh_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
+                                                document.getElementById('certezh_Type_label_status').innerText=`Статус: ${certezh_list_user_task.status}`
+
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
                                                 send_telegram(certezh_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
@@ -299,6 +303,9 @@ async function certezh_updatde_UserTask(data, name_task, rezult_task) {
 
         if (JSON.parse(certezh_list_user_task.connection).certezh_ != undefined) {
             console.log("UserTasck",certezh_list_user_task)
+            console.log("certezh_list_user_task",certezh_list_user_task)
+           document.getElementById('certezh_Type_label_status').innerText=`Статус: ${certezh_list_user_task.status}`
+
             window.certezh_list_user_task=certezh_list_user_task
             document.getElementById('certezh_checkbox').style.display = 'block'
             document.getElementById('certezh_user_task').style.display = 'none'

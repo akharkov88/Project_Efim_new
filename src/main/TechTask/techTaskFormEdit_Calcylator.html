@@ -752,7 +752,7 @@ $('#first_table').keypress(
 });
 let etalon_html_table = ''
 async function Test() {
-{#console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})#}
+console.log("getTechTaskName",{{getTechTaskName.NameTechTask|tojson|safe}})
     let response = await fetch('/techTask/formPtoGet', {
   method: 'POST',
   headers: {
