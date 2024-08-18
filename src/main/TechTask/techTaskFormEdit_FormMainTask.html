@@ -38,10 +38,11 @@
                                             <div class="form-group">
 
                                                 <span>начало работ</span>
-                                                <input  type="date" class="form-control"
+                                                <input  type="date" class="form-control DateCurrent"
                                                        name="TechTaskDateSrokStart"
                                                        value="{{ getTechTaskName.TechTaskDateSrokStart }}"
-                                                       placeholder="dd.mm.yyyy">
+                                                       placeholder="dd.mm.yyyy"
+                                                       >
 
                                             </div>
 
@@ -51,14 +52,16 @@
                                                 <input  type="date"
                                                        name="TechTaskDateSrokEnd"
                                                        value="{{ getTechTaskName.TechTaskDateSrokEnd }}"
-                                                       class="form-control"
+                                                       class="form-control DateCurrent"
                                                        placeholder="dd.mm.yyyy"
                                                        id="DateEndWork">
 
                                             </div>
 
                                         </div>
-                <label>Исходные данные, передаваемые заказчиком</label>
+
+                                        <div><label>Исходные данные, передаваемые заказчиком</label></div>
+
                 <div name="TechTaskProject_form" class="form-group ">
                     <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
                     <!-- hidden="true"-->
@@ -518,7 +521,7 @@
                         <input name="TechTaskDateKP"
 
                                value="{{ getTechTaskName.TechTaskDateKP }}"
-                               type="date" class="form-control"
+                               type="date" class="form-control DateCurrent"
                                placeholder="dd.mm.yyyy"
                                disabled>
                     </div>
@@ -530,7 +533,7 @@
 
                                value="{{ getTechTaskName.TechTaskDateEndWork }}"
                                type="date"
-                               class="form-control"
+                               class="form-control DateCurrent"
                                placeholder="dd.mm.yyyy"
                                disabled>
                     </div>
