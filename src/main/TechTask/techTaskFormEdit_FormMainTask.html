@@ -541,7 +541,21 @@
                         <option>Директор</option>
                     </select>
                 </div>
+                <script>
+                    console.log('!@#$%^!!!')
+                    let defaultValueLeade = {{ getTechTaskName.TechTaskLeaderKP|tojson|safe }};
 
+                    let yourSelectLeade = document.getElementsByName('TechTaskLeaderKP')[0];
+
+                    console.log('LeadeLeade')
+                    console.log(yourSelectLeade)
+                    for (let i, j = 0; i = yourSelectLeade.options[j]; j++) {
+                        if (i.value == defaultValueLeade) {
+                            yourSelectLeade.selectedIndex = j;
+                            break;
+                        }
+                    }
+                </script>
                 <button id="createTicket" disabled>Сохранить задание</button>
                 <button id="cancelTicket" disabled>Отмена</button>
                 <script>
