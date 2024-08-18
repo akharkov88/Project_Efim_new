@@ -57,6 +57,8 @@
     <div class="checkbox" onclick="return false" disabled="disabled">
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Подсчет объемов работ</label>
+    <H4 id="podschet_obemov_rabot_Type_label_status"></H4>
+
     </div>
     <div id="podschet_obemov_rabot_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -196,6 +198,8 @@ async function podschet_obemov_rabot_updatde_UserTask(data, name_task, rezult_ta
                                         console.log("res.status", res.status)
                                         podschet_obemov_rabot_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
+                                                document.getElementById('podschet_obemov_rabot_Type_label_status').innerText=`Статус: ${podschet_obemov_rabot_list_user_task.status}`
+
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
                                                 send_telegram(podschet_obemov_rabot_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
@@ -299,6 +303,8 @@ async function podschet_obemov_rabot_updatde_UserTask(data, name_task, rezult_ta
 
         if (JSON.parse(podschet_obemov_rabot_list_user_task.connection).podschet_obemov_rabot_ != undefined) {
             console.log("UserTasck",podschet_obemov_rabot_list_user_task)
+           document.getElementById('podschet_obemov_rabot_Type_label_status').innerText=`Статус: ${podschet_obemov_rabot_list_user_task.status}`
+
             window.podschet_obemov_rabot_list_user_task=podschet_obemov_rabot_list_user_task
             document.getElementById('podschet_obemov_rabot_checkbox').style.display = 'block'
             document.getElementById('podschet_obemov_rabot_user_task').style.display = 'none'

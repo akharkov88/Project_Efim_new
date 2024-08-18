@@ -57,6 +57,8 @@
     <div class="checkbox" onclick="return false" disabled="disabled">
         <input  checked="checked"  type="checkbox" id="checkbox_sketch" class="" onclick="return false">
         <label for="checkbox_sketch" style="font-weight:bold;">Анализ проектной документации</label>
+    <H4 id="analiz_documentov_Type_label_status"></H4>
+
     </div>
     <div id="analiz_documentov_div_checkbox" class="panel panel-default" style="padding: 10px; ">
         <div class="form-group" style="display: flex; justify-content: flex-start; gap: 20px;">
@@ -194,6 +196,8 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
                                         console.log("res.status", res.status)
                                         analiz_documentov_list_user_task = JSON.parse(await res.text())
                                         if (res.status == 200) {
+                                                document.getElementById('analiz_documentov_Type_label_status').innerText=`Статус: ${analiz_documentov_list_user_task.status}`
+
                                             if (data["user_data"]["status"] == "Выполнено" || data["user_data"]["status"] == "Отказ выполнять") {
                                                 console.log("Выполнена")
                                                 send_telegram(analiz_documentov_list_user_task.user_create, `Задача <${name_task}> выполнена с решением: <${rezult_task}>`)
@@ -297,6 +301,8 @@ async function analiz_documentov_updatde_UserTask(data, name_task, rezult_task) 
 
         if (JSON.parse(analiz_documentov_list_user_task.connection).analiz_documentov_ != undefined) {
             console.log("UserTasck",analiz_documentov_list_user_task)
+           document.getElementById('analiz_documentov_Type_label_status').innerText=`Статус: ${analiz_documentov_list_user_task.status}`
+            
             window.analiz_documentov_list_user_task=analiz_documentov_list_user_task
             document.getElementById('analiz_documentov_checkbox').style.display = 'block'
             document.getElementById('analiz_documentov_user_task').style.display = 'none'
