@@ -25,7 +25,8 @@
                     <input class="form-control"
                            name="NameTechAdres"
                            value="{{ getTechTaskName.NameTechAdres }}"
-                           placeholder="Введите описание">
+                           placeholder="Введите описание"
+                           disabled>
                 </div>
                  <script>
                                                 console.log('getTechTaskName!!!')
@@ -42,6 +43,7 @@
                                                        name="TechTaskDateSrokStart"
                                                        value="{{ getTechTaskName.TechTaskDateSrokStart }}"
                                                        placeholder="dd.mm.yyyy"
+                                                       disabled
                                                        >
 
                                             </div>
@@ -54,7 +56,8 @@
                                                        value="{{ getTechTaskName.TechTaskDateSrokEnd }}"
                                                        class="form-control DateCurrent"
                                                        placeholder="dd.mm.yyyy"
-                                                       id="DateEndWork">
+                                                       id="DateEndWork"
+                                                       disabled>
 
                                             </div>
 
@@ -87,8 +90,14 @@
                             $('#formFrame').find('textarea:disabled').removeAttr('disabled');
                             $('#formFrame').find('select:disabled').removeAttr('disabled');
                             $('#formFrame').find('button:disabled').removeAttr('disabled');
-                            $('input[id^="Form_file"]')[0].setAttribute("disabled", true)
+                            console.log('console',$('input[id^="Form_file"]'))
+                            for (let i=0;i< $('input[id^="Form_file"]').length; i++){
+                            console.log('iziz',i)
+                            $('input[id^="Form_file"]')[i].setAttribute("disabled", true)
+                            }
+
                         }
+
                     }
 
                     // Заголовки для таблиц
@@ -408,7 +417,7 @@
                                 document.getElementById('expent' + str).appendChild(div);
                                 {#document.getElementById('label' + str).innerHTML = document.getElementById('input' + str).value;#}
                                 // <a href='javascript:void(0);' target="_blank" onclick="event.preventDefault();downloadFileFromURL('/BaseFile/download-file/6d3d286e-4ab5-4f69-afdc-952a7d98137f', 'Бросить кубики онлайн.html')">Бросить кубики онлайн.html</a>
-                                console.warn(str)
+                                console.warn('strstrstr',str)
                                 document.getElementById('Form_file' + str).disabled = true;
                             }
                             // $('input[name="TechTaskProject"]').prop('files')[0]["id"] = $('input[name="TechTaskProject"]').prop('files')[0]["id"].append(xhr.response)
@@ -541,7 +550,7 @@
 
                 <div class="form-group">
                     <label>Условия оплаты</label>
-                    <select id="select" name='TechTaskPrice' class="form-control">
+                    <select id="select" name='TechTaskPrice' class="form-control" disabled>
                         <option value="noncash">Безналичный</option>
                         <option value="cash">Наличный</option>
                     </select>

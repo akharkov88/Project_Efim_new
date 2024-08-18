@@ -65,7 +65,7 @@
                                             <div class="form-group">
 
                                                 <span>начало работ</span>
-                                                <input  type="date" class="form-control"
+                                                <input  type="date" class="form-control DateCurrent"
                                                        name="TechTaskDateSrokStart"
 
                                                        placeholder="dd.mm.yyyy">
@@ -76,7 +76,7 @@
                                                 <span>конец работ</span>
                                                 <input  type="date"
                                                        name="TechTaskDateSrokEnd"
-                                                       class="form-control"
+                                                       class="form-control DateCurrent"
                                                        placeholder="dd.mm.yyyy"
                                                        id="DateEndWork">
 
@@ -390,7 +390,7 @@
                                         <div class="form-group">
 
                                                 <label>Срок подготовки коммерческого предложения</label>
-                                                <input name="TechTaskDateKP" type="date" class="form-control"
+                                                <input name="TechTaskDateKP" type="date" class="form-control DateCurrent"
                                                        placeholder="dd.mm.yyyy">
 
                                         </div>
@@ -398,7 +398,7 @@
 
                                                 <label>Срок выполнения работ</label>
                                                 <input name="TechTaskDateEndWork" type="date"
-                                                       class="form-control"
+                                                       class="form-control DateCurrent"
                                                        placeholder="dd.mm.yyyy">
 
                                         </div>
@@ -699,7 +699,11 @@
                                                     event.preventDefault()
                                                 }
                                             }
+                                            today = new Date().toISOString().split('T')[0];
 
+                                            for (let i of document.getElementsByClassName('DateCurrent')){
+                                                i.setAttribute('min', today);
+                                            }
                                         </script>
                                     </form>
 
