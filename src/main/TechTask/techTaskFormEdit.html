@@ -595,9 +595,8 @@ $(document).ready(function(){
                     {#TechTaskDate_plan.value=plan.TechTaskDate_plan#}
                     {#TechTaskPPR_plan.value=plan.TechTaskPPR_plan#}
 
-                    let today = new Date().toISOString().split('T')[0];
-                    document.getElementById("DateEndWork").setAttribute('min', today);
-                    console.log('DATE DateCurrent')
+                    today = new Date().toISOString().split('T')[0];
+
                     for (let i of document.getElementsByClassName('DateCurrent')){
                         i.setAttribute('min', today);
                     }
