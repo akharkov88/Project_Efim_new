@@ -11,7 +11,7 @@ from fastapi import (
     status,
 )
 from sqlalchemy.orm import Session
-
+import dateutil.parser
 import models
 import tables
 from services.auth import  get_session
@@ -196,7 +196,8 @@ class TaskServices:
                     save_executor.append(save_val_fio[user_executor_val])
 
                 lisr_tech_tasks["ListUserTask"][j]["UserPfofile_executor"] = save_executor
-
+            lisr_tech_tasks["TechTaskDateSrokStart"]= dateutil.parser.isoparse(lisr_tech_tasks["TechTaskDateSrokStart"]).strftime("%Y-%m-%d")
+            lisr_tech_tasks["TechTaskDateSrokEnd"]= dateutil.parser.isoparse(lisr_tech_tasks["TechTaskDateSrokEnd"]).strftime("%Y-%m-%d")
             return lisr_tech_tasks
         except:
             print(traceback.format_exc())
