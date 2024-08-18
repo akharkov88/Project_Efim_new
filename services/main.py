@@ -121,6 +121,7 @@ class TaskServices:
                     self.session
                     .query(tables.ListUserTask)
                     .filter(
+                        # tables.ListUserTask.connection.ilike('%"TechTask":'+str(lisr_tech_task["id"])+'%')
                         tables.ListUserTask.connection == '{"TechTask":'+str(lisr_tech_task["id"])+'}'
                     )
                     .all()

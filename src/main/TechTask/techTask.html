@@ -91,38 +91,42 @@
 
                         <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
                             <div class="panel-body">
-                                <div id="status">
+                                <div id="status_{{getAllTask.id}}">
                                     Тестирование
                                 </div>
                             </div>
                         </div>
                         <script>
-                            console.log("getAllTask", {{ getAllTask.ListUserTask|tojson }})
+                            console.log("getAllTask", {{ getAllTask|tojson }})
                             list_user_tasks = {{ getAllTask.ListUserTask|tojson }}
+                                console.log("list_user_task11",list_user_tasks)
+
                              info_status = ""
                             for (list_user_task of list_user_tasks) {
-                                console.log(list_user_task)
+                                console.log("list_user_task11",list_user_task)
                                 let info_Ispolnitel = ""
                                 for (executor of list_user_task.UserPfofile_executor) {
                                     info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
                                 }
                                 info_Ispolnitel.trim(",")
+                            console.log("info_status",info_status)
+
                                 info_status += `<div>Создал задачу: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}\nИсполнитель: ${info_Ispolnitel}\n Статус: ${list_user_task.status}\n контрольный срок: ${list_user_task.target_date} </div><div></div>`
                             }
-                            console.log(info_status)
+                            console.log("info_status",info_status)
                             if (list_user_tasks.length == 0) {
                                 info_status = "Еще не было активных задач"
-                                document.getElementById("status").style.backgroundColor = '#ff9090'
+                                document.getElementById("status_{{getAllTask.id}}").style.backgroundColor = '#ff9090'
                             } else if (info_status == "") {
                                 info_status = "Все задачи выполнены"
-                                document.getElementById("status").style.backgroundColor = '#5cb85c'
+                                document.getElementById("status_{{getAllTask.id}}").style.backgroundColor = '#5cb85c'
 
                             } else {
                                 console.log("backgroundColor")
-                                document.getElementById("status").style.backgroundColor = '#f0ad4e'
+                                document.getElementById("status_{{getAllTask.id}}").style.backgroundColor = '#f0ad4e'
                             }
 
-                            document.getElementById("status").innerHTML = info_status
+                            document.getElementById("status_{{getAllTask.id}}").innerHTML = info_status
 
                         </script>
 
