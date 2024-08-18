@@ -27,7 +27,38 @@
                            value="{{ getTechTaskName.NameTechAdres }}"
                            placeholder="Введите описание">
                 </div>
+                 <script>
+                                                console.log('getTechTaskName!!!')
+                                            </script>
+                <label>Сроки реализации проекта</label>
 
+                                        <div class="form-group form-group col-lg-12">
+
+
+                                            <div class="form-group">
+
+                                                <span>начало работ</span>
+                                                <input  type="date" class="form-control"
+                                                       name="TechTaskDateSrokStart"
+                                                       value="{{ getTechTaskName.TechTaskDateSrokStart }}"
+                                                       placeholder="dd.mm.yyyy">
+
+                                            </div>
+
+                                            <div class="form-group">
+
+                                                <span>конец работ</span>
+                                                <input  type="date"
+                                                       name="TechTaskDateSrokEnd"
+                                                       value="{{ getTechTaskName.TechTaskDateSrokEnd }}"
+                                                       class="form-control"
+                                                       placeholder="dd.mm.yyyy"
+                                                       id="DateEndWork">
+
+                                            </div>
+
+                                        </div>
+                <label>Исходные данные, передаваемые заказчиком</label>
                 <div name="TechTaskProject_form" class="form-group ">
                     <!--     DOM                                        <form id="myForm" action="/submit" method="post">-->
                     <!-- hidden="true"-->

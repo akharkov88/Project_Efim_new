@@ -691,8 +691,12 @@ $(document).ready(function(){
                     {#TechTaskDate_plan.value=plan.TechTaskDate_plan#}
                     {#TechTaskPPR_plan.value=plan.TechTaskPPR_plan#}
 
-                    var today = new Date().toISOString().split('T')[0];
-                    document.getElementById("DateEndWork").setAttribute('min', today);
+                    let today = new Date().toISOString().split('T')[0];
+                    {#document.getElementById("DateEndWork").setAttribute('min', today);#}
+
+                    for (let i of document.getElementsByClassName('DateCurrent')){
+                        i.setAttribute('min', today);
+                    }
 
                 </script>
 
