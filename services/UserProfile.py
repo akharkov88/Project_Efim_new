@@ -275,6 +275,8 @@ class UserProfileServices:
             # if not operation:
             #     return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
             # return jsonable_encoder(operation)
+            val_mas[0]["create_at"]= dateutil.parser.isoparse(val_mas[0]["create_at"]).strftime("%Y-%m-%d")
+            val_mas[0]["target_date"]= dateutil.parser.isoparse(val_mas[0]["target_date"]).strftime("%Y-%m-%d")
             return val_mas
 
         except:
