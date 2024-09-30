@@ -297,6 +297,7 @@ class UserProfileServices:
                         tables.ListUserTask.user_executor.ilike('%"' + user + '"%')
                     )
                 )
+                .order_by(tables.ListUserTask.id)
                 .all()
             )
 
