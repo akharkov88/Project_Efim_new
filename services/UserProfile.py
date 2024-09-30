@@ -363,15 +363,22 @@ class UserProfileServices:
                 .filter(
                     tables.ListUserTask.control.any(user)
                 )
+
                 .filter(
                     and_(
                         tables.ListUserTask.user_create != user,
-                        tables.ListUserTask.user_executor.notlike("%'" + user + "'%"),
-                        tables.ListUserTask.user_executor.notlike('%"' + user + '"%')
                     )
                 )
+
+                .filter(
+                    not_(
+                        tables.ListUserTask.user_executor.ilike("%'" + user + "'%"),
+                    )
+                )
+
                 .all()
             )
+            print(jsonable_encoder(operation))
             val_mas = []
             for hh in jsonable_encoder(operation):
 

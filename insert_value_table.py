@@ -275,8 +275,8 @@ print("Формируем список задач на сотрудников")
 async def insert_UserTask():
     vv = [{
         "name": "Разработка таблицы",
-        "user_create": "admin",
-        "user_executor": "['Naumov','Efimov']",
+        "user_create": 'Efimov',
+        "user_executor": "['Naumov']",
         "status": "Назначена",
         "result": "",
         "target_date": "2024-01-20",
