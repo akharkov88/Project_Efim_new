@@ -243,7 +243,7 @@
 
 
                                         }
-                                        res = await fetch(`http://127.0.0.1:8000/userprofile/set_Control_Task?id=1&event=${event_control_process}`, {
+                                        res = await fetch(`http://127.0.0.1:8000/userprofile/set_Control_Task?id=${document.getElementById("id").innerText}&event=${event_control_process}`, {
                                             method: "GET",
                                             headers: {
                                                 Accept: 'application/json',

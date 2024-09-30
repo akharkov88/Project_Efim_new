@@ -91,7 +91,7 @@
 
                         <div class="text-center no-boder col-md-2 col-sm-12 col-xs-12">
                             <div class="panel-body">
-                                <div id="status_{{getAllTask.id}}">
+                                <div id="status_{{ getAllTask.id }}">
                                     Тестирование
                                 </div>
                             </div>
@@ -99,21 +99,20 @@
                         <script>
                             console.log("getAllTask", {{ getAllTask|tojson }})
                             list_user_tasks = {{ getAllTask.ListUserTask|tojson }}
-                                console.log("list_user_task11",list_user_tasks)
+                            console.log("list_user_task11", list_user_tasks)
 
-                             info_status = ""
+                            info_status = ""
+                            nomer_zadachi = 0
                             for (list_user_task of list_user_tasks) {
-                                console.log("list_user_task11",list_user_task)
                                 let info_Ispolnitel = ""
                                 for (executor of list_user_task.UserPfofile_executor) {
                                     info_Ispolnitel += `${executor.first_name} ${executor.last_name},`
                                 }
                                 info_Ispolnitel.trim(",")
-                            console.log("info_status",info_status)
-
-                                info_status += `<div>Создал задачу: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}\nИсполнитель: ${info_Ispolnitel}\n Статус: ${list_user_task.status}\n контрольный срок: ${list_user_task.target_date} </div><div></div>`
+                                nomer_zadachi++
+                                info_status += `<div>Задача ${nomer_zadachi}</div><div>Создал задачу: ${list_user_task.UserPfofile_create.first_name} ${list_user_task.UserPfofile_create.last_name}\nИсполнитель: ${info_Ispolnitel}\n Статус: ${list_user_task.status}\n контрольный срок: ${list_user_task.target_date} </div><div></div>`
                             }
-                            console.log("info_status",info_status)
+                            console.log("info_status", info_status)
                             if (list_user_tasks.length == 0) {
                                 info_status = "Еще не было активных задач"
                                 document.getElementById("status_{{getAllTask.id}}").style.backgroundColor = '#ff9090'
