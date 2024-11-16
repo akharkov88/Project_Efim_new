@@ -1263,7 +1263,6 @@ function up_obj_global_sum(){
                     if (temp[key].childNodes[3].childNodes[9].innerText!= ''){
                         obj_global_sum['Накладные_расходы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[3].childNodes[9].innerText.replace(',','.').replace('%','')
                     }
-                    alert('up_obj_global_sum')
                     if (temp[key].childNodes[5].childNodes[9].innerText!= ''){
                         obj_global_sum['Вспомогательные_материалы_' + temp[key].id.slice(temp[key].id.lastIndexOf('_')+1)] = temp[key].childNodes[5].childNodes[9].innerText.replace(',','.').replace('%','')
                     }
@@ -2935,15 +2934,9 @@ if(this.id.indexOf('Form_') == -1){
     function delLine(cel){
         etalon_table = false;
         upTableTime();
-        {#console.warn('cel= ' + cel)#}
         let id_table = document.getElementById(cel).parentElement.parentElement.parentElement.id;
         id_table = id_table.slice(id_table.lastIndexOf('_')+1,id_table.length)
-        {#console.log('tbody = ' + id_table)#}
         let id_del = cel.slice(cel.lastIndexOf('_')+1, cel.length)
-        {#console.warn('id_del !!! ' , id_del)#}
-
-        {#console.warn(document.getElementById('stroka_' + id_del).parentElement.id)#}
-
         let del_math_td = document.getElementById('stroka_' + id_del);
 
         if(!isNaN(del_math_td.parentElement.childNodes[1].childNodes[7].innerText)  && !isNaN(del_math_td.childNodes[13].innerText) {#&& !isNaN(del_math_td.parentElement.childNodes[1].childNodes[9].innerText)#}){
@@ -2952,8 +2945,14 @@ if(this.id.indexOf('Form_') == -1){
             {#console.log('!!! ', del_math_td.parentElement.childNodes[1].childNodes[7].innerText)#}
             obj_global_sum[document.getElementById('stroka_' + id_del).parentElement.id] = del_math_td.parentElement.childNodes[1].childNodes[7].innerText;
             let index = del_math_td.parentElement.id.slice(del_math_td.parentElement.id.lastIndexOf('_')+1);
+            console.log('до изменения')
+            console.log(obj_global_sum['earthWorks_Total_' + index])
+
             obj_global_sum['earthWorks_Total_' + index] = Number(obj_global_sum['earthWorks_costWork_' + index]) + Number(obj_global_sum['earthWorks_costMaterial_' + index]) + Number(obj_global_sum['earthWorks_Special_' + index])
             {#console.warn(document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText)#}
+
+            console.log('после изменения')
+            console.log(obj_global_sum['earthWorks_Total_' + index])
             document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
             //.childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
 
