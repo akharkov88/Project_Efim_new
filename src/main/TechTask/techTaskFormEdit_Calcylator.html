@@ -957,17 +957,24 @@ function event_input(e) {
         obj_global_sum['ВСЕГО_'+id_for_itogo] = (Number(obj_global_sum['earthWorks_Total_'+ id_for_itogo]) + Number(summa_v_itogo.toFixed(2))).toFixed(2);
         console.log("присвоение ", obj_global_sum['earthWorks_Total_'+ id_for_itogo],' + ',  Number(summa_v_itogo.toFixed(2)) )
 
+        let procentNDS = $('#earthWorks_Total_'+id_for_itogo)[0].childNodes[11].childNodes[9].innerText.replace(',','.').replace('%','');
+        obj_global_sum['ВСЕГО_НДС_'+id_for_itogo] = ((obj_global_sum['ВСЕГО_'+id_for_itogo] * Number(procentNDS)) / (100+Number(procentNDS))).toFixed(2)
+
         pereschetTotalSum();
+        pereschetTotalNDS();
     }
     if (obj_global_sum['earthWorks_Total_'+id_for_itogo]== '0'){
         obj_global_sum['ВСЕГО_'+id_for_itogo] = 0;
+        obj_global_sum['ВСЕГО_НДС_'+id_for_itogo] = 0;
         document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[9].childNodes[13].innerText = obj_global_sum['ВСЕГО_'+id_for_itogo];
+        document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_'+id_for_itogo];
 
     }
 
 
     if (obj_global_sum['ВСЕГО_'+id_for_itogo] != '' && !isNaN(obj_global_sum['ВСЕГО_'+id_for_itogo])) {
         document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[9].childNodes[13].innerText = obj_global_sum['ВСЕГО_'+id_for_itogo];
+        document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[11].childNodes[13].innerText = obj_global_sum['ВСЕГО_НДС_'+id_for_itogo];
     }
 
     document.getElementById('earthWorks_Total_'+ id_for_itogo).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_'+ id_for_itogo]).toFixed(2);
@@ -1605,7 +1612,8 @@ console.log('ПТО СУММ')
     console.log('summa_v_itogo ', summa_v_itogo.toFixed(2))
     if (summa_v_itogo>0 && obj_global_sum['earthWorks_Total_'+id_for_itogo]!= ''){
         obj_global_sum['ВСЕГО_'+elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] = (obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)] + Number(summa_v_itogo.toFixed(2))).toFixed(2);
-        console.log("присвоение ", obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)],' + ',  Number(summa_v_itogo.toFixed(2)) )
+        console.log("присвоение 2", obj_global_sum['earthWorks_Total_'+ elem_stroka.parentElement.id.slice(elem_stroka.parentElement.id.lastIndexOf('_')+1)],' + ',  Number(summa_v_itogo.toFixed(2)) )
+
         pereschetTotalSum();
     }
     if (obj_global_sum['ВСЕГО_'+id_for_itogo] != '' && !isNaN(obj_global_sum['ВСЕГО_'+id_for_itogo])) {
@@ -2945,14 +2953,10 @@ if(this.id.indexOf('Form_') == -1){
             {#console.log('!!! ', del_math_td.parentElement.childNodes[1].childNodes[7].innerText)#}
             obj_global_sum[document.getElementById('stroka_' + id_del).parentElement.id] = del_math_td.parentElement.childNodes[1].childNodes[7].innerText;
             let index = del_math_td.parentElement.id.slice(del_math_td.parentElement.id.lastIndexOf('_')+1);
-            console.log('до изменения')
-            console.log(obj_global_sum['earthWorks_Total_' + index])
 
             obj_global_sum['earthWorks_Total_' + index] = Number(obj_global_sum['earthWorks_costWork_' + index]) + Number(obj_global_sum['earthWorks_costMaterial_' + index]) + Number(obj_global_sum['earthWorks_Special_' + index])
             {#console.warn(document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText)#}
 
-            console.log('после изменения')
-            console.log(obj_global_sum['earthWorks_Total_' + index])
             document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
             //.childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
 
@@ -3011,6 +3015,8 @@ if(this.id.indexOf('Form_') == -1){
         document.getElementById(`stroka_${id_del}`).remove()
                 counterTr();
 
+                // Очень странное место, что тут происходит - не понятно. убрал все if, вынес вызов PTO_td_sum и заработало корректно
+                /*
                 if (idParelem.indexOf('earthWorks_costMaterial_')!= -1 && $(`#${idParelem} tr`).length == 1){
                     let temp = idParelem.slice(idParelem.lastIndexOf('_')+1);
                     console.log(temp)
@@ -3020,8 +3026,15 @@ if(this.id.indexOf('Form_') == -1){
                         console.log('попал в есле и вызываю PTO')
                         PTO_td_sum($(`#${idParelem} tr`)[1]);
                 }
+                */
+
+                if ($(`#${idParelem} tr`).length>1){
+                    PTO_td_sum($(`#${idParelem} tr`)[1]);
+                }
 
                 func_sum_vsego_razdel($(`#${idParelem} tr`)[0].childNodes[5]);
+                console.log('pometka')
+                console.log($(`#${idParelem} tr`)[0].childNodes[5])
                 pereschetTotalSum();
                 pereschetTotalNDS();
                 resize_div_for_table()
