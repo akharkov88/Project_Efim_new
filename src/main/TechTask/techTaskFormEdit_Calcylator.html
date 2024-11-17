@@ -985,6 +985,20 @@ function event_input(e) {
 
  }
 
+ /**
+ * Функция для удаления значений из объекта obj_global_sum
+ *  @cleanObjGlobalSumm index после символа "_"
+*/
+function cleanObjGlobalSumm(index){
+    console.log('index', index)
+    let regex = new RegExp(`_${index}$`);
+    for (var key of Object.keys(obj_global_sum)) {
+
+        if(regex.test(key)){
+            delete obj_global_sum[key]
+        }
+    }
+}
 
  function del_func (event) {
      {#console.log('eventDel_razdel ' + event.target.id.slice(event.target.id.lastIndexOf('_')+1))#}
@@ -1001,7 +1015,9 @@ function event_input(e) {
          let cifra = event.target.id.slice(event.target.id.lastIndexOf('_') + 1);
          arr_coll_table.splice(arr_coll_table.indexOf(Number(event.target.id.slice(event.target.id.lastIndexOf('_') + 1))), 1)
          {#console.log(arr_zaglav);#}
-
+         console.log('index!@!#@!',`${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`)
+         let index = Number(''+`${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`)
+            cleanObjGlobalSumm(index)
          document.getElementById(`earthWorks_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_costWork_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_costMaterial_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
@@ -1009,6 +1025,8 @@ function event_input(e) {
          document.getElementById(`earthWorks_subcontracting_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_Special_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
          document.getElementById(`earthWorks_Total_${event.target.id.slice(event.target.id.lastIndexOf('_') + 1)}`).remove()
+
+
 
          let arr_test = []
          $(`#first_table tbody`).each(function () {
