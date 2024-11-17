@@ -938,15 +938,18 @@ function event_input(e) {
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText = (Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]).toFixed(2)
         }
     }
-    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 &&obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
+    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 && obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && (obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '' || obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]!= '')) {
         summa_v_itogo += Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))
         console.log('Сумма ИТОГО материалов и работ')
         console.log((Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo])))
         if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText != Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))){
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText = (Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))).toFixed(2)
+            console.log('popal')
+        } else {
+            console.log('ne popal')
         }
     }
-    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 &&obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
+    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 && obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && (obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '' || obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]!= '')) {
         summa_v_itogo += Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))
         if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText != Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))){
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText = (Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))).toFixed(2)
@@ -1540,6 +1543,7 @@ let coll_table = id.slice(id.lastIndexOf('_')+1)
 console.log(obj_global_sum['earthWorks_costWork_'+ coll_table]);
 console.log(obj_global_sum['earthWorks_costMaterial_'+ coll_table]);
 console.log(obj_global_sum['earthWorks_Special_'+ coll_table]);
+console.log(obj_global_sum['earthWorks_subcontracting_'+ coll_table]);
 
 sum = Number(obj_global_sum['earthWorks_costWork_'+ coll_table]) +
         Number(obj_global_sum['earthWorks_costMaterial_'+ coll_table]) +
@@ -1595,16 +1599,16 @@ console.log('ПТО СУММ')
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[3].childNodes[13].innerText = (Number(obj_global_sum['Накладные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costWork_'+ id_for_itogo]).toFixed(2)
         }
     }
-    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 && obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
-        summa_v_itogo += Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]
+    if (Object.keys(obj_global_sum).indexOf('Вспомогательные_материалы_'+ id_for_itogo)!=-1 && obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo]!= '' && (obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '' || obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]!= '')) {
+        summa_v_itogo += Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))
         if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText != Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))){
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[5].childNodes[13].innerText = (Number(obj_global_sum['Вспомогательные_материалы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))).toFixed(2)
         }
     }
 
     // fix формула рассчета Транспортные_расходы от стоимости материалов вместо Стоимость спецтехники
-    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 && obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '') {
-        summa_v_itogo += Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]
+    if (Object.keys(obj_global_sum).indexOf('Транспортные_расходы_'+ id_for_itogo)!=-1 && obj_global_sum['Транспортные_расходы_'+ id_for_itogo]!= '' && (obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo]!= '' || obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]!= '')) {
+        summa_v_itogo += Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))
         if (document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText != Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))){
             document.getElementById('earthWorks_Total_'+id_for_itogo).childNodes[7].childNodes[13].innerText = (Number(obj_global_sum['Транспортные_расходы_'+ id_for_itogo])/100 * (Number(obj_global_sum['earthWorks_costMaterial_'+ id_for_itogo])+Number(obj_global_sum['earthWorks_subcontracting_'+ id_for_itogo]))).toFixed(2)
         }
@@ -1983,7 +1987,7 @@ tr_math.childNodes[9].removeAttribute('data-title')
                 tr_math.childNodes[23].innerText = Number(tr_math.childNodes[9].innerText.replace(',','.')).toFixed(2);
             }
             }
-            if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1){
+            if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial_')!=-1 || tr_math.parentElement.id.indexOf('earthWorks_subcontracting_')!=-1){
 
                 if (!isNaN(tr_math.childNodes[15].innerText.replace(',','.')) && tr_math.childNodes[15].innerText!=''){
                 tr_math.childNodes[9].innerText = Number(eval((tr_math.childNodes[9]).abbr.replaceAll(',','.')) * Number(eval(tr_math.childNodes[15].abbr.replaceAll(',','.')))).toFixed(2);
@@ -2080,7 +2084,7 @@ tr_math.childNodes[15].addEventListener('focusout', function(event) {
         } else {
             tr_math.childNodes[29].innerText = Number(tr_math.childNodes[15].innerText.replace(',','.')).toFixed(2)
         }
-    } else if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
+    } else if(tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 || tr_math.parentElement.id.indexOf('earthWorks_subcontracting_')!=-1){
                 if (!isNaN(tr_math.childNodes[9].innerText.replaceAll(',','.')) && tr_math.childNodes[9].innerText!=''){
                 if (!isNaN(tr_math.childNodes[15].innerText.replaceAll(',','.')) && tr_math.childNodes[15].innerText!=''){
 
@@ -2954,9 +2958,9 @@ if(this.id.indexOf('Form_') == -1){
             obj_global_sum[document.getElementById('stroka_' + id_del).parentElement.id] = del_math_td.parentElement.childNodes[1].childNodes[7].innerText;
             let index = del_math_td.parentElement.id.slice(del_math_td.parentElement.id.lastIndexOf('_')+1);
 
-            obj_global_sum['earthWorks_Total_' + index] = Number(obj_global_sum['earthWorks_costWork_' + index]) + Number(obj_global_sum['earthWorks_costMaterial_' + index]) + Number(obj_global_sum['earthWorks_Special_' + index])
-            {#console.warn(document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText)#}
-
+            // Ручной пересчет суммы Итого при удалении строк
+            obj_global_sum['earthWorks_Total_' + index] = Number(obj_global_sum['earthWorks_costWork_' + index]) + Number(obj_global_sum['earthWorks_costMaterial_' + index]) + Number(obj_global_sum['earthWorks_Special_' + index])+ Number(obj_global_sum['earthWorks_subcontracting_' + index])
+            //присвоение Итого из объекта
             document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
             //.childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
 
