@@ -48,6 +48,9 @@ from .UserProfile import (
     ModelUserTaskEventControl
 )
 
+from .searchCompanyINN import (
+    ModelSearchCompanyINN
+)
 from .Telegram import (
     BaseTelegram,
     BaseUserTelegram,
