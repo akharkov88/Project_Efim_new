@@ -49,7 +49,9 @@ from .UserProfile import (
 )
 
 from .searchCompanyINN import (
-    ModelSearchCompanyINN
+    ModelSearchCompanyINN,
+    CompanyStructure,
+    CompanyStructureLegal,
 )
 from .Telegram import (
     BaseTelegram,

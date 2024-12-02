@@ -37,7 +37,7 @@ templates = Jinja2Templates(directory="src/main/")
 
 
 @router.get('/searchCompany', response_model=Json, )
-def get_operation(request: Request,
+def find_company (request: Request,
                   param_search: models.ModelSearchCompanyINN = Depends(),
                   SearchCompanyINN: SearchCompanyINNServicesClass = Depends(),
                   Auth_Service: AuthService = Depends(),
@@ -47,3 +47,16 @@ def get_operation(request: Request,
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
     return SearchCompanyINN.services_searchCompanyINN(param_search)
+
+
+@router.post('/saveCompany', response_model=Json, )
+def save_company(request: Request,
+                  param_save: models.CompanyStructureLegal = Depends(),
+                  SearchCompanyINN: SearchCompanyINNServicesClass = Depends(),
+                  Auth_Service: AuthService = Depends(),
+                  ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return SearchCompanyINN.services_saveCompanyINN(param_save)

@@ -57,3 +57,20 @@ class SearchCompanyINNServicesClass:
         r = requests.get('https://api-fns.ru/api/search', params=params)
         return r.text
     # response = asyncio.run(services_searchCompanyINN(param_search))
+
+    def services_saveCompanyINN(self, param_save: models.CompanyStructure) -> str:
+        try:
+            operation = tables.CompanyStructure(**dict(dict(param_save)["ЮЛ"]))
+            self.session.add(operation)
+            self.session.flush()
+            self.session.refresh(operation)
+            rez=jsonable_encoder(operation)
+            self.session.commit()
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            return json.dumps(rez)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key НаимПолнЮЛ")
+
