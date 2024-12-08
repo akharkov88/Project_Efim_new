@@ -3,7 +3,9 @@ from datetime import (
     timedelta,
 )
 import ast
-
+import math
+from pydantic import BaseModel,Field
+from sqlalchemy import select
 from pandas.core.computation.pytables import Constant
 from pytz import timezone
 import traceback
@@ -39,24 +41,26 @@ class dotdict(dict):
     __delattr__ = dict.__delitem__
 
 
-class SearchCompanyINNServicesClass:
+class CompanyServicesClass:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
 
-    def services_searchCompanyINN(self, param_search: models.searchCompanyINN) -> str:
+    def services_SearchCompanyINN(self, param_search: models.Company) -> str:
         # response = await asyncio.get_event_loop().run_in_executor(None, requests.get, "https://api-fns.ru/api/search",
         #                                                           data={"q":"5259107913","key":"d4a0ff06fad2f9491613657c091753fc143c2ab4"})
         # return response
         params = {
-            'q': param_search.q,
+            'q': param_search.inn,
             'filter': param_search.filter,
             'key': Constants.key
         }
 
-        r = requests.get('https://api-fns.ru/api/search', params=params)
+        # r = requests.get('https://api-fns.ru/api/search', params=params)
+        r = requests.get(f'https://api.ofdata.ru/v2/company?key={Constants.keyOfdata}&inn={param_search.inn}')
+        #offline https://ofdata.ru/open-data
         return r.text
-    # response = asyncio.run(services_searchCompanyINN(param_search))
+    # response = asyncio.run(services_Company(param_search))
 
     def services_saveCompanyINN(self, param_save: models.CompanyStructure) -> str:
         try:
@@ -72,5 +76,33 @@ class SearchCompanyINNServicesClass:
 
         except:
             print(traceback.format_exc())
-            raise HTTPException(status.HTTP_409_CONFLICT, detail="Duplicate key НаимПолнЮЛ")
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Организация с стаким наименованием уже существует")
+
+    def services_getCompany(self,id_company:int,page:int, size:int) -> str:
+        try:
+            q = (
+                self.session
+                .query(tables.CompanyStructure))
+
+            if id_company!=None:
+                q=q.filter(tables.CompanyStructure.id == id_company)
+            operation=q.all()
+            if id_company==None and page!=None and size!=None:
+
+                offset_min = page * size
+                offset_max = (page + 1) * size
+
+                operation = operation[offset_min:offset_max] + [
+                    {
+                        "page": page,
+                        "size": size,
+                        "total": math.ceil(len(operation) / size) - 1,
+                    }
+                ]
+
+            return operation
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Организация с стаким наименованием уже существует")
 
