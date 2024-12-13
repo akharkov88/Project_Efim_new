@@ -1129,3 +1129,8 @@ input.submit {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
+
+
+.initial {
+  all: initial;
+}
