@@ -48,6 +48,21 @@ def get_operation(request: Request,
             Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
     )
 
+@router.get('/userprofile1', response_model=List[models.Operation], )
+def get_operation(request: Request,
+                  User_ProfileServices: UserProfileServices = Depends(),
+                  # user: models.User = Depends(),
+                  Auth_Service: AuthService = Depends(),
+                  ):
+    try:
+        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
+    except:
+        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
+    return templates.TemplateResponse(
+        "/UserProfile/UserProfile.html", {"request": request, "get_UserProfile": User_ProfileServices.get_UserProfile(
+            Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", "")).username)}
+    )
+
 
 @router.post('/set_userprofile', response_model=models.ModelUserPfofile)
 def set_userprofile(request: Request,

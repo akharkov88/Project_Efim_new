@@ -48,6 +48,14 @@ from .UserProfile import (
     ModelUserTaskEventControl
 )
 
+from .Company import (
+    ModelCompany,
+    CompanyStructure,
+    CompanyStructureLegal,
+    GetCompanyStructureLegal,
+    GetPainting,
+    test,
+)
 from .Telegram import (
     BaseTelegram,
     BaseUserTelegram,

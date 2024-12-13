@@ -11,6 +11,7 @@ from . import (
     suggest,
     UserProfile,
     Telegram,
+    Company,
 )
 
 
@@ -25,4 +26,4 @@ router.include_router(techTaskForm.router)
 router.include_router(BaseFile.router)
 router.include_router(suggest.router)
 router.include_router(UserProfile.router)
-router.include_router(Telegram.router)
+router.include_router(Company.router)

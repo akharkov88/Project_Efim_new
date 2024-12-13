@@ -183,3 +183,34 @@ class departmentTable(Base):
     department = Column(String, index=True, primary_key=True)
     username = Column(String, ForeignKey('users.username'))
     create_at = Column(DateTime(timezone=True), server_default=func.now())
+
+
+
+class CompanyStructure(Base):
+    __tablename__ = 'CompanyStructure'
+    id = Column(Integer, index=True,primary_key=True)
+    ИНН = Column(String) #ИНН
+    ОГРН = Column(String) #ОГРН
+    НаимСокрЮЛ = Column(String) #НаимСокрЮЛ
+    НаимПолнЮЛ = Column(String, unique=True) #НаимПолнЮЛ
+    ДатаОГРН = Column(String)  #ДатаОГРН
+    Статус = Column(String) #Статус
+    АдресПолн = Column(String) #АдресПолн
+    ОснВидДеят = Column(String) #ОснВидДеят
+    ГдеНайдено = Column(String) #ГдеНайдено
+
+#
+# class CompanyStructure(Base):
+#     __tablename__ = 'CompanyStructure'
+#     id = Column(Integer, primary_key=True)
+#
+#     INN = Column(String) #ИНН
+#     OGRN = Column(String) #ОГРН
+#     NameAbbreviatedLegal = Column(String) #НаимСокрЮЛ
+#     NameFullLegal = Column(String) #НаимПолнЮЛ
+#     DateOGRN = Column(String)  #ДатаОГРН
+#     Status = Column(String) #Статус
+#     FullAddress = Column(String) #АдресПолн
+#     MainTypeActivity = Column(String) #ОснВидДеят
+#     WhereFound = Column(String) #ГдеНайдено
+
