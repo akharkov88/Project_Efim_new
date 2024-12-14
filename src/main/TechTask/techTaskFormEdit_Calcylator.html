@@ -1451,7 +1451,7 @@ const table = document.getElementById('first_table');
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="false"  style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none"> <input id="costWork_file_${id_count}" type="file"></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto note" style="display:none"></td>
@@ -1525,7 +1525,7 @@ const table = document.getElementById('first_table');
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
-                        <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
+                        <td contenteditable="false" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none"> <input id="subcontracting_file_${id_count}" type="file"></td>
                         <td contenteditable="true" class="costWork_role_supplier pto" style="display:none""></td>
                         <td contenteditable="true" class="costWork_role_supplier pto note" style="display:none"></td>
@@ -1709,11 +1709,13 @@ function Director_td_sum(elem_stroka){
     }
 };
 
-function Provision_td_sum(elem_stroka){
+    function Provision_td_sum(elem_stroka){
     let sum_total = 0;
+    console.log('dell in func', elem_stroka)
     $(`#${elem_stroka.parentElement.id} tr`).each(function () {
         if (this.id.indexOf('stroka')!=-1 ) {
             sum_total += Number(this.childNodes[31].innerText.replace(',','.'))
+            console.log(Number(this.childNodes[31].innerText.replace(',','.')))
         }
     });
     elem_stroka.parentElement.childNodes[1].childNodes[23].innerText = sum_total.toFixed(2);
@@ -2122,7 +2124,7 @@ tr_math.childNodes[15].addEventListener('focusout', function(event) {
 
             }
 });
-if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1) {
+if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 || tr_math.parentElement.id.indexOf('earthWorks_subcontracting')!=-1) {
     formulaTable(tr_math.childNodes[19])
 }
 
@@ -2215,7 +2217,7 @@ tr_math.childNodes[23].addEventListener('keyup', function(event) {
 
 tr_math.childNodes[27].addEventListener('keyup', function(event){
 
-if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
+if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 || tr_math.parentElement.id.indexOf('earthWorks_subcontracting')!=-1){
 tr_math.childNodes[27].removeAttribute('data-title');
     if (!isNaN(tr_math.childNodes[27].innerText.replace(',','.')) && tr_math.childNodes[27].innerText != '' ){
             if (!isNaN(tr_math.childNodes[29].innerText.replace(',','.')) && tr_math.childNodes[29].innerText != '' ){
@@ -2230,7 +2232,7 @@ tr_math.childNodes[27].removeAttribute('data-title');
 }
 });
 tr_math.childNodes[29].addEventListener('keyup', function(event){
-if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1){
+if (tr_math.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 || tr_math.parentElement.id.indexOf('earthWorks_subcontracting')!=-1){
 tr_math.childNodes[29].removeAttribute('data-title');
     if (!isNaN(tr_math.childNodes[29].innerText.replace(',','.')) && tr_math.childNodes[29].innerText != '' ){
             if (!isNaN(tr_math.childNodes[27].innerText.replace(',','.')) && tr_math.childNodes[27].innerText != '' ){
@@ -2969,6 +2971,16 @@ if(this.id.indexOf('Form_') == -1){
         let id_del = cel.slice(cel.lastIndexOf('_')+1, cel.length)
         let del_math_td = document.getElementById('stroka_' + id_del);
 
+         // Аналитический блок в разделах Стоимость материалов и Субподрядные работы
+         if (del_math_td.parentElement.id.indexOf('earthWorks_costMaterial')!=-1 || del_math_td.parentElement.id.indexOf('earthWorks_subcontracting')!=-1){
+            console.log('try dell')
+            del_math_td.childNodes[29].innerText='';
+            del_math_td.childNodes[27].innerText='';
+            del_math_td.childNodes[31].innerText='';
+            Provision_td_sum(del_math_td)
+         }
+
+
         if(!isNaN(del_math_td.parentElement.childNodes[1].childNodes[7].innerText)  && !isNaN(del_math_td.childNodes[13].innerText) {#&& !isNaN(del_math_td.parentElement.childNodes[1].childNodes[9].innerText)#}){
 
             del_math_td.parentElement.childNodes[1].childNodes[7].innerText = (Number(del_math_td.parentElement.childNodes[1].childNodes[7].innerText) - Number(del_math_td.childNodes[13].innerText)).toFixed(2)
@@ -2981,6 +2993,10 @@ if(this.id.indexOf('Form_') == -1){
             //присвоение Итого из объекта
             document.getElementById('earthWorks_Total_'+ index).childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
             //.childNodes[1].childNodes[7].innerText = Number(obj_global_sum['earthWorks_Total_' + index]).toFixed(2)
+
+
+
+
 
             // подсчет итоговых значений "Столбец для анализа" в "Стоимость работ"
             if (del_math_td.parentElement.id.indexOf('earthWorks_costWork')!=-1 ){
