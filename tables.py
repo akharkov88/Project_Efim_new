@@ -199,6 +199,18 @@ class CompanyStructure(Base):
     ОснВидДеят = Column(String) #ОснВидДеят
     ГдеНайдено = Column(String) #ГдеНайдено
 
+
+
+
+class CompanyStructure(Base):
+    __tablename__ = 'construction'
+    id = Column(Integer, index=True,primary_key=True)
+    idCompanyStructure = Column(Integer)
+    Наименнование = Column(String)
+    Местоположение = Column(String)
+    ВидОбъекта = Column(String)
+    Описание = Column(String)
+
 #
 # class CompanyStructure(Base):
 #     __tablename__ = 'CompanyStructure'
