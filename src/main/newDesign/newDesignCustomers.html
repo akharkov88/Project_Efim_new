@@ -10,7 +10,7 @@
 <div class="containerNewDesign">
     <div class="left-menu">
         <div class="box">
-            <a href="../newDesign/newDesign" class="active_menu">
+            <a href="../newDesign/newDesign" class="not_active_menu">
                 <img src="{{ url_for('static', path='auth/images/home.png') }}" alt="" width="30">
             </a>
         </div>
@@ -20,7 +20,8 @@
             </a>
         </div>
         <div class="box">
-            <a href="../newDesign/newDesignCustomers" class="not_active_menu">
+            <a href="../newDesign/newDesignCustomers" class="active_menu">
+{#            style="background: #e7e7e7; "#}
                 <img src="{{ url_for('static', path='auth/images/people.png') }}" alt="" width="30">
             </a>
         </div>
@@ -54,7 +55,7 @@
     </div>
     <div class="subhead">
         <div style="font-weight: bolder;
-    font-size: xx-large;">Заголовок
+    font-size: xx-large;">Заказчики
         </div>
         <div class="subhead_subsection">
 

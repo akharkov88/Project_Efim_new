@@ -71,6 +71,12 @@ def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/newDesign/newDesign.html", {"request": request}
     )
+@router.get('/newDesign/newDesignCustomers',response_model=List[models.Operation],)
+def get_operation(request: Request,):
+    return templates.TemplateResponse(
+        "/newDesign/newDesignCustomers.html", {"request": request}
+    )
+
 @router.get('/old/tab-panel.html',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
