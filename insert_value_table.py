@@ -38,6 +38,8 @@ print("Создаю таблицы")
 Base.metadata.create_all(engine)
 
 print("Добавляю пользователей")
+
+
 def add_user():
     vv = [{"user": {
         "username": "admin",
@@ -185,7 +187,6 @@ def add_user():
         res = requests.post('http://127.0.0.1:8000/auth/sign-up/', json=ff["user"])
         print(res.status_code)
 
-
         headers = {'Content-Type': 'application/json', 'Accept': 'application/json',
                    "Authorization": "Bearer " + json.loads(res.text)['access_token']}
 
@@ -199,7 +200,6 @@ def add_user():
 
 token_user = add_user()
 
-
 # def set_user_profile():
 #     headers = {'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json'}
 #     res = requests.post('http://127.0.0.1:8000/auth/sign-in/', headers=headers, data='grant_type=&username=admin&password=admin&scope=&client_id=&client_secret=')
@@ -209,6 +209,8 @@ token_user = add_user()
 
 
 print("Формируем значения для выпадающего списка")
+
+
 async def insert_Suggest():
     value = {"costWork": ["Грунтование м/к", "Изготовление м/к ферм с грунтованием",
                           "Устройство свай недостающих, с армированием и бетонированием", "Окраска м/к ", "Монтаж м/к"],
@@ -248,6 +250,8 @@ async def insert_Suggest():
 asyncio.run(insert_Suggest())
 
 print("Формируем таблицу ролей")
+
+
 async def addRoles():
     value = [
         {"ADMIN": "Администратор"},
@@ -272,6 +276,8 @@ async def addRoles():
 asyncio.run(addRoles())
 
 print("Формируем список задач на сотрудников")
+
+
 async def insert_UserTask():
     vv = [{
         "name": "Разработка таблицы",
@@ -283,8 +289,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Не важно",
-        "control":['Naumov', 'Efimov'],
-        "attachment":[]
+        "control": ['Naumov', 'Efimov'],
+        "attachment": []
     }, {
         "name": "Реализация создание задач",
         "user_create": "admin",
@@ -295,9 +301,9 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":['Naumov'],
-        "attachment":[]
-    },{
+        "control": ['Naumov'],
+        "attachment": []
+    }, {
         "name": "Реализация создание задач",
         "user_create": "Kharkov",
         "user_executor": "['admin']",
@@ -307,8 +313,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":["admin","Naumov"],
-        "attachment":[]
+        "control": ["admin", "Naumov"],
+        "attachment": []
     }, {
         "name": "test",
         "user_create": "Kharkov",
@@ -319,9 +325,9 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":["admin","Naumov"],
-        "attachment":[]
-    },  {
+        "control": ["admin", "Naumov"],
+        "attachment": []
+    }, {
         "name": "test2",
         "user_create": "Kharkov",
         "user_executor": "['admin']",
@@ -331,8 +337,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Нормально",
-        "control":["admin","Naumov"],
-        "attachment":[]
+        "control": ["admin", "Naumov"],
+        "attachment": []
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "admin",
@@ -343,8 +349,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Важно",
-        "control":['Efimov'],
-        "attachment":[]
+        "control": ['Efimov'],
+        "attachment": []
     }, {
         "name": "Доделать права в таблицах",
         "user_create": "Efimov",
@@ -355,8 +361,8 @@ async def insert_UserTask():
         "notification_holder": False,
         "notification_executor": True,
         "priority": "Важно",
-        "control":['admin'],
-        "attachment":[]
+        "control": ['admin'],
+        "attachment": []
     }]
 
     with sync_engine.connect() as conn:
@@ -435,32 +441,32 @@ for v in vv:
     res = requests.post('http://127.0.0.1:8000/message/Telegram_set_message/', headers=headers, json=v)
     print(res.status_code)
 
-
 print("Создаю таблицу с отделами")
 
-
-user={
-        "username": "admin",
-        "roles": "[\"ADMIN\"]",
-        "password": "admin"
+user = {
+    "username": "admin",
+    "roles": "[\"ADMIN\"]",
+    "password": "admin"
 }
 
+headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}
+#
+#
+res = requests.post('http://127.0.0.1:8000/auth/sign-in/', headers=headers,
+                    data="grant_type=&username=admin&password=admin&scope=&client_id=&client_secret=")
+access_token = json.loads(res.text)
 
-headers = {'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json'}
-#
-#
-res = requests.post('http://127.0.0.1:8000/auth/sign-in/',headers=headers, data="grant_type=&username=admin&password=admin&scope=&client_id=&client_secret=")
-access_token=json.loads(res.text)
+
 def add_department():
     global access_token
-    vv=[
+    vv = [
         {
-          "value": "отдел снабжения",
-          "event": "add"
+            "value": "отдел снабжения",
+            "event": "add"
         },
         {
-          "value": "отдел закупки",
-          "event": "add"
+            "value": "отдел закупки",
+            "event": "add"
         }
     ]
 
@@ -472,4 +478,6 @@ def add_department():
 
         res = requests.post('http://127.0.0.1:8000/userprofile/setDepartmentTable', headers=headers, json=ff)
         print(res.status_code)
+
+
 add_department()

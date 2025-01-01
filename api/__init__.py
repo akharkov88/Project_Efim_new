@@ -12,6 +12,7 @@ from . import (
     UserProfile,
     Telegram,
     Company,
+    Сonstruction,
 )
 
 
@@ -27,3 +28,4 @@ router.include_router(BaseFile.router)
 router.include_router(suggest.router)
 router.include_router(UserProfile.router)
 router.include_router(Company.router)
+router.include_router(Сonstruction.router)

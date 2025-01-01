@@ -41,40 +41,48 @@ class dotdict(dict):
     __delattr__ = dict.__delitem__
 
 
-class CompanyServicesClass:
+class СonstructionServicesClass:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
 
-    def services_SearchCompanyINN(self, param_search: models.Company,filter:str) -> str:
-        # response = await asyncio.get_event_loop().run_in_executor(None, requests.get, "https://api-fns.ru/api/search",
-        #                                                           data={"q":"5259107913","key":"d4a0ff06fad2f9491613657c091753fc143c2ab4"})
-        # return response
-        params = {
-            'q': param_search.inn,
-            'filter': filter,
-            'key': Constants.key
-        }
+    def updateConstruction(self,id: models.ModelConstructionID, param_save: models.ModelConstruction) -> str:
+        operation = (
+            self.session
+            .query(tables.Сonstruction)
+            .filter(
+                tables.Сonstruction.id == id.id
+            )
+            .first()
+        )
 
-        # r = requests.get('https://api-fns.ru/api/search', params=params)
-        r = requests.get(f'https://api.ofdata.ru/v2/company?key={Constants.keyOfdata}&inn={param_search.inn}')
-        #offline https://ofdata.ru/open-data
-        # gg=models.CompanyStructure1.parse_obj(json.loads(r.text)["data"])
-        # ff=models.CompanyStructure1.create_model()
-        #
-        # for k, v in modelCompany.items():
-        #     modelCompany[k] = json.loads(r.text)["data"].get(k, v)
-        #r.text
-        rezult=json.loads(r.text)
-        rezult["ЮЛ"] = rezult.pop("data")
-        rezult["ЮЛ"]["Статус"]=', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["Статус"].items())
-        rezult["ЮЛ"]["ЮрАдрес"]=', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["ЮрАдрес"].items())
-        return rezult
-    # response = asyncio.run(services_Company(param_search))
+        if not operation:
+            return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Отсутствует ID")
 
-    def services_addCompanyINN(self, param_save: models.CompanyStructure) -> str:
         try:
-            operation = tables.CompanyStructure(**dict(dict(param_save)["ЮЛ"]))
+
+            self.session.query(tables.Сonstruction).filter(tables.Сonstruction.id == id.id).update(dict(param_save))
+            self.session.commit()
+            operation = (
+                self.session
+                .query(tables.Сonstruction)
+                .filter(
+                    tables.Сonstruction.id == id.id
+                )
+                .first()
+            )
+
+            if not operation:
+                return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
+            return jsonable_encoder(operation)
+
+        except:
+            print(traceback.format_exc())
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Объект с стаким наименованием уже существует")
+
+    def services_addConstruction(self, param_save: models.ModelConstruction) -> str:
+        try:
+            operation = tables.Сonstruction(**dict(param_save))
             self.session.add(operation)
             self.session.flush()
             self.session.refresh(operation)
@@ -86,18 +94,18 @@ class CompanyServicesClass:
 
         except:
             print(traceback.format_exc())
-            raise HTTPException(status.HTTP_409_CONFLICT, detail="Организация с стаким наименованием уже существует")
+            raise HTTPException(status.HTTP_409_CONFLICT, detail="Объект с стаким наименованием уже существует")
 
-    def services_getCompany(self,id_company:int,page:int, size:int) -> str:
+    def services_getConstruction(self,id_construction:int,page:int, size:int) -> str|List[dict]:
         try:
             q = (
                 self.session
-                .query(tables.CompanyStructure))
+                .query(tables.Сonstruction))
 
-            if id_company!=None:
-                q=q.filter(tables.CompanyStructure.id == id_company)
+            if id_construction!=None:
+                q=q.filter(tables.Сonstruction.id == id_construction)
             operation=q.all()
-            if id_company==None and page!=None and size!=None:
+            if id_construction==None and page!=None and size!=None:
 
                 offset_min = page * size
                 offset_max = (page + 1) * size

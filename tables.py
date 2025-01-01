@@ -191,18 +191,16 @@ class CompanyStructure(Base):
     id = Column(Integer, index=True,primary_key=True)
     ИНН = Column(String) #ИНН
     ОГРН = Column(String) #ОГРН
-    НаимСокрЮЛ = Column(String) #НаимСокрЮЛ
-    НаимПолнЮЛ = Column(String, unique=True) #НаимПолнЮЛ
+    НаимСокр = Column(String) #НаимСокрЮЛ
+    НаимПолн = Column(String, unique=True) #НаимПолнЮЛ
     ДатаОГРН = Column(String)  #ДатаОГРН
     Статус = Column(String) #Статус
-    АдресПолн = Column(String) #АдресПолн
-    ОснВидДеят = Column(String) #ОснВидДеят
-    ГдеНайдено = Column(String) #ГдеНайдено
+    ЮрАдрес = Column(String) #АдресПолн
 
 
 
 
-class CompanyStructure(Base):
+class Сonstruction(Base):
     __tablename__ = 'construction'
     id = Column(Integer, index=True,primary_key=True)
     idCompanyStructure = Column(Integer)

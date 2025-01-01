@@ -19,16 +19,18 @@ from services.auth import (
 from services.Company import CompanyServicesClass
 
 router = APIRouter(
-    prefix='/Company',
-    tags=['Company'],
+    prefix='/company',
+    tags=['company'],
 )
 
 templates = Jinja2Templates(directory="src/main/")
 
 
-@router.get('/searchCompany', response_model=Json, )
+@router.get('/searchCompany', response_model=models.CompanyStructureLegal, )
 def find_company (request: Request,
                   param_search: models.ModelCompany = Depends(),
+                  # modelCompany: models.CompanyStructureLegal = Depends(),
+                  filter: str = None,
                   Company: CompanyServicesClass = Depends(),
                   Auth_Service: AuthService = Depends(),
                   ):
@@ -36,10 +38,10 @@ def find_company (request: Request,
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return Company.services_SearchCompanyINN(param_search)
+    return Company.services_SearchCompanyINN(param_search,filter)
 
 
-@router.post('/saveCompany', response_model=Json, )
+@router.post('/addCompany', response_model=Json, )
 def save_company(request: Request,
                   param_save: models.CompanyStructureLegal = Depends(),
                   Company: CompanyServicesClass = Depends(),
@@ -49,7 +51,7 @@ def save_company(request: Request,
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return Company.services_saveCompanyINN(param_save)
+    return Company.services_addCompanyINN(param_save)
 
 
 
