@@ -25,7 +25,7 @@ def working_api_CompanyStructure():
     search = requests.get('http://127.0.0.1:8000/company/searchCompany', headers=headers, params={"inn":"5259107913"})
     print(search)
     print(search.text)
-    addCompany = requests.post('http://127.0.0.1:8000/company/addCompany', headers=headers, json=json.loads(search.text)["data"])
+    addCompany = requests.post('http://127.0.0.1:8000/company/addCompany', headers=headers, json=json.loads(search.text)["ЮЛ"])
     print(addCompany)
     print(addCompany.text)
 
