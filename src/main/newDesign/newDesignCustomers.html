@@ -78,5 +78,24 @@
 </div>
 
 </body>
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded page')
+        getCompanyList()
+    })
+
+    /**
+    getCompanyList - функция для получения списка компаний
+
+        @param id_company - идентификатор компании из Postgress;
+        @param page - запрашиваемая страница пагинации;
+        @param size - количество компаний на одной странице;
+    **/
+    async function getCompanyList(id_company='', page='', size='') {
+        let response = await fetch('/Company/getCompany', {})
+        console.log(response)
+    }
+</script>
 </html>
 
