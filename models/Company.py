@@ -9,7 +9,6 @@ from typing import Any, Dict, List, Optional
 
 class ModelCompany(BaseModel):
     inn: int
-    filter: str
 
 
 class CompanyStructure(BaseModel):
@@ -27,13 +26,12 @@ class CompanyStructure(BaseModel):
 class CompanyStructure1(BaseModel):
     ИНН: str
     ОГРН: str
-    НаимСокрЮЛ: str
-    НаимПолнЮЛ: str
+    НаимСокр: str
+    НаимПолн: str
     ДатаОГРН: str
     Статус: str
-    АдресПолн: str
-    ОснВидДеят: str
-    ГдеНайдено: str
+    ЮрАдрес: str
+
 
 class CompanyStructureLegal(BaseModel):
     ЮЛ:CompanyStructure1

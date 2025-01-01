@@ -51,17 +51,17 @@ def get_operation(
         "index.html", {"request": request}
     )
 
-@router.get('/old/chart.html',response_model=List[models.Operation],)
+@router.get('/old/chart',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "chart.html", {"request": request}
     )
-@router.get('/old/empty.html',response_model=List[models.Operation],)
+@router.get('/old/empty',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/empty.html", {"request": request}
     )
-@router.get('/old/form.html',response_model=List[models.Operation],)
+@router.get('/old/form',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/form.html", {"request": request}
@@ -77,33 +77,33 @@ def get_operation(request: Request,):
         "/newDesign/newDesignCustomers.html", {"request": request}
     )
 
-@router.get('/old/tab-panel.html',response_model=List[models.Operation],)
+@router.get('/old/tab-panel',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/tab-panel.html", {"request": request}
     )
-@router.get('/old/table.html',response_model=List[models.Operation],)
+@router.get('/old/table',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/table.html", {"request": request}
     )
-@router.get('/old/ui-elements.html',response_model=List[models.Operation],)
+@router.get('/old/ui-elements',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/ui-elements.html", {"request": request}
     )
-@router.get('/index.html',response_model=List[models.Operation],)
+@router.get('/index',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "index.html", {"request": request}
     )
-@router.get('/old/index_copy_example.html',response_model=List[models.Operation],)
+@router.get('/old/index_copy_example',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "/old/index_copy_example.html", {"request": request}
     )
 
-@router.get('/index.html',response_model=List[models.Operation],)
+@router.get('/index',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "index.html", {"request": request}
@@ -112,13 +112,13 @@ def get_operation(request: Request,):
 
 
 
-@router.get('/indexShablon.html',response_model=List[models.Operation],)
+@router.get('/indexShablon',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "indexShablon.html", {"request": request}
     )
 
-@router.get('/techTaskForm.html',response_model=List[models.Operation],)
+@router.get('/techTaskForm',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "TechTask/techTaskForm.html", {"request": request}
@@ -126,7 +126,7 @@ def get_operation(request: Request,):
 
 
 
-@router.get('/Uvedomleniya.html',response_model=List[models.Operation],)
+@router.get('/Uvedomleniya',response_model=List[models.Operation],)
 def get_operation(request: Request,):
     return templates.TemplateResponse(
         "Uvedomleniya.html", {"request": request}

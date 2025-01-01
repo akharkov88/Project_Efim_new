@@ -55,6 +55,11 @@ from .Company import (
     GetCompanyStructureLegal,
     GetPainting,
     test,
+    CompanyStructure1,
+)
+from .Сonstruction import (
+    ModelConstruction,
+    ModelConstructionID,
 )
 from .Telegram import (
     BaseTelegram,
