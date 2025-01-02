@@ -164,7 +164,51 @@
         grid-area: main;
         /*{#background-color: #5C787C;#}*/
     }
+table {
+  /*border-collapse: separate;*/
+  line-height: 1.1;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  /*background:  radial-gradient(farthest-corner at 50% 50%, white, #e5ebf2);*/
+  color: #0C213B;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    width: 100%;
+}
+td{
+  font-size: 0.8em;
+  padding: 5px 7px;
+  border: 1px solid #454545;
+  /*border: 1px solid #A9E2CC;*/
+}
 
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  outline: 1px solid #494a4f;
+  border-radius: 1px;
+  border: none;
+}
+
+.hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+}
     .searchBox {
         background: #ededed;
         /*{#height: 25px;#}*/

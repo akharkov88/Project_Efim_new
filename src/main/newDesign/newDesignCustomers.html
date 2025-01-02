@@ -73,12 +73,23 @@
     </div>
     <div class="main">
 {#    Весь контент сюда    #}
-
+        <article class="content">
+            <table id="tableCustomers">
+                {#         https://www.dev-notes.ru/articles/frontend/simple-pagination-html-css-javascript/#}
+                <thead id="theadTableCustomers">
+                <tr>
+                </tr>
+                </thead>
+                <tbody id="tableContent">
+                </tbody>
+            </table>
+        </article>
     </div>
 </div>
 
 </body>
 <script>
+
 
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded page')
@@ -92,10 +103,102 @@
         @param page - запрашиваемая страница пагинации;
         @param size - количество компаний на одной странице;
     **/
-    async function getCompanyList(id_company='', page='', size='') {
-        let response = await fetch('/Company/getCompany', {})
-        console.log(response)
+    async function getCompanyList(id_company = '', page = 0, size = 5) {
+        let URL = `/company/getCompany?page=${page}&size=${size}`
+        check_user = await fetch(URL, {
+            headers: {
+                Accept: 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+        });
+        let responseText = await check_user.text();
+        {#console.log('response', responseText)#}
+        let arrayCustomers = JSON.parse(responseText)
+        console.log(arrayCustomers)
+        {#console.log(arrayCustomers[arrayCustomers.length - 1].total)#}
+
+        let tempTr = '';
+        document.getElementById('tableContent').replaceChildren();
+        for (let i = 0; i < arrayCustomers.length - 1; i++) {
+            tempTr = document.createElement('tr');
+            let tempTd = ''
+            for (let j in arrayCustomers[i]) {
+                tempTd = document.createElement('td');
+                {#console.log(arrayCustomers[i][j])#}
+                tempTd.textContent = arrayCustomers[i][j];
+                tempTr.append(tempTd)
+            }
+            document.getElementById('tableContent').append(tempTr)
+
+        }
+
+        if (document.getElementById('pagination')==null) {
+            let p2 = ''
+            for (let i in arrayCustomers[0]) {
+                p2 = document.createElement('td');
+                p2.textContent = i;
+                document.getElementById('theadTableCustomers').childNodes[1].append(p2);
+                {#console.log('тут', i)#}
+            }
+            paginationBut(arrayCustomers[arrayCustomers.length - 1].size, arrayCustomers[arrayCustomers.length - 1].total)
+
+        }
     }
+
+    function paginationBut(itemsPerPage, totalPages) {
+        const content = document.querySelector('.content');
+        {#const itemsPerPage = 5;#}
+        let currentPage = 0;
+        const items = Array.from(content.getElementsByTagName('tr')).slice(1);
+
+        function showPage(page) {
+            console.log('PAGE', page)
+            getCompanyList('', page, itemsPerPage)
+
+            /*const startIndex = page * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            items.forEach((item, index) => {
+                item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+            })*/
+            updateActiveButtonStates();
+        }
+
+        function createPageButtons() {
+            {#const totalPages = Math.ceil(items.length / itemsPerPage);#}
+            const paginationContainer = document.createElement('div');
+            const paginationDiv = document.body.appendChild(paginationContainer);
+            paginationContainer.classList.add('pagination');
+            paginationContainer.setAttribute('id', 'pagination');
+
+            // Add page buttons
+            for (let i = 0; i < totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i + 1;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updateActiveButtonStates();
+                });
+
+                content.appendChild(paginationContainer);
+                paginationDiv.appendChild(pageButton);
+    }
+        }
+
+        function updateActiveButtonStates() {
+            const pageButtons = document.querySelectorAll('.pagination button');
+            pageButtons.forEach((button, index) => {
+                if (index === currentPage) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+        createPageButtons(); // Call this function to create the page buttons initially
+        showPage(currentPage);
+    }
+
 </script>
 </html>
 
