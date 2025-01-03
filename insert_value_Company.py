@@ -2,6 +2,21 @@
 import requests
 import json
 
+import string
+import random
+# number_of_strings = 5
+# length_of_string = 15
+# for x in range(number_of_strings):
+#     print("" .join(random.choice(string.ascii_letters + string.digits) for _ in range(length_of_string) ) )
+
+def random_string (length: int,options: string):
+    return options+" "+"".join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
+
+def random_Construction (length: int):
+    ff=[]
+    for i in range(length):
+        ff.append({"idCompanyStructure":"","Наименнование":random_string(10,"Наименнование"),"Местоположение":random_string(10,"Местоположение"),"ВидОбъекта":random_string(10,"ВидОбъекта"),"Описание":random_string(10,"Описание")})
+    return ff
 
 headers = {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}
 #
@@ -20,11 +35,27 @@ def working_api_CompanyStructure():
                "Authorization": "Bearer " + access_token["access_token"],
                "Cookie": "Authorization=bearer " + access_token["access_token"]
                }
-    inns=["5259107913","6143087120","5609044282","7017061036","3525457593","6312058600","5003049878","7404039101","6662091900","7701013265","7717140237"]
-
+    inns_construct={"5259107913":random_Construction(1)
+    ,"6143087120":random_Construction(1)
+    ,"5609044282":random_Construction(2)
+    ,"7017061036":random_Construction(3)
+    ,"3525457593":random_Construction(4)
+    ,"6312058600":random_Construction(5)
+    ,"5003049878":random_Construction(7)
+    ,"7404039101":random_Construction(9)
+    ,"6662091900":random_Construction(11)
+    ,"7701013265":random_Construction(13)
+    ,"7717140237":random_Construction(15)
+    }
+    inns=list(inns_construct.keys())
     company = requests.get('http://127.0.0.1:8000/company/getCompany', headers=headers)
     for inn in json.loads(company.text):
         if inn["ИНН"] in inns:
+            for i,v in enumerate(inns_construct[inn["ИНН"]]):
+                inns_construct[inn["ИНН"]][i]["idCompanyStructure"]=inn["id"]
+                addConstruction = requests.post('http://127.0.0.1:8000/construction/addConstruction', headers=headers,json=inns_construct[inn["ИНН"]][i])
+                print(addConstruction)
+                print(addConstruction.text)
             inns.pop(inns.index(inn["ИНН"]))
 
     for inn in inns:
@@ -36,6 +67,11 @@ def working_api_CompanyStructure():
                 addCompany = requests.post('http://127.0.0.1:8000/company/addCompany', headers=headers, json=json.loads(search.text)["ЮЛ"])
                 print(addCompany)
                 print(addCompany.text)
+                for i,v in enumerate(inns_construct[json.loads(addCompany.text)["ИНН"]]):
+                    inns_construct[json.loads(addCompany.text)["ИНН"]][i]["idCompanyStructure"]=json.loads(addCompany.text)["id"]
+                    addConstruction = requests.post('http://127.0.0.1:8000/construction/addConstruction', headers=headers,json=inns_construct[json.loads(addCompany.text)["ИНН"]][i])
+                    print(addConstruction)
+                    print(addConstruction.text)
 
 
 working_api_CompanyStructure()

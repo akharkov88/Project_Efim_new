@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 
+
 class ModelConstruction(BaseModel):
     idCompanyStructure:int
     Наименнование:str
@@ -10,5 +11,7 @@ class ModelConstruction(BaseModel):
     ВидОбъекта:str
     Описание:str
 
+class ModelConstructionPost(BaseModel):
+    data:ModelConstruction
 class ModelConstructionID(BaseModel):
     id:int

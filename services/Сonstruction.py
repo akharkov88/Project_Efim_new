@@ -80,9 +80,9 @@ class СonstructionServicesClass:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Объект с стаким наименованием уже существует")
 
-    def services_addConstruction(self, param_save: models.ModelConstruction) -> str:
+    def services_addConstruction(self, param_save: models.ModelConstructionPost) -> str:
         try:
-            operation = tables.Сonstruction(**dict(param_save))
+            operation = tables.Сonstruction(**dict(param_save.data))
             self.session.add(operation)
             self.session.flush()
             self.session.refresh(operation)

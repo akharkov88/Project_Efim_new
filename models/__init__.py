@@ -60,6 +60,7 @@ from .Company import (
 from .Сonstruction import (
     ModelConstruction,
     ModelConstructionID,
+    ModelConstructionPost,
 )
 from .Telegram import (
     BaseTelegram,

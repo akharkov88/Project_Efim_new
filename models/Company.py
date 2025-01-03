@@ -1,11 +1,5 @@
 from pydantic import BaseModel
-from pydantic.main import ModelMetaclass
-from datetime import datetime, timezone,date
-from enum import Enum
-from typing import Optional
-# from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
 
 class ModelCompany(BaseModel):
     inn: int
