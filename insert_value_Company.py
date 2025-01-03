@@ -23,14 +23,9 @@ def working_api_CompanyStructure():
     inns=["5259107913","6143087120","5609044282","7017061036","3525457593","6312058600","5003049878","7404039101","6662091900","7701013265","7717140237"]
 
     company = requests.get('http://127.0.0.1:8000/company/getCompany', headers=headers)
-    print(company)
-    print(company.text)
-    print(len(json.loads(company.text)))
-    createinn=[]
     for inn in json.loads(company.text):
         if inn["ИНН"] in inns:
             inns.pop(inns.index(inn["ИНН"]))
-    print(inns)
 
     for inn in inns:
 

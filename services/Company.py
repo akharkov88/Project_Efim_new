@@ -99,14 +99,14 @@ class CompanyServicesClass:
             operation=q.all()
             if id_company==None and page!=None and size!=None:
 
-                offset_min = page * size
-                offset_max = (page + 1) * size
+                offset_min = (page-1) * size
+                offset_max = (page) * size
 
                 operation = operation[offset_min:offset_max] + [
                     {
                         "page": page,
                         "size": size,
-                        "total": math.ceil(len(operation) / size) - 1,
+                        "total": math.ceil(len(operation) / size),
                     }
                 ]
 
