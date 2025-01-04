@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    {% include "indexShablon_head.html" %}
+
+</head>
+<body class="initial">
+<div class="containerNewDesign">
+    <div class="left-menu">
+        <div class="box">
+            <a href="../newDesign/newDesign" class="not_active_menu">
+                <img src="{{ url_for('static', path='auth/images/home.png') }}" alt="" width="30">
+            </a>
+        </div>
+        <div class="box">
+            <a href="#" class="not_active_menu">
+                <img src="{{ url_for('static', path='auth/images/messenger.png') }}" alt="" width="30">
+            </a>
+        </div>
+        <div class="box">
+            <a href="../newDesign/newDesignCustomers" class="active_menu">
+                {#            style="background: #e7e7e7; "#}
+                <img src="{{ url_for('static', path='auth/images/people.png') }}" alt="" width="30">
+            </a>
+        </div>
+        <div class="box">
+            <a href="#" class="not_active_menu">
+                <img src="{{ url_for('static', path='auth/images/settings.png') }}" alt="" width="30">
+            </a>
+        </div>
+    </div>
+    <div class="head">
+        <div class="left-head">
+            <img src="{{ url_for('static', path='auth/images/bricks.png') }}" alt="" width="50"> MTI Manager
+        </div>
+        <div class="subhead_head">
+            <div class="searchBox search-head">
+                <input class="searchInput" type="search" name="" placeholder="Search" style="all: unset;">
+                <a href="#" class="search-btn">
+                    <i class="fa fa-search search-icon"></i>
+                </a>
+            </div>
+            <div class="right-head" style="text-align: right">
+                FIO main user
+                <div class="user">
+
+                    <i class="fa fa-user fa-fw" style=" font-size: xxx-large;"></i>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="subhead">
+        <div style="font-weight: bolder;
+    font-size: xx-large;">Заказчики
+        </div>
+        <div class="subhead_subsection">
+
+            <div class="search">
+                <a href="#" class="search-btn">
+                    <i class="fa fa-search search-icon"></i>
+                </a>
+                <input type="search" class="search-field" placeholder="Поиск" style="all: unset;">
+            </div>
+
+            <div class="" style="width: 100%">
+                <input type="button" class="button_add" value="+ Добавить создать">
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        {#    Весь контент сюда    #}
+        <article class="content">
+            <table id="tableCustomers">
+                {#         https://www.dev-notes.ru/articles/frontend/simple-pagination-html-css-javascript/#}
+                <thead id="theadTableCustomers">
+                <tr>
+                </tr>
+                </thead>
+                <tbody id="tableContent">
+                </tbody>
+            </table>
+        </article>
+    </div>
+
+    <div id="overlay"></div>
+    <div class="container">
+
+
+        <div id="ModalNewDesign" class="popup">
+            <!--  Создадим div, в который обернем заголовок и кнопки, а затем применем стили -->
+            <div class="popup__content">
+                {#                                                            <h2 class="popup__title">#}
+                {#                                                                Результат работы#}
+                {#                                                            </h2>#}
+                {##}
+                {#                                                            <label>Код закрытия</label>#}
+                {#                                                            <select id="kod" class="form-control" required>#}
+                {#                                                                <option>Выполнено</option>#}
+                {#                                                                <option>Отказ выполнять</option>#}
+                {#                                                            </select>#}
+                {#                                                            <div class="form-group">#}
+                {#                                                                <div id="containerPPR" class="testText"#}
+                {#                                                                     style="margin-bottom: 10px;"></div>#}
+                {##}
+                {#                                                                <input id="addPPR" type="button"#}
+                {#                                                                       value="Добавить вложение">#}
+                {#                                                            </div>#}
+                {##}
+                {##}
+                {#                                                            <label>Решение</label>#}
+                {#                                                            <div class="form-group">#}
+                {#                                                            <textarea id="result" class="form-control" rows="3"#}
+                {#                                                                      placeholder="Введите резултаты работы"></textarea>#}
+                {#                                                        </div>#}
+                {#                                                        <div class="btn-container">#}
+                {##}
+                {#                                                            <button id="yes-btn" class="popup__button" required>#}
+                {#                                                                Сохранить#}
+                {#                                                            </button>#}
+                {#                                                            <button id="no-btn" class="popup__button">#}
+                {#                                                                Отмена#}
+                {#                                                            </button>#}
+                {#                                                        </div>#}
+            </div>
+        </div>
+
+        <div id="success" class="popup">
+            <!--  Создадим div, в который обернем заголовок и кнопки, а затем применем стили -->
+            {#                                                    <div class="popup__content">#}
+            {#                                                        <h2 class="popup__title">#}
+            {#                                                            Выполнено#}
+            {#                                                        </h2>#}
+            {#                                                        <svg class="checkmark" viewBox="0 0 52 52">#}
+            {#                                                            <circle class="checkmark__circle" cx="26" cy="26" r="25"#}
+            {#                                                                    fill="none"/>#}
+            {#                                                            <path class="checkmark__check" fill="none"#}
+            {#                                                                  d="M14.1 27.2l7.1 7.2 16.7-16.8"/>#}
+            {#                                                        </svg>#}
+            {##}
+            {#                                                        <button id="good" class="popup__button">#}
+            {#                                                            Отлично#}
+            {#                                                        </button>#}
+            {##}
+            {#                                                        </div>#}
+            {#                                                    </div>#}
+        </div>
+    </div>
+
+    <button id="Otpravka_roles_button" class="btn btn-primary">Подтвердить отправку</button>
+
+</body>
+<script>
+    document.getElementById('Otpravka_roles_button').onclick = async function () {
+        createModal(title = "Форма добавление заказчика", body = [{
+            "type": "input",
+            "label": "Решение",
+            "placeholder": "Введите резултаты работы",
+            "class": "form-control",
+            "rows": "12"
+        }])
+        {#<label>Решение</label>#}
+        {#                                                            <div class="form-group">#}
+        {#                                                            <textarea id="result" class="form-control" rows="3"#}
+        {#                                                                      placeholder="Введите резултаты работы"></textarea>#}
+        {#                                                        </div>#}
+    }
+
+    /**
+     createModal - функция для создания модального окна
+
+     @param title - Текст Заголовка модального окна H2;
+     @param body - массив элементов тела всех элементов формы. Пока поддерживает типы полей (input);
+      пример {
+      "type": "input",
+      "label": "Решение",
+      "placeholder": "Введите резултаты работы",
+      "class": "form-control",
+      }
+     @param button - количество компаний на одной странице;
+     **/
+    function createModal(title, body) {
+        removeAllElementModal()
+        createModalTitle(title)
+        createModalBody(body)
+
+        document.getElementById("ModalNewDesign").style.display = "block";
+        document.getElementById("overlay").classList.add("show");
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded page')
+        getCompanyList()
+    })
+
+    function removeAllElementModal() {
+        document.getElementById("ModalNewDesign").textContent = ""
+    }
+
+    function createModalTitle(title) {
+        let titleModal = document.createElement('h2');
+        titleModal.className = "popup__title";
+        titleModal.textContent = title;
+        titleModal.id = "titleModal";
+        document.getElementById("ModalNewDesign").appendChild(titleModal);
+    }
+
+    function createModalBody(body) {
+        i = 0
+        let element;
+        for (element of body) {
+            i++
+            if (element.type === "input") {
+
+                if (element.label !== undefined) {
+
+                    let labelbodyElement = document.createElement('label');
+                    labelbodyElement.textContent = element.label;
+                    labelbodyElement.id = `labelbodyElement_${i}`;
+
+                    document.getElementById("ModalNewDesign").appendChild(labelbodyElement);
+
+                }
+
+
+                let bodyElement = document.createElement(element.type);
+                bodyElement.id = `bodyElement_${i}`;
+                bodyElement.class = "form-group";
+                if (element.placeholder !== undefined) {
+                    bodyElement.placeholder = element.placeholder
+                }
+
+                if (element.class !== undefined) {
+                    bodyElement.classList.add(element.class)
+                }
+
+                document.getElementById("ModalNewDesign").appendChild(bodyElement);
+
+            }
+
+        }
+    }
+
+    /**
+     getCompanyList - функция для получения списка компаний
+
+     @param id_company - идентификатор компании из Postgress;
+     @param page - запрашиваемая страница пагинации;
+     @param size - количество компаний на одной странице;
+     **/
+    async function getCompanyList(id_company = '', page = 0, size = 5) {
+        let URL = `/company/getCompany?page=${page}&size=${size}`
+        check_user = await fetch(URL, {
+            headers: {
+                Accept: 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+        });
+        let responseText = await check_user.text();
+        {#console.log('response', responseText)#}
+        let arrayCustomers = JSON.parse(responseText)
+        console.log(arrayCustomers)
+        {#console.log(arrayCustomers[arrayCustomers.length - 1].total)#}
+
+        let tempTr = '';
+        document.getElementById('tableContent').replaceChildren();
+        for (let i = 0; i < arrayCustomers.length - 1; i++) {
+            tempTr = document.createElement('tr');
+            let tempTd = ''
+            for (let j in arrayCustomers[i]) {
+                tempTd = document.createElement('td');
+                {#console.log(arrayCustomers[i][j])#}
+                tempTd.textContent = arrayCustomers[i][j];
+                tempTr.append(tempTd)
+            }
+            document.getElementById('tableContent').append(tempTr)
+
+        }
+
+        if (document.getElementById('pagination') == null) {
+            let p2 = ''
+            for (let i in arrayCustomers[0]) {
+                p2 = document.createElement('td');
+                p2.textContent = i;
+                document.getElementById('theadTableCustomers').childNodes[1].append(p2);
+                {#console.log('тут', i)#}
+            }
+            paginationBut(arrayCustomers[arrayCustomers.length - 1].size, arrayCustomers[arrayCustomers.length - 1].total)
+
+        }
+    }
+
+    function paginationBut(itemsPerPage, totalPages) {
+        const content = document.querySelector('.content');
+        {#const itemsPerPage = 5;#}
+        let currentPage = 0;
+        const items = Array.from(content.getElementsByTagName('tr')).slice(1);
+
+        function showPage(page) {
+            console.log('PAGE', page)
+            getCompanyList('', page, itemsPerPage)
+
+            /*const startIndex = page * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            items.forEach((item, index) => {
+                item.classList.toggle('hidden', index < startIndex || index >= endIndex);
+            })*/
+            updateActiveButtonStates();
+        }
+
+        function createPageButtons() {
+            {#const totalPages = Math.ceil(items.length / itemsPerPage);#}
+            const paginationContainer = document.createElement('div');
+            const paginationDiv = document.body.appendChild(paginationContainer);
+            paginationContainer.classList.add('pagination');
+            paginationContainer.setAttribute('id', 'pagination');
+
+            // Add page buttons
+            for (let i = 0; i < totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i + 1;
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    updateActiveButtonStates();
+                });
+
+                content.appendChild(paginationContainer);
+                paginationDiv.appendChild(pageButton);
+            }
+        }
+
+        function updateActiveButtonStates() {
+            const pageButtons = document.querySelectorAll('.pagination button');
+            pageButtons.forEach((button, index) => {
+                if (index === currentPage) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        createPageButtons(); // Call this function to create the page buttons initially
+        showPage(currentPage);
+    }
+
+
+</script>
+</html>
+

@@ -55,7 +55,7 @@ def save_company(request: Request,
 
 
 
-@router.get('/getCompany', ) #, response_model=Json
+@router.get('/getCompany' ) #, response_model=Json
 def save_company(request: Request,
                   id_company:  int = None,
                   page:  int = None,

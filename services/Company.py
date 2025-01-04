@@ -94,8 +94,14 @@ class CompanyServicesClass:
                 self.session
                 .query(tables.CompanyStructure))
 
-            if id_company!=None:
+            if id_company!=None and id_company!=0:
                 q=q.filter(tables.CompanyStructure.id == id_company)
+            elif id_company==0:
+                rez={}
+                for v in list(tables.CompanyStructure.__table__.columns):
+                    if v.name!="id":
+                        rez[v.name]=v.type.python_type
+                return list(rez)
             operation=q.all()
             if id_company==None and page!=None and size!=None:
 

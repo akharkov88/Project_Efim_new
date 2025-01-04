@@ -39,20 +39,9 @@ templates = Jinja2Templates(directory="src/main/")
 #     return Company.services_SearchCompanyINN(param_search)
 #
 #
-@router.post('/addCompany1', response_model=Json, )
-def save_company(request: Request,
-                  param_save: models.CompanyStructureLegal = Depends(),
-                  Company: СonstructionServicesClass = Depends(),
-                  Auth_Service: AuthService = Depends(),
-                  ):
-    try:
-        Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
-    except:
-        return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return Company.services_addCompanyINN(param_save)
 
 
-@router.post('/addConstruction', response_model=Json,) #, response_model=Json
+@router.post('/addConstruction', response_model=models.ModelConstructionPost) #, response_model=Json
 def save_construction(request: Request,
                   param_save: models.ModelConstructionPost = Depends(),
                   Construction: СonstructionServicesClass = Depends(),
@@ -79,7 +68,7 @@ def save_company(request: Request,
     return Construction.updateConstruction(id_construction,param_save)
 
 
-@router.get('/getConstruction', ) #, response_model=Json
+@router.get('/getConstruction' ) #, response_model=Json
 def save_company(request: Request,
                   id_construction:  int = None,
                   page:  int = None,

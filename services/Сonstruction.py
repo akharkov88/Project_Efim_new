@@ -102,13 +102,19 @@ class СonstructionServicesClass:
                 self.session
                 .query(tables.Сonstruction))
 
-            if id_construction!=None:
+            if id_construction!=None and id_construction!=0:
                 q=q.filter(tables.Сonstruction.id == id_construction)
+            elif id_construction==0:
+                rez={}
+                for v in list(tables.Сonstruction.__table__.columns):
+                    if v.name!="id" and v.name!="idCompanyStructure":
+                        rez[v.name]=v.type.python_type
+                return list(rez)
             operation=q.all()
             if id_construction==None and page!=None and size!=None:
 
-                offset_min = page * size
-                offset_max = (page + 1) * size
+                offset_min = (page-1) * size
+                offset_max = page  * size
 
                 operation = operation[offset_min:offset_max] + [
                     {
