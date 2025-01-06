@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+{#    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">#}
         {% include "indexShablon_head.html" %}
 
 </head>
@@ -103,7 +103,7 @@
         @param page - запрашиваемая страница пагинации;
         @param size - количество компаний на одной странице;
     **/
-    async function getCompanyList(id_company = '', page = 0, size = 5) {
+    async function getCompanyList(id_company = '', page = 1, size = 5) {
         let URL = `/company/getCompany?page=${page}&size=${size}`
         check_user = await fetch(URL, {
             headers: {
@@ -122,6 +122,20 @@
         for (let i = 0; i < arrayCustomers.length - 1; i++) {
             tempTr = document.createElement('tr');
             let tempTd = ''
+            tempTd = document.createElement('td');
+            let tempBut = document.createElement('button');
+
+            tempBut.setAttribute('type', 'button');
+            tempBut.classList.add('btn'); // для стиля
+            tempBut.classList.add('btnCustomerOpen'); // для логики
+            tempBut.textContent = '+';
+            tempBut.addEventListener('click', () => {
+                console.log($('#theadTableCustomers'))
+                tempBut.textContent = '-';
+            }); // событие для кнопки (Модалка с списком объектов или вложенная таблица)
+            tempTd.append(tempBut);
+            tempTr.append(tempTd)
+
             for (let j in arrayCustomers[i]) {
                 tempTd = document.createElement('td');
                 {#console.log(arrayCustomers[i][j])#}
@@ -130,10 +144,14 @@
             }
             document.getElementById('tableContent').append(tempTr)
 
+
         }
 
+
         if (document.getElementById('pagination')==null) {
-            let p2 = ''
+            let p2 = '';
+            p2 = document.createElement('td');
+            document.getElementById('theadTableCustomers').childNodes[1].append(p2); // пустая ячейка для ровной сетки
             for (let i in arrayCustomers[0]) {
                 p2 = document.createElement('td');
                 p2.textContent = i;
@@ -148,7 +166,7 @@
     function paginationBut(itemsPerPage, totalPages) {
         const content = document.querySelector('.content');
         {#const itemsPerPage = 5;#}
-        let currentPage = 0;
+        let currentPage = 1;
         const items = Array.from(content.getElementsByTagName('tr')).slice(1);
 
         function showPage(page) {
@@ -171,9 +189,9 @@
             paginationContainer.setAttribute('id', 'pagination');
 
             // Add page buttons
-            for (let i = 0; i < totalPages; i++) {
+            for (let i = 1; i < totalPages + 1; i++) {
                 const pageButton = document.createElement('button');
-                pageButton.textContent = i + 1;
+                pageButton.textContent = i;
                 pageButton.addEventListener('click', () => {
                     currentPage = i;
                     showPage(currentPage);
@@ -188,7 +206,7 @@
         function updateActiveButtonStates() {
             const pageButtons = document.querySelectorAll('.pagination button');
             pageButtons.forEach((button, index) => {
-                if (index === currentPage) {
+                if (index + 1 === currentPage) {
                     button.classList.add('active');
                 } else {
                     button.classList.remove('active');
