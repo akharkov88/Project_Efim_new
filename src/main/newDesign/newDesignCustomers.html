@@ -74,7 +74,7 @@
     <div class="main">
 {#    Весь контент сюда    #}
         <article class="content">
-            <table id="tableCustomers">
+            <table id="tableCustomers" class="tableCustomersClass">
                 {#         https://www.dev-notes.ru/articles/frontend/simple-pagination-html-css-javascript/#}
                 <thead id="theadTableCustomers">
                 <tr>
@@ -130,9 +130,17 @@
             tempBut.classList.add('btnCustomerOpen'); // для логики
             tempBut.textContent = '+';
             tempBut.addEventListener('click', () => {
-                console.log($('#theadTableCustomers'))
+                if (tempBut.textContent == '-') {
+                    tempBut.textContent = '+';
+                } else {
+                    let jQueryBtn = $('.btnCustomerOpen');
+                    // замена всех символов из выборки "-" на "+"
+                    jQueryBtn.map((e) => {
+                        jQueryBtn[e].innerHTML = '+';
+                    })
                 tempBut.textContent = '-';
-            }); // событие для кнопки (Модалка с списком объектов или вложенная таблица)
+                }
+            }); // событие для кнопки (Модалка со списком объектов или вложенная таблица)
             tempTd.append(tempBut);
             tempTr.append(tempTd)
 
