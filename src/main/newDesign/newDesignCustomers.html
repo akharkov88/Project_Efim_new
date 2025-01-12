@@ -132,6 +132,9 @@
             tempBut.addEventListener('click', () => {
                 if (tempBut.textContent == '-') {
                     tempBut.textContent = '+';
+                        if($('.pasteObjectTr')[0]){
+                            $('.pasteObjectTr')[0].remove()
+                        }
                 } else {
                     let jQueryBtn = $('.btnCustomerOpen');
                     // замена всех символов из выборки "-" на "+"
@@ -139,6 +142,12 @@
                         jQueryBtn[e].innerHTML = '+';
                     })
                 tempBut.textContent = '-';
+
+                if($('.pasteObjectTr')[0]){
+                    $('.pasteObjectTr')[0].remove()
+                } // удаление вложенной таблицы при нажатии на другого заказчика
+
+                getObjectList(tempBut)
                 }
             }); // событие для кнопки (Модалка со списком объектов или вложенная таблица)
             tempTd.append(tempBut);
@@ -169,6 +178,53 @@
             paginationBut(arrayCustomers[arrayCustomers.length - 1].size, arrayCustomers[arrayCustomers.length - 1].total)
 
         }
+    }
+
+    /**
+     getObjectList - функция для получения списка объектов комании
+
+     **/
+    async function getObjectList(tempBut, id_company = '', page = 1, size = 5) {
+        let URL = `/company/getCompany?page=${page}&size=${size}`
+        check_user = await fetch(URL, {
+            headers: {
+                Accept: 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+        });
+        let responseText = await check_user.text();
+        let arrayCustomers = JSON.parse(responseText)
+        console.log('tempBut',tempBut.parentElement.parentElement.parentElement)
+                let pasteTr = document.createElement("tr");
+                let pasteTd = document.createElement("td");
+                let pasteTbody = document.createElement("tbody");
+                pasteTd.setAttribute('colspan','10')
+                pasteTr.append(pasteTd)
+                pasteTd.append(pasteTbody)
+
+                pasteTbody.classList.add('tbodyObject');
+                pasteTr.classList.add('pasteObjectTr');
+
+                {#let pasteTd = document.createElement("td");#}
+
+                {#pasteTr.append(pasteTd)#}
+            {#document.getElementById('tableCustomers').append(pasteTr)#}
+        console.log(arrayCustomers)
+        for (let i = 0; i < arrayCustomers.length - 1; i++) {
+            let tempTr = document.createElement('tr');
+            let tempTd = ''
+            tempTd = document.createElement('td');
+            {#let tempButObject = document.createElement('button');#}
+            for (let j in arrayCustomers[i]) {
+                tempTd = document.createElement('td');
+                {#console.log(arrayCustomers[i][j])#}
+                tempTd.textContent = arrayCustomers[i][j];
+                tempTr.append(tempTd)
+            }
+            pasteTbody.append(tempTr)
+        }
+        tempBut.parentElement.parentElement.after(pasteTr)
+
     }
 
     function paginationBut(itemsPerPage, totalPages) {
