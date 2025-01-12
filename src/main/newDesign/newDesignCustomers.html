@@ -185,7 +185,7 @@
 
      **/
     async function getObjectList(tempBut, id_company = '', page = 1, size = 5) {
-        let URL = `/company/getCompany?page=${page}&size=${size}`
+        let URL = `/construction/getConstruction`
         check_user = await fetch(URL, {
             headers: {
                 Accept: 'application/json',
@@ -204,12 +204,24 @@
 
                 pasteTbody.classList.add('tbodyObject');
                 pasteTr.classList.add('pasteObjectTr');
-
+                 tempBut.parentElement.parentElement.after(pasteTr)
+                //  Добавляю заголовок для вложенной таблицы
+                let p2 = '';
+                let headTr = document.createElement("tr");
+                    for (let i in arrayCustomers[0]) {
+                        p2 = document.createElement('td');
+                        p2.textContent = i;
+                        headTr.append(p2);
+                        console.log('тут', i)
+                    }
+                    pasteTbody.append(headTr)
+                    {#document.getElementsByClassName('tbodyObject').append(headTr)#}
                 {#let pasteTd = document.createElement("td");#}
 
                 {#pasteTr.append(pasteTd)#}
             {#document.getElementById('tableCustomers').append(pasteTr)#}
         console.log(arrayCustomers)
+
         for (let i = 0; i < arrayCustomers.length - 1; i++) {
             let tempTr = document.createElement('tr');
             let tempTd = ''
@@ -223,7 +235,7 @@
             }
             pasteTbody.append(tempTr)
         }
-        tempBut.parentElement.parentElement.after(pasteTr)
+
 
     }
 
