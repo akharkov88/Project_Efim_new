@@ -12,6 +12,16 @@
     padding:3px 5px;
 }
 
+.btnObjectOpen{
+    background-color: rgb(255, 255, 255);
+    border: 2px solid black;
+    margin:5px 5px;
+    line-height:14px;
+    font-size:14px;
+    text-align:center;
+    padding:3px 5px;
+}
+
 
     .button_add {
         background-color: #0a0a23;
@@ -189,10 +199,30 @@
         background: white;
         padding: 10px;
         border: 1px solid black;
-    border-radius: 20px;
-    --r: 20px; /* Радиус скругления */
-    --b: 1px solid #333; /* Параметры линии */
-    border-spacing: 0; /* Расстояние между ячейками */
+        /*border-radius: 20px;*/
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+
+        --r: 20px; /* Радиус скругления */
+        --b: 1px solid #333; /* Параметры линии */
+        border-spacing: 0; /* Расстояние между ячейками */
+    }
+.tbodyObjectButton {
+        height: 50px;
+        /*overflow-y: auto;*/
+        /*scrollbar-color: #458245 #714826; !* «цвет ползунка» «цвет полосы скроллбара» *!*/
+        /*scrollbar-width: thin;  !* толщина *!*/
+        /*overscroll-behavior-y: contain; !* от прокрутки *!*/
+        display: block;
+        background: white;
+        padding: 10px;
+        border: 1px solid black;
+        /*border-radius: 20px;*/
+        --r: 20px; /* Радиус скругления */
+        --b: 1px solid #333; /* Параметры линии */
+        border-spacing: 0; /* Расстояние между ячейками */
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
     }
     .tbodyObject tr:first-child td:last-child {
     border-top-right-radius: var(--r); /* Правый верхний угол */

@@ -200,18 +200,52 @@
         let arrayCustomers = JSON.parse(responseText)
         console.log('tempBut',tempBut.parentElement.parentElement.parentElement)
                 let pasteTr = document.createElement("tr");
+                let pasteTr2 = document.createElement("tr");
+
                 let pasteTd = document.createElement("td");
                 let pasteTbody = document.createElement("tbody");
                 pasteTd.setAttribute('colspan','10')
+                pasteTd.setAttribute('style','border-bottom: none')
                 pasteTr.append(pasteTd)
+                let pasteTdForButton = document.createElement("td");
+                pasteTdForButton.setAttribute('colspan','10')
+                pasteTdForButton.classList.add('pasteObjectTrForButton');
+
+                pasteTdForButton.setAttribute('style','text-align: right; border-top: none')
+
+                let pasteTbodyForButton = document.createElement("tbody");
+                pasteTbodyForButton.classList.add('tbodyObjectButton');
+
+                let tempButObject = document.createElement('button');
+                tempButObject.setAttribute('type', 'button');
+                tempButObject.classList.add('btn'); // для стиля
+                tempButObject.classList.add('btnObjectOpen'); // для логики
+                tempButObject.textContent = '+';
+                let tempButObject2 = document.createElement('button');
+                tempButObject2.setAttribute('type', 'button');
+                tempButObject2.classList.add('btn'); // для стиля
+                tempButObject2.classList.add('btnObjectOpen'); // для логики
+                tempButObject2.textContent = '+';
+
+                pasteTr2.append(pasteTdForButton)
+
+                pasteTdForButton.append(pasteTbodyForButton)
+
+                {#pasteTbodyForButton.setAttribute()#}
+                pasteTbodyForButton.append(tempButObject)
+                pasteTbodyForButton.append(tempButObject2)
+
                 pasteTd.append(pasteTbody)
 
                 pasteTbody.classList.add('tbodyObject');
                 pasteTr.classList.add('pasteObjectTr');
-                 tempBut.parentElement.parentElement.after(pasteTr)
+                tempBut.parentElement.parentElement.after(pasteTr2)
+
+                tempBut.parentElement.parentElement.after(pasteTr)
                 //  Добавляю заголовок для вложенной таблицы
-                let p2 = '';
+        let p2 = document.createElement('td');
                 let headTr = document.createElement("tr");
+        headTr.append(p2);
                     for (let i in arrayCustomers[0]) {
                         p2 = document.createElement('td');
                         p2.textContent = i;
@@ -230,14 +264,28 @@
             let tempTr = document.createElement('tr');
             let tempTd = ''
             tempTd = document.createElement('td');
+            tempTr.append(tempTd)
+
             {#let tempButObject = document.createElement('button');#}
+            let tempButObject = document.createElement('button');
+
+            tempButObject.setAttribute('type', 'button');
+            tempButObject.classList.add('btn'); // для стиля
+            tempButObject.classList.add('btnObjectOpen'); // для логики
+            tempButObject.textContent = '+';
+            tempButObject.addEventListener('click', () => {
+            })
+            tempTd.append(tempButObject);
+
             for (let j in arrayCustomers[i]) {
                 tempTd = document.createElement('td');
                 {#console.log(arrayCustomers[i][j])#}
                 tempTd.textContent = arrayCustomers[i][j];
                 tempTr.append(tempTd)
             }
+
             pasteTbody.append(tempTr)
+
         }
 
 
