@@ -4,7 +4,10 @@
 <head>
 {#    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">#}
         {% include "indexShablon_head.html" %}
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 </head>
 <body class="initial">
 <div class="containerNewDesign">
@@ -136,19 +139,20 @@
                             $('.pasteObjectTr')[0].remove()
                         }
                 } else {
-                    let jQueryBtn = $('.btnCustomerOpen');
-                    // замена всех символов из выборки "-" на "+"
-                    jQueryBtn.map((e) => {
-                        jQueryBtn[e].innerHTML = '+';
-                    })
-                tempBut.textContent = '-';
+                        let jQueryBtn = $('.btnCustomerOpen');
+                        // замена всех символов из выборки "-" на "+"
+                        jQueryBtn.map((e) => {
+                            jQueryBtn[e].innerHTML = '+';
+                        })
+                    tempBut.textContent = '-';
 
-                if($('.pasteObjectTr')[0]){
-                    $('.pasteObjectTr')[0].remove()
-                } // удаление вложенной таблицы при нажатии на другого заказчика
+                    if($('.pasteObjectTr')[0]){
+                        $('.pasteObjectTr')[0].remove()
+                    } // удаление вложенной таблицы при нажатии на другого заказчика
 
-                getObjectList(tempBut)
+                    getObjectList(tempBut)
                 }
+
             }); // событие для кнопки (Модалка со списком объектов или вложенная таблица)
             tempTd.append(tempBut);
             tempTr.append(tempTd)
@@ -276,7 +280,7 @@
 
                 content.appendChild(paginationContainer);
                 paginationDiv.appendChild(pageButton);
-    }
+            }
         }
 
         function updateActiveButtonStates() {
