@@ -70,7 +70,7 @@
             </div>
 
             <div class="" style="width: 100%">
-                <input type="button" class="button_add" value="+ Добавить создать">
+                <input type="button" class="button_add" value="+ Добавить заказчика">
             </div>
         </div>
     </div>
@@ -137,6 +137,7 @@
                     tempBut.textContent = '+';
                         if($('.pasteObjectTr')[0]){
                             $('.pasteObjectTr')[0].remove()
+                            $('.pasteObjectTrForButton')[0].remove()
                         }
                 } else {
                         let jQueryBtn = $('.btnCustomerOpen');
@@ -148,6 +149,7 @@
 
                     if($('.pasteObjectTr')[0]){
                         $('.pasteObjectTr')[0].remove()
+                        $('.pasteObjectTrForButton')[0].remove()
                     } // удаление вложенной таблицы при нажатии на другого заказчика
 
                     getObjectList(tempBut)
@@ -204,23 +206,26 @@
 
                 let pasteTd = document.createElement("td");
                 let pasteTbody = document.createElement("tbody");
+                {# pasteTbody.setAttribute('style','border-bottom: none') // тонкая линия между tbody #}
+
                 pasteTd.setAttribute('colspan','10')
-                pasteTd.setAttribute('style','border-bottom: none')
+                pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px 0 7px')
                 pasteTr.append(pasteTd)
                 let pasteTdForButton = document.createElement("td");
                 pasteTdForButton.setAttribute('colspan','10')
                 pasteTdForButton.classList.add('pasteObjectTrForButton');
 
-                pasteTdForButton.setAttribute('style','text-align: right; border-top: none')
+                pasteTdForButton.setAttribute('style','text-align: right; border-top: none; padding: 0 7px 5px 7px')
 
                 let pasteTbodyForButton = document.createElement("tbody");
+                pasteTbodyForButton.setAttribute('style','border-top: none')
                 pasteTbodyForButton.classList.add('tbodyObjectButton');
 
                 let tempButObject = document.createElement('button');
                 tempButObject.setAttribute('type', 'button');
                 tempButObject.classList.add('btn'); // для стиля
                 tempButObject.classList.add('btnObjectOpen'); // для логики
-                tempButObject.textContent = '+';
+                tempButObject.textContent = 'Добавить объект';
                 let tempButObject2 = document.createElement('button');
                 tempButObject2.setAttribute('type', 'button');
                 tempButObject2.classList.add('btn'); // для стиля
@@ -233,7 +238,7 @@
 
                 {#pasteTbodyForButton.setAttribute()#}
                 pasteTbodyForButton.append(tempButObject)
-                pasteTbodyForButton.append(tempButObject2)
+                {#pasteTbodyForButton.append(tempButObject2)#}
 
                 pasteTd.append(pasteTbody)
 
@@ -252,6 +257,7 @@
                         headTr.append(p2);
                         console.log('тут', i)
                     }
+                    headTr.setAttribute('style','position: sticky;top: 0;background: white;')
                     pasteTbody.append(headTr)
                     {#document.getElementsByClassName('tbodyObject').append(headTr)#}
                 {#let pasteTd = document.createElement("td");#}
