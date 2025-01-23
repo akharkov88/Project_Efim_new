@@ -197,7 +197,7 @@
         overscroll-behavior-y: contain; /* от прокрутки */
         display: block;
         background: white;
-        padding: 10px;
+        padding: 0 10px 10px 0;
         border: 1px solid black;
         /*border-radius: 20px;*/
         border-top-right-radius: 20px;
@@ -265,7 +265,7 @@
    }
 
 table.tableCustomersClass td {
-  font-size: 0.8em;
+  font-size: 0.8em;  /* изменить размер текста в таблице заказчики*/
   padding: 5px 7px;
   border: 1px solid #454545;
   /*border: 1px solid #A9E2CC;*/
