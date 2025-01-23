@@ -4,7 +4,7 @@ from datetime import (
 )
 import ast
 import math
-from pydantic import BaseModel,Field
+from pydantic import BaseModel, Field
 from sqlalchemy import select
 from pandas.core.computation.pytables import Constant
 from pytz import timezone
@@ -34,6 +34,7 @@ import asyncio
 import requests
 import Constants
 
+
 class dotdict(dict):
     """dot.notation access to dictionary attributes"""
     __getattr__ = dict.get
@@ -45,8 +46,7 @@ class CompanyServicesClass:
     def __init__(self, session: Session = Depends(get_session)):
         self.session = session
 
-
-    def services_SearchCompanyINN(self, param_search: models.Company,filter:str) -> str:
+    def services_SearchCompanyINN(self, param_search: models.Company, filter: str) -> str:
         # response = await asyncio.get_event_loop().run_in_executor(None, requests.get, "https://api-fns.ru/api/search",
         #                                                           data={"q":"5259107913","key":"d4a0ff06fad2f9491613657c091753fc143c2ab4"})
         # return response
@@ -58,18 +58,19 @@ class CompanyServicesClass:
 
         # r = requests.get('https://api-fns.ru/api/search', params=params)
         r = requests.get(f'https://api.ofdata.ru/v2/company?key={Constants.keyOfdata}&inn={param_search.inn}')
-        #offline https://ofdata.ru/open-data
+        # offline https://ofdata.ru/open-data
         # gg=models.CompanyStructure1.parse_obj(json.loads(r.text)["data"])
         # ff=models.CompanyStructure1.create_model()
         #
         # for k, v in modelCompany.items():
         #     modelCompany[k] = json.loads(r.text)["data"].get(k, v)
-        #r.text
-        rezult=json.loads(r.text)
+        # r.text
+        rezult = json.loads(r.text)
         rezult["ЮЛ"] = rezult.pop("data")
-        rezult["ЮЛ"]["Статус"]=', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["Статус"].items())
-        rezult["ЮЛ"]["ЮрАдрес"]=', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["ЮрАдрес"].items())
+        rezult["ЮЛ"]["Статус"] = ', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["Статус"].items())
+        rezult["ЮЛ"]["ЮрАдрес"] = ', '.join('{} : {}'.format(key, val) for key, val in rezult["ЮЛ"]["ЮрАдрес"].items())
         return rezult
+
     # response = asyncio.run(services_Company(param_search))
 
     def services_addCompanyINN(self, param_save: models.CompanyStructure) -> str:
@@ -78,7 +79,7 @@ class CompanyServicesClass:
             self.session.add(operation)
             self.session.flush()
             self.session.refresh(operation)
-            rez=jsonable_encoder(operation)
+            rez = jsonable_encoder(operation)
             self.session.commit()
             if not operation:
                 return HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Ошибка повторите еще раз")
@@ -88,24 +89,37 @@ class CompanyServicesClass:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Организация с стаким наименованием уже существует")
 
-    def services_getCompany(self,id_company:int,page:int, size:int) -> str:
+    def services_getCompany(self, id_company: int, page: int, size: int) -> str:
         try:
             q = (
                 self.session
                 .query(tables.CompanyStructure))
 
-            if id_company!=None and id_company!=0:
-                q=q.filter(tables.CompanyStructure.id == id_company)
-            elif id_company==0:
-                rez={}
+            if id_company != None and id_company != 0:
+                q = q.filter(tables.CompanyStructure.id == id_company)
+            elif id_company == 0:
+                rez = []
+                # {
+                #     "type": "input",
+                #     "label": "Решение",
+                #     "placeholder": "Введите результаты работы",
+                #     "class": "form-control",
+                #     "rows": "12"
+                # }
                 for v in list(tables.CompanyStructure.__table__.columns):
-                    if v.name!="id":
-                        rez[v.name]=v.type.python_type
-                return list(rez)
-            operation=q.all()
-            if id_company==None and page!=None and size!=None:
-
-                offset_min = (page-1) * size
+                    if v.name != "id":
+                        value = {
+                            "type": "input",
+                            "label": v.name,
+                            "placeholder": "",
+                            "class": "form-control",
+                            "rows": "12"
+                        }
+                        rez.append(value)
+                return rez
+            operation = q.all()
+            if id_company == None and page != None and size != None:
+                offset_min = (page - 1) * size
                 offset_max = (page) * size
 
                 operation = operation[offset_min:offset_max] + [
@@ -117,14 +131,13 @@ class CompanyServicesClass:
                 ]
 
             # сортируем поля для ответа
-            rez=[]
+            rez = []
             mapper = ['id', "ИНН"]
             for v in operation:
-                rez.append({k_new: jsonable_encoder(v)[k_new]  for k_new in
+                rez.append({k_new: jsonable_encoder(v)[k_new] for k_new in
                             mapper + list(jsonable_encoder(v).keys()) if k_new in list(jsonable_encoder(v).keys())})
             return rez
 
         except:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Организация с стаким наименованием уже существует")
-
