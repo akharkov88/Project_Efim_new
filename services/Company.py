@@ -116,7 +116,13 @@ class CompanyServicesClass:
                     }
                 ]
 
-            return operation
+            # сортируем поля для ответа
+            rez=[]
+            mapper = ['id', "ИНН"]
+            for v in operation:
+                rez.append({k_new: jsonable_encoder(v)[k_new]  for k_new in
+                            mapper + list(jsonable_encoder(v).keys()) if k_new in list(jsonable_encoder(v).keys())})
+            return rez
 
         except:
             print(traceback.format_exc())
