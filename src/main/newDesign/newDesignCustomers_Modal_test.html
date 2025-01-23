@@ -155,22 +155,28 @@
 </body>
 <script>
     document.getElementById('Otpravka_roles_button').onclick = async function () {
-        createModal(title = "Форма добавление заказчика", body = [{
-            "type": "input",
-            "label": "Решение",
-            "placeholder": "Введите резултаты работы",
-            "class": "form-control",
-            "rows": "12"
-        }])
-        {#<label>Решение</label>#}
-        {#                                                            <div class="form-group">#}
-        {#                                                            <textarea id="result" class="form-control" rows="3"#}
-        {#                                                                      placeholder="Введите резултаты работы"></textarea>#}
-        {#                                                        </div>#}
+        let URL = `/company/getCompany?id_company=0`
+        check_user = await fetch(URL, {
+            headers: {
+                Accept: 'application/json',
+                "Authorization": getCookieValue("Authorization")
+            },
+        });
+        let arrayCustomers = await check_user.json();
+        yes_button = function () {
+            console.log("yesyesyesyesyesyesyes")
+        }
+        gg = [{
+            "label": "Сохранить",
+            "id": "yes",
+            "script": yes_button.toString()
+        }]
+        NewModal.prototype.createModal(title = "Форма добавление заказчика", body = arrayCustomers, button = gg)
+
     }
 
     /**
-     createModal - функция для создания модального окна
+     createModal - class для создания модального окна
 
      @param title - Текст Заголовка модального окна H2;
      @param body - массив элементов тела всех элементов формы. Пока поддерживает типы полей (input);
@@ -180,69 +186,109 @@
       "placeholder": "Введите резултаты работы",
       "class": "form-control",
       }
-     @param button - количество компаний на одной странице;
+     @param button - количество кнопки с действиями;
      **/
-    function createModal(title, body) {
-        removeAllElementModal()
-        createModalTitle(title)
-        createModalBody(body)
+    class NewModal {
+        createModal(title, body, button) {
+            this.removeAllElementModal()
+            this.createModalTitle(title)
+            this.createModalBody(body)
 
-        document.getElementById("ModalNewDesign").style.display = "block";
-        document.getElementById("overlay").classList.add("show");
-    }
+            this.createModalButton(button)
 
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded page')
-        getCompanyList()
-    })
+            document.getElementById("ModalNewDesign").style.display = "block";
+            document.getElementById("overlay").classList.add("show");
+        }
 
-    function removeAllElementModal() {
-        document.getElementById("ModalNewDesign").textContent = ""
-    }
 
-    function createModalTitle(title) {
-        let titleModal = document.createElement('h2');
-        titleModal.className = "popup__title";
-        titleModal.textContent = title;
-        titleModal.id = "titleModal";
-        document.getElementById("ModalNewDesign").appendChild(titleModal);
-    }
+        removeAllElementModal() {
+            document.getElementById("ModalNewDesign").textContent = ""
+        }
 
-    function createModalBody(body) {
-        i = 0
-        let element;
-        for (element of body) {
-            i++
-            if (element.type === "input") {
+        createModalTitle(title) {
+            let titleModal = document.createElement('h2');
+            titleModal.className = "popup__title";
+            titleModal.textContent = title;
+            titleModal.id = "titleModal";
+            document.getElementById("ModalNewDesign").appendChild(titleModal);
+        }
 
-                if (element.label !== undefined) {
+        createModalBody(body) {
+            let i = 0
+            let element;
+            for (element of body) {
+                i++
+                if (element.type === "input") {
 
-                    let labelbodyElement = document.createElement('label');
-                    labelbodyElement.textContent = element.label;
-                    labelbodyElement.id = `labelbodyElement_${i}`;
+                    if (element.label !== undefined) {
 
-                    document.getElementById("ModalNewDesign").appendChild(labelbodyElement);
+                        let labelbodyElement = document.createElement('label');
+                        labelbodyElement.textContent = element.label;
+                        labelbodyElement.id = `labelbodyElement_${i}`;
+
+                        document.getElementById("ModalNewDesign").appendChild(labelbodyElement);
+
+                    }
+
+
+                    let bodyElement = document.createElement(element.type);
+                    bodyElement.id = `bodyElement_${i}`;
+                    bodyElement.class = "form-group";
+                    if (element.placeholder !== undefined) {
+                        bodyElement.placeholder = element.placeholder
+                    }
+
+                    if (element.class !== undefined) {
+                        bodyElement.classList.add(element.class)
+                    }
+
+                    document.getElementById("ModalNewDesign").appendChild(bodyElement);
 
                 }
-
-
-                let bodyElement = document.createElement(element.type);
-                bodyElement.id = `bodyElement_${i}`;
-                bodyElement.class = "form-group";
-                if (element.placeholder !== undefined) {
-                    bodyElement.placeholder = element.placeholder
-                }
-
-                if (element.class !== undefined) {
-                    bodyElement.classList.add(element.class)
-                }
-
-                document.getElementById("ModalNewDesign").appendChild(bodyElement);
 
             }
+        }
+
+        createModalButton(button) {
+            let i = 0
+            let element;
+
+            console.log(button)
+            let div = document.createElement('div');
+            div.className = "btn-container";
+            for (element of button) {
+                i++
+
+                if (element.label !== undefined) {
+                    document.getElementById("ModalNewDesign").appendChild(div);
+                    let labelbodyElement = document.createElement('button');
+                    labelbodyElement.textContent = element.label;
+                    labelbodyElement.id = element.id;
+                    labelbodyElement.onclick = eval("(" + element.script + ")");
+                    div.appendChild(labelbodyElement);
+
+                }
+
+
+            }
+            let cancleButton = document.createElement('button');
+            cancleButton.textContent = "Отмена";
+
+            cancleButton.onclick = function () {
+
+                document.getElementById("ModalNewDesign").style.display = "block";
+                document.getElementById("overlay").classList.add("show");
+                {#document.getElementById("ModalNewDesign").textContent = ""#}
+
+
+            };
+            div.appendChild(cancleButton);
+
 
         }
+
     }
+
 
     /**
      getCompanyList - функция для получения списка компаний
@@ -251,7 +297,7 @@
      @param page - запрашиваемая страница пагинации;
      @param size - количество компаний на одной странице;
      **/
-    async function getCompanyList(id_company = '', page = 0, size = 5) {
+    async function getCompanyList(id_company = '', page = 1, size = 5) {
         let URL = `/company/getCompany?page=${page}&size=${size}`
         check_user = await fetch(URL, {
             headers: {
