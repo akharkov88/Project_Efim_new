@@ -152,7 +152,19 @@
                         $('.pasteObjectTrForButton')[0].remove()
                     } // удаление вложенной таблицы при нажатии на другого заказчика
 
-                    getObjectList(tempBut)
+                    // поиск индекса id
+                    let searchIndexId = 0;
+                    $('#theadTableCustomers')[0].childNodes[1].childNodes.forEach((item,index) => {
+                        console.log(item)
+                        if (item.innerText=='id'){
+                            console.log(index - 1)
+                            searchIndexId = index - 1;
+                        }
+                    })
+                    console.log('дергаю запрос, передаю ',tempBut.parentElement.parentElement.childNodes[searchIndexId].innerText)
+                    let idCompanyOpen = tempBut.parentElement.parentElement.childNodes[searchIndexId].innerText
+
+                    getObjectList(tempBut, idCompanyOpen)
                 }
 
             }); // событие для кнопки (Модалка со списком объектов или вложенная таблица)
@@ -190,8 +202,9 @@
      getObjectList - функция для получения списка объектов комании
 
      **/
-    async function getObjectList(tempBut, id_company = '', page = 1, size = 5) {
-        let URL = `/construction/getConstruction`
+    async function getObjectList(tempBut, id_company = '', id_construction='', page = 1, size = 5) {
+        let URL = `/construction/getConstruction?id_company=${id_company}`
+        console.log('in zapros',id_company)
         check_user = await fetch(URL, {
             headers: {
                 Accept: 'application/json',
@@ -266,7 +279,7 @@
             {#document.getElementById('tableCustomers').append(pasteTr)#}
         console.log(arrayCustomers)
 
-        for (let i = 0; i < arrayCustomers.length - 1; i++) {
+        for (let i = 0; i < arrayCustomers.length; i++) {
             let tempTr = document.createElement('tr');
             let tempTd = ''
             tempTd = document.createElement('td');
