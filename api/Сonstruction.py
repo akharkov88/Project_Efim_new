@@ -70,6 +70,7 @@ def save_company(request: Request,
 
 @router.get('/getConstruction' ) #, response_model=Json
 def save_company(request: Request,
+                  id_company:  int = None,
                   id_construction:  int = None,
                   page:  int = None,
                   size:  int = None,
@@ -80,4 +81,4 @@ def save_company(request: Request,
         Auth_Service.verify_token(str(request.cookies.get('Authorization')).replace("bearer ", ""))
     except:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
-    return Construction.services_getConstruction(id_construction,page, size)
+    return Construction.services_getConstruction(id_construction,id_company,page, size)

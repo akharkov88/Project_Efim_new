@@ -96,11 +96,14 @@ class СonstructionServicesClass:
             print(traceback.format_exc())
             raise HTTPException(status.HTTP_409_CONFLICT, detail="Объект с стаким наименованием уже существует")
 
-    def services_getConstruction(self,id_construction:int,page:int, size:int) -> str|List[dict]:
+    def services_getConstruction(self,id_construction:int,id_company:int,page:int, size:int) -> str|List[dict]:
         try:
             q = (
                 self.session
                 .query(tables.Сonstruction))
+
+            if id_company!=None and id_construction!=0:
+                q = q.filter(tables.Сonstruction.idCompanyStructure == id_company)
 
             if id_construction!=None and id_construction!=0:
                 q=q.filter(tables.Сonstruction.id == id_construction)
@@ -124,7 +127,13 @@ class СonstructionServicesClass:
                     }
                 ]
 
-            return operation
+            # сортируем поля для ответа
+            rez=[]
+            mapper = ['id', "Наименнование"]
+            for v in operation:
+                rez.append({k_new: jsonable_encoder(v)[k_new]  for k_new in
+                            mapper + list(jsonable_encoder(v).keys()) if k_new in list(jsonable_encoder(v).keys())})
+            return rez
 
         except:
             print(traceback.format_exc())
