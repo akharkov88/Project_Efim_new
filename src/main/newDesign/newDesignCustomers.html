@@ -70,7 +70,11 @@
             </div>
 
             <div class="" style="width: 100%">
-                <input type="button" class="button_add" value="+ Добавить заказчика">
+{#                <input type="button" class="button_add" value="+ Добавить заказчика">#}
+                <button class="button_add">
+                    <span class="mobile">+</span>
+                    <span class="desktop">Заказать сейчас</span>
+                </button>
             </div>
         </div>
     </div>
@@ -149,7 +153,7 @@
 
                     if($('.pasteObjectTr')[0]){
                         $('.pasteObjectTr')[0].remove()
-                        $('.pasteObjectTrForButton')[0].remove()
+                        {#$('.pasteObjectTrForButton')[0].remove()#}
                     } // удаление вложенной таблицы при нажатии на другого заказчика
 
                     // поиск индекса id
@@ -204,7 +208,6 @@
      **/
     async function getObjectList(tempBut, id_company = '', id_construction='', page = 1, size = 5) {
         let URL = `/construction/getConstruction?id_company=${id_company}`
-        console.log('in zapros',id_company)
         check_user = await fetch(URL, {
             headers: {
                 Accept: 'application/json',
@@ -213,13 +216,12 @@
         });
         let responseText = await check_user.text();
         let arrayCustomers = JSON.parse(responseText)
-        console.log('tempBut',tempBut.parentElement.parentElement.parentElement)
                 let pasteTr = document.createElement("tr");
                 let pasteTr2 = document.createElement("tr");
 
                 let pasteTd = document.createElement("td");
                 let pasteTbody = document.createElement("tbody");
-                {# pasteTbody.setAttribute('style','border-bottom: none') // тонкая линия между tbody #}
+                {#pasteTbody.setAttribute('style', 'border-bottom: none') // тонкая линия между tbody#}
 
                 pasteTd.setAttribute('colspan','10')
                 pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px 0 7px')
@@ -231,13 +233,13 @@
                 pasteTdForButton.setAttribute('style','text-align: right; border-top: none; padding: 0 7px 5px 7px')
 
                 let pasteTbodyForButton = document.createElement("tbody");
-                pasteTbodyForButton.setAttribute('style','border-top: none')
                 pasteTbodyForButton.classList.add('tbodyObjectButton');
 
                 let tempButObject = document.createElement('button');
                 tempButObject.setAttribute('type', 'button');
                 tempButObject.classList.add('btn'); // для стиля
                 tempButObject.classList.add('btnObjectOpen'); // для логики
+                tempButObject.classList.add('btnObjectOpenAdd'); // для логики
                 tempButObject.textContent = 'Добавить объект';
                 let tempButObject2 = document.createElement('button');
                 tempButObject2.setAttribute('type', 'button');
@@ -247,17 +249,22 @@
 
                 pasteTr2.append(pasteTdForButton)
 
-                pasteTdForButton.append(pasteTbodyForButton)
+                {#pasteTdForButton.append(pasteTbodyForButton)#}
 
                 {#pasteTbodyForButton.setAttribute()#}
-                pasteTbodyForButton.append(tempButObject)
+
+                {#pasteTbodyForButton.append(tempButObject)#}
+
+                pasteTbody.append(tempButObject)
+
                 {#pasteTbodyForButton.append(tempButObject2)#}
 
                 pasteTd.append(pasteTbody)
 
                 pasteTbody.classList.add('tbodyObject');
                 pasteTr.classList.add('pasteObjectTr');
-                tempBut.parentElement.parentElement.after(pasteTr2)
+                pasteTd.classList.add('top-container');
+                {#tempBut.parentElement.parentElement.after(pasteTr2)#}
 
                 tempBut.parentElement.parentElement.after(pasteTr)
                 //  Добавляю заголовок для вложенной таблицы
@@ -305,6 +312,11 @@
 
             pasteTbody.append(tempTr)
 
+        }
+        {# изменение размера вложенного tbody на auto при условии, что мало вложенных объектов#}
+        if (arrayCustomers.length<4){
+            {#$('.tbodyObject')[0].setAttribute('style','height:auto')#}
+            $('.tbodyObject')[0].style.height="auto";
         }
 
 
