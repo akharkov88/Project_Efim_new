@@ -203,11 +203,12 @@
         padding: 0 10px 40px 0;
         border: 1px solid black;
         /*border-radius: 20px;*/
-    /*border-bottom: none; !* тонкая линия между tbody *!*/
+        /*border-bottom: none; !* тонкая линия между tbody *!*/
+
         border-top-right-radius: 20px;
         border-top-left-radius: 20px;
 
-        /* нижнее скругление*/
+        /*!* нижнее скругление*!*/
         border-bottom-right-radius: 20px;
         border-bottom-left-radius: 20px;
 
@@ -225,33 +226,24 @@
 .btnObjectOpenAdd{
     position: absolute;
     right: 20px;
-    bottom: 0;
+    bottom: 5px;
 }
 
-.tbodyObjectButton {
-        height: 50px;
-        /*overflow-y: auto;*/
-        /*scrollbar-color: #458245 #714826; !* «цвет ползунка» «цвет полосы скроллбара» *!*/
-        /*scrollbar-width: thin;  !* толщина *!*/
-        /*overscroll-behavior-y: contain; !* от прокрутки *!*/
-        display: block;
-        background: white;
-        padding: 10px;
-        border: 1px solid black;
-        /*border-radius: 20px;*/
-        --r: 20px; /* Радиус скругления */
-        --b: 1px solid #333; /* Параметры линии */
-        border-spacing: 0; /* Расстояние между ячейками */
-        /*border-top: none; !* тонкая линия между tbody *!*/
-        border-bottom-right-radius: 20px;
-        border-bottom-left-radius: 20px;
-    }
+
     .tbodyObject tr:first-child td:last-child {
     border-top-right-radius: var(--r); /* Правый верхний угол */
    }
    .tbodyObject tr:first-child td:first-child {
     border-top-left-radius: var(--r);; /* Левый верхний угол */
    }
+
+   .tbodyObject tr:last-child td:first-child {
+    border-bottom-left-radius: var(--r); /* Левый нижний угол */
+   }
+   .tbodyObject tr:last-child td:last-child {
+    border-bottom-right-radius: var(--r); /* Правый нижний угол */
+   }
+
 .tableCustomersClass {
   /*border-collapse: separate;*/
   /*  border-collapse: collapse;*/
@@ -278,11 +270,23 @@
    table.tableCustomersClass thead tr:first-child td:last-child {
     border-top-right-radius: var(--r); /* Правый верхний угол */
    }
+    /*#tableContent  tr:last-child td:first-child {*/
+    /*border-bottom-left-radius: var(--r);*/
+    /*}*/
 
-   table.tableCustomersClass tbody tr:last-child td:first-child {
+     /*  стили для скругления границ таблицы   */
+     table.tableCustomersClass tr:last-child:not(.notLastTD) td:first-child {
     border-bottom-left-radius: var(--r); /* Левый нижний угол */
    }
-   table.tableCustomersClass tbody tr:last-child td:last-child {
+
+    table.tableCustomersClass tr:last-child:not(.notLastTD) td:last-child {
+   border-bottom-right-radius: var(--r); /* Правый нижний угол */
+   }
+
+   table.tableCustomersClass tr:last-child td:first-child.lastTd {
+    border-bottom-left-radius: var(--r); /* Левый нижний угол */
+   }
+   table.tableCustomersClass tr:last-child td:last-child.lastTd {
     border-bottom-right-radius: var(--r); /* Правый нижний угол */
    }
 

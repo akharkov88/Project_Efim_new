@@ -84,7 +84,7 @@
             <table id="tableCustomers" class="tableCustomersClass">
                 {#         https://www.dev-notes.ru/articles/frontend/simple-pagination-html-css-javascript/#}
                 <thead id="theadTableCustomers">
-                <tr>
+                <tr class="notLastTD">
                 </tr>
                 </thead>
                 <tbody id="tableContent">
@@ -141,7 +141,7 @@
                     tempBut.textContent = '+';
                         if($('.pasteObjectTr')[0]){
                             $('.pasteObjectTr')[0].remove()
-                            $('.pasteObjectTrForButton')[0].remove()
+                            {#$('.pasteObjectTrForButton')[0].remove()#}
                         }
                 } else {
                         let jQueryBtn = $('.btnCustomerOpen');
@@ -224,16 +224,16 @@
                 {#pasteTbody.setAttribute('style', 'border-bottom: none') // тонкая линия между tbody#}
 
                 pasteTd.setAttribute('colspan','10')
-                pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px 0 7px')
+                pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px')
                 pasteTr.append(pasteTd)
-                let pasteTdForButton = document.createElement("td");
-                pasteTdForButton.setAttribute('colspan','10')
-                pasteTdForButton.classList.add('pasteObjectTrForButton');
+                {#let pasteTdForButton = document.createElement("td");#}
+                {#pasteTdForButton.setAttribute('colspan','10')#}
+                {#pasteTdForButton.classList.add('pasteObjectTrForButton');#}
+                {##}
+                {#pasteTdForButton.setAttribute('style','text-align: right; border-top: none; padding: 0 7px 5px 7px')#}
 
-                pasteTdForButton.setAttribute('style','text-align: right; border-top: none; padding: 0 7px 5px 7px')
-
-                let pasteTbodyForButton = document.createElement("tbody");
-                pasteTbodyForButton.classList.add('tbodyObjectButton');
+                {#let pasteTbodyForButton = document.createElement("tbody");#}
+                {#pasteTbodyForButton.classList.add('tbodyObjectButton');#}
 
                 let tempButObject = document.createElement('button');
                 tempButObject.setAttribute('type', 'button');
@@ -241,13 +241,13 @@
                 tempButObject.classList.add('btnObjectOpen'); // для логики
                 tempButObject.classList.add('btnObjectOpenAdd'); // для логики
                 tempButObject.textContent = 'Добавить объект';
-                let tempButObject2 = document.createElement('button');
-                tempButObject2.setAttribute('type', 'button');
-                tempButObject2.classList.add('btn'); // для стиля
-                tempButObject2.classList.add('btnObjectOpen'); // для логики
-                tempButObject2.textContent = '+';
+                {#let tempButObject2 = document.createElement('button');#}
+                {#tempButObject2.setAttribute('type', 'button');#}
+                {#tempButObject2.classList.add('btn'); // для стиля#}
+                {#tempButObject2.classList.add('btnObjectOpen'); // для логики#}
+                {#tempButObject2.textContent = '+';#}
 
-                pasteTr2.append(pasteTdForButton)
+                {#pasteTr2.append(pasteTdForButton)#}
 
                 {#pasteTdForButton.append(pasteTbodyForButton)#}
 
@@ -255,15 +255,18 @@
 
                 {#pasteTbodyForButton.append(tempButObject)#}
 
-                pasteTbody.append(tempButObject)
+
 
                 {#pasteTbodyForButton.append(tempButObject2)#}
 
                 pasteTd.append(pasteTbody)
 
                 pasteTbody.classList.add('tbodyObject');
+                pasteTd.append(tempButObject)
                 pasteTr.classList.add('pasteObjectTr');
+                pasteTr.classList.add('notLastTD');
                 pasteTd.classList.add('top-container');
+                pasteTd.classList.add('lastTd');
                 {#tempBut.parentElement.parentElement.after(pasteTr2)#}
 
                 tempBut.parentElement.parentElement.after(pasteTr)
