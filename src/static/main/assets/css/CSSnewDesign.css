@@ -192,8 +192,18 @@
         grid-area: main;
         /*{#background-color: #5C787C;#}*/
     }
+
+    .fixed-height-cell {
+      height: 150px;
+      line-height: 150px;
+    }
+    .fixed-height-div {
+      height: 100%;
+      overflow: hidden;
+    }
 .tbodyObject {
         height: 200px;
+        width: 100%;
         overflow-y: auto;
         scrollbar-color: #458245 #714826; /* «цвет ползунка» «цвет полосы скроллбара» */
         scrollbar-width: thin;  /* толщина */

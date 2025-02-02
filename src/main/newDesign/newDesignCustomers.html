@@ -8,6 +8,7 @@
     <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="/style.css?t=<?php echo(microtime(true).rand()); ?>" type="text/css" />
 </head>
 <body class="initial">
 <div class="containerNewDesign">
@@ -80,7 +81,7 @@
     </div>
     <div class="main">
 {#    Весь контент сюда    #}
-        <article class="content">
+        <div class="content">
             <table id="tableCustomers" class="tableCustomersClass">
                 {#         https://www.dev-notes.ru/articles/frontend/simple-pagination-html-css-javascript/#}
                 <thead id="theadTableCustomers">
@@ -90,7 +91,7 @@
                 <tbody id="tableContent">
                 </tbody>
             </table>
-        </article>
+        </div>
     </div>
 </div>
 
@@ -213,7 +214,7 @@
         const arrayCustomers = JSON.parse(responseText)
         const pasteTr = document.createElement("tr");
         const pasteTd = document.createElement("td");
-        const pasteTbody = document.createElement("tbody");
+        const pasteTbody = document.createElement("table");
         const tempButObject = document.createElement('button');
         const headTr = document.createElement("tr");
         let p2 = document.createElement('td');
@@ -221,6 +222,7 @@
 
         pasteTd.setAttribute('colspan','10')
         pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px')
+        pasteTd.classList.add('fixed-height-cell')
         pasteTr.append(pasteTd)
 
         tempButObject.setAttribute('type', 'button');
@@ -283,15 +285,27 @@
             {#$('.tbodyObject')[0].setAttribute('style','height:auto')#}
             $('.tbodyObject')[0].style.height="auto";
         }
+        widthTable()
+    }
 
-
+    // изменение ширины вложенной таблицы
+    function widthTable(){
+        const tableWidth = document.getElementsByClassName('tbodyObject')[0].offsetWidth
+        const lenCells = document.getElementsByClassName('tbodyObject')[0].childNodes[0].cells.length
+        const trTableWidth = document.getElementsByClassName('tbodyObject')[0].childNodes[0].offsetWidth
+        if (trTableWidth<tableWidth){
+            const changePX = (tableWidth-trTableWidth)/(lenCells-1)
+            for (let i=1;i<lenCells;i++){
+                document.getElementsByClassName('tbodyObject')[0].childNodes[0].cells[i].style.width = String(document.getElementsByClassName('tbodyObject')[0].childNodes[0].cells[i].offsetWidth+changePX) + 'px'
+            }
+        }
     }
 
     function paginationBut(itemsPerPage, totalPages) {
         const content = document.querySelector('.content');
         {#const itemsPerPage = 5;#}
         let currentPage = 1;
-        const items = Array.from(content.getElementsByTagName('tr')).slice(1);
+        {#let items = Array.from(content.getElementsByTagName('tr')).slice(1);#}
 
         function showPage(page) {
             console.log('PAGE', page)
