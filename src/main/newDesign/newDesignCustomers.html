@@ -161,13 +161,10 @@
                     $('#theadTableCustomers')[0].childNodes[1].childNodes.forEach((item,index) => {
                         console.log(item)
                         if (item.innerText=='id'){
-                            console.log(index - 1)
                             searchIndexId = index - 1;
                         }
                     })
-                    console.log('дергаю запрос, передаю ',tempBut.parentElement.parentElement.childNodes[searchIndexId].innerText)
                     let idCompanyOpen = tempBut.parentElement.parentElement.childNodes[searchIndexId].innerText
-
                     getObjectList(tempBut, idCompanyOpen)
                 }
 
@@ -177,7 +174,6 @@
 
             for (let j in arrayCustomers[i]) {
                 tempTd = document.createElement('td');
-                {#console.log(arrayCustomers[i][j])#}
                 tempTd.textContent = arrayCustomers[i][j];
                 tempTr.append(tempTd)
             }
@@ -186,7 +182,7 @@
 
         }
 
-
+        // header таблицы
         if (document.getElementById('pagination')==null) {
             let p2 = '';
             p2 = document.createElement('td');
@@ -195,7 +191,6 @@
                 p2 = document.createElement('td');
                 p2.textContent = i;
                 document.getElementById('theadTableCustomers').childNodes[1].append(p2);
-                {#console.log('тут', i)#}
             }
             paginationBut(arrayCustomers[arrayCustomers.length - 1].size, arrayCustomers[arrayCustomers.length - 1].total)
 
@@ -214,89 +209,57 @@
                 "Authorization": getCookieValue("Authorization")
             },
         });
-        let responseText = await check_user.text();
-        let arrayCustomers = JSON.parse(responseText)
-                let pasteTr = document.createElement("tr");
-                let pasteTr2 = document.createElement("tr");
-
-                let pasteTd = document.createElement("td");
-                let pasteTbody = document.createElement("tbody");
-                {#pasteTbody.setAttribute('style', 'border-bottom: none') // тонкая линия между tbody#}
-
-                pasteTd.setAttribute('colspan','10')
-                pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px')
-                pasteTr.append(pasteTd)
-                {#let pasteTdForButton = document.createElement("td");#}
-                {#pasteTdForButton.setAttribute('colspan','10')#}
-                {#pasteTdForButton.classList.add('pasteObjectTrForButton');#}
-                {##}
-                {#pasteTdForButton.setAttribute('style','text-align: right; border-top: none; padding: 0 7px 5px 7px')#}
-
-                {#let pasteTbodyForButton = document.createElement("tbody");#}
-                {#pasteTbodyForButton.classList.add('tbodyObjectButton');#}
-
-                let tempButObject = document.createElement('button');
-                tempButObject.setAttribute('type', 'button');
-                tempButObject.classList.add('btn'); // для стиля
-                tempButObject.classList.add('btnObjectOpen'); // для логики
-                tempButObject.classList.add('btnObjectOpenAdd'); // для логики
-                tempButObject.textContent = 'Добавить объект';
-                {#let tempButObject2 = document.createElement('button');#}
-                {#tempButObject2.setAttribute('type', 'button');#}
-                {#tempButObject2.classList.add('btn'); // для стиля#}
-                {#tempButObject2.classList.add('btnObjectOpen'); // для логики#}
-                {#tempButObject2.textContent = '+';#}
-
-                {#pasteTr2.append(pasteTdForButton)#}
-
-                {#pasteTdForButton.append(pasteTbodyForButton)#}
-
-                {#pasteTbodyForButton.setAttribute()#}
-
-                {#pasteTbodyForButton.append(tempButObject)#}
-
-
-
-                {#pasteTbodyForButton.append(tempButObject2)#}
-
-                pasteTd.append(pasteTbody)
-
-                pasteTbody.classList.add('tbodyObject');
-                pasteTd.append(tempButObject)
-                pasteTr.classList.add('pasteObjectTr');
-                pasteTr.classList.add('notLastTD');
-                pasteTd.classList.add('top-container');
-                pasteTd.classList.add('lastTd');
-                {#tempBut.parentElement.parentElement.after(pasteTr2)#}
-
-                tempBut.parentElement.parentElement.after(pasteTr)
-                //  Добавляю заголовок для вложенной таблицы
+        const responseText = await check_user.text();
+        const arrayCustomers = JSON.parse(responseText)
+        const pasteTr = document.createElement("tr");
+        const pasteTd = document.createElement("td");
+        const pasteTbody = document.createElement("tbody");
+        const tempButObject = document.createElement('button');
+        const headTr = document.createElement("tr");
         let p2 = document.createElement('td');
-                let headTr = document.createElement("tr");
-        headTr.append(p2);
-                    for (let i in arrayCustomers[0]) {
-                        p2 = document.createElement('td');
-                        p2.textContent = i;
-                        headTr.append(p2);
-                        console.log('тут', i)
-                    }
-                    headTr.setAttribute('style','position: sticky;top: 0;background: white;')
-                    pasteTbody.append(headTr)
-                    {#document.getElementsByClassName('tbodyObject').append(headTr)#}
-                {#let pasteTd = document.createElement("td");#}
 
-                {#pasteTr.append(pasteTd)#}
-            {#document.getElementById('tableCustomers').append(pasteTr)#}
-        console.log(arrayCustomers)
+
+        pasteTd.setAttribute('colspan','10')
+        pasteTd.setAttribute('style','border-bottom: none; padding: 5px 7px')
+        pasteTr.append(pasteTd)
+
+        tempButObject.setAttribute('type', 'button');
+        tempButObject.classList.add('btn'); // для стиля
+        tempButObject.classList.add('btnObjectOpen'); // для логики
+        tempButObject.classList.add('btnObjectOpenAdd'); // для логики
+        tempButObject.textContent = 'Добавить объект';
+
+        pasteTd.append(pasteTbody)
+
+        pasteTbody.classList.add('tbodyObject');
+        pasteTd.append(tempButObject)
+        pasteTd.classList.add('top-container');
+        pasteTd.classList.add('lastTd');  // для исключения стилей
+        pasteTr.classList.add('pasteObjectTr');
+        pasteTr.classList.add('notLastTD'); // для исключения стилей
+
+
+        tempBut.parentElement.parentElement.after(pasteTr)
+        //  Добавляю заголовок для вложенной таблицы
+
+        headTr.append(p2);
+            for (let i in arrayCustomers[0]) {
+                p2 = document.createElement('td');
+                p2.textContent = i;
+                headTr.append(p2);
+                console.log('тут', i)
+            }
+            headTr.setAttribute('style','position: sticky;top: 0;background: white;')
+            pasteTbody.append(headTr)
+
 
         for (let i = 0; i < arrayCustomers.length; i++) {
             let tempTr = document.createElement('tr');
-            let tempTd = ''
+            let tempTd = '';
+            let tempButObject = document.createElement('button');
+
             tempTd = document.createElement('td');
             tempTr.append(tempTd)
-
-            {#let tempButObject = document.createElement('button');#}
-            let tempButObject = document.createElement('button');
 
             tempButObject.setAttribute('type', 'button');
             tempButObject.classList.add('btn'); // для стиля
@@ -308,15 +271,14 @@
 
             for (let j in arrayCustomers[i]) {
                 tempTd = document.createElement('td');
-                {#console.log(arrayCustomers[i][j])#}
                 tempTd.textContent = arrayCustomers[i][j];
                 tempTr.append(tempTd)
             }
-
             pasteTbody.append(tempTr)
 
         }
-        {# изменение размера вложенного tbody на auto при условии, что мало вложенных объектов#}
+
+        // изменение размера вложенного tbody на auto при условии, что мало вложенных объектов
         if (arrayCustomers.length<4){
             {#$('.tbodyObject')[0].setAttribute('style','height:auto')#}
             $('.tbodyObject')[0].style.height="auto";
@@ -334,17 +296,10 @@
         function showPage(page) {
             console.log('PAGE', page)
             getCompanyList('', page, itemsPerPage)
-
-            /*const startIndex = page * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            items.forEach((item, index) => {
-                item.classList.toggle('hidden', index < startIndex || index >= endIndex);
-            })*/
             updateActiveButtonStates();
         }
 
         function createPageButtons() {
-            {#const totalPages = Math.ceil(items.length / itemsPerPage);#}
             const paginationContainer = document.createElement('div');
             const paginationDiv = document.body.appendChild(paginationContainer);
             paginationContainer.classList.add('pagination');
